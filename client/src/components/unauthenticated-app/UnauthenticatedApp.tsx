@@ -11,7 +11,6 @@ export const UnauthenticatedApp = () => {
 				<Route path="/login" component={Login} />
 				<Route path="/" component={Login} />
 			</Switch>
-			;
 		</>
 	);
 };

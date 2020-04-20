@@ -18,14 +18,6 @@ export const authService = {
 		localStorage.removeItem("x-refresh-token");
 	},
 
-	/* login() {
-		if (store.getState().userReducer.user) {
-			return;
-		}
-		store.dispatch(logIn());
-		flashMessage("You're now logged in!");
-	}, */
-
 	logout(customFlashMessage: string = "You're now logged out!") {
 		if (!store.getState().userReducer.user) {
 			if (location.pathname === "/register" || location.pathname === "/login") {
@@ -100,7 +92,8 @@ export const authService = {
 				const xToken = res.headers.get("x-token");
 				if (xToken) {
 					this.refreshXToken(xToken);
-					this.storeUserInState();
+					const user = constructUserFromTokenPayload(getPayloadFromJwt(xToken));
+					this.storeUserInState(user);
 				} else {
 					this.logout("You're not allowed to access that page. Please log in!");
 					this.removeTokensFromLocalStorage();

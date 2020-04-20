@@ -1,19 +1,15 @@
 import React from "react";
-import {Switch} from "react-router";
-import {PrivateRoute} from "../PrivateRoute";
-import {AdminRoute} from "../AdminRoute";
+import {Switch, Route} from "react-router";
 import Main from "../Main";
-import Admin from "../Admin";
+import {Navbar} from "../Navbar";
 
 export const AuthenticatedApp = () => {
 	return (
 		<>
 			<Switch>
-				<PrivateRoute path="/main" component={Main} />
-				<AdminRoute path="/admin" component={Admin} />
-				<PrivateRoute path="/" component={Main} />
+				<Route path="/main" component={Main} />
+				<Route path="/" component={Main} />
 			</Switch>
-			;
 		</>
 	);
 };

@@ -43,6 +43,7 @@ const StyledDiv = styled.div<WrapperProps>`
 			? css`
 					transform: scale(1.3);
 					opacity: 100%;
+					z-index: 2;
 			  `
 			: css`
 					transform: scale(0);
