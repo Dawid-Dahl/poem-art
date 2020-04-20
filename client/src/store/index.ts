@@ -1,10 +1,10 @@
 import {createStore, combineReducers, applyMiddleware} from "redux";
-import {flashReducer, userReducer} from "../reducers/reducers";
+import {flashReducer, poemReducer, userReducer} from "../reducers/reducers";
 import {composeWithDevTools} from "redux-devtools-extension";
 import ReduxThunk from "redux-thunk";
 import promise from "redux-promise-middleware";
 
-export const rootReducer = combineReducers({flashReducer, userReducer});
+export const rootReducer = combineReducers({flashReducer, poemReducer, userReducer});
 
 export type RootState = ReturnType<typeof rootReducer>;
 

@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import {withRouter, RouteComponentProps} from "react-router-dom";
-import Input from "./Input";
-import {LoginInformation, AuthJsonResponse} from "../types/types";
-import {authService} from "../auth/authService";
+import Input from "../Input";
+import {LoginInformation, AuthJsonResponse} from "../../types/types";
+import {authService} from "../../auth/authService";
 
 interface Props extends RouteComponentProps {
 	postUrl: string;
@@ -74,6 +74,6 @@ export default withRouter(LoginForm);
 
 // -------------- CSS -------------- //
 
-import Button from "../styled-components/Button";
-import StyledForm from "../styled-components/StyledForm";
-import {flashMessage} from "../utils/utils";
+import Button from "../../styled-components/Button";
+import StyledForm from "../../styled-components/StyledForm";
+import {flashMessage} from "../../utils/utils";

@@ -7,12 +7,13 @@ type Props = {
 	linkTo: string;
 	onClick?: () => void;
 	kind: string;
+	customization?: string;
 };
 
-const Button: React.FC<Props> = ({title, linkTo, onClick, kind}) => {
+const Button: React.FC<Props> = ({title, linkTo, onClick, kind, customization}) => {
 	return (
 		<>
-			<StyledDiv kind={kind}>
+			<StyledDiv kind={kind} customization={customization}>
 				<Link to={linkTo} onClick={onClick}>
 					{title}
 				</Link>
@@ -25,6 +26,7 @@ export default Button;
 
 type StyledProps = {
 	kind: string;
+	customization?: string;
 };
 
 const StyledDiv = styled.div<StyledProps>`
@@ -49,19 +51,16 @@ const StyledDiv = styled.div<StyledProps>`
 		color: ${props =>
 			props.kind === "primary" ? "white" : props.kind === "white" ? "black" : "black"};
 		transition: all 0.2s;
-
-		:hover {
-			color: ${props =>
-				props.kind === "primary"
-					? "white"
-					: props.kind === "white"
-					? "#b3b3b3"
-					: "#b3b3b3"};
-		}
 	}
 	:hover {
 		transform: scale(1.05);
 		background-color: ${props => props.kind === "primary" && "var(--hover-btn-color)"};
-		box-shadow: ${props => props.kind === "primary" && "inset 0px 0px 10px 2px #65656542"};
+		box-shadow: inset 0px 0px 0px 5px #00000017;
+	}
+
+	/* This media query is here to make sure that the desktop nav buttons don't take up space at tablet and mobile devices. */
+
+	@media only screen and (max-width: 700px) {
+		display: ${props => props.customization === "desktopButton" && "none"};
 	}
 `;

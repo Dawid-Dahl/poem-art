@@ -31,7 +31,7 @@ const Wrapper = styled.div`
 
 const StyledDiv = styled.div<WrapperProps>`
 	position: relative;
-	top: 150px;
+	top: 70px;
 	background-color: var(--main-btn-color);
 	border-radius: 10px;
 	border: 2px solid rgba(255, 255, 255, 0.327);

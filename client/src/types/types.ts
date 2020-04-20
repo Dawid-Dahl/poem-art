@@ -10,6 +10,28 @@ export type LoginInformation = {
 	password: string;
 };
 
+export type Poem = {
+	id: number;
+	title: string;
+	content: string;
+	imageUrl: string;
+	createdAt: number;
+	likes?: number;
+	comments?: Comment[];
+};
+
+export type Collection = {
+	id: number;
+	poems: Poem[];
+	createdAt: number;
+};
+
+export type Comment = {
+	content: string;
+	createdAt: number;
+	username: string;
+};
+
 export type xTokenPayload = {
 	sub: number;
 	username?: string;

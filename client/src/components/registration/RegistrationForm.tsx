@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import Input from "./Input";
-import {FormState, AuthJsonResponse} from "../types/types";
+import Input from "../Input";
+import {FormState, AuthJsonResponse} from "../../types/types";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 
 interface Props extends RouteComponentProps {
@@ -92,6 +92,6 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 
 export default withRouter(RegistrationForm);
 
-import Button from "../styled-components/Button";
-import StyledForm from "../styled-components/StyledForm";
-import {flashMessage} from "../utils/utils";
+import Button from "../../styled-components/Button";
+import StyledForm from "../../styled-components/StyledForm";
+import {flashMessage} from "../../utils/utils";

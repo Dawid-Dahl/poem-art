@@ -11,8 +11,8 @@ export const Navbar: React.FC = () => {
 			<Wrapper>
 				<Logo>imageArt.</Logo>
 				<Buttons>
-					<Button title="Upload" linkTo="#" kind="white" />
-					<Button title="Profile" linkTo="#" kind="white" />
+					<Button title="Upload" linkTo="#" kind="white" customization="desktopButton" />
+					<Button title="Profile" linkTo="#" kind="white" customization="desktopButton" />
 					<Button
 						title="Logout"
 						linkTo="login"
@@ -21,6 +21,7 @@ export const Navbar: React.FC = () => {
 							authService.removeTokensFromLocalStorage();
 						}}
 						kind="white"
+						customization="desktopButton"
 					/>
 				</Buttons>
 				<Hamburger active={rolldownState} onClick={() => setRolldownState(!rolldownState)}>
@@ -48,9 +49,11 @@ export const Navbar: React.FC = () => {
 };
 
 const Wrapper = styled.div`
-	width: 100vw;
+	position: fixed;
+	top: 0;
+	width: 100%;
 	background-color: var(--main-color);
-	height: 8.05em;
+	height: 7em;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
@@ -114,9 +117,9 @@ const Hamburger = styled.div<RolldownProps>`
 const Rolldown = styled.div<RolldownProps>`
 	height: ${props => (props.active ? "70%" : "0%")};
 	display: none;
-	position: absolute;
+	position: fixed;
 	width: 100%;
-	top: 8em;
+	top: 6.05em;
 	z-index: -1;
 	background-color: var(--main-color);
 	transition: 1s cubic-bezier(0.85, 0, 0.15, 1);
@@ -133,7 +136,7 @@ const Rolldown = styled.div<RolldownProps>`
 
 const RolldownButtons = styled.div<RolldownProps>`
 	display: none;
-	position: absolute;
+	position: fixed;
 	top: 120px;
 	transform: ${props => (props.active ? "scale(1.3)" : "scale(0)")};
 	transform-origin: 50% 10%;

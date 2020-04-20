@@ -1,7 +1,7 @@
 import React from "react";
 import {Switch, Route} from "react-router";
-import Registration from "../Registration";
-import Login from "../Login";
+import Registration from "../registration/Registration";
+import Login from "../login/Login";
 
 export const UnauthenticatedApp = () => {
 	return (

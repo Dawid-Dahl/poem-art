@@ -1,6 +1,9 @@
-import {xTokenPayload, User} from "../types/types";
+import {xTokenPayload, User, Poem, Comment} from "../types/types";
 import store from "../store";
 import {showFlash, hideFlash, setFlashMessage} from "../actions/actions";
+
+export const range = (start: number, end: number): number[] =>
+	end <= start ? [end] : [...range(start, end - 1), end];
 
 export const getPayloadFromJwt = (jwt: string | null) =>
 	jwt
@@ -28,3 +31,23 @@ export const flashMessage = (message: string) => {
 		store.dispatch(hideFlash());
 	}, 3000);
 };
+
+// temporary dummy function - remove later
+
+export const createDummyPoem = (
+	id: number,
+	title: string,
+	content: string,
+	imageUrl: string,
+	createdAt: number,
+	likes?: number,
+	comments?: Comment[]
+): Poem => ({
+	id,
+	title,
+	content,
+	imageUrl,
+	likes,
+	comments,
+	createdAt,
+});
