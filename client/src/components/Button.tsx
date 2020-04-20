@@ -5,14 +5,17 @@ import {Link} from "react-router-dom";
 type Props = {
 	title: string;
 	linkTo: string;
-	color?: string;
+	onClick?: () => void;
+	kind: string;
 };
 
-const Button: React.FC<Props> = ({title, linkTo, color}) => {
+const Button: React.FC<Props> = ({title, linkTo, onClick, kind}) => {
 	return (
 		<>
-			<StyledDiv color={color}>
-				<Link to={linkTo}>{title}</Link>
+			<StyledDiv kind={kind}>
+				<Link to={linkTo} onClick={onClick}>
+					{title}
+				</Link>
 			</StyledDiv>
 		</>
 	);
@@ -20,26 +23,45 @@ const Button: React.FC<Props> = ({title, linkTo, color}) => {
 
 export default Button;
 
-const StyledDiv = styled.div`
-	width: 100%;
+type StyledProps = {
+	kind: string;
+};
+
+const StyledDiv = styled.div<StyledProps>`
+	height: 3em;
+	min-width: 7em;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	border-radius: 30px;
+	background-color: ${props =>
+		props.kind === "primary"
+			? "var(--main-btn-color)"
+			: props.kind === "white"
+			? "white"
+			: "white"};
+	margin: 0px 10px;
+	transition: all 0.2s;
+	cursor: pointer;
 
 	a {
-		max-width: 5em;
-		display: inline-block;
-		padding: 15px 30px;
-		margin: 0px 10px;
-		color: black;
-		border-radius: 30px;
-		background-color: ${props => (props.color ? props.color : "white")};
 		text-decoration: none;
-		transition: color 0.2s;
-		cursor: pointer;
+		color: ${props =>
+			props.kind === "primary" ? "white" : props.kind === "white" ? "black" : "black"};
+		transition: all 0.2s;
 
 		:hover {
-			color: #b3b3b3;
+			color: ${props =>
+				props.kind === "primary"
+					? "white"
+					: props.kind === "white"
+					? "#b3b3b3"
+					: "#b3b3b3"};
 		}
+	}
+	:hover {
+		transform: scale(1.05);
+		background-color: ${props => props.kind === "primary" && "var(--hover-btn-color)"};
+		box-shadow: ${props => props.kind === "primary" && "inset 0px 0px 10px 2px #65656542"};
 	}
 `;

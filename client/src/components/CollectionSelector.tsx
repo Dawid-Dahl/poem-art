@@ -6,7 +6,7 @@ export const CollectionSelector = () => {
 	return (
 		<>
 			<Wrapper>
-				<Button title="UploadUploadUploadUpload" linkTo="#" color="var(--main-btn-color)" />
+				<Button title="Collections" linkTo="#" kind="primary" />
 			</Wrapper>
 		</>
 	);
@@ -14,6 +14,7 @@ export const CollectionSelector = () => {
 
 const Wrapper = styled.div`
 	width: 100%;
+	height: 100px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
