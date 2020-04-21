@@ -6,7 +6,7 @@ type Props = {
 	title: string;
 	linkTo: string;
 	onClick?: () => void;
-	kind: string;
+	kind: "primary" | "white" | "black";
 	customization?: string;
 };
 
@@ -41,21 +41,33 @@ const StyledDiv = styled.div<StyledProps>`
 			? "var(--main-btn-color)"
 			: props.kind === "white"
 			? "white"
+			: props.kind === "black"
+			? "black"
 			: "white"};
-	margin: 0px 10px;
+	margin: 0px 20px;
 	transition: all 0.2s;
 	cursor: pointer;
+	z-index: 1;
 
 	a {
 		text-decoration: none;
 		color: ${props =>
-			props.kind === "primary" ? "white" : props.kind === "white" ? "black" : "black"};
+			props.kind === "primary"
+				? "white"
+				: props.kind === "white"
+				? "black"
+				: props.kind === "black"
+				? "white"
+				: "black"};
 		transition: all 0.2s;
 	}
 	:hover {
 		transform: scale(1.05);
 		background-color: ${props => props.kind === "primary" && "var(--hover-btn-color)"};
-		box-shadow: inset 0px 0px 0px 5px #00000017;
+		box-shadow: ${props =>
+			props.kind === "black"
+				? "inset 0px 0px 0px 5px var(--dark-grey-color)"
+				: "inset 0px 0px 0px 5px #00000017"};
 	}
 
 	/* This media query is here to make sure that the desktop nav buttons don't take up space at tablet and mobile devices. */

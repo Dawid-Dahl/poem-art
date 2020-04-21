@@ -13,7 +13,6 @@ export const CollectionSelector = () => {
 };
 
 const Wrapper = styled.div`
-	width: 100%;
 	height: 150px;
 	display: flex;
 	align-items: center;

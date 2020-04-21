@@ -12,7 +12,7 @@ const initialState: PoemReducerState = {
 			x,
 			`This Is The Title ${x * 2}`,
 			"Roses are red, violets are awesome",
-			"https://wallup.net/wp-content/uploads/2017/03/16/171381-macro-flowers-desaturated-748x468.jpg",
+			`https://i.picsum.photos/id/${Math.floor(Math.random() * 100)}/600/300.jpg`,
 			Date.now(),
 			Math.round(Math.random() * 30)
 		)

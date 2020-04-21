@@ -31,19 +31,21 @@ export const Navbar: React.FC = () => {
 				</Hamburger>
 				<Rolldown active={rolldownState} />
 			</Wrapper>
-			<RolldownButtons active={rolldownState}>
-				<Button title="Upload" linkTo="#" kind="white" />
-				<Button title="Profile" linkTo="#" kind="white" />
-				<Button
-					title="Logout"
-					linkTo="login"
-					onClick={() => {
-						authService.removeUserFromState();
-						authService.removeTokensFromLocalStorage();
-					}}
-					kind="white"
-				/>
-			</RolldownButtons>
+			<RolldownButtonsWrapper>
+				<RolldownButtons active={rolldownState}>
+					<Button title="Upload" linkTo="#" kind="white" />
+					<Button title="Profile" linkTo="#" kind="white" />
+					<Button
+						title="Logout"
+						linkTo="login"
+						onClick={() => {
+							authService.removeUserFromState();
+							authService.removeTokensFromLocalStorage();
+						}}
+						kind="white"
+					/>
+				</RolldownButtons>
+			</RolldownButtonsWrapper>
 		</>
 	);
 };
@@ -57,7 +59,7 @@ const Wrapper = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	z-index: 1;
+	z-index: 2;
 
 	@media only screen and (max-width: 1280px) {
 		justify-content: space-between;
@@ -134,6 +136,13 @@ const Rolldown = styled.div<RolldownProps>`
 	}
 `;
 
+const RolldownButtonsWrapper = styled.div`
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
+
 const RolldownButtons = styled.div<RolldownProps>`
 	display: none;
 	position: fixed;
@@ -142,7 +151,7 @@ const RolldownButtons = styled.div<RolldownProps>`
 	transform-origin: 50% 10%;
 	opacity: ${props => (props.active ? "100%" : "0%")};
 	transition: ${props => (props.active ? "all 1s 0.3s;" : "all 1s;")};
-	z-index: 1;
+	z-index: 2;
 
 	@media only screen and (max-width: 800px) {
 		display: flex;

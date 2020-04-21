@@ -40,6 +40,10 @@ const StyledDiv = styled.div<Props>`
 	background-color: lightgray;
 	overflow: hidden;
 
+	@media only screen and (max-width: 805px) {
+		width: 90%;
+	}
+
 	h1 {
 		color: white;
 		max-width: 200px;
