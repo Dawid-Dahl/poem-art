@@ -3,6 +3,9 @@ import {withRouter, RouteComponentProps} from "react-router-dom";
 import Input from "../Input";
 import {LoginInformation, AuthJsonResponse} from "../../types/types";
 import {authService} from "../../auth/authService";
+import Button from "../Button";
+import {flashMessage} from "../../utils/utils";
+import styled from "styled-components";
 
 interface Props extends RouteComponentProps {
 	postUrl: string;
@@ -19,7 +22,7 @@ const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 	});
 
 	return (
-		<div>
+		<>
 			<StyledForm
 				action="POST"
 				className="form"
@@ -46,6 +49,7 @@ const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 					e.currentTarget.reset();
 				}}
 			>
+				<h2>LOGIN</h2>
 				<Input
 					name="email"
 					type="email"
@@ -62,11 +66,9 @@ const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 					}
 					required
 				/>
-				<Button type="submit" id="login-button">
-					Login
-				</Button>
+				<Button title="Login" kind="white" />
 			</StyledForm>
-		</div>
+		</>
 	);
 };
 
@@ -74,6 +76,17 @@ export default withRouter(LoginForm);
 
 // -------------- CSS -------------- //
 
-import Button from "../../styled-components/Button";
-import StyledForm from "../../styled-components/StyledForm";
-import {flashMessage} from "../../utils/utils";
+const StyledForm = styled.form`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	margin: 1em 0;
+	padding: 1em 0;
+	background-color: black;
+
+	h2 {
+		color: white;
+	}
+`;

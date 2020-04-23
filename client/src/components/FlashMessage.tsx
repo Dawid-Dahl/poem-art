@@ -31,19 +31,20 @@ const Wrapper = styled.div`
 
 const StyledDiv = styled.div<WrapperProps>`
 	position: relative;
-	top: 70px;
+	top: 60px;
 	background-color: var(--main-btn-color);
 	border-radius: 10px;
 	border: 2px solid rgba(255, 255, 255, 0.327);
 	transform: scale(1.3);
 	opacity: 100%;
 	transition: all 0.5s;
+	z-index: 10;
+
 	${props =>
 		props.active
 			? css`
 					transform: scale(1.3);
 					opacity: 100%;
-					z-index: 2;
 			  `
 			: css`
 					transform: scale(0);

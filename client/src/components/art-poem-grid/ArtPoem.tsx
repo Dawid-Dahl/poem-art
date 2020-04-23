@@ -1,15 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 import {Poem} from "../../types/types";
 
-const ArtPoem: React.FC<Poem> = ({title, likes, imageUrl}) => {
+const ArtPoem: React.FC<Poem> = ({id, title, likes, imageUrl}) => {
 	return (
 		<>
 			<Wrapper>
-				<StyledDiv imageUrl={imageUrl}>
-					<h1>{title}</h1>
-					<p>{`👍🏻 ${likes}`}</p>
-				</StyledDiv>
+				<Link to={`/fullscreen?id=${id}`}>
+					<StyledDiv imageUrl={imageUrl}>
+						<ArtPoemTitle>{title}</ArtPoemTitle>
+						<ArtPoemLikes>{`👍🏻 ${likes}`}</ArtPoemLikes>
+					</StyledDiv>
+				</Link>
 			</Wrapper>
 		</>
 	);
@@ -18,9 +21,13 @@ const ArtPoem: React.FC<Poem> = ({title, likes, imageUrl}) => {
 export default ArtPoem;
 
 const Wrapper = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	a {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-decoration: none;
+		width: 100%;
+	}
 `;
 
 type Props = {
@@ -34,29 +41,35 @@ const StyledDiv = styled.div<Props>`
 	flex-direction: column;
 	background-image: ${props => `url(${props.imageUrl})`};
 	background-size: cover;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	height: 300px;
 	width: 300px;
 	background-color: lightgray;
 	overflow: hidden;
+	box-shadow: var(--box-shadow);
+	transition: transform 0.3s;
+
+	:hover {
+		transform: scale(1.01) rotate(1deg);
+	}
 
 	@media only screen and (max-width: 805px) {
 		width: 90%;
 	}
+`;
 
-	h1 {
-		color: white;
-		max-width: 200px;
-		padding: 5px;
-		border-radius: 5px;
-		background-color: #0000005c;
-		text-align: center;
-	}
+const ArtPoemTitle = styled.h1`
+	color: white;
+	max-width: 200px;
+	padding: 5px;
+	border-radius: 5px;
+	background-color: #00000029;
+	text-align: center;
+`;
 
-	p {
-		color: white;
-		padding: 5px;
-		border-radius: 5px;
-		background-color: #0000005c;
-	}
+const ArtPoemLikes = styled.h1`
+	color: white;
+	padding: 5px;
+	border-radius: 5px;
+	background-color: #0000005c;
 `;

@@ -6,7 +6,7 @@ import styled from "styled-components";
 const Login = () => {
 	return (
 		<Wrapper>
-			<h1 className="registration">LOGIN</h1>
+			<h1 className="registration">poemArt.</h1>
 			<LoginForm postUrl={`${process.env.FETCH_URL}/api/login`} redirectUrl="/main" />
 			<Link to="/register" className="registrationLink">
 				Go To Registration
@@ -22,14 +22,14 @@ export const Wrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	height: 100vh;
+	height: 90vh;
 
 	.registrationLink {
 		color: black;
 		text-decoration: none;
 	}
 
-	h1 {
+	h2 {
 		letter-spacing: 1px;
 	}
 `;

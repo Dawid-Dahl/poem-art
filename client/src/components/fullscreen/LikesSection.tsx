@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
-export const LikesSection = () => {
+type Props = {
+	likes: number;
+};
+
+export const LikesSection: React.FC<Props> = ({likes}) => {
 	return (
 		<>
 			<Wrapper>
-				<p>👍🏻 3</p>
+				<p>{`👍🏻 ${likes}`}</p>
 			</Wrapper>
 		</>
 	);
@@ -14,19 +18,25 @@ export const LikesSection = () => {
 export default LikesSection;
 
 const Wrapper = styled.div`
-	grid-area: LikesSection;
+	margin: 0 0 1em 0;
 	background-color: white;
-	box-shadow: 0 0 20px black;
+	box-shadow: var(--box-shadow);
 	border-radius: 5px;
+	height: fit-content;
+	padding: 50px;
+
+	p {
+		margin: 0;
+	}
 
 	@media only screen and (max-width: 1280px) {
+		padding: 30px;
 	}
 
 	@media only screen and (max-width: 800px) {
 	}
 
 	p {
-		padding: 50px;
 		text-align: center;
 		font-size: 1.5em;
 	}

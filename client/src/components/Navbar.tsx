@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import {authService} from "../auth/authService";
-import Button from "./Button";
+import LinkButton from "./LinkButton";
+import {Link} from "react-router-dom";
 
 export const Navbar: React.FC = () => {
 	const [rolldownState, setRolldownState] = useState(false);
@@ -9,11 +10,23 @@ export const Navbar: React.FC = () => {
 	return (
 		<>
 			<Wrapper>
-				<Logo>imageArt.</Logo>
+				<Link to={"/"}>
+					<Logo>poemArt.</Logo>
+				</Link>
 				<Buttons>
-					<Button title="Upload" linkTo="#" kind="white" customization="desktopButton" />
-					<Button title="Profile" linkTo="#" kind="white" customization="desktopButton" />
-					<Button
+					<LinkButton
+						title="Upload"
+						linkTo="upload"
+						kind="white"
+						customization="desktopButton"
+					/>
+					<LinkButton
+						title="Profile"
+						linkTo="profile"
+						kind="white"
+						customization="desktopButton"
+					/>
+					<LinkButton
 						title="Logout"
 						linkTo="login"
 						onClick={() => {
@@ -33,9 +46,9 @@ export const Navbar: React.FC = () => {
 			</Wrapper>
 			<RolldownButtonsWrapper>
 				<RolldownButtons active={rolldownState}>
-					<Button title="Upload" linkTo="#" kind="white" />
-					<Button title="Profile" linkTo="#" kind="white" />
-					<Button
+					<LinkButton title="Upload" linkTo="upload" kind="white" />
+					<LinkButton title="Profile" linkTo="profile" kind="white" />
+					<LinkButton
 						title="Logout"
 						linkTo="login"
 						onClick={() => {
@@ -60,6 +73,10 @@ const Wrapper = styled.div`
 	align-items: center;
 	justify-content: space-around;
 	z-index: 2;
+
+	a {
+		text-decoration: none;
+	}
 
 	@media only screen and (max-width: 1280px) {
 		justify-content: space-between;

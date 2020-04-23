@@ -1,18 +1,29 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import PoemSection from "./PoemSection";
 import CommentSection from "./CommentSection";
 import LikesSection from "./LikesSection";
+import {Poem} from "../../types/types";
 
-const FullscreenPicture: React.FC = () => {
+type Props = {
+	artPoem: Poem;
+};
+
+const FullscreenPicture: React.FC<Props> = ({artPoem}) => {
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	return (
 		<>
 			<Wrapper>
-				<StyledDiv imageUrl="https://picsum.photos/id/1/1200/600">
+				<StyledDiv imageUrl={artPoem.imageUrl ? artPoem.imageUrl : ""}>
 					<Grid>
 						<PoemSection />
-						<CommentSection />
-						<LikesSection />
+						<SidebarWrapper>
+							<LikesSection likes={artPoem.likes ? artPoem.likes : 0} />
+							<CommentSection />
+						</SidebarWrapper>
 					</Grid>
 				</StyledDiv>
 			</Wrapper>
@@ -51,21 +62,30 @@ const Grid = styled.div`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	gap: 1em 1em;
-	grid-template-areas: "PoemSection LikesSection" "PoemSection CommentSection";
+	grid-template-areas: "PoemSection Sidebar" "PoemSection Sidebar";
 
 	@media only screen and (max-width: 1280px) {
 		width: 70%;
 
 		p {
-			padding: 10px;
+			padding: 20px;
 		}
 	}
 
 	@media only screen and (max-width: 800px) {
-		width: 80%;
+		width: 90%;
 
 		p {
-			padding: 10px;
+			padding: 15px;
 		}
 	}
+
+	@media only screen and (max-width: 500px) {
+		width: 85%;
+		display: block;
+	}
+`;
+
+const SidebarWrapper = styled.div`
+	grid-area: Sidebar;
 `;

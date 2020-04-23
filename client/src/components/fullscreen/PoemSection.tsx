@@ -33,7 +33,7 @@ export default PoemSection;
 const Wrapper = styled.div`
 	grid-area: PoemSection;
 	background-color: white;
-	box-shadow: 0 0 20px black;
+	box-shadow: var(--box-shadow);
 	border-radius: 5px;
 	height: fit-content;
 

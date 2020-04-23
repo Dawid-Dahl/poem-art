@@ -10,6 +10,11 @@ export type LoginInformation = {
 	password: string;
 };
 
+export type UploadInformation = {
+	name: string;
+	collection: string;
+};
+
 export type Poem = {
 	id: number;
 	title: string;

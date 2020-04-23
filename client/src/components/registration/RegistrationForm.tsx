@@ -2,6 +2,9 @@ import React, {useState} from "react";
 import Input from "../Input";
 import {FormState, AuthJsonResponse} from "../../types/types";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import styled from "styled-components";
+import {flashMessage} from "../../utils/utils";
+import Button from "../Button";
 
 interface Props extends RouteComponentProps {
 	postUrl: string;
@@ -22,7 +25,7 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 	});
 
 	return (
-		<div>
+		<>
 			<StyledForm
 				action="POST"
 				className="form"
@@ -48,6 +51,7 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 					e.currentTarget.reset();
 				}}
 			>
+				<h2>REGISTRATION</h2>
 				<Input
 					name="username"
 					type="text"
@@ -82,16 +86,25 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 					}
 					required
 				/>
-				<Button type="submit" id="login-button">
-					Register
-				</Button>
+				<Button title="Register" kind="white" />
 			</StyledForm>
-		</div>
+		</>
 	);
 };
 
 export default withRouter(RegistrationForm);
 
-import Button from "../../styled-components/Button";
-import StyledForm from "../../styled-components/StyledForm";
-import {flashMessage} from "../../utils/utils";
+const StyledForm = styled.form`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	margin: 1em 0;
+	padding: 1em 0;
+	background-color: black;
+
+	h2 {
+		color: white;
+	}
+`;
