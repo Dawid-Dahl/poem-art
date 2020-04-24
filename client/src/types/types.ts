@@ -15,8 +15,8 @@ export type UploadInformation = {
 	collection: string;
 };
 
-export type Poem = {
-	id: number;
+export type Artpoem = {
+	artpoem_id: number;
 	title: string;
 	content: string;
 	imageUrl: string;
@@ -26,8 +26,8 @@ export type Poem = {
 };
 
 export type Collection = {
-	id: number;
-	poems: Poem[];
+	collection_id: number;
+	poems: Artpoem[];
 	createdAt: number;
 };
 
@@ -47,7 +47,7 @@ export type xTokenPayload = {
 };
 
 export type User = {
-	id: number;
+	user_id: number;
 	username: string;
 	email?: string;
 	date_added?: string;

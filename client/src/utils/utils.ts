@@ -18,7 +18,7 @@ export const constructUserFromTokenPayload = (
 	payload: xTokenPayload | undefined
 ): User | undefined =>
 	payload && {
-		id: payload.sub,
+		user_id: payload.sub,
 		username: payload.username ?? "",
 		email: payload.email,
 		admin: payload.admin ?? 0,

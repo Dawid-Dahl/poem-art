@@ -3,5 +3,6 @@ dist
 .cache
 .env
 database.db
+artpoems.db
 cryptography/
 poem-art-8459ffeb00ca.json

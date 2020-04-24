@@ -3,12 +3,13 @@ import {ParamsDictionary} from "express-serve-static-core";
 import {authJsonResponse} from "../utils/utils";
 
 export type User = {
-	id: number;
+	user_id: number;
 	username: string;
 	email: string;
 	password?: string;
 	date_added?: string;
 	admin: number;
+	profile_picture?: string;
 };
 
 export type xTokenPayload = {

@@ -1,8 +1,8 @@
 import express from "express";
-import booksRouter from "./books";
+import artPoemsRouter from "./artPoems";
 
 const apiRouter = express.Router();
 
-apiRouter.use("/books", booksRouter);
+apiRouter.use("/books", artPoemsRouter);
 
 export default apiRouter;

@@ -3,7 +3,7 @@ import {Tables} from "../types/enums";
 import {config} from "dotenv";
 
 config({
-	path: "../../.env"
+	path: "../../.env",
 });
 
 const dbPath = process.env.DB_PATH || "";
@@ -18,7 +18,7 @@ db.serialize(() => {
 	);
 	db.run(
 		`CREATE TABLE IF NOT EXISTS ${Tables.users} (
-            "id" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+            "user_id" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
             "username" TEXT NOT NULL,
             "email" TEXT NOT NULL UNIQUE,
             "password" TEXT NOT NULL,

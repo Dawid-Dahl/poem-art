@@ -41,7 +41,7 @@ const jwtJwtDoneCallback: JwtDoneCallback = (req, res, next) => (err, user, info
 						err ? console.error(err) : console.log("Connected to the SQLite database")
 					);
 
-					const sql = `SELECT * FROM ${Tables.users} WHERE id = ?`;
+					const sql = `SELECT * FROM ${Tables.users} WHERE user_id = ?`;
 
 					db.get(sql, user.sub, (err, row: User) => {
 						if (err) {

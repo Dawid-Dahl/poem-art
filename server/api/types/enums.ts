@@ -1,5 +1,5 @@
-export enum JWT {
-	header,
-	payload,
-	signature,
+export enum Tables {
+	ArtPoems = "ArtPoems",
+	Collections = "Collections",
+	Comments = "Comments",
 }

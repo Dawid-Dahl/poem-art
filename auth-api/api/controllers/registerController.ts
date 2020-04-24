@@ -24,7 +24,7 @@ export const registerController = (req: Request, res: Response) => {
 				db.run(sql, values, err => {
 					if (!err) {
 						db.get(
-							`SELECT id, username, email, admin FROM ${Tables.users} WHERE email = ?`,
+							`SELECT user_id, username, email, admin FROM ${Tables.users} WHERE email = ?`,
 							req.body.email,
 							(err, row: User) => {
 								if (err) console.error(err);
