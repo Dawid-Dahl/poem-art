@@ -11,10 +11,10 @@ export const ArtPoemGrid = () => {
 		<>
 			<Wrapper>
 				<Grid>
-					{poems?.map(({id, title, content, imageUrl, createdAt, likes}) => (
+					{poems?.map(({artpoem_id, title, content, imageUrl, createdAt, likes}) => (
 						<ArtPoem
-							key={id}
-							id={id}
+							key={artpoem_id}
+							artpoem_id={artpoem_id}
 							title={title}
 							imageUrl={imageUrl}
 							content={content}

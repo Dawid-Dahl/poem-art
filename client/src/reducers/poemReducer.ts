@@ -1,9 +1,9 @@
 import {PoemActionTypes} from "../actions/poemAction";
-import {Poem} from "../types/types";
+import {Artpoem} from "../types/types";
 import {range, createDummyPoem} from "../utils/utils";
 
 export type PoemReducerState = {
-	poems: Poem[] | null;
+	poems: Artpoem[] | null;
 };
 
 const initialState: PoemReducerState = {

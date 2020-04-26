@@ -3,10 +3,10 @@ import styled from "styled-components";
 import PoemSection from "./PoemSection";
 import CommentSection from "./CommentSection";
 import LikesSection from "./LikesSection";
-import {Poem} from "../../types/types";
+import {Artpoem} from "../../types/types";
 
 type Props = {
-	artPoem: Poem;
+	artPoem: Artpoem;
 };
 
 const FullscreenPicture: React.FC<Props> = ({artPoem}) => {

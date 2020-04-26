@@ -1,14 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-const collectionMock = {
-	collection_id: 4,
-	name: "Cat Poems",
-	poems: [{}, {}, {}],
-	date_added: Date.now(),
-	owner: 39,
-};
-
 type Props = {
 	name: string;
 };

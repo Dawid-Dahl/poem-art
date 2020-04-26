@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
-import {Poem} from "../../types/types";
+import {Artpoem} from "../../types/types";
 
-const ArtPoem: React.FC<Poem> = ({id, title, likes, imageUrl}) => {
+const ArtPoem: React.FC<Artpoem> = ({artpoem_id, title, likes, imageUrl}) => {
 	return (
 		<>
 			<Wrapper>
-				<Link to={`/fullscreen?id=${id}`}>
+				<Link to={`/fullscreen?id=${artpoem_id}`}>
 					<StyledDiv imageUrl={imageUrl}>
 						<ArtPoemTitle>{title}</ArtPoemTitle>
 						<ArtPoemLikes>{`👍🏻 ${likes}`}</ArtPoemLikes>

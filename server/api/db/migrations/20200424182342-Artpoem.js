@@ -1,8 +1,8 @@
 "use strict";
 
 module.exports = {
-	up: async (queryInterface, Sequelize) => {
-		return queryInterface.sequelize.transaction(t => {
+	up: (queryInterface, Sequelize) => {
+		return queryInterface.sequelize.transaction(async t => {
 			return Promise.all([
 				queryInterface.createTable(
 					"ArtPoems",
@@ -25,10 +25,6 @@ module.exports = {
 							type: Sequelize.INTEGER,
 							allowNull: false,
 						},
-						comments: {
-							type: Sequelize.JSON,
-							allowNull: false,
-						},
 						image_url: {
 							type: Sequelize.STRING,
 							allowNull: false,
@@ -49,10 +45,7 @@ module.exports = {
 							type: Sequelize.STRING,
 							allowNull: false,
 						},
-						poems: {
-							type: Sequelize.JSON,
-							allowNull: false,
-						},
+
 						owner: {
 							type: Sequelize.INTEGER,
 							allowNull: false,
@@ -92,7 +85,7 @@ module.exports = {
 					},
 					{transaction: t}
 				),
-			]);
+			]).catch(e => console.log(e));
 		});
 	},
 
@@ -102,7 +95,7 @@ module.exports = {
 				queryInterface.dropTable("ArtPoems", {transaction: t}),
 				queryInterface.dropTable("Collections", {transaction: t}),
 				queryInterface.dropTable("Comments", {transaction: t}),
-			]);
+			]).catch(e => console.log(e));
 		});
 	},
 };

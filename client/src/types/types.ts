@@ -52,6 +52,7 @@ export type User = {
 	email?: string;
 	date_added?: string;
 	admin: number;
+	profile_picture?: string;
 };
 
 export type AuthJsonResponsePayload = {

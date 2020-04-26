@@ -114,7 +114,7 @@ export const constructUserFromTokenPayload = (payload: xTokenPayload): User => (
 
 export const attachUserToRequest = (req: RequestWithUser, user: User) => {
 	req.user = {
-		id: user.user_id,
+		user_id: user.user_id,
 		username: user.username,
 		admin: user.admin,
 	};
