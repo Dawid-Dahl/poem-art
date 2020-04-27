@@ -88,7 +88,7 @@ export const addRefreshTokenToDatabase = (refreshToken: SQLRefreshToken): void =
 		err ? console.error(err) : console.log("Connected to the SQLite database")
 	);
 
-	const sql = `INSERT INTO ${Tables.refreshTokens} (sub, iat, refresh_token) VALUES (?, ?, ?)`;
+	const sql = `INSERT INTO ${Tables.refresh_tokens} (sub, iat, refresh_token) VALUES (?, ?, ?)`;
 	const values = [refreshToken.sub, refreshToken.iat, refreshToken.xRefreshToken];
 
 	db.run(sql, values, err =>
@@ -130,7 +130,7 @@ export const checkIfXRefreshTokenExistsInDb = (
 			err ? console.error(err) : console.log("Connected to the SQLite database")
 		);
 
-		const sql = `SELECT 1 FROM ${Tables.refreshTokens} WHERE refresh_token = ?`;
+		const sql = `SELECT 1 FROM ${Tables.refresh_tokens} WHERE refresh_token = ?`;
 
 		return new Promise((res, rej) => {
 			db.get(sql, xRefreshToken, (err, row) => {

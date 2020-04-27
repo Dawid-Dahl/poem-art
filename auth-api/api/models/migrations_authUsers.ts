@@ -13,19 +13,18 @@ const db = new sqlite.Database(dbPath, err =>
 );
 
 db.serialize(() => {
-	db.run(`DROP TABLE IF EXISTS ${Tables.users}`, err =>
-		err ? console.error(err) : console.log(`Table ${Tables.users} dropped successfully`)
+	db.run(`DROP TABLE IF EXISTS ${Tables.auth_users}`, err =>
+		err ? console.error(err) : console.log(`Table ${Tables.auth_users} dropped successfully`)
 	);
 	db.run(
-		`CREATE TABLE IF NOT EXISTS ${Tables.users} (
+		`CREATE TABLE IF NOT EXISTS ${Tables.auth_users} (
             "user_id" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
-            "username" TEXT NOT NULL,
             "email" TEXT NOT NULL UNIQUE,
             "password" TEXT NOT NULL,
-            "date_added" TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            "admin" BOOLEAN NOT NULL DEFAULT 0
+            "created_at" TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
         );`,
-		err => (err ? console.error(err) : console.log(`Table ${Tables.users} added successfully`))
+		err =>
+			err ? console.error(err) : console.log(`Table ${Tables.auth_users} added successfully`)
 	);
 });
 

@@ -18,23 +18,18 @@ export const registerController = (req: Request, res: Response) => {
 
 		bcrypt.hash(req.body.password, 10, (err, hash) => {
 			if (!err) {
-				const sql = `INSERT INTO ${Tables.users} (username, email, password) VALUES (?, ?, ?)`;
-				const values = [req.body.username, req.body.email, hash];
+				const sql = `INSERT INTO ${Tables.auth_users} (email, password) VALUES (?, ?)`;
+				const values = [req.body.email, hash];
+
+				//TODO: Send username to main server to create User in the main database.
+				//req.body.username
 
 				db.run(sql, values, err => {
 					if (!err) {
-						db.get(
-							`SELECT user_id, username, email, admin FROM ${Tables.users} WHERE email = ?`,
-							req.body.email,
-							(err, row: User) => {
-								if (err) console.error(err);
-
-								res.status(200).json(
-									authJsonResponse(true, {
-										message: `Registration successful. Welcome, ${row.username}, now you can log in!`,
-									})
-								);
-							}
+						res.status(200).json(
+							authJsonResponse(true, {
+								message: `Registration successful. Welcome! You can now log in!`,
+							})
 						);
 					} else {
 						res.status(403).json(

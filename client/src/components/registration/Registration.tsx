@@ -8,7 +8,7 @@ const Registration = () => {
 		<Wrapper>
 			<h1 className="registration">poemArt.</h1>
 			<RegistrationForm
-				postUrl={`${process.env.FETCH_URL}/api/register`}
+				postUrl={`${process.env.AUTH_FETCH_URL}/api/register`}
 				redirectUrl="/login"
 			/>
 			<Link to="/login" className="loginLink">

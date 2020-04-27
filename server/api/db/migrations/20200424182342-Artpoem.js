@@ -16,6 +16,7 @@ module.exports = {
 				},
 				admin: {
 					type: Sequelize.BOOLEAN,
+					defaultValue: 0,
 					allowNull: false,
 				},
 				profile_picture: {

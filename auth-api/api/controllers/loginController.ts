@@ -25,7 +25,7 @@ export const loginController = (req: Request, res: Response, next: NextFunction)
 		err ? console.error(err) : console.log("Connected to the SQLite database")
 	);
 
-	const sql = `SELECT * FROM ${Tables.users} WHERE email = ?`;
+	const sql = `SELECT * FROM ${Tables.auth_users} WHERE email = ?`;
 
 	db.get(sql, req.body.email, async (err, row: User) => {
 		if (!err) {

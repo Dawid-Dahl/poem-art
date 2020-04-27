@@ -81,7 +81,7 @@ export const authService = {
 	},
 
 	verifyXRefreshTokenServerSide(xRefreshToken: string | null) {
-		fetch(`${process.env.FETCH_URL}/api/verify-jwt`, {
+		fetch(`${process.env.AUTH_FETCH_URL}/api/verify-jwt`, {
 			method: "POST",
 			headers: {
 				"x-refresh-token": xRefreshToken ?? "null",
