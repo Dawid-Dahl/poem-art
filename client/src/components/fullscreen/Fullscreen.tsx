@@ -12,7 +12,7 @@ function useQuery() {
 }
 
 const backupPoem = {
-	id: 0,
+	artpoem_id: 0,
 	title: "",
 	content: "",
 	imageUrl: "",
@@ -26,7 +26,7 @@ const Fullscreen = () => {
 
 	const artPoem = useSelector(
 		(state: RootState) =>
-			state.poemReducer.poems?.filter(poem => poem.id === Number(query.get("id")))[0]
+			state.poemReducer.poems?.filter(poem => poem.artpoem_id === Number(query.get("id")))[0]
 	);
 
 	return (

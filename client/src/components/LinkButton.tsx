@@ -72,12 +72,6 @@ const StyledDiv = styled.div<StyledProps>`
 	:hover {
 		transform: scale(1.05);
 		background-color: ${props => props.kind === "primary" && "var(--hover-btn-color)"};
-		box-shadow: ${props =>
-			props.kind === "black"
-				? "inset 0px 0px 0px 5px var(--dark-grey-color), var(--box-shadow)"
-				: props.kind === "white"
-				? "inset 0px 0px 0px 5px #00000017, var(--box-shadow)"
-				: "inset 0px 0px 0px 5px #00000017, var(--box-shadow)"};
 	}
 
 	/* This media query is here to make sure that the desktop nav buttons don't take up space at tablet and mobile devices. */
