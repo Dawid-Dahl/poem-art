@@ -1,8 +1,8 @@
 require("dotenv").config({
-	path: "../../../.env",
+	path: "../../.env",
 });
 
-const config = {
+module.exports = {
 	development: {
 		username: process.env.DB_USER,
 		password: process.env.DB_PASSWORD,
@@ -10,7 +10,7 @@ const config = {
 		host: process.env.DB_HOST,
 		socketPath: process.env.DB_SOCKET_PATH,
 		port: process.env.DB_PORT,
-		dialect: process.env.DB_DIALECT,
+		dialect: "mysql",
 	},
 	test: {
 		username: process.env.DB_USER,
@@ -19,7 +19,7 @@ const config = {
 		host: process.env.DB_HOST,
 		socketPath: process.env.DB_SOCKET_PATH,
 		port: process.env.DB_PORT,
-		dialect: process.env.DB_DIALECT,
+		dialect: "mysql",
 	},
 	production: {
 		username: process.env.DB_USER,
@@ -28,8 +28,6 @@ const config = {
 		host: process.env.DB_HOST,
 		socketPath: process.env.DB_SOCKET_PATH,
 		port: process.env.DB_PORT,
-		dialect: process.env.DB_DIALECT,
+		dialect: "mysql",
 	},
 };
-
-module.exports = config[process.env.NODE_ENV];

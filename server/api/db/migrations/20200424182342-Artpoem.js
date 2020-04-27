@@ -1,8 +1,8 @@
-/* "use strict";
+"use strict";
 
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-		return Promise.all([
+		return await Promise.all([
 			queryInterface.createTable("Users", {
 				user_id: {
 					type: Sequelize.INTEGER,
@@ -20,6 +20,38 @@ module.exports = {
 				},
 				profile_picture: {
 					type: Sequelize.STRING,
+					allowNull: false,
+				},
+				created_at: {
+					allowNull: false,
+					type: Sequelize.DATE,
+				},
+				updated_at: {
+					allowNull: false,
+					type: Sequelize.DATE,
+				},
+			}),
+			queryInterface.createTable("Collections", {
+				collection_id: {
+					type: Sequelize.INTEGER,
+					allowNull: false,
+					autoIncrement: true,
+					primaryKey: true,
+				},
+				name: {
+					type: Sequelize.STRING,
+					allowNull: false,
+				},
+				public: {
+					type: Sequelize.BOOLEAN,
+					allowNull: false,
+				},
+				user_id: {
+					type: Sequelize.INTEGER,
+					references: {
+						model: "Users",
+						key: "user_id",
+					},
 					allowNull: false,
 				},
 				created_at: {
@@ -59,38 +91,6 @@ module.exports = {
 					references: {
 						model: "Collections",
 						key: "collection_id",
-					},
-					allowNull: false,
-				},
-				created_at: {
-					allowNull: false,
-					type: Sequelize.DATE,
-				},
-				updated_at: {
-					allowNull: false,
-					type: Sequelize.DATE,
-				},
-			}),
-			queryInterface.createTable("Collections", {
-				collection_id: {
-					type: Sequelize.INTEGER,
-					allowNull: false,
-					autoIncrement: true,
-					primaryKey: true,
-				},
-				name: {
-					type: Sequelize.STRING,
-					allowNull: false,
-				},
-				public: {
-					type: Sequelize.BOOLEAN,
-					allowNull: false,
-				},
-				user_id: {
-					type: Sequelize.INTEGER,
-					references: {
-						model: "Users",
-						key: "user_id",
 					},
 					allowNull: false,
 				},
@@ -145,10 +145,9 @@ module.exports = {
 	down: async queryInterface => {
 		return await Promise.all([
 			queryInterface.dropTable("Users"),
-			queryInterface.dropTable("ArtPoems"),
 			queryInterface.dropTable("Collections"),
+			queryInterface.dropTable("ArtPoems"),
 			queryInterface.dropTable("Comments"),
 		]).catch(e => console.log(e));
 	},
 };
- */
