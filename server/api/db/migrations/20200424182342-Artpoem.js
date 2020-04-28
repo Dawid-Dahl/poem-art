@@ -4,7 +4,7 @@ module.exports = {
 	up: async (queryInterface, Sequelize) => {
 		return await Promise.all([
 			queryInterface.createTable("Users", {
-				user_id: {
+				id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
 					autoIncrement: true,
@@ -21,7 +21,7 @@ module.exports = {
 				},
 				profile_picture: {
 					type: Sequelize.STRING,
-					allowNull: false,
+					allowNull: true,
 				},
 				created_at: {
 					allowNull: false,
@@ -33,7 +33,7 @@ module.exports = {
 				},
 			}),
 			queryInterface.createTable("Collections", {
-				collection_id: {
+				id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
 					autoIncrement: true,
@@ -65,7 +65,7 @@ module.exports = {
 				},
 			}),
 			queryInterface.createTable("ArtPoems", {
-				artpoem_id: {
+				id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
 					autoIncrement: true,
@@ -105,7 +105,7 @@ module.exports = {
 				},
 			}),
 			queryInterface.createTable("Comments", {
-				comment_id: {
+				id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
 					autoIncrement: true,
@@ -127,7 +127,7 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					references: {
 						model: "ArtPoems",
-						key: "artpoem_id",
+						key: "art_poem_id",
 					},
 					allowNull: false,
 				},

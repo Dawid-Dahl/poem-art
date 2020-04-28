@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
 	const User = sequelize.define(
 		"User",
 		{
-			user_id: {
+			id: {
 				type: DataTypes.INTEGER,
 				allowNull: false,
 				autoIncrement: true,
@@ -16,26 +16,26 @@ module.exports = (sequelize, DataTypes) => {
 			admin: {
 				type: DataTypes.BOOLEAN,
 				allowNull: false,
+				defaultValue: 0,
 			},
 			profile_picture: {
 				type: DataTypes.STRING,
-				allowNull: false,
+				allowNull: true,
+				defaultValue: null,
 			},
-			created_at: {
-				allowNull: false,
-				type: DataTypes.DATE,
-			},
-			updated_at: {
-				allowNull: false,
-				type: DataTypes.DATE,
-			},
+			createdAt: {type: DataTypes.DATE, allowNull: false, defaultValue: sequelize.fn("NOW")},
+			updatedAt: {type: DataTypes.DATE, allowNull: false, defaultValue: sequelize.fn("NOW")},
 		},
 		{
-			underscored: true,
+			timestamps: false,
 		}
 	);
 	User.associate = function (models) {
-		// associations can be defined here
+		User.hasMany(models.Collection, {
+			foreignKey: {
+				allowNull: false,
+			},
+		});
 	};
 	return User;
 };

@@ -5,7 +5,7 @@ import cors from "cors";
 import errorhandler from "errorhandler";
 import morgan from "morgan";
 import verifyXToken from "./api/middleware/verifyXToken";
-/* const db = require("./api/db/models/index"); */
+const db = require("./api/db/models");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -17,17 +17,15 @@ app.use(
 	})
 );
 app.use(morgan("dev"));
-app.use(verifyXToken);
+/* app.use(verifyXToken); */
 
 app.use("/api", apiRouter);
 
 app.use(errorhandler());
 
-/* db.sequelize
+db.sequelize
 	.sync()
 	.then(() => {
 		app.listen(PORT, () => console.log(`Server now listening at port: ${PORT}`));
 	})
-	.catch((e: Error) => console.log(e)); */
-
-app.listen(PORT, () => console.log(`Server now listening at port: ${PORT}`));
+	.catch((e: Error) => console.log(e));

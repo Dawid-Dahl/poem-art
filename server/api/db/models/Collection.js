@@ -1,9 +1,9 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-	const User = sequelize.define(
-		"ArtPoem",
+	const Collection = sequelize.define(
+		"Collection",
 		{
-			collection_id: {
+			id: {
 				type: DataTypes.INTEGER,
 				allowNull: false,
 				autoIncrement: true,
@@ -17,29 +17,23 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.BOOLEAN,
 				allowNull: false,
 			},
-			user_id: {
-				type: DataTypes.INTEGER,
-				references: {
-					model: "Users",
-					key: "user_id",
-				},
-				allowNull: false,
-			},
-			created_at: {
-				allowNull: false,
-				type: DataTypes.DATE,
-			},
-			updated_at: {
-				allowNull: false,
-				type: DataTypes.DATE,
-			},
+			createdAt: {type: DataTypes.DATE, allowNull: false, defaultValue: sequelize.fn("NOW")},
+			updatedAt: {type: DataTypes.DATE, allowNull: false, defaultValue: sequelize.fn("NOW")},
 		},
 		{
-			underscored: true,
+			timestamps: false,
 		}
 	);
-	User.associate = function (models) {
-		// associations can be defined here
+	Collection.associate = function (models) {
+		Collection.belongsTo(models.User, {
+			foreignKey: {
+				allowNull: false,
+			},
+		});
+
+		Collection.hasMany(models.ArtPoem, {
+			foreignKey: {allowNull: false},
+		});
 	};
-	return User;
+	return Collection;
 };

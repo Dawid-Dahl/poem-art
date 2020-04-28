@@ -1,6 +1,6 @@
-require("dotenv").config({
-	path: "../../.env",
-});
+require("dotenv").config();
+
+console.log("INSIDE CONFIG", process.env.DB_USER);
 
 module.exports = {
 	development: {
