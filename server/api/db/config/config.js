@@ -1,9 +1,5 @@
 require("dotenv").config();
 
-/* require("dotenv").config({
-	path: "../../.env",
-}); */
-
 console.log("INSIDE CONFIG", process.env.DB_USER);
 
 module.exports = {
