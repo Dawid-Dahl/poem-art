@@ -19,15 +19,15 @@ module.exports = {
 					defaultValue: 0,
 					allowNull: false,
 				},
-				profile_picture: {
+				profilePicture: {
 					type: Sequelize.STRING,
 					allowNull: true,
 				},
-				created_at: {
+				createdAt: {
 					allowNull: false,
 					type: Sequelize.DATE,
 				},
-				updated_at: {
+				updatedAt: {
 					allowNull: false,
 					type: Sequelize.DATE,
 				},
@@ -47,19 +47,19 @@ module.exports = {
 					type: Sequelize.BOOLEAN,
 					allowNull: false,
 				},
-				user_id: {
+				UserId: {
 					type: Sequelize.INTEGER,
 					references: {
 						model: "Users",
-						key: "user_id",
+						key: "UserId",
 					},
 					allowNull: false,
 				},
-				created_at: {
+				createdAt: {
 					allowNull: false,
 					type: Sequelize.DATE,
 				},
-				updated_at: {
+				updatedAt: {
 					allowNull: false,
 					type: Sequelize.DATE,
 				},
@@ -83,23 +83,23 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					allowNull: false,
 				},
-				image_url: {
+				imageUrl: {
 					type: Sequelize.STRING,
 					allowNull: false,
 				},
-				collection_id: {
+				CollectionId: {
 					type: Sequelize.INTEGER,
 					references: {
 						model: "Collections",
-						key: "collection_id",
+						key: "CollectionId",
 					},
 					allowNull: false,
 				},
-				created_at: {
+				createdAt: {
 					allowNull: false,
 					type: Sequelize.DATE,
 				},
-				updated_at: {
+				updatedAt: {
 					allowNull: false,
 					type: Sequelize.DATE,
 				},
@@ -123,19 +123,19 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					allowNull: false,
 				},
-				artpoem_id: {
+				ArtPoemId: {
 					type: Sequelize.INTEGER,
 					references: {
 						model: "ArtPoems",
-						key: "art_poem_id",
+						key: "ArtPoemId",
 					},
 					allowNull: false,
 				},
-				created_at: {
+				createdAt: {
 					allowNull: false,
 					type: Sequelize.DATE,
 				},
-				updated_at: {
+				updatedAt: {
 					allowNull: false,
 					type: Sequelize.DATE,
 				},
