@@ -27,13 +27,11 @@ module.exports = (sequelize, DataTypes) => {
 	);
 	Collection.associate = function (models) {
 		Collection.belongsTo(models.User, {
-			foreignKey: {
-				allowNull: false,
-			},
+			foreignKey: "userId",
 		});
 
 		Collection.hasMany(models.ArtPoem, {
-			foreignKey: {allowNull: false},
+			foreignKey: "artPoemId",
 		});
 	};
 	return Collection;

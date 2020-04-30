@@ -10,7 +10,7 @@ apiRouter.get("/test", (req, res) => {
 
 apiRouter.get("/add-user", async (req, res) => {
 	const response = await db.User.create({
-		username: "Wobbly",
+		username: "Wobbleeeeyyy",
 	});
 	res.send(response);
 });

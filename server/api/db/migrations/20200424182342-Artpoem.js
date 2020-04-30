@@ -3,7 +3,7 @@
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
 		return await Promise.all([
-			queryInterface.createTable("Users", {
+			await queryInterface.createTable("Users", {
 				id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
@@ -32,7 +32,7 @@ module.exports = {
 					type: Sequelize.DATE,
 				},
 			}),
-			queryInterface.createTable("Collections", {
+			await queryInterface.createTable("Collections", {
 				id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
@@ -47,11 +47,12 @@ module.exports = {
 					type: Sequelize.BOOLEAN,
 					allowNull: false,
 				},
-				UserId: {
+				userId: {
 					type: Sequelize.INTEGER,
+					allowNull: false,
 					references: {
 						model: "Users",
-						key: "UserId",
+						key: "id",
 					},
 					allowNull: false,
 				},
@@ -64,7 +65,7 @@ module.exports = {
 					type: Sequelize.DATE,
 				},
 			}),
-			queryInterface.createTable("ArtPoems", {
+			await queryInterface.createTable("ArtPoems", {
 				id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
@@ -87,11 +88,12 @@ module.exports = {
 					type: Sequelize.STRING,
 					allowNull: false,
 				},
-				CollectionId: {
+				collectionId: {
 					type: Sequelize.INTEGER,
+					allowNull: false,
 					references: {
 						model: "Collections",
-						key: "CollectionId",
+						key: "id",
 					},
 					allowNull: false,
 				},
@@ -104,7 +106,7 @@ module.exports = {
 					type: Sequelize.DATE,
 				},
 			}),
-			queryInterface.createTable("Comments", {
+			await queryInterface.createTable("Comments", {
 				id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
@@ -123,11 +125,12 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					allowNull: false,
 				},
-				ArtPoemId: {
+				artPoemId: {
 					type: Sequelize.INTEGER,
+					allowNull: false,
 					references: {
 						model: "ArtPoems",
-						key: "ArtPoemId",
+						key: "id",
 					},
 					allowNull: false,
 				},
@@ -145,10 +148,10 @@ module.exports = {
 
 	down: async queryInterface => {
 		return await Promise.all([
-			queryInterface.dropTable("Users"),
-			queryInterface.dropTable("Collections"),
-			queryInterface.dropTable("ArtPoems"),
-			queryInterface.dropTable("Comments"),
+			await queryInterface.dropTable("Comments"),
+			await queryInterface.dropTable("ArtPoems"),
+			await queryInterface.dropTable("Collections"),
+			await queryInterface.dropTable("Users"),
 		]).catch(e => console.log(e));
 	},
 };

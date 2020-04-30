@@ -32,9 +32,7 @@ module.exports = (sequelize, DataTypes) => {
 	);
 	User.associate = function (models) {
 		User.hasMany(models.Collection, {
-			foreignKey: {
-				allowNull: false,
-			},
+			foreignKey: "collectionId",
 		});
 	};
 	return User;

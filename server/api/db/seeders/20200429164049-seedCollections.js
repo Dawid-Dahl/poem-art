@@ -8,14 +8,17 @@ module.exports = {
 				{
 					name: "Sad Poems",
 					public: true,
+					UserId: 1,
 				},
 				{
 					name: "Cat Poems",
 					public: false,
+					UserId: 1,
 				},
 				{
 					name: "Inspiring",
 					public: true,
+					UserId: 3,
 				},
 			],
 			{}

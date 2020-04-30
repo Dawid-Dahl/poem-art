@@ -30,9 +30,7 @@ module.exports = (sequelize, DataTypes) => {
 	);
 	Comment.associate = function (models) {
 		Comment.belongsTo(models.ArtPoem, {
-			foreignKey: {
-				allowNull: false,
-			},
+			foreignKey: "artPoemId",
 		});
 	};
 	return Comment;

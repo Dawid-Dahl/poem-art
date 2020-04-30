@@ -34,15 +34,11 @@ module.exports = (sequelize, DataTypes) => {
 	);
 	ArtPoem.associate = function (models) {
 		ArtPoem.belongsTo(models.Collection, {
-			foreignKey: {
-				allowNull: false,
-			},
+			foreignKey: "collectionId",
 		});
 
 		ArtPoem.hasMany(models.Comment, {
-			foreignKey: {
-				allowNull: false,
-			},
+			foreignKey: "commentId",
 		});
 	};
 	return ArtPoem;

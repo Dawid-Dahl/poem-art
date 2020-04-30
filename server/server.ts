@@ -23,9 +23,11 @@ app.use("/api", apiRouter);
 
 app.use(errorhandler());
 
-db.sequelize
+app.listen(PORT, () => console.log(`Server now listening at port: ${PORT}`));
+
+/* db.sequelize
 	.sync()
 	.then(() => {
 		app.listen(PORT, () => console.log(`Server now listening at port: ${PORT}`));
 	})
-	.catch((e: Error) => console.log(e));
+	.catch((e: Error) => console.log(e)); */
