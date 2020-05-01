@@ -5,7 +5,9 @@ import cors from "cors";
 import errorhandler from "errorhandler";
 import morgan from "morgan";
 import verifyXToken from "./api/middleware/verifyXToken";
-const db = require("./api/db/models");
+import "reflect-metadata";
+import {createConnection} from "typeorm";
+import {User} from "./api/db/entities/entity";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,11 +25,20 @@ app.use("/api", apiRouter);
 
 app.use(errorhandler());
 
-app.listen(PORT, () => console.log(`Server now listening at port: ${PORT}`));
+createConnection()
+	.then(async connection => {
+		const user = new User();
+		user.firstName = "Timber";
+		user.lastName = "Saw";
+		user.age = 25;
+		await connection.manager.save(user);
 
-/* db.sequelize
-	.sync()
-	.then(() => {
+		console.log("Saved a new user with id: " + user.id);
+
+		console.log("Loading users from the database...");
+		const users = connection.manager.find(User);
+		console.log("Loaded users: ", users);
+
 		app.listen(PORT, () => console.log(`Server now listening at port: ${PORT}`));
 	})
-	.catch((e: Error) => console.log(e)); */
+	.catch(err => console.log(err));

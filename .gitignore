@@ -6,3 +6,7 @@ database.db
 artpoems.db
 cryptography/
 poem-art-8459ffeb00ca.json
+.idea/
+.vscode/
+tmp/
+temp/
