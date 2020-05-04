@@ -61,13 +61,13 @@ export const registerController = (req: Request, res: Response) => {
 								);
 							} catch (e) {
 								console.error(e);
-
-								db.close(err =>
-									err
-										? console.error(err)
-										: console.log("Closed the database connection")
-								);
 							}
+
+							db.close(err =>
+								err
+									? console.error(err)
+									: console.log("Closed the database connection")
+							);
 						}
 					});
 				})
