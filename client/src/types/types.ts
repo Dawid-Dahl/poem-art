@@ -47,7 +47,7 @@ export type xTokenPayload = {
 };
 
 export type User = {
-	user_id: number;
+	id: number;
 	username: string;
 	email?: string;
 	date_added?: string;

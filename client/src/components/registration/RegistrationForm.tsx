@@ -47,7 +47,9 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 								flashMessage(data.payload?.message ?? "");
 							}
 						})
-						.catch(err => console.error(err));
+						.catch(err => {
+							console.error(err);
+						});
 					e.currentTarget.reset();
 				}}
 			>

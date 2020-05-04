@@ -54,7 +54,7 @@ export const extractPayloadFromBase64JWT = (jwt: string | undefined): xTokenPayl
 
 export const issueAccessToken = (user: User, privKey: string, expiresIn = "15s") => {
 	const payload = {
-		sub: user.user_id,
+		sub: user.id,
 		username: user.username,
 		email: user.email,
 		admin: user.admin,
@@ -71,7 +71,7 @@ export const issueAccessToken = (user: User, privKey: string, expiresIn = "15s")
 
 export const issueRefreshToken = (user: User, privKey: string, expiresIn = "30d") => {
 	const payload = {
-		sub: user.user_id,
+		sub: user.id,
 	};
 
 	const signedXRefreshTokenPromise = new Promise<string>((res, rej) => {
@@ -101,14 +101,14 @@ export const addRefreshTokenToDatabase = (refreshToken: SQLRefreshToken): void =
 };
 
 export const constructUserWithoutPasswordFromSqlResult = (payload: User): User => ({
-	user_id: payload.user_id,
+	id: payload.id,
 	username: payload.username,
 	email: payload.email,
 	admin: payload.admin,
 });
 
 export const constructUserFromTokenPayload = (payload: xTokenPayload): User => ({
-	user_id: payload.sub,
+	id: payload.sub,
 	username: payload.username,
 	email: payload.email,
 	admin: payload.admin,
@@ -116,7 +116,7 @@ export const constructUserFromTokenPayload = (payload: xTokenPayload): User => (
 
 export const attachUserToRequest = (req: RequestWithUser, user: User) => {
 	req.user = {
-		user_id: user.user_id,
+		id: user.id,
 		username: user.username,
 		admin: user.admin,
 	};

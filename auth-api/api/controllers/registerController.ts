@@ -22,45 +22,64 @@ export const registerController = (req: Request, res: Response) => {
 				return;
 			}
 
-			const id = generateId();
-			const sql = `INSERT INTO ${Tables.auth_users} (id, email, password) VALUES (?, ?, ?)`;
-			const values = [id, req.body.email, hash];
+			fetch(`${process.env.MAIN_FETCH_URL}/api/ping`)
+				.then(() => {
+					const id = generateId();
+					const sql = `INSERT INTO ${Tables.auth_users} (id, email, password) VALUES (?, ?, ?)`;
+					const values = [id, req.body.email, hash];
 
-			db.run(sql, values, async err => {
-				if (err) {
-					res.status(403).json(
-						authJsonResponse(false, {message: "Couldn't register user"})
+					db.run(sql, values, async err => {
+						if (err) {
+							const errorMsg = err.message.includes(
+								"UNIQUE constraint failed: AuthUsers.email"
+							)
+								? "A user with that email is already registered."
+								: "Couldn't register user.";
+
+							res.status(403).json(authJsonResponse(false, {message: errorMsg}));
+
+							db.close(err =>
+								err
+									? console.error(err)
+									: console.log("Closed the database connection")
+							);
+						} else {
+							try {
+								await fetch(`${process.env.MAIN_FETCH_URL}/api/create-user`, {
+									method: "POST",
+									headers: {
+										"Content-Type": "application/json",
+									},
+									body: JSON.stringify({id, username: req.body.username}),
+								});
+
+								res.status(200).json(
+									authJsonResponse(true, {
+										message:
+											"Registration successful. Welcome! You can now log in!",
+									})
+								);
+							} catch (e) {
+								console.error(e);
+
+								db.close(err =>
+									err
+										? console.error(err)
+										: console.log("Closed the database connection")
+								);
+							}
+						}
+					});
+				})
+				.catch(e => {
+					console.error("Could not connect to main API. No user created --", e);
+
+					res.status(200).json(
+						authJsonResponse(false, {
+							message: "Registration is not possible right now. Sorry!",
+						})
 					);
-
-					console.error(err);
-				} else {
-					try {
-						await fetch(`${process.env.MAIN_FETCH_URL}/api/create-user`, {
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify({id, username: req.body.username}),
-						});
-
-						res.status(200).json(
-							authJsonResponse(true, {
-								message: `Registration successful. Welcome! You can now log in!`,
-							})
-						);
-					} catch (e) {
-						console.error("Could not connect to main API. No user created --", e);
-
-						db.close(err =>
-							err ? console.error(err) : console.log("Closed the database connection")
-						);
-					}
-				}
-			});
-
-			db.close(err =>
-				err ? console.error(err) : console.log("Closed the database connection")
-			);
+				});
 		});
 	} else {
 		res.status(422).send("Invalid Registration, try again!");

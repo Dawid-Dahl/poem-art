@@ -3,7 +3,7 @@ import {ParamsDictionary} from "express-serve-static-core";
 import {authJsonResponse} from "../utils/utils";
 
 export type User = {
-	user_id: number;
+	id: number;
 	username: string;
 	email: string;
 	password?: string;

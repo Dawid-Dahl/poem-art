@@ -62,5 +62,5 @@ export type SQLRefreshToken = {
 
 export type AuthJsonResponse = {
 	success: boolean;
-	payload?: NodeJS.ReadableStream | undefined;
+	payload?: string | NodeJS.ReadableStream | undefined;
 };

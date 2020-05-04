@@ -4,5 +4,5 @@ export const removeBearerFromTokenHeader = (tokenHeader?: string) => tokenHeader
 
 export const jsonResponse = (
 	success: boolean,
-	payload?: NodeJS.ReadableStream | undefined
+	payload?: string | NodeJS.ReadableStream | undefined
 ): AuthJsonResponse => (!payload ? {success} : {success, payload});
