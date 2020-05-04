@@ -18,7 +18,7 @@ db.serialize(() => {
 	);
 	db.run(
 		`CREATE TABLE IF NOT EXISTS ${Tables.auth_users} (
-            "user_id" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+            "id" TEXT NOT NULL UNIQUE PRIMARY KEY,
             "email" TEXT NOT NULL UNIQUE,
             "password" TEXT NOT NULL,
             "created_at" TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP

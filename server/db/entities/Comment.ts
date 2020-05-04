@@ -15,7 +15,7 @@ export class Comment extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column({type: "varchar"})
+	@Column({type: "text"})
 	comment: string;
 
 	@Column({type: "integer", default: 0})

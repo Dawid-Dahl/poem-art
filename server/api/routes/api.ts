@@ -1,14 +1,8 @@
 import express from "express";
-import artPoemsRouter from "./artPoems";
+import createUserRouter from "./create-user";
 
 const apiRouter = express.Router();
 
-apiRouter.get("/test", (req, res) => {
-	res.send("YOOOO");
-});
-
-apiRouter.get("/add-user", async (req, res) => {});
-
-apiRouter.use("/books", artPoemsRouter);
+apiRouter.use("/create-user", createUserRouter);
 
 export default apiRouter;

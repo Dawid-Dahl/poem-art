@@ -59,3 +59,8 @@ export type SQLRefreshToken = {
 	iat: number;
 	refreshToken: string | undefined;
 };
+
+export type AuthJsonResponse = {
+	success: boolean;
+	payload?: NodeJS.ReadableStream | undefined;
+};

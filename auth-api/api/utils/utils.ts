@@ -24,6 +24,8 @@ export const log = (label: string, expression = "") => {
 	return expression;
 };
 
+export const generateId = () => Math.random().toString(36).substring(2) + Date.now().toString(36);
+
 export const authJsonResponse = (
 	success: boolean,
 	payload?: AuthJsonResponsePayload,

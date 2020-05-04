@@ -20,7 +20,7 @@ export class ArtPoem extends BaseEntity {
 	@Column({type: "varchar"})
 	title: string;
 
-	@Column({type: "varchar"})
+	@Column({type: "text"})
 	content: string;
 
 	@Column({type: "integer", default: 0})

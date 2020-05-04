@@ -1,6 +1,6 @@
 import {
 	Entity,
-	PrimaryGeneratedColumn,
+	PrimaryColumn,
 	Column,
 	CreateDateColumn,
 	UpdateDateColumn,
@@ -12,8 +12,8 @@ import {Comment} from "./Comment";
 
 @Entity()
 export class User extends BaseEntity {
-	@PrimaryGeneratedColumn()
-	id: number;
+	@PrimaryColumn({type: "varchar", unique: true})
+	id: string;
 
 	@Column({type: "varchar"})
 	username: string;

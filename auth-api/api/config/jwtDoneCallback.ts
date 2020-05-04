@@ -47,6 +47,16 @@ const jwtJwtDoneCallback: JwtDoneCallback = (req, res, next) => (err, user, info
 						if (err) {
 							next(err);
 						} else {
+							if (!row) {
+								res.status(401).json(
+									authJsonResponse(false, {
+										message:
+											"No user with this id could be found in the database.",
+									})
+								);
+								return;
+							}
+
 							const user = constructUserWithoutPasswordFromSqlResult(row);
 
 							issueAccessToken(user, PRIV_KEY)

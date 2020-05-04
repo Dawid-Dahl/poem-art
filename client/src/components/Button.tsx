@@ -62,7 +62,7 @@ const Wrapper = styled.div<WrapperProps>`
 			box-shadow: ${props =>
 				props.kind === "black"
 					? "inset 0px 0px 0px 5px var(--dark-grey-color)"
-					: "inset 0px 0px 0px 5px #00000017"};
+					: "var(--box-shadow), inset 0px 0px 0px 5px #00000017"};
 		}
 	}
 `;

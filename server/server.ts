@@ -9,29 +9,31 @@ import morgan from "morgan";
 import {createConnection, getConnectionOptions} from "typeorm";
 
 (async () => {
-	const config = await getConnectionOptions(process.env.NODE_ENV);
+	try {
+		const config = await getConnectionOptions(process.env.NODE_ENV);
 
-	console.log(config);
+		console.log(config);
 
-	const app = express();
-	const PORT = process.env.PORT || 5000;
+		createConnection(config).then(() => {
+			const app = express();
+			const PORT = process.env.PORT || 5000;
 
-	app.use(express.json());
-	app.use(
-		cors({
-			origin: "http://localhost:1234",
-		})
-	);
-	app.use(morgan("dev"));
-	/* app.use(verifyXToken); */
+			app.use(express.json());
+			app.use(
+				cors({
+					origin: "http://localhost:1234",
+				})
+			);
+			app.use(morgan("dev"));
+			/* app.use(verifyXToken); */
 
-	app.use("/api", apiRouter);
+			app.use("/api", apiRouter);
 
-	app.use(errorhandler());
+			app.use(errorhandler());
 
-	createConnection(config)
-		.then(async connection => {
 			app.listen(PORT, () => console.log(`Server now listening at port: ${PORT}`));
-		})
-		.catch(err => console.log(err));
+		});
+	} catch (e) {
+		console.error(e);
+	}
 })();

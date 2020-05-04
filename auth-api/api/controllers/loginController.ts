@@ -30,7 +30,10 @@ export const loginController = (req: Request, res: Response, next: NextFunction)
 	db.get(sql, req.body.email, async (err, row: User) => {
 		if (!err) {
 			if (!row) {
-				res.status(401).json(authJsonResponse(false, {message: "Could not find user."}));
+				res.status(401).json(
+					authJsonResponse(false, {message: "No user with this password exists."})
+				);
+				return;
 			}
 
 			const isMatch = await bcrypt.compare(req.body.password, row.password!);
