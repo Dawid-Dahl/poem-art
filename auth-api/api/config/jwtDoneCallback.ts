@@ -10,7 +10,7 @@ import {
 	checkIfXRefreshTokenExistsInDb,
 	removeBearerFromTokenHeader,
 } from "../utils/utils";
-import {JwtDoneCallback, User, xTokenPayload} from "../types/types";
+import {JwtDoneCallback, xTokenPayload, AuthUser} from "../types/types";
 import {config} from "dotenv";
 import {Tables} from "../types/enums";
 
@@ -43,7 +43,7 @@ const jwtJwtDoneCallback: JwtDoneCallback = (req, res, next) => (err, user, info
 
 					const sql = `SELECT * FROM ${Tables.auth_users} WHERE id = ?`;
 
-					db.get(sql, user.sub, (err, row: User) => {
+					db.get(sql, user.sub, (err, row: AuthUser) => {
 						if (err) {
 							next(err);
 						} else {
@@ -56,6 +56,8 @@ const jwtJwtDoneCallback: JwtDoneCallback = (req, res, next) => (err, user, info
 								);
 								return;
 							}
+
+							console.log(row);
 
 							const user = constructUserWithoutPasswordFromSqlResult(row);
 

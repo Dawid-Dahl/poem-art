@@ -24,35 +24,33 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 		confirmPassword,
 	});
 
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		fetch(postUrl, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(turnFormStateIntoObj()),
+		})
+			.then(res => res.json())
+			.then((data: AuthJsonResponse) => {
+				if (data.success) {
+					flashMessage(data.payload?.message ?? "");
+					history.push(redirectUrl);
+				} else {
+					flashMessage(data.payload?.message ?? "");
+				}
+			})
+			.catch(err => {
+				console.error(err);
+			});
+		e.currentTarget.reset();
+	};
+
 	return (
 		<>
-			<StyledForm
-				action="POST"
-				className="form"
-				onSubmit={e => {
-					e.preventDefault();
-					fetch(postUrl, {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify(turnFormStateIntoObj()),
-					})
-						.then(res => res.json())
-						.then((data: AuthJsonResponse) => {
-							if (data.success) {
-								flashMessage(data.payload?.message ?? "");
-								history.push(redirectUrl);
-							} else {
-								flashMessage(data.payload?.message ?? "");
-							}
-						})
-						.catch(err => {
-							console.error(err);
-						});
-					e.currentTarget.reset();
-				}}
-			>
+			<StyledForm action="POST" className="form" onSubmit={handleSubmit}>
 				<h2>REGISTRATION</h2>
 				<Input
 					name="username"

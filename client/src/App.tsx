@@ -10,7 +10,10 @@ const App: React.FC = () => {
 	const user = useSelector((state: RootState) => state.userReducer.user);
 
 	useEffect(() => {
-		authService.verifyXTokenClientSide(localStorage.getItem("x-token"));
+		authService.verifyXTokenClientSide(
+			localStorage.getItem("x-token"),
+			localStorage.getItem("x-refresh-token")
+		);
 	});
 
 	return (
