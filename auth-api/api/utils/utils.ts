@@ -146,3 +146,14 @@ export const checkIfXRefreshTokenExistsInDb = (
 		throw new Error("Token was undefined and not a string.");
 	}
 };
+
+export const refreshAndFetch = (
+	url: string,
+	{method, headers, body}: RequestInit
+): Promise<Response> => {
+	return fetch(url, {
+		method: method,
+		headers,
+		body,
+	});
+};

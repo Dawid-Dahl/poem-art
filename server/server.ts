@@ -1,6 +1,5 @@
 import "reflect-metadata";
 import "dotenv/config";
-import verifyXToken from "./api/middleware/verifyXToken";
 import express from "express";
 import apiRouter from "./api/routes/api";
 import cors from "cors";
@@ -25,7 +24,6 @@ import {createConnection, getConnectionOptions} from "typeorm";
 				})
 			);
 			app.use(morgan("dev"));
-			/* app.use(verifyXToken); */
 
 			app.use("/api", apiRouter);
 

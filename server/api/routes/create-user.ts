@@ -13,7 +13,6 @@ createUserRouter.post("/", async (req, res, next) => {
 	if (username && id) {
 		try {
 			const user = new User();
-
 			user.id = id;
 			user.username = username;
 
@@ -21,14 +20,15 @@ createUserRouter.post("/", async (req, res, next) => {
 
 			console.log("User was saved!");
 
-			jsonResponse(true);
-
+			res.json(jsonResponse(true));
 			next();
 		} catch (e) {
-			console.error(e);
+			res.json(jsonResponse(false));
+			next(e);
 		}
 	} else {
-		jsonResponse(false);
+		res.json(jsonResponse(false));
+		next();
 	}
 });
 
