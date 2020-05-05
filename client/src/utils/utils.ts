@@ -1,6 +1,7 @@
 import {xTokenPayload, User, Artpoem, Comment} from "../types/types";
 import store from "../store";
 import {showFlash, hideFlash, setFlashMessage} from "../actions/actions";
+import {resolve} from "dns";
 
 export const range = (start: number, end: number): number[] =>
 	end <= start ? [end] : [...range(start, end - 1), end];
@@ -14,15 +15,37 @@ export const getPayloadFromJwt = (jwt: string | null) =>
 			[] as Array<xTokenPayload>
 		)[0];
 
-export const constructUserFromTokenPayload = (
-	payload: xTokenPayload | undefined
-): User | undefined =>
-	payload && {
-		id: payload.sub,
-		username: payload.username ?? "",
-		email: payload.email,
-		admin: payload.admin ?? 0,
-	};
+export const constructUserFromId = (
+	identification: string | undefined
+): Promise<User> | undefined => {
+	if (identification) {
+		return new Promise(async (res, rej) => {
+			try {
+				const response = await fetch(
+					`${process.env.MAIN_FETCH_URL}/api/users/get/${identification}`,
+					{
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+						},
+					}
+				);
+				const data = await response.json();
+
+				const {id, username, admin} = JSON.parse(data.payload).user;
+
+				res({
+					id,
+					username,
+					admin,
+				});
+			} catch (e) {
+				rej(e);
+			}
+		});
+	}
+	return;
+};
 
 export const flashMessage = (message: string) => {
 	store.dispatch(setFlashMessage(message));

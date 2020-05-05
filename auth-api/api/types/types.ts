@@ -2,14 +2,11 @@ import {Request, Response, NextFunction} from "express";
 import {ParamsDictionary} from "express-serve-static-core";
 import {authJsonResponse} from "../utils/utils";
 
-export type User = {
+export type AuthUser = {
 	id: number;
-	username: string;
-	email: string;
+	email?: string;
 	password?: string;
-	date_added?: string;
-	admin: number;
-	profile_picture?: string;
+	created_at?: string;
 };
 
 export type xTokenPayload = {

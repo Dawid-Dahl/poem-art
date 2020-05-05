@@ -45,7 +45,7 @@ export const registerController = (req: Request, res: Response) => {
 							);
 						} else {
 							try {
-								await fetch(`${process.env.MAIN_FETCH_URL}/api/create-user`, {
+								await fetch(`${process.env.MAIN_FETCH_URL}/api/users/create`, {
 									method: "POST",
 									headers: {
 										"Content-Type": "application/json",

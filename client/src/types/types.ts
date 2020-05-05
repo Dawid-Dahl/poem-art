@@ -38,10 +38,7 @@ export type Comment = {
 };
 
 export type xTokenPayload = {
-	sub: number;
-	username?: string;
-	email?: string;
-	admin?: 0 | 1;
+	sub: string;
 	iat: number;
 	exp: number;
 };
@@ -49,10 +46,10 @@ export type xTokenPayload = {
 export type User = {
 	id: number;
 	username: string;
-	email?: string;
-	date_added?: string;
+	createdAt?: string;
+	updatedAt?: string;
 	admin: number;
-	profile_picture?: string;
+	profilePicture?: string;
 };
 
 export type AuthJsonResponsePayload = {

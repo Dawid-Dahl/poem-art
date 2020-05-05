@@ -1,5 +1,5 @@
 import express from "express";
-import createUserRouter from "./create-user";
+import userRouter from "./userRouter";
 import {jsonResponse} from "../utils/utils";
 
 const apiRouter = express.Router();
@@ -9,6 +9,6 @@ apiRouter.get("/ping", (req, res, next) => {
 	next();
 });
 
-apiRouter.use("/create-user", createUserRouter);
+apiRouter.use("/users", userRouter);
 
 export default apiRouter;

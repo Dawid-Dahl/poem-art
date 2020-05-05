@@ -4,7 +4,7 @@ import {Request, Response} from "express";
 import bcrypt from "bcrypt";
 import sqlite from "sqlite3";
 import {Tables} from "../types/enums";
-import {User, SQLRefreshToken} from "../types/types";
+import {SQLRefreshToken, AuthUser} from "../types/types";
 import {
 	issueAccessToken,
 	issueRefreshToken,
@@ -27,7 +27,7 @@ export const loginController = (req: Request, res: Response, next: NextFunction)
 
 	const sql = `SELECT * FROM ${Tables.auth_users} WHERE email = ?`;
 
-	db.get(sql, req.body.email, async (err, row: User) => {
+	db.get(sql, req.body.email, async (err, row: AuthUser) => {
 		if (!err) {
 			if (!row) {
 				res.status(401).json(
@@ -64,7 +64,10 @@ export const loginController = (req: Request, res: Response, next: NextFunction)
 							res.status(200).json(
 								authJsonResponse(
 									true,
-									{message: "Tokens generated!"},
+									{
+										message: "Tokens generated!",
+										user: {id: refreshTokenPayload.sub},
+									},
 									xTokenFromPromise,
 									xRefreshTokenFromPromise
 								)
@@ -77,7 +80,11 @@ export const loginController = (req: Request, res: Response, next: NextFunction)
 					})
 					.catch(err => next(err));
 			} else {
-				res.status(401).json(authJsonResponse(false, {message: "Couldn't log in."}));
+				res.status(401).json(
+					authJsonResponse(false, {
+						message: "Couldn't log in. Did you type in the wrong password?",
+					})
+				);
 			}
 		} else {
 			res.status(503).json(

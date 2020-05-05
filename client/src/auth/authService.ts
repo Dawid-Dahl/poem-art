@@ -1,7 +1,7 @@
 import store from "../store";
 import {setUser, removeUser} from "../actions/actions";
 import {xTokenPayload, User} from "../types/types";
-import {getPayloadFromJwt, flashMessage, constructUserFromTokenPayload} from "../utils/utils";
+import {getPayloadFromJwt, flashMessage, constructUserFromId} from "../utils/utils";
 
 export const authService = {
 	setTokensInLocalStorage(data: any) {
@@ -57,22 +57,28 @@ export const authService = {
 		return;
 	},
 
-	verifyXTokenClientSide(xToken: string | null) {
+	async verifyXTokenClientSide(xToken: string | null, xRefreshToken: string | null) {
+		if (!xToken && !xRefreshToken) return;
+
 		if (xToken) {
 			if (!this.isXTokenExpired(getPayloadFromJwt(xToken))) {
-				const user = constructUserFromTokenPayload(getPayloadFromJwt(xToken));
-				this.storeUserInState(user);
+				try {
+					const user = await constructUserFromId(getPayloadFromJwt(xToken)?.sub);
+					this.storeUserInState(user);
+				} catch (e) {
+					console.log(e);
+				}
 			} else {
 				if (localStorage.getItem("x-refresh-token")) {
 					console.log("Verifying server side!");
-					this.verifyXRefreshTokenServerSide(localStorage.getItem("x-refresh-token"));
+					this.verifyXRefreshTokenServerSide(xRefreshToken);
 				} else {
 					this.logout("You're not allowed to access that page. Please log in!");
 				}
 			}
 		} else {
 			if (localStorage.getItem("x-refresh-token")) {
-				this.verifyXRefreshTokenServerSide(localStorage.getItem("x-refresh-token"));
+				this.verifyXRefreshTokenServerSide(xRefreshToken);
 			} else {
 				this.logout("You're not allowed to access that page. Please log in!");
 				this.removeTokensFromLocalStorage();
@@ -80,25 +86,27 @@ export const authService = {
 		}
 	},
 
-	verifyXRefreshTokenServerSide(xRefreshToken: string | null) {
-		fetch(`${process.env.AUTH_FETCH_URL}/api/verify-jwt`, {
-			method: "POST",
-			headers: {
-				"x-refresh-token": xRefreshToken ?? "null",
-				"Content-Type": "application/json",
-			},
-		})
-			.then(res => {
-				const xToken = res.headers.get("x-token");
-				if (xToken) {
-					this.refreshXToken(xToken);
-					const user = constructUserFromTokenPayload(getPayloadFromJwt(xToken));
-					this.storeUserInState(user);
-				} else {
-					this.logout("You're not allowed to access that page. Please log in!");
-					this.removeTokensFromLocalStorage();
-				}
-			})
-			.catch(err => console.error(err));
+	async verifyXRefreshTokenServerSide(xRefreshToken: string | null) {
+		try {
+			const res = await fetch(`${process.env.AUTH_FETCH_URL}/api/verify-jwt`, {
+				method: "POST",
+				headers: {
+					"x-refresh-token": xRefreshToken ?? "null",
+					"Content-Type": "application/json",
+				},
+			});
+			const xToken = res.headers.get("x-token");
+
+			if (xToken) {
+				this.refreshXToken(xToken);
+				const user = await constructUserFromId(getPayloadFromJwt(xToken)?.sub);
+				this.storeUserInState(user);
+			} else {
+				this.logout("You're not allowed to access that page. Please log in!");
+				this.removeTokensFromLocalStorage();
+			}
+		} catch (e) {
+			console.log(e);
+		}
 	},
 };

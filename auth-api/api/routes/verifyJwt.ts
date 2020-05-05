@@ -1,12 +1,12 @@
 import express, {Request} from "express";
 import verifyWithJwtStrategy from "../config/myPassport";
 import {authJsonResponse} from "../utils/utils";
-import {User} from "../types/types";
+import {AuthUser} from "../types/types";
 
 const verifyJwtRouter = express.Router();
 
 interface RequestWithUser extends Request {
-	user?: User;
+	user?: AuthUser;
 }
 
 verifyJwtRouter.post("/", verifyWithJwtStrategy, (req: RequestWithUser, res) => {

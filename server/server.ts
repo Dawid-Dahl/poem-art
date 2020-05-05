@@ -19,6 +19,7 @@ import {createConnection, getConnectionOptions} from "typeorm";
 			const PORT = process.env.PORT || 5000;
 
 			app.use(express.json());
+			app.use(express.urlencoded({extended: false}));
 			app.use(
 				cors({
 					origin: "http://localhost:1234",

@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import {withRouter, RouteComponentProps} from "react-router-dom";
 import Input from "../Input";
-import {LoginInformation, AuthJsonResponse} from "../../types/types";
+import {LoginInformation} from "../../types/types";
 import {authService} from "../../auth/authService";
 import Button from "../Button";
-import {flashMessage} from "../../utils/utils";
+import {flashMessage, constructUserFromId} from "../../utils/utils";
 import styled from "styled-components";
 
 interface Props extends RouteComponentProps {
@@ -21,31 +21,44 @@ const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 		password,
 	});
 
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		try {
+			e.preventDefault();
+			const res = await fetch(postUrl, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(turnFormStateIntoObj()),
+			});
+			const data = await res.json();
+
+			if (data.success) {
+				const user = await constructUserFromId(data.payload.user.id);
+
+				if (data.success) {
+					authService.setTokensInLocalStorage(data);
+					authService.storeUserInState(user);
+					history.push(redirectUrl);
+				} else {
+					flashMessage(data.payload?.message ?? "");
+				}
+			} else {
+				flashMessage(data.payload?.message ?? "");
+			}
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
 	return (
 		<>
 			<StyledForm
 				action="POST"
 				className="form"
-				onSubmit={e => {
-					e.preventDefault();
-					fetch(postUrl, {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify(turnFormStateIntoObj()),
-					})
-						.then(res => res.json())
-						.then((data: AuthJsonResponse) => {
-							if (data.success) {
-								authService.setTokensInLocalStorage(data);
-								authService.storeUserInState();
-								history.push(redirectUrl);
-							} else {
-								flashMessage(data.payload?.message ?? "");
-							}
-						})
-						.catch(err => console.error(err));
+				onSubmit={async e => {
+					e.persist();
+					handleSubmit(e);
 					e.currentTarget.reset();
 				}}
 			>

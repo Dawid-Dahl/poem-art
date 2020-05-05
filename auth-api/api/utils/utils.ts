@@ -1,4 +1,4 @@
-import {User, SQLRefreshToken, xTokenPayload} from "../types/types";
+import {SQLRefreshToken, xTokenPayload, AuthUser} from "../types/types";
 import jwt from "jsonwebtoken";
 import sqlite from "sqlite3";
 import {config} from "dotenv";
@@ -11,7 +11,7 @@ interface RequestWithUser extends Request {
 
 type AuthJsonResponsePayload = {
 	message?: string;
-	user?: User;
+	user?: AuthUser;
 };
 
 config({
@@ -52,12 +52,9 @@ export const extractPayloadFromBase64JWT = (jwt: string | undefined): xTokenPayl
 				.map(x => x.toString("utf8"))
 				.map(x => JSON.parse(x))[0];
 
-export const issueAccessToken = (user: User, privKey: string, expiresIn = "15s") => {
+export const issueAccessToken = (user: AuthUser, privKey: string, expiresIn = "15s") => {
 	const payload = {
 		sub: user.id,
-		username: user.username,
-		email: user.email,
-		admin: user.admin,
 	};
 
 	const signedXTokenPromise = new Promise<string>((res, rej) => {
@@ -69,7 +66,7 @@ export const issueAccessToken = (user: User, privKey: string, expiresIn = "15s")
 	return signedXTokenPromise;
 };
 
-export const issueRefreshToken = (user: User, privKey: string, expiresIn = "30d") => {
+export const issueRefreshToken = (user: AuthUser, privKey: string, expiresIn = "30d") => {
 	const payload = {
 		sub: user.id,
 	};
@@ -100,25 +97,18 @@ export const addRefreshTokenToDatabase = (refreshToken: SQLRefreshToken): void =
 	db.close(err => (err ? console.error(err) : console.log("Closed the database connection")));
 };
 
-export const constructUserWithoutPasswordFromSqlResult = (payload: User): User => ({
+export const constructUserWithoutPasswordFromSqlResult = (payload: AuthUser): AuthUser => ({
 	id: payload.id,
-	username: payload.username,
 	email: payload.email,
-	admin: payload.admin,
 });
 
-export const constructUserFromTokenPayload = (payload: xTokenPayload): User => ({
+export const constructUserFromTokenPayload = (payload: xTokenPayload): AuthUser => ({
 	id: payload.sub,
-	username: payload.username,
-	email: payload.email,
-	admin: payload.admin,
 });
 
-export const attachUserToRequest = (req: RequestWithUser, user: User) => {
+export const attachUserToRequest = (req: RequestWithUser, user: AuthUser) => {
 	req.user = {
 		id: user.id,
-		username: user.username,
-		admin: user.admin,
 	};
 };
 
