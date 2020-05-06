@@ -46,8 +46,6 @@ export type xTokenPayload = {
 export type User = {
 	id: number;
 	username: string;
-	createdAt?: string;
-	updatedAt?: string;
 	admin: number;
 	profilePicture?: string;
 };
@@ -63,3 +61,10 @@ export type AuthJsonResponse = {
 	xToken?: string;
 	xRefreshToken?: string;
 };
+
+export type ServerXTokenResponse = {
+	isVerified: boolean;
+	refreshedXToken: string | null;
+};
+
+export type ValidOrRefreshedXToken = string | null;

@@ -1,20 +1,35 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "./store";
-import {authService} from "./auth/authService";
 import FlashMessage from "./components/FlashMessage";
 import {AuthenticatedApp} from "./components/authenticated-app/AuthenticatedApp";
 import {UnauthenticatedApp} from "./components/unauthenticated-app/UnauthenticatedApp";
+import {useTokensToVerifyAndRefresh} from "./custom-hooks/useTokensToVerifyAuth";
+import {useXTokenToStoreUserInStore} from "./custom-hooks/useXTokenToStoreUser";
+import {authService} from "./auth/authService";
 
 const App: React.FC = () => {
 	const user = useSelector((state: RootState) => state.userReducer.user);
 
-	useEffect(() => {
-		authService.verifyXTokenClientSide(
-			localStorage.getItem("x-token"),
-			localStorage.getItem("x-refresh-token")
-		);
-	});
+	const xToken = localStorage.getItem("x-token");
+	const xRefreshToken = localStorage.getItem("x-refresh-token");
+
+	const validOrRefreshedXToken = useTokensToVerifyAndRefresh(xToken, xRefreshToken);
+
+	if (validOrRefreshedXToken) {
+		validOrRefreshedXToken
+			.then(token => {
+				if (!user) {
+					useXTokenToStoreUserInStore(token);
+				}
+			})
+			.catch(e => {
+				authService.logout("You're not allowed to access that page. Please log in!");
+				console.log(e);
+			});
+	} else {
+		authService.logout("You're not allowed to access that page. Please log in!");
+	}
 
 	return (
 		<>
