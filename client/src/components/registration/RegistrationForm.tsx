@@ -3,7 +3,7 @@ import Input from "../Input";
 import {FormState, AuthJsonResponse} from "../../types/types";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import styled from "styled-components";
-import {flashMessage} from "../../utils/utils";
+import {flashMessage, areStringsIdentical} from "../../utils/utils";
 import Button from "../Button";
 
 interface Props extends RouteComponentProps {
@@ -26,26 +26,30 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		fetch(postUrl, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(turnFormStateIntoObj()),
-		})
-			.then(res => res.json())
-			.then((data: AuthJsonResponse) => {
-				if (data.success) {
-					flashMessage(data.payload?.message ?? "");
-					history.push(redirectUrl);
-				} else {
-					flashMessage(data.payload?.message ?? "");
-				}
+		if (areStringsIdentical(password, confirmPassword)) {
+			fetch(postUrl, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(turnFormStateIntoObj()),
 			})
-			.catch(err => {
-				console.error(err);
-			});
-		e.currentTarget.reset();
+				.then(res => res.json())
+				.then((data: AuthJsonResponse) => {
+					if (data.success) {
+						flashMessage(data.payload?.message ?? "");
+						history.push(redirectUrl);
+					} else {
+						flashMessage(data.payload?.message ?? "");
+					}
+				})
+				.catch(err => {
+					console.error(err);
+				});
+			e.currentTarget.reset();
+		} else {
+			flashMessage("Passwords do not match.");
+		}
 	};
 
 	return (

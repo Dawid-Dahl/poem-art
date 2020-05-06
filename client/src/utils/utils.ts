@@ -55,6 +55,9 @@ export const flashMessage = (message: string) => {
 	}, 3000);
 };
 
+export const areStringsIdentical = (str1: string, str2: string) =>
+	str1.match(RegExp(`^${str2}$`)) ? true : false;
+
 // temporary dummy function - remove later
 
 export const createDummyPoem = (

@@ -30,6 +30,8 @@ export const registerController = (req: Request, res: Response) => {
 
 					db.run(sql, values, async err => {
 						if (err) {
+							console.log(err);
+
 							const errorMsg = err.message.includes(
 								"UNIQUE constraint failed: AuthUsers.email"
 							)
