@@ -14,22 +14,19 @@ const App: React.FC = () => {
 	const xToken = localStorage.getItem("x-token");
 	const xRefreshToken = localStorage.getItem("x-refresh-token");
 
-	const validOrRefreshedXToken = useTokensToVerifyAndRefresh(xToken, xRefreshToken);
+	(async () => {
+		try {
+			const validOrRefreshedXToken = await useTokensToVerifyAndRefresh(xToken, xRefreshToken);
 
-	if (validOrRefreshedXToken) {
-		validOrRefreshedXToken
-			.then(token => {
-				if (!user) {
-					useXTokenToStoreUserInStore(token);
-				}
-			})
-			.catch(e => {
+			if (validOrRefreshedXToken) {
+				useXTokenToStoreUserInStore(validOrRefreshedXToken);
+			} else {
 				authService.logout("You're not allowed to access that page. Please log in!");
-				console.log(e);
-			});
-	} else {
-		authService.logout("You're not allowed to access that page. Please log in!");
-	}
+			}
+		} catch (e) {
+			authService.logout("You're not allowed to access that page. Please log in!");
+		}
+	})();
 
 	return (
 		<>
