@@ -5,7 +5,7 @@ import FlashMessage from "./components/FlashMessage";
 import {AuthenticatedApp} from "./components/authenticated-app/AuthenticatedApp";
 import {UnauthenticatedApp} from "./components/unauthenticated-app/UnauthenticatedApp";
 import {useTokensToVerifyAndRefresh} from "./custom-hooks/useTokensToVerifyAuth";
-import {useXTokenToStoreUserInStore} from "./custom-hooks/useXTokenToStoreUser";
+import {useXTokenToSaveUserInStore} from "./custom-hooks/useXTokenToSaveUserInStore";
 import {authService} from "./auth/authService";
 
 const App: React.FC = () => {
@@ -19,7 +19,7 @@ const App: React.FC = () => {
 			const validOrRefreshedXToken = await useTokensToVerifyAndRefresh(xToken, xRefreshToken);
 
 			validOrRefreshedXToken
-				? useXTokenToStoreUserInStore(validOrRefreshedXToken)
+				? useXTokenToSaveUserInStore(validOrRefreshedXToken)
 				: authService.logout("You're not allowed to access that page. Please log in!");
 		} catch (e) {
 			authService.logout("You're not allowed to access that page. Please log in!");
