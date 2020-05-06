@@ -1,7 +1,7 @@
 import {xTokenPayload, User, Artpoem, Comment} from "../types/types";
 import store from "../store";
 import {showFlash, hideFlash, setFlashMessage} from "../actions/actions";
-import {resolve} from "dns";
+import {authService} from "../auth/authService";
 
 export const range = (start: number, end: number): number[] =>
 	end <= start ? [end] : [...range(start, end - 1), end];
@@ -58,6 +58,13 @@ export const flashMessage = (message: string) => {
 export const areStringsIdentical = (str1: string, str2: string) =>
 	str1.match(RegExp(`^${str2}$`)) ? true : false;
 
+export const useXTokenToSaveUserInStore = (xToken: string | null) => {
+	constructUserFromId(getPayloadFromJwt(xToken)?.sub)
+		?.then(user => {
+			authService.storeUserInState(user);
+		})
+		.catch(e => console.log(e));
+};
 // temporary dummy function - remove later
 
 export const createDummyPoem = (
