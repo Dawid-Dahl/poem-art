@@ -1,17 +1,20 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import Button from "../Button";
-import Input from "../Input";
+import TextInput from "../inputs/TextInput";
+import TextAreaInput from "../inputs/TextAreaInput";
 import {UploadInformation} from "../../types/types";
 import {Navbar} from "../Navbar";
 
 const Upload = () => {
-	const [name, setName] = useState("");
+	const [title, setTitle] = useState("");
 	const [collection, setCollection] = useState("");
+	const [poem, setPoem] = useState("");
 
 	const turnFormStateIntoObj = (): UploadInformation => ({
-		name,
+		title,
 		collection,
+		poem,
 	});
 
 	return (
@@ -20,19 +23,26 @@ const Upload = () => {
 			<Wrapper>
 				<h1 className="registration">Let's Upload!</h1>
 				<UploadWrapper>
-					<Input
-						name="name"
+					<TextInput
+						name="title"
 						type="text"
-						onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
-							setName(e.target.value)
+						onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+							setTitle(e.target.value)
 						}
 						required
 					/>
-					<Input
+					<TextInput
 						name="collection"
 						type="text"
-						onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+						onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 							setCollection(e.target.value)
+						}
+						required
+					/>
+					<TextAreaInput
+						name="poem"
+						onChangeHandle={(event: React.ChangeEvent<HTMLTextAreaElement>): void =>
+							setPoem(event.target.value)
 						}
 						required
 					/>
@@ -50,10 +60,13 @@ const Wrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	height: 90vh;
+	top: 7em;
+	position: absolute;
+	width: 100%;
 
 	h1 {
 		letter-spacing: 1px;
+		margin-top: 1em;
 	}
 `;
 

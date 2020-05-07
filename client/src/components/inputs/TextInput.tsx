@@ -3,18 +3,18 @@ import styled from "styled-components";
 
 type Props = {
 	name: string;
-	type: string;
-	onChangleHandle: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	type: "text" | "email" | "password";
+	onChangeHandle: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	required?: boolean;
 	minLength?: number;
 	pattern?: string;
 	title?: string;
 };
 
-const Input: React.FC<Props> = ({
+const TextInput: React.FC<Props> = ({
 	name,
 	type,
-	onChangleHandle,
+	onChangeHandle,
 	required,
 	pattern,
 	title,
@@ -25,7 +25,7 @@ const Input: React.FC<Props> = ({
 		name={name}
 		type={type}
 		placeholder={[name[0].toUpperCase(), name.slice(1)].join("")}
-		onChange={onChangleHandle}
+		onChange={onChangeHandle}
 		required={required}
 		pattern={pattern}
 		title={title}
@@ -33,7 +33,7 @@ const Input: React.FC<Props> = ({
 	/>
 );
 
-export default Input;
+export default TextInput;
 
 const StyledInput = styled.input`
 	border: solid var(--main-grey-color) 1px;

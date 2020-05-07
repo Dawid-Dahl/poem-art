@@ -19,7 +19,7 @@ const App: React.FC = () => {
 			const validOrRefreshedXToken = await useTokensToVerifyAndRefresh(xToken, xRefreshToken);
 
 			validOrRefreshedXToken
-				? saveUserInStoreWithXToken(validOrRefreshedXToken)
+				? !user && saveUserInStoreWithXToken(validOrRefreshedXToken)
 				: authService.logout("You're not allowed to access that page. Please log in!");
 		} catch (e) {
 			authService.logout("You're not allowed to access that page. Please log in!");

@@ -11,8 +11,9 @@ export type LoginInformation = {
 };
 
 export type UploadInformation = {
-	name: string;
+	title: string;
 	collection: string;
+	poem: string;
 };
 
 export type Artpoem = {

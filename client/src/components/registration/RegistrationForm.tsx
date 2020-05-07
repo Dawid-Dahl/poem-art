@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import Input from "../Input";
+import Input from "../inputs/TextInput";
 import {FormState, AuthJsonResponse} from "../../types/types";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import styled from "styled-components";
@@ -59,7 +59,7 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 				<Input
 					name="username"
 					type="text"
-					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setUsername(e.target.value)
 					}
 					required
@@ -68,7 +68,7 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 				<Input
 					name="email"
 					type="email"
-					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setEmail(e.target.value)
 					}
 					required
@@ -76,7 +76,7 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 				<Input
 					name="password"
 					type="password"
-					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setPassword(e.target.value)
 					}
 					required
@@ -85,7 +85,7 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 				<Input
 					name="confirm-password"
 					type="password"
-					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setconfirmPassword(e.target.value)
 					}
 					required

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {withRouter, RouteComponentProps} from "react-router-dom";
-import Input from "../Input";
+import Input from "../inputs/TextInput";
 import {LoginInformation} from "../../types/types";
 import {authService} from "../../auth/authService";
 import Button from "../Button";
@@ -66,7 +66,7 @@ const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 				<Input
 					name="email"
 					type="email"
-					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setEmail(e.target.value)
 					}
 					required
@@ -74,7 +74,7 @@ const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 				<Input
 					name="password"
 					type="password"
-					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setPassword(e.target.value)
 					}
 					required

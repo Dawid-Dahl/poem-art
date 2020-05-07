@@ -82,6 +82,10 @@ export const registerController = async (req: Request, res: Response) => {
 						message: "Registration is not possible right now. Sorry!",
 					})
 				);
+
+				db.close(err =>
+					err ? console.error(err) : console.log("Closed the database connection")
+				);
 			}
 		});
 	} else {
