@@ -61,7 +61,13 @@ export const registerController = async (req: Request, res: Response) => {
 								})
 							);
 						} catch (e) {
-							console.error(e);
+							console.error("Could not connect to main API. No user created --", e);
+
+							res.status(200).json(
+								authJsonResponse(false, {
+									message: "Registration is not possible right now. Sorry!",
+								})
+							);
 						}
 						db.close(err =>
 							err ? console.error(err) : console.log("Closed the database connection")
