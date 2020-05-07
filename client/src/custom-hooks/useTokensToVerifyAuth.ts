@@ -2,10 +2,16 @@ import {useEffect} from "react";
 import {authService} from "../auth/authService";
 import {ValidOrRefreshedXToken} from "../types/types";
 
+/** This hook takes a xToken/xRefreshToken-pair and uses them for verification.
+ *
+ * Returns the x-token if valid, or a refreshed x-token if not valid but x-refresh-token is valid.
+ *
+ * Otherwise returns null.
+ */
 export const useTokensToVerifyAndRefresh = (
 	xToken: string | null,
 	xRefreshToken: string | null
-): Promise<ValidOrRefreshedXToken | null> => {
+): Promise<ValidOrRefreshedXToken> => {
 	return new Promise((resolve, reject) => {
 		useEffect(() => {
 			if (!xToken) {
