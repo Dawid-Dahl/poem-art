@@ -58,7 +58,7 @@ export const flashMessage = (message: string) => {
 export const areStringsIdentical = (str1: string, str2: string) =>
 	str1.match(RegExp(`^${str2}$`)) ? true : false;
 
-export const useXTokenToSaveUserInStore = (xToken: string | null) => {
+export const saveUserInStoreWithXToken = (xToken: string | null) => {
 	constructUserFromId(getPayloadFromJwt(xToken)?.sub)
 		?.then(user => {
 			authService.storeUserInState(user);

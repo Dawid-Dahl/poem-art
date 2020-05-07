@@ -2,9 +2,8 @@ node_modules
 dist
 .cache
 .env
-db/
-database.db
-artpoems.db
+auth_users.db
+refresh_tokens.db
 cryptography/
 poem-art-8459ffeb00ca.json
 .idea/

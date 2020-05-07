@@ -6,7 +6,7 @@ import {AuthenticatedApp} from "./components/authenticated-app/AuthenticatedApp"
 import {UnauthenticatedApp} from "./components/unauthenticated-app/UnauthenticatedApp";
 import {useTokensToVerifyAndRefresh} from "./custom-hooks/useTokensToVerifyAuth";
 import {authService} from "./auth/authService";
-import {useXTokenToSaveUserInStore} from "./utils/utils";
+import {saveUserInStoreWithXToken} from "./utils/utils";
 
 const App: React.FC = () => {
 	const user = useSelector((state: RootState) => state.userReducer.user);
@@ -19,7 +19,7 @@ const App: React.FC = () => {
 			const validOrRefreshedXToken = await useTokensToVerifyAndRefresh(xToken, xRefreshToken);
 
 			validOrRefreshedXToken
-				? useXTokenToSaveUserInStore(validOrRefreshedXToken)
+				? saveUserInStoreWithXToken(validOrRefreshedXToken)
 				: authService.logout("You're not allowed to access that page. Please log in!");
 		} catch (e) {
 			authService.logout("You're not allowed to access that page. Please log in!");
