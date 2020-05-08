@@ -90,7 +90,7 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 					}
 					required
 				/>
-				<Button title="Register" kind="white" />
+				<Button title="Register" kind="white" type="submit" />
 			</StyledForm>
 		</>
 	);

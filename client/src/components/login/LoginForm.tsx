@@ -79,15 +79,13 @@ const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 					}
 					required
 				/>
-				<Button title="Login" kind="white" />
+				<Button title="Login" kind="white" type="submit" />
 			</StyledForm>
 		</>
 	);
 };
 
 export default withRouter(LoginForm);
-
-// -------------- CSS -------------- //
 
 const StyledForm = styled.form`
 	display: flex;

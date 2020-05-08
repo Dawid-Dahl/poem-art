@@ -26,7 +26,6 @@ const StyledTextArea = styled.textarea`
 	height: 20vh;
 	min-width: 30%;
 	padding: 1em 3em;
-	margin: 2.5em 0 0 0;
 	font-size: 1em;
 	border-radius: 5px;
 `;

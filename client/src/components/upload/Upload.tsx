@@ -5,6 +5,7 @@ import TextInput from "../inputs/TextInput";
 import TextAreaInput from "../inputs/TextAreaInput";
 import {UploadInformation} from "../../types/types";
 import {Navbar} from "../Navbar";
+import FileInput from "../inputs/FileInput";
 
 const Upload = () => {
 	const [title, setTitle] = useState("");
@@ -22,7 +23,7 @@ const Upload = () => {
 			<Navbar />
 			<Wrapper>
 				<h1 className="registration">Let's Upload!</h1>
-				<UploadWrapper>
+				<StyledForm>
 					<TextInput
 						name="title"
 						type="text"
@@ -39,6 +40,7 @@ const Upload = () => {
 						}
 						required
 					/>
+					<FileInput name="fileInput" required />
 					<TextAreaInput
 						name="poem"
 						onChangeHandle={(event: React.ChangeEvent<HTMLTextAreaElement>): void =>
@@ -46,8 +48,8 @@ const Upload = () => {
 						}
 						required
 					/>
-					<Button title="Upload" kind="primary" />
-				</UploadWrapper>
+					<Button title="Upload" kind="primary" type="submit" />
+				</StyledForm>
 			</Wrapper>
 		</>
 	);
@@ -70,7 +72,7 @@ const Wrapper = styled.div`
 	}
 `;
 
-const UploadWrapper = styled.div`
+const StyledForm = styled.form`
 	display: flex;
 	flex-direction: column;
 	align-items: center;

@@ -2,31 +2,45 @@ import React from "react";
 import styled from "styled-components";
 
 type Props = {
-	title: string;
-	kind: "primary" | "white" | "black";
-	type: "button" | "submit";
+	name: string;
+	required?: boolean;
 };
 
-const Button: React.FC<Props> = ({title, kind, type}) => {
+const FileInput: React.FC<Props> = ({name, required}) => {
+	const onChangeHandle = (event: React.ChangeEvent<HTMLInputElement>): void =>
+		console.log(event.target.files?.[0]);
+
 	return (
-		<>
-			<Wrapper kind={kind}>
-				<button type={type}>{title}</button>
-			</Wrapper>
-		</>
+		<StyledWrapper kind={"white"}>
+			<input
+				id={name}
+				onChange={onChangeHandle}
+				name={name}
+				type="file"
+				required={required}
+			/>
+			<label htmlFor="fileInput">
+				<span className="material-icons">add_photo_alternate</span>Choose File
+			</label>
+		</StyledWrapper>
 	);
 };
 
-export default Button;
+export default FileInput;
 
 type WrapperProps = {
 	kind: "primary" | "white" | "black";
 };
 
-const Wrapper = styled.div<WrapperProps>`
+const StyledWrapper = styled.div<WrapperProps>`
 	z-index: 1;
 
-	button {
+	input {
+		display: none;
+	}
+
+	label {
+		padding: 0 0.5em;
 		height: 3em;
 		min-width: 7em;
 		display: flex;
