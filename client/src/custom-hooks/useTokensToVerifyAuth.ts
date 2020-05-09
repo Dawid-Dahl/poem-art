@@ -1,6 +1,7 @@
 import {useEffect} from "react";
 import {authService} from "../auth/authService";
 import {ValidOrRefreshedXToken, RefreshedXToken} from "../types/types";
+import {removeBearerFromTokenHeader} from "../utils/utils";
 
 /** This hook takes a xToken/xRefreshToken-pair and uses them for verification.
  *
@@ -8,7 +9,7 @@ import {ValidOrRefreshedXToken, RefreshedXToken} from "../types/types";
  *
  * Otherwise returns null.
  */
-export const useTokensToVerifyAndRefreshIfNeeded = (
+export const useTokensToRefreshIfNeeded = (
 	xToken: string | null,
 	xRefreshToken: string | null
 ): Promise<ValidOrRefreshedXToken> => {
@@ -24,7 +25,6 @@ export const useTokensToVerifyAndRefreshIfNeeded = (
 						.verifyXRefreshTokenServerSide(xRefreshToken)
 						.then(res => {
 							if (res.isVerified) {
-								authService.setXToken(res.refreshedXToken);
 								resolve(res.refreshedXToken);
 							} else {
 								reject(null);
@@ -38,7 +38,7 @@ export const useTokensToVerifyAndRefreshIfNeeded = (
 				}
 
 				if (authService.isClientSideXTokenValid(xToken)) {
-					resolve(xToken);
+					resolve(removeBearerFromTokenHeader(xToken));
 				} else {
 					console.log("Verifying server side!");
 
@@ -46,7 +46,6 @@ export const useTokensToVerifyAndRefreshIfNeeded = (
 						.verifyXRefreshTokenServerSide(xRefreshToken)
 						.then(res => {
 							if (res.isVerified) {
-								authService.setXToken(res.refreshedXToken);
 								resolve(res.refreshedXToken);
 							} else {
 								reject(null);
@@ -81,7 +80,6 @@ export const useTokensToRefreshXToken = (
 						.verifyXRefreshTokenServerSide(xRefreshToken)
 						.then(res => {
 							if (res.isVerified) {
-								authService.setXToken(res.refreshedXToken);
 								resolve(res.refreshedXToken);
 							} else {
 								reject(null);
@@ -100,7 +98,6 @@ export const useTokensToRefreshXToken = (
 					.verifyXRefreshTokenServerSide(xRefreshToken)
 					.then(res => {
 						if (res.isVerified) {
-							authService.setXToken(res.refreshedXToken);
 							resolve(res.refreshedXToken);
 						} else {
 							reject(null);

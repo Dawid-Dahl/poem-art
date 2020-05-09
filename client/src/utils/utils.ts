@@ -66,6 +66,14 @@ export const saveUserInStoreWithXToken = (xToken: string | null) => {
 		.catch(e => console.log(e));
 };
 
+//FIND OUT WHY THIS IS NOT WORKING
+
+export const removeBearerFromTokenHeader = (tokenHeader: string | undefined | null) => {
+	if (!tokenHeader) return;
+
+	return tokenHeader.match(/^Bearer /) ? tokenHeader.split(" ")[1] : tokenHeader;
+};
+
 // temporary dummy function - remove later
 
 export const createDummyPoem = (

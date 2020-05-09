@@ -4,9 +4,9 @@ import {RootState} from "./store";
 import FlashMessage from "./components/FlashMessage";
 import {AuthenticatedApp} from "./components/authenticated-app/AuthenticatedApp";
 import {UnauthenticatedApp} from "./components/unauthenticated-app/UnauthenticatedApp";
-import {useTokensToVerifyAndRefreshIfNeeded} from "./custom-hooks/useTokensToVerifyAuth";
+import {useTokensToRefreshIfNeeded} from "./custom-hooks/useTokensToVerifyAuth";
 import {authService} from "./auth/authService";
-import {saveUserInStoreWithXToken} from "./utils/utils";
+import {saveUserInStoreWithXToken, removeBearerFromTokenHeader} from "./utils/utils";
 
 const App: React.FC = () => {
 	const user = useSelector((state: RootState) => state.userReducer.user);
@@ -16,13 +16,11 @@ const App: React.FC = () => {
 
 	(async () => {
 		try {
-			const validOrRefreshedXToken = await useTokensToVerifyAndRefreshIfNeeded(
-				xToken,
-				xRefreshToken
-			);
+			const validOrRefreshedXToken = await useTokensToRefreshIfNeeded(xToken, xRefreshToken);
 
 			validOrRefreshedXToken
-				? !user && saveUserInStoreWithXToken(validOrRefreshedXToken)
+				? (authService.setXToken(validOrRefreshedXToken),
+				  !user && saveUserInStoreWithXToken(validOrRefreshedXToken))
 				: authService.logout("You're not allowed to access that page. Please log in!");
 		} catch (e) {
 			authService.logout("You're not allowed to access that page. Please log in!");

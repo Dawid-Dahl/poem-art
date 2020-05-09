@@ -15,7 +15,7 @@ const Upload = () => {
 	});
 	const [poem, setPoem] = useState("");
 
-	const turnFormStateIntoObj = (): UploadInformation => {
+	/* const turnFormStateIntoObj = (): UploadInformation => {
 		if (title && imageFile && poem) {
 			const data = new FormData();
 			data.append("fileInput", imageFile);
@@ -29,7 +29,7 @@ const Upload = () => {
 		} else {
 			console.log("No data sent. Fill in all the required fields.");
 		}
-	};
+	}; */
 
 	const onChangeHandle = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		setImageFile({...imageFile, imageFile: event.target.files?.[0]});
@@ -43,7 +43,7 @@ const Upload = () => {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(turnFormStateIntoObj()),
+				/* body: JSON.stringify(turnFormStateIntoObj()), */
 			});
 			const data = await res.json();
 			console.log(data);
