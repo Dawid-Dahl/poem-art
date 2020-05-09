@@ -1,6 +1,6 @@
 import {Request, Response, NextFunction} from "express";
 import {ParamsDictionary} from "express-serve-static-core";
-import {authJsonResponse} from "../utils/utils";
+import {authJsonResponse, jsonResponse} from "../utils/utils";
 
 export type AuthUser = {
 	id: number;
@@ -61,3 +61,10 @@ export type MyPassport = (
 ) => (req: Request<ParamsDictionary>, res: Response<any>, next: NextFunction) => void;
 
 export type AuthJsonResponse = ReturnType<typeof authJsonResponse>;
+
+export type AuthJsonResponsePayload = {
+	message?: string;
+	user?: AuthUser;
+};
+
+export type JsonResponse = ReturnType<typeof jsonResponse>;

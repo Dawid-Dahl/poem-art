@@ -1,4 +1,10 @@
-import {SQLRefreshToken, xTokenPayload, AuthUser} from "../types/types";
+import {
+	SQLRefreshToken,
+	xTokenPayload,
+	AuthUser,
+	AuthJsonResponsePayload,
+	JsonResponse,
+} from "../types/types";
 import jwt from "jsonwebtoken";
 import sqlite from "sqlite3";
 import {config} from "dotenv";
@@ -8,11 +14,6 @@ import {Request} from "express";
 interface RequestWithUser extends Request {
 	user?: object;
 }
-
-type AuthJsonResponsePayload = {
-	message?: string;
-	user?: AuthUser;
-};
 
 config({
 	path: "../../.env",
@@ -39,6 +40,11 @@ export const authJsonResponse = (
 		: !xRefreshToken
 		? {success, payload, xToken}
 		: {success, payload, xToken, xRefreshToken};
+
+export const jsonResponse = (
+	success: boolean,
+	payload?: string | NodeJS.ReadableStream | undefined
+) => (!payload ? {success} : {success, payload});
 
 export const removeBearerFromTokenHeader = (tokenHeader: string | undefined) =>
 	tokenHeader?.split(" ")[1];

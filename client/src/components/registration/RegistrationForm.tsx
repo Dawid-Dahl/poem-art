@@ -44,6 +44,7 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 					}
 				})
 				.catch(err => {
+					flashMessage("Cannot log in right now, try again soon!");
 					console.error(err);
 				});
 			e.currentTarget.reset();

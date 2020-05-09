@@ -13,6 +13,7 @@ export type LoginInformation = {
 export type UploadInformation = {
 	title: string;
 	collection: string;
+	imageFile: {imageFile: FileList | File | null | undefined};
 	poem: string;
 };
 
@@ -69,3 +70,5 @@ export type ServerXTokenResponse = {
 };
 
 export type ValidOrRefreshedXToken = string | null;
+
+export type RefreshedXToken = string | null;

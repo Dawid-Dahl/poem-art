@@ -65,6 +65,7 @@ export const saveUserInStoreWithXToken = (xToken: string | null) => {
 		})
 		.catch(e => console.log(e));
 };
+
 // temporary dummy function - remove later
 
 export const createDummyPoem = (

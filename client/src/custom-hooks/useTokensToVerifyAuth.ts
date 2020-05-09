@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {authService} from "../auth/authService";
-import {ValidOrRefreshedXToken} from "../types/types";
+import {ValidOrRefreshedXToken, RefreshedXToken} from "../types/types";
 
 /** This hook takes a xToken/xRefreshToken-pair and uses them for verification.
  *
@@ -8,7 +8,7 @@ import {ValidOrRefreshedXToken} from "../types/types";
  *
  * Otherwise returns null.
  */
-export const useTokensToVerifyAndRefresh = (
+export const useTokensToVerifyAndRefreshIfNeeded = (
 	xToken: string | null,
 	xRefreshToken: string | null
 ): Promise<ValidOrRefreshedXToken> => {
@@ -24,7 +24,7 @@ export const useTokensToVerifyAndRefresh = (
 						.verifyXRefreshTokenServerSide(xRefreshToken)
 						.then(res => {
 							if (res.isVerified) {
-								authService.refreshXToken(res.refreshedXToken);
+								authService.setXToken(res.refreshedXToken);
 								resolve(res.refreshedXToken);
 							} else {
 								reject(null);
@@ -46,7 +46,7 @@ export const useTokensToVerifyAndRefresh = (
 						.verifyXRefreshTokenServerSide(xRefreshToken)
 						.then(res => {
 							if (res.isVerified) {
-								authService.refreshXToken(res.refreshedXToken);
+								authService.setXToken(res.refreshedXToken);
 								resolve(res.refreshedXToken);
 							} else {
 								reject(null);
@@ -54,6 +54,59 @@ export const useTokensToVerifyAndRefresh = (
 						})
 						.catch(e => (console.log(e), reject(null)));
 				}
+			}
+		});
+	});
+};
+
+/** This hook takes a xToken/xRefreshToken-pair and uses them for verification.
+ *
+ * Always returns a refreshed x-token if x-refresh-token is valid.
+ *
+ * Otherwise returns null.
+ */
+export const useTokensToRefreshXToken = (
+	xToken: string | null,
+	xRefreshToken: string | null
+): Promise<RefreshedXToken> => {
+	return new Promise((resolve, reject) => {
+		useEffect(() => {
+			if (location.pathname === "/register" || location.pathname === "/login") {
+				return;
+			} else {
+				if (!xToken) {
+					console.log("Verifying server side!");
+
+					authService
+						.verifyXRefreshTokenServerSide(xRefreshToken)
+						.then(res => {
+							if (res.isVerified) {
+								authService.setXToken(res.refreshedXToken);
+								resolve(res.refreshedXToken);
+							} else {
+								reject(null);
+							}
+						})
+						.catch(e => (console.log(e), reject(null)));
+				}
+
+				if (!xRefreshToken) {
+					reject(null);
+				}
+
+				console.log("Verifying server side!");
+
+				authService
+					.verifyXRefreshTokenServerSide(xRefreshToken)
+					.then(res => {
+						if (res.isVerified) {
+							authService.setXToken(res.refreshedXToken);
+							resolve(res.refreshedXToken);
+						} else {
+							reject(null);
+						}
+					})
+					.catch(e => (console.log(e), reject(null)));
 			}
 		});
 	});

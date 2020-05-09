@@ -9,7 +9,7 @@ export const authService = {
 		localStorage.setItem("x-refresh-token", `Bearer ${data.xRefreshToken}`);
 	},
 
-	refreshXToken(xToken: any) {
+	setXToken(xToken: any) {
 		localStorage.setItem("x-token", `Bearer ${xToken}`);
 	},
 

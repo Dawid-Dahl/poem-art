@@ -2,6 +2,7 @@ import express from "express";
 import {getConnection} from "typeorm";
 import {jsonResponse} from "../utils/utils";
 import {User} from "../../db/entities/User";
+import {Collection} from "../../db/entities/Collection";
 
 const userRouter = express.Router();
 
@@ -23,6 +24,7 @@ userRouter.get("/get/:id", async (req, res, next) => {
 
 userRouter.post("/create", async (req, res, next) => {
 	const userRepo = getConnection(process.env.NODE_ENV).getRepository(User);
+	const collectionRepo = getConnection(process.env.NODE_ENV).getRepository(Collection);
 
 	const {id, username} = req.body;
 
@@ -32,7 +34,11 @@ userRouter.post("/create", async (req, res, next) => {
 			user.id = id;
 			user.username = username;
 
+			const collection = new Collection();
+			collection.user = user;
+
 			await userRepo.save(user);
+			await collectionRepo.save(collection);
 
 			console.log("User was saved!");
 

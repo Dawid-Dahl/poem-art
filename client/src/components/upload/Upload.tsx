@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import Button from "../Button";
 import TextInput from "../inputs/TextInput";
@@ -10,20 +10,62 @@ import FileInput from "../inputs/FileInput";
 const Upload = () => {
 	const [title, setTitle] = useState("");
 	const [collection, setCollection] = useState("");
+	const [imageFile, setImageFile] = useState<{imageFile: FileList | File | null | undefined}>({
+		imageFile: null,
+	});
 	const [poem, setPoem] = useState("");
 
-	const turnFormStateIntoObj = (): UploadInformation => ({
-		title,
-		collection,
-		poem,
-	});
+	const turnFormStateIntoObj = (): UploadInformation => {
+		if (title && imageFile && poem) {
+			const data = new FormData();
+			data.append("fileInput", imageFile);
+
+			return {
+				title,
+				collection,
+				imageFile,
+				poem,
+			};
+		} else {
+			console.log("No data sent. Fill in all the required fields.");
+		}
+	};
+
+	const onChangeHandle = (event: React.ChangeEvent<HTMLInputElement>): void => {
+		setImageFile({...imageFile, imageFile: event.target.files?.[0]});
+	};
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		try {
+			e.preventDefault();
+			const res = await fetch(`${process.env.MAIN_FETCH_URL}/api/artPoem/upload`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(turnFormStateIntoObj()),
+			});
+			const data = await res.json();
+			console.log(data);
+		} catch (e) {
+			console.log(e);
+		}
+	};
 
 	return (
 		<>
 			<Navbar />
 			<Wrapper>
 				<h1 className="registration">Let's Upload!</h1>
-				<StyledForm>
+				<StyledForm
+					action="POST"
+					className="form"
+					onSubmit={e => {
+						e.persist();
+						handleSubmit(e);
+						e.currentTarget.reset();
+					}}
+				>
 					<TextInput
 						name="title"
 						type="text"
@@ -40,7 +82,7 @@ const Upload = () => {
 						}
 						required
 					/>
-					<FileInput name="fileInput" required />
+					<FileInput name="fileInput" onChangeHandle={onChangeHandle} required />
 					<TextAreaInput
 						name="poem"
 						onChangeHandle={(event: React.ChangeEvent<HTMLTextAreaElement>): void =>

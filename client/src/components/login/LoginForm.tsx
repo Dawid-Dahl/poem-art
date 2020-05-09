@@ -56,7 +56,7 @@ const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 			<StyledForm
 				action="POST"
 				className="form"
-				onSubmit={async e => {
+				onSubmit={e => {
 					e.persist();
 					handleSubmit(e);
 					e.currentTarget.reset();

@@ -14,7 +14,7 @@ export class Collection extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column({type: "varchar"})
+	@Column({type: "varchar", default: "My Collection"})
 	name: string;
 
 	@Column({type: "boolean", default: false})

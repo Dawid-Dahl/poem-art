@@ -4,7 +4,7 @@ import {RootState} from "./store";
 import FlashMessage from "./components/FlashMessage";
 import {AuthenticatedApp} from "./components/authenticated-app/AuthenticatedApp";
 import {UnauthenticatedApp} from "./components/unauthenticated-app/UnauthenticatedApp";
-import {useTokensToVerifyAndRefresh} from "./custom-hooks/useTokensToVerifyAuth";
+import {useTokensToVerifyAndRefreshIfNeeded} from "./custom-hooks/useTokensToVerifyAuth";
 import {authService} from "./auth/authService";
 import {saveUserInStoreWithXToken} from "./utils/utils";
 
@@ -16,7 +16,10 @@ const App: React.FC = () => {
 
 	(async () => {
 		try {
-			const validOrRefreshedXToken = await useTokensToVerifyAndRefresh(xToken, xRefreshToken);
+			const validOrRefreshedXToken = await useTokensToVerifyAndRefreshIfNeeded(
+				xToken,
+				xRefreshToken
+			);
 
 			validOrRefreshedXToken
 				? !user && saveUserInStoreWithXToken(validOrRefreshedXToken)

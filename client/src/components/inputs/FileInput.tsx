@@ -3,13 +3,11 @@ import styled from "styled-components";
 
 type Props = {
 	name: string;
+	onChangeHandle: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	required?: boolean;
 };
 
-const FileInput: React.FC<Props> = ({name, required}) => {
-	const onChangeHandle = (event: React.ChangeEvent<HTMLInputElement>): void =>
-		console.log(event.target.files?.[0]);
-
+const FileInput: React.FC<Props> = ({name, onChangeHandle, required}) => {
 	return (
 		<StyledWrapper kind={"white"}>
 			<input
