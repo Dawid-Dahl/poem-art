@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import Button from "../Button";
 import TextInput from "../inputs/TextInput";
@@ -6,6 +6,8 @@ import TextAreaInput from "../inputs/TextAreaInput";
 import {UploadInformation} from "../../types/types";
 import {Navbar} from "../Navbar";
 import FileInput from "../inputs/FileInput";
+import {addXTokenHeaderToFetch, refreshXToken} from "../../utils/utils";
+import {authService} from "../../auth/authService";
 
 const Upload = () => {
 	const [title, setTitle] = useState("");
@@ -15,10 +17,10 @@ const Upload = () => {
 	});
 	const [poem, setPoem] = useState("");
 
-	/* const turnFormStateIntoObj = (): UploadInformation => {
+	const turnFormStateIntoObj = (): UploadInformation | undefined => {
 		if (title && imageFile && poem) {
-			const data = new FormData();
-			data.append("fileInput", imageFile);
+			/* const data = new FormData();
+			data.append("fileInput", imageFile); */
 
 			return {
 				title,
@@ -28,8 +30,9 @@ const Upload = () => {
 			};
 		} else {
 			console.log("No data sent. Fill in all the required fields.");
+			return;
 		}
-	}; */
+	};
 
 	const onChangeHandle = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		setImageFile({...imageFile, imageFile: event.target.files?.[0]});
@@ -38,12 +41,23 @@ const Upload = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault();
+
+			const xRefreshToken = localStorage.getItem("x-refresh-token");
+
+			const refreshedXToken = await refreshXToken(xRefreshToken);
+
+			if (!refreshedXToken) throw new Error("Couldn't refresh x-token");
+
+			authService.setXToken(refreshedXToken);
+
+			const fetch = addXTokenHeaderToFetch(localStorage.getItem("x-token"));
+
 			const res = await fetch(`${process.env.MAIN_FETCH_URL}/api/artPoem/upload`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				/* body: JSON.stringify(turnFormStateIntoObj()), */
+				body: JSON.stringify(turnFormStateIntoObj()),
 			});
 			const data = await res.json();
 			console.log(data);

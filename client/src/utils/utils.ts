@@ -1,4 +1,4 @@
-import {xTokenPayload, User, Artpoem, Comment} from "../types/types";
+import {xTokenPayload, User, Artpoem, Comment, RefreshedXToken} from "../types/types";
 import store from "../store";
 import {showFlash, hideFlash, setFlashMessage} from "../actions/actions";
 import {authService} from "../auth/authService";
@@ -66,12 +66,64 @@ export const saveUserInStoreWithXToken = (xToken: string | null) => {
 		.catch(e => console.log(e));
 };
 
-//FIND OUT WHY THIS IS NOT WORKING
-
 export const removeBearerFromTokenHeader = (tokenHeader: string | undefined | null) => {
 	if (!tokenHeader) return;
 
 	return tokenHeader.match(/^Bearer /) ? tokenHeader.split(" ")[1] : tokenHeader;
+};
+
+/** This function takes an xRefreshToken and uses it to return a new and refreshed x-token.
+ *
+ * Returns null if something went wrong.
+ */
+export const refreshXToken = (xRefreshToken: string | null): Promise<RefreshedXToken> => {
+	return new Promise((resolve, reject) => {
+		if (location.pathname === "/register" || location.pathname === "/login") {
+			return;
+		} else {
+			if (!xRefreshToken) {
+				reject(null);
+			}
+
+			console.log("Refreshing server side!");
+
+			authService
+				.verifyXRefreshTokenServerSide(xRefreshToken)
+				.then(res => {
+					if (res.isVerified) {
+						resolve(res.refreshedXToken);
+					} else {
+						reject(null);
+					}
+				})
+				.catch(e => (console.log(e), reject(null)));
+		}
+	});
+};
+
+/** This curried function takes an x-token and attaches it to the outgoing fetch request headers.
+ *
+ * Returns a fetch function with the x-token header added.
+ *
+ * Throws an error if something went wrong.
+ */
+export const addXTokenHeaderToFetch = (xToken: string | null) => async (
+	url: string,
+	{method, headers, body}: RequestInit
+): Promise<Response> => {
+	if (!xToken) {
+		throw new Error("There is an issue with the supplied x-token.");
+	}
+
+	const headersWithTokenAdded = {...headers, "x-token": xToken};
+
+	const response = await fetch(url, {
+		method: method,
+		headers: headersWithTokenAdded,
+		body,
+	});
+
+	return response;
 };
 
 // temporary dummy function - remove later
