@@ -3,7 +3,7 @@ import fs from "fs";
 import jwt from "jsonwebtoken";
 import {JwtVerifyCallback, xTokenPayload} from "../types/types";
 
-const PUB_KEY_PATH = path.join(__dirname, "..", "cryptography", "id_rsa_pub.pem");
+const PUB_KEY_PATH = path.join(__dirname, "../..", "cryptography", "id_rsa_pub.pem");
 const PUB_KEY = fs.readFileSync(PUB_KEY_PATH, "utf8");
 
 const jwtVerifyCallback: JwtVerifyCallback = (done, xRefreshToken, xToken) => {

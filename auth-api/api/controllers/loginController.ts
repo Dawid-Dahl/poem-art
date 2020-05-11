@@ -15,7 +15,7 @@ import {
 } from "../utils/utils";
 import {NextFunction} from "connect";
 
-const PRIV_KEY_PATH = path.join(__dirname, "..", "cryptography", "id_rsa_priv.pem");
+const PRIV_KEY_PATH = path.join(__dirname, "../../", "cryptography", "id_rsa_priv.pem");
 const PRIV_KEY = fs.readFileSync(PRIV_KEY_PATH, "utf8");
 
 export const loginController = (req: Request, res: Response, next: NextFunction) => {

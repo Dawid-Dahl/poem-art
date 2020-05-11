@@ -4,9 +4,9 @@ import {RootState} from "./store";
 import FlashMessage from "./components/FlashMessage";
 import {AuthenticatedApp} from "./components/authenticated-app/AuthenticatedApp";
 import {UnauthenticatedApp} from "./components/unauthenticated-app/UnauthenticatedApp";
-import {useTokensToRefreshIfNeeded} from "./custom-hooks/useTokensToVerifyAuth";
+import {useTokensToRefreshIfNeeded} from "./custom-hooks/useTokensToRefreshIfNeeded";
 import {authService} from "./auth/authService";
-import {saveUserInStoreWithXToken, removeBearerFromTokenHeader} from "./utils/utils";
+import {saveUserInStoreWithXToken} from "./utils/utils";
 
 const App: React.FC = () => {
 	const user = useSelector((state: RootState) => state.userReducer.user);

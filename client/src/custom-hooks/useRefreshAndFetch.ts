@@ -1,3 +1,5 @@
+import {useTokensToRefreshXToken} from "./useTokensToRefreshXToken";
+
 /** This hook takes a xToken/xRefreshToken-pair and refreshes the x-token if x-refresh-token is valid. Then attaches the refreshed x-token to the outgoing fetch request.
  *
  * Returns a refreshAndFetch function.

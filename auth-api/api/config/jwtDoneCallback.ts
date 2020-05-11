@@ -16,7 +16,7 @@ import {Tables} from "../types/enums";
 
 config({path: "../../.env"});
 
-const PRIV_KEY_PATH = path.join(__dirname, "..", "cryptography", "id_rsa_priv.pem");
+const PRIV_KEY_PATH = path.join(__dirname, "../..", "cryptography", "id_rsa_priv.pem");
 const PRIV_KEY = fs.readFileSync(PRIV_KEY_PATH, "utf8");
 
 const jwtJwtDoneCallback: JwtDoneCallback = (req, res, next) => (err, user, info, refresh) => {
