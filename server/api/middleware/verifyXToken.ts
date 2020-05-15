@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import {Request, Response, NextFunction} from "express";
+import {Request, Response, NextFunction} from "express-serve-static-core";
 import jwt from "jsonwebtoken";
 import {removeBearerFromTokenHeader} from "../utils/utils";
 

@@ -11,11 +11,11 @@ export type LoginInformation = {
 };
 
 export type UploadInformation = {
-	title: string;
-	collection: string;
-	imageFile: {imageFile: FileList | File | null | undefined};
-	poem: string;
+	formData: FormData;
+	json: string;
 };
+
+export type ImageFile = string | Blob | null | undefined;
 
 export type Artpoem = {
 	artpoem_id: number;

@@ -3,31 +3,27 @@ import styled from "styled-components";
 import Button from "../Button";
 import TextInput from "../inputs/TextInput";
 import TextAreaInput from "../inputs/TextAreaInput";
-import {UploadInformation} from "../../types/types";
+import {ImageFile} from "../../types/types";
 import {Navbar} from "../Navbar";
 import FileInput from "../inputs/FileInput";
-import {addXTokenHeaderToFetch, refreshXToken} from "../../utils/utils";
-import {authService} from "../../auth/authService";
+import {refreshAndSetXToken} from "../../utils/utils";
 
 const Upload = () => {
 	const [title, setTitle] = useState("");
 	const [collection, setCollection] = useState("");
-	const [imageFile, setImageFile] = useState<{imageFile: FileList | File | null | undefined}>({
-		imageFile: null,
-	});
+	const [imageFile, setImageFile] = useState<ImageFile>(null);
 	const [poem, setPoem] = useState("");
 
-	const turnFormStateIntoObj = (): UploadInformation | undefined => {
+	const turnFormStateIntoObj = () => {
 		if (title && imageFile && poem) {
-			/* const data = new FormData();
-			data.append("fileInput", imageFile); */
+			const data = new FormData();
+			data.append("imageFile", imageFile);
+			data.append("poemFields", JSON.stringify({title, collection, poem}));
 
-			return {
-				title,
-				collection,
-				imageFile,
-				poem,
-			};
+			console.log(data.get("imageFile"));
+			console.log(data.get("poemFields"));
+
+			return data;
 		} else {
 			console.log("No data sent. Fill in all the required fields.");
 			return;
@@ -35,31 +31,23 @@ const Upload = () => {
 	};
 
 	const onChangeHandle = (event: React.ChangeEvent<HTMLInputElement>): void => {
-		setImageFile({...imageFile, imageFile: event.target.files?.[0]});
+		setImageFile(event.target.files?.[0]);
 	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault();
 
-			const xRefreshToken = localStorage.getItem("x-refresh-token");
+			await refreshAndSetXToken(localStorage.getItem("x-refresh-token"));
 
-			const refreshedXToken = await refreshXToken(xRefreshToken);
-
-			if (!refreshedXToken) throw new Error("Couldn't refresh x-token");
-
-			authService.setXToken(refreshedXToken);
-
-			const fetch = addXTokenHeaderToFetch(localStorage.getItem("x-token"));
-
-			const res = await fetch(`${process.env.MAIN_FETCH_URL}/api/artPoem/upload`, {
+			const res = await fetch(`${process.env.MAIN_FETCH_URL}/api/poemArt/upload`, {
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(turnFormStateIntoObj()),
+				headers: {"x-token": localStorage.getItem("x-token") ?? "null"},
+				body: turnFormStateIntoObj(),
 			});
+
 			const data = await res.json();
+
 			console.log(data);
 		} catch (e) {
 			console.log(e);
@@ -74,6 +62,7 @@ const Upload = () => {
 				<StyledForm
 					action="POST"
 					className="form"
+					encType="multipart/form-data"
 					onSubmit={e => {
 						e.persist();
 						handleSubmit(e);
@@ -96,7 +85,7 @@ const Upload = () => {
 						}
 						required
 					/>
-					<FileInput name="fileInput" onChangeHandle={onChangeHandle} required />
+					<FileInput name="imageFile" onChangeHandle={onChangeHandle} required />
 					<TextAreaInput
 						name="poem"
 						onChangeHandle={(event: React.ChangeEvent<HTMLTextAreaElement>): void =>

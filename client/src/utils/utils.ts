@@ -72,7 +72,7 @@ export const removeBearerFromTokenHeader = (tokenHeader: string | undefined | nu
 	return tokenHeader.match(/^Bearer /) ? tokenHeader.split(" ")[1] : tokenHeader;
 };
 
-/** This function takes an xRefreshToken and uses it to return a new and refreshed x-token.
+/** This function takes an x-refresh-token and uses it to return a new and refreshed x-token.
  *
  * Returns null if something went wrong.
  */
@@ -97,6 +97,31 @@ export const refreshXToken = (xRefreshToken: string | null): Promise<RefreshedXT
 					}
 				})
 				.catch(e => (console.log(e), reject(null)));
+		}
+	});
+};
+
+/** This function takes an x-refresh-token and uses it to return a new and refreshed x-token.
+ *
+ * Compared to "refreshXToken", this function also sets x-token in localStorage before returning it.
+ *
+ * Returns null if something went wrong.
+ */
+export const refreshAndSetXToken = (xRefreshToken: string | null): Promise<RefreshedXToken> => {
+	return new Promise(async (resolve, reject) => {
+		try {
+			const refreshedXToken = await refreshXToken(xRefreshToken);
+
+			if (!refreshedXToken) {
+				throw new Error("Couldn't refresh x-token");
+			} else {
+				authService.setXToken(refreshedXToken);
+
+				resolve(refreshedXToken);
+			}
+		} catch (e) {
+			console.log(e);
+			reject(null);
 		}
 	});
 };

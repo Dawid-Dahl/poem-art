@@ -17,7 +17,7 @@ const FileInput: React.FC<Props> = ({name, onChangeHandle, required}) => {
 				type="file"
 				required={required}
 			/>
-			<label htmlFor="fileInput">
+			<label htmlFor="imageFile">
 				<span className="material-icons">add_photo_alternate</span>Choose File
 			</label>
 		</StyledWrapper>

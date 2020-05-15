@@ -1,7 +1,8 @@
 import express from "express";
 import userRouter from "./userRouter";
-import artPoemRouter from "./artPoemRouter";
+import poemArtRouter from "./poemArtRouter";
 import {jsonResponse} from "../utils/utils";
+import verifyXToken from "../middleware/verifyXToken";
 
 const apiRouter = express.Router();
 
@@ -11,6 +12,6 @@ apiRouter.get("/ping", (req, res, next) => {
 });
 
 apiRouter.use("/users", userRouter);
-apiRouter.use("/artpoem", artPoemRouter);
+apiRouter.use("/poemArt", verifyXToken, poemArtRouter);
 
 export default apiRouter;

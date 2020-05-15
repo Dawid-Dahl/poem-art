@@ -24,6 +24,7 @@ const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault();
+
 			const res = await fetch(postUrl, {
 				method: "POST",
 				headers: {
@@ -31,6 +32,7 @@ const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 				},
 				body: JSON.stringify(turnFormStateIntoObj()),
 			});
+
 			const data = await res.json();
 
 			if (data.success) {
