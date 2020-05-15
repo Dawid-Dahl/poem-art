@@ -1,6 +1,6 @@
+import crypto from "crypto";
 import {Storage} from "@google-cloud/storage";
 import {Request, Response, NextFunction} from "express-serve-static-core";
-import {jsonResponse} from "../utils/utils";
 
 const keyFile =
 	"/Volumes/Seagate Backup Plus Drive/Dawid Programming Files/Projects/PoemArt/server/poem-art-40049b821725.json";
@@ -18,7 +18,9 @@ export const uploadToGCS = (req: Request, res: Response, next: NextFunction) => 
 		return;
 	}
 
-	const fileName = req.file.originalname;
+	const fileName = `${Date.now()}-${crypto.randomBytes(3).toString("hex")}-${
+		req.file.originalname
+	}`;
 
 	const file = bucket.file(fileName);
 
@@ -31,13 +33,13 @@ export const uploadToGCS = (req: Request, res: Response, next: NextFunction) => 
 	})
 		.on("error", err => next(err))
 		.on("finish", () => {
-			const publicUrl = `https://storage.cloud.google.com/${bucket.name}/${file.name}`;
+			const publicUrl = `https://storage.cloud.google.com/${bucket.name}/${fileName}`;
 
 			//TODO: add relevant info to req object.
 
 			req.gcsPublicUrl = publicUrl;
+
+			next();
 		})
 		.end(req.file.buffer);
-
-	next();
 };

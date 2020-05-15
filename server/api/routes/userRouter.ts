@@ -22,7 +22,7 @@ userRouter.get("/get/:id", async (req, res, next) => {
 	}
 });
 
-userRouter.post("/create", async (req, res, next) => {
+userRouter.post("/create", async (req, res) => {
 	const userRepo = getConnection(process.env.NODE_ENV).getRepository(User);
 	const collectionRepo = getConnection(process.env.NODE_ENV).getRepository(Collection);
 
@@ -43,8 +43,6 @@ userRouter.post("/create", async (req, res, next) => {
 			console.log("User was saved!");
 
 			res.json(jsonResponse(true));
-
-			next();
 		} catch (e) {
 			console.error(e);
 			res.status(401).json(jsonResponse(false));

@@ -1,5 +1,6 @@
 declare namespace Express {
-	export interface Request {
+	interface Request {
 		gcsPublicUrl?: string;
+		user?: import("../types").UserId;
 	}
 }

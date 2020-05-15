@@ -33,10 +33,10 @@ export type Comment = {
 	updated_at: number;
 };
 
-export type UserId = Pick<User, "user_id">;
+export type UserId = User["user_id"];
 
 export type User = {
-	user_id: number;
+	user_id: string;
 	username: string;
 	email: string;
 	password?: string;
@@ -45,13 +45,10 @@ export type User = {
 	date_added?: string;
 };
 
-export type TokenPayload = {
-	sub: number;
-	username: string;
-	email: string;
-	admin: number;
-	iat: number;
-	exp: number;
+export type xTokenPayload = {
+	sub: string;
+	iat: string;
+	exp: string;
 };
 
 export type SQLRefreshToken = {

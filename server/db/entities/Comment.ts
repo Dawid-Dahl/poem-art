@@ -7,7 +7,7 @@ import {
 	BaseEntity,
 	ManyToOne,
 } from "typeorm";
-import {ArtPoem} from "./ArtPoem";
+import {PoemArt} from "./PoemArt";
 import {User} from "./User";
 
 @Entity()
@@ -21,8 +21,8 @@ export class Comment extends BaseEntity {
 	@Column({type: "integer", default: 0})
 	likes: number;
 
-	@ManyToOne(type => ArtPoem, artPoem => artPoem.comments)
-	artPoem: ArtPoem;
+	@ManyToOne(type => PoemArt, PoemArt => PoemArt.comments)
+	PoemArt: PoemArt;
 
 	@ManyToOne(type => User, user => user.collections)
 	user: User;
