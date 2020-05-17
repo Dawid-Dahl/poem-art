@@ -53,7 +53,9 @@ const Upload = () => {
 
 			const res = await fetch(`${process.env.MAIN_FETCH_URL}/api/artPoem/upload`, {
 				method: "POST",
-				headers: {"x-token": localStorage.getItem("x-token") ?? "null"},
+				headers: {
+					"x-token": localStorage.getItem("x-token") ?? "null",
+				},
 				body: turnFormStateIntoObj(),
 			});
 

@@ -11,7 +11,8 @@ const AddCollection: React.FC<Props> = ({onClickHandler}) => {
 			<Wrapper onClick={onClickHandler}>
 				<CollectionTitle>
 					Add Collection
-					<br />+
+					<br />
+					<span>+</span>
 				</CollectionTitle>
 			</Wrapper>
 		</>
@@ -27,7 +28,7 @@ const Wrapper = styled.div`
 	align-items: center;
 	justify-content: center;
 	height: 200px;
-	flex: 1 1 100px;
+	flex: 1 1 200px;
 	border-radius: var(--border-radius);
 	padding: 1em;
 	margin: 1em;
@@ -35,6 +36,10 @@ const Wrapper = styled.div`
 	box-shadow: var(--box-shadow);
 	cursor: pointer;
 	transition: transform 0.3s;
+
+	span {
+		font-size: 2em;
+	}
 
 	:hover {
 		transform: scale(1.01) rotate(1deg);

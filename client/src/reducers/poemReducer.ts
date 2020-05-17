@@ -21,9 +21,11 @@ const initialState: PoemReducerState = {
 
 export const poemReducer = (
 	state: PoemReducerState = initialState,
-	payload: PoemActionTypes
+	action: PoemActionTypes
 ): PoemReducerState => {
-	switch (payload.type) {
+	switch (action.type) {
+		case "REMOVE_ALL_POEMS":
+			return {...state, poems: []};
 		default:
 			return state;
 	}

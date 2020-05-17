@@ -12,15 +12,17 @@ const initialState: FlashReducerState = {
 
 export const flashReducer = (
 	state: FlashReducerState = initialState,
-	payload: FlashActionTypes
+	action: FlashActionTypes
 ): FlashReducerState => {
-	switch (payload.type) {
+	switch (action.type) {
 		case "SHOW_FLASH":
 			return {...state, isShowingFlash: true};
 		case "HIDE_FLASH":
 			return {...state, isShowingFlash: false};
 		case "SET_FLASH_MESSAGE":
-			return {...state, flashMessage: payload.message};
+			return {...state, flashMessage: action.message};
+		case "REMOVE_FLASH_MESSAGE":
+			return {...state, flashMessage: ""};
 		default:
 			return state;
 	}

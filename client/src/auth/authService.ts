@@ -1,7 +1,7 @@
 import store from "../store";
 import {setUser, removeUser} from "../actions/actions";
 import {xTokenPayload, User, ServerXTokenResponse} from "../types/types";
-import {getPayloadFromJwt, flashMessage} from "../utils/utils";
+import {getPayloadFromJwt, flashMessage, resetReduxState} from "../utils/utils";
 
 export const authService = {
 	setTokensInLocalStorage(data: any) {
@@ -26,7 +26,7 @@ export const authService = {
 				flashMessage(customFlashMessage);
 			}
 		}
-		this.removeUserFromState();
+		resetReduxState();
 		this.removeTokensFromLocalStorage();
 		flashMessage(customFlashMessage);
 	},
@@ -44,10 +44,6 @@ export const authService = {
 			if (user) store.dispatch(setUser(user));
 			flashMessage("You're now logged in!");
 		}
-	},
-
-	removeUserFromState() {
-		store.dispatch(removeUser());
 	},
 
 	isXTokenExpired(payload: xTokenPayload | undefined) {

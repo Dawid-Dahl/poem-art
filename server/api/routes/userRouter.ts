@@ -6,7 +6,7 @@ import {Collection} from "../../db/entities/Collection";
 
 const userRouter = express.Router();
 
-userRouter.get("/get/:id", async (req, res, next) => {
+userRouter.get("/get/:id", async (req, res) => {
 	const userRepo = getConnection(process.env.NODE_ENV).getRepository(User);
 
 	const id = req.params.id;

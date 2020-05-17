@@ -10,9 +10,9 @@ const initialState: PopupReducerState = {
 
 export const popupReducer = (
 	state: PopupReducerState = initialState,
-	payload: PopupActionTypes
+	action: PopupActionTypes
 ): PopupReducerState => {
-	switch (payload.type) {
+	switch (action.type) {
 		case "SHOW_POPUP":
 			return {...state, isShowingPopup: true};
 		case "HIDE_POPUP":

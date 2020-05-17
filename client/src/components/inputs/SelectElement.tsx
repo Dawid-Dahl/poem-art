@@ -26,6 +26,11 @@ const StyledSelectElement = styled.select`
 	padding: 1em 3em;
 	margin: 1.5em 0 0 0;
 	font-size: 1em;
-	border-radius: 5px;
+	border-radius: var(--border-radius-inputs);
 	cursor: pointer;
+	outline: none;
+
+	&:focus {
+		box-shadow: 0 0 0 2pt var(--main-btn-color);
+	}
 `;

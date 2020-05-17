@@ -19,5 +19,4 @@ const StyledOption = styled.option`
 	padding: 1em 3em;
 	margin: 1em 0 0 0;
 	font-size: 1em;
-	border-radius: 5px;
 `;

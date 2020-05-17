@@ -35,8 +35,7 @@ export const Navbar: React.FC = () => {
 						title="Logout"
 						linkTo="login"
 						onClick={() => {
-							authService.removeUserFromState();
-							authService.removeTokensFromLocalStorage();
+							authService.logout();
 						}}
 						kind="white"
 						customization="desktopButton"
@@ -57,7 +56,6 @@ export const Navbar: React.FC = () => {
 						title="Logout"
 						linkTo="login"
 						onClick={() => {
-							authService.removeUserFromState();
 							authService.removeTokensFromLocalStorage();
 						}}
 						kind="white"

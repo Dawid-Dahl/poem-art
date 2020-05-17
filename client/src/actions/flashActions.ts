@@ -14,7 +14,13 @@ export const setFlashMessage = (message: string) =>
 		message,
 	} as const);
 
+export const removeFlashMessage = () =>
+	({
+		type: "REMOVE_FLASH_MESSAGE",
+	} as const);
+
 export type FlashActionTypes =
 	| ReturnType<typeof showFlash>
 	| ReturnType<typeof hideFlash>
-	| ReturnType<typeof setFlashMessage>;
+	| ReturnType<typeof setFlashMessage>
+	| ReturnType<typeof removeFlashMessage>;

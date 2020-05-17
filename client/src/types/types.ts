@@ -28,9 +28,8 @@ export type Artpoem = {
 };
 
 export type Collection = {
-	collection_id: number;
-	poems: Artpoem[];
-	createdAt: number;
+	name: string;
+	public: boolean;
 };
 
 export type Comment = {

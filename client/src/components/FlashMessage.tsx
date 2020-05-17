@@ -21,24 +21,29 @@ type WrapperProps = {
 };
 
 const Wrapper = styled.div`
-	position: absolute;
+	position: fixed;
 	width: 100%;
 	height: 0px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	z-index: 30;
 `;
 
 const StyledDiv = styled.div<WrapperProps>`
 	position: relative;
 	top: 60px;
+	max-width: 60%;
 	background-color: var(--main-btn-color);
 	border-radius: 10px;
 	border: 2px solid rgba(255, 255, 255, 0.327);
 	transform: scale(1.3);
 	opacity: 100%;
 	transition: all 0.5s;
-	z-index: 10;
+
+	@media only screen and (max-width: 500px) {
+		top: 90px;
+	}
 
 	${props =>
 		props.active
@@ -56,6 +61,7 @@ const Paragraph = styled.p`
 	color: white;
 	padding: 0px 20px;
 	font-size: 1em;
+	text-align: center;
 `;
 
 export default FlashMessage;

@@ -17,7 +17,7 @@ export class Collection extends BaseEntity {
 	@Column({type: "varchar", default: "My Collection"})
 	name: string;
 
-	@Column({type: "boolean", default: false})
+	@Column({type: "boolean", default: true})
 	public: boolean;
 
 	@ManyToOne(type => User, user => user.collections)

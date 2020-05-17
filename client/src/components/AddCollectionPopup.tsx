@@ -4,8 +4,9 @@ import TextInput from "./inputs/TextInput";
 import Button from "./Button";
 import CheckBoxInput from "./inputs/CheckBoxInput";
 import {useDispatch, useSelector} from "react-redux";
-import {showPopup, hidePopup} from "../actions/popupActions";
+import {hidePopup} from "../actions/popupActions";
 import {RootState} from "../store";
+import {refreshAndSetXToken, flashMessage} from "../utils/utils";
 
 type Props = {};
 
@@ -17,12 +18,58 @@ const AddCollectionPopup: React.FC<Props> = () => {
 
 	const isShowingPopup = useSelector((state: RootState) => state.popupReducer.isShowingPopup);
 
-	const handleClick = () => dispatch(hidePopup());
+	const turnFormStateIntoObj = (collectionName: string, isPublic: boolean) => {
+		if (collectionName) {
+			return {
+				collectionName,
+				isPublic,
+			};
+		} else {
+			console.log("No data sent. Fill in all the required fields.");
+			return;
+		}
+	};
+
+	const handleClick = () => {
+		setCollectionName("");
+		dispatch(hidePopup());
+	};
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		try {
+			e.preventDefault();
+
+			const collectionPayload = turnFormStateIntoObj(collectionName, isPublic);
+
+			if (!collectionPayload) return;
+
+			await refreshAndSetXToken(localStorage.getItem("x-refresh-token"));
+
+			const res = await fetch(`${process.env.MAIN_FETCH_URL}/api/collections/add`, {
+				method: "POST",
+				headers: {
+					"x-token": localStorage.getItem("x-token") ?? "null",
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(collectionPayload),
+			});
+
+			const data = await res.json();
+
+			setCollectionName("");
+
+			dispatch(hidePopup());
+
+			flashMessage(JSON.parse(data.payload).message);
+		} catch (e) {
+			console.log(e);
+		}
+	};
 
 	return (
 		<>
 			<Wrapper active={isShowingPopup}>
-				<StyledForm>
+				<StyledForm action="POST" onSubmit={e => handleSubmit(e)}>
 					<h2>Add Collection</h2>
 					<NameRow>
 						<p>Name</p>
@@ -54,7 +101,7 @@ const AddCollectionPopup: React.FC<Props> = () => {
 							title="Cancel"
 							kind="grey"
 							type="button"
-							onClickHandler={() => handleClick()}
+							onClickHandler={handleClick}
 						/>
 						<Button title="Add" kind="primary" type="submit" />
 					</ButtonRow>
@@ -117,7 +164,7 @@ const NameRow = styled.div`
 	justify-content: space-between;
 	margin-top: 3em;
 	padding-top: 2em;
-	border-top: 1px var(--main-grey-color) solid;
+	border-top: 1px var(--light-grey-color) solid;
 
 	p {
 		padding-right: 30px;
@@ -128,6 +175,15 @@ const NameRow = styled.div`
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	input {
+		border: var(--light-grey-color) 2px solid;
+		outline: none;
+
+		&:focus {
+			box-shadow: 0 0 0 2pt var(--main-btn-color);
+		}
 	}
 
 	@media only screen and (max-width: 500px) {
@@ -145,7 +201,8 @@ const PublicRow = styled.div`
 	align-items: center;
 	justify-content: start;
 	margin-top: 3em;
-	border-top: 1px var(--main-grey-color) solid;
+	padding-top: 2em;
+	border-top: 1px var(--light-grey-color) solid;
 
 	p {
 		padding-right: 30px;

@@ -11,11 +11,11 @@ const initialState: UserReducerState = {
 
 export const userReducer = (
 	state: UserReducerState = initialState,
-	payload: UserActionTypes
+	action: UserActionTypes
 ): UserReducerState => {
-	switch (payload.type) {
+	switch (action.type) {
 		case "SET_USER":
-			return {...state, user: payload.user};
+			return {...state, user: action.user};
 		case "REMOVE_USER":
 			return {...state, user: null};
 

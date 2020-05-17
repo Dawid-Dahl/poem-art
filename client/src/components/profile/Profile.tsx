@@ -5,15 +5,18 @@ import CollectionsDisplay from "./CollectionsDisplay";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store";
 import {Navbar} from "../Navbar";
+import {authService} from "../../auth/authService";
 
 const Profile = () => {
-	const username = useSelector((state: RootState) => state.userReducer.user?.username);
+	const user = useSelector((state: RootState) => state.userReducer.user);
+
+	if (!user) return authService.logout("You're not allowed to access that page. Please log in!");
 
 	return (
 		<>
 			<Navbar />
 			<Wrapper>
-				<Greeting>{`Welcome back, ${username}!`}</Greeting>
+				<Greeting>{`Welcome back, ${user.username}!`}</Greeting>
 				<ProfilePic />
 				<h2>Your Collections</h2>
 				<CollectionsDisplay />

@@ -11,8 +11,6 @@ export const uploadArtPoemController = async (req: Request, res: Response) => {
 
 	const {title, collection, poem} = JSON.parse(req.body.poemFields);
 
-	console.log(collection);
-
 	try {
 		const artPoem = new ArtPoem();
 

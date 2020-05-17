@@ -29,5 +29,10 @@ const StyledTextArea = styled.textarea`
 	min-width: 20%;
 	padding: 1em 3em;
 	font-size: 1em;
-	border-radius: 5px;
+	border-radius: var(--border-radius-inputs);
+	outline: none;
+
+	&:focus {
+		box-shadow: 0 0 0 2pt var(--main-btn-color);
+	}
 `;
