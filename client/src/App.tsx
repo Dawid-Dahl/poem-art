@@ -1,5 +1,5 @@
 import React from "react";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "./store";
 import FlashMessage from "./components/FlashMessage";
 import {AuthenticatedApp} from "./components/authenticated-app/AuthenticatedApp";
@@ -7,9 +7,17 @@ import {UnauthenticatedApp} from "./components/unauthenticated-app/Unauthenticat
 import {useTokensToRefreshIfNeeded} from "./custom-hooks/useTokensToRefreshIfNeeded";
 import {authService} from "./auth/authService";
 import {saveUserInStoreWithXToken} from "./utils/utils";
+import AddCollectionPopup from "./components/AddCollectionPopup";
+import {Overlay} from "./components/Overlay";
+import {hidePopup} from "./actions/popupActions";
 
 const App: React.FC = () => {
 	const user = useSelector((state: RootState) => state.userReducer.user);
+	const isShowingPopup = useSelector((state: RootState) => state.popupReducer.isShowingPopup);
+
+	const dispatch = useDispatch();
+
+	const handleClick = () => dispatch(hidePopup());
 
 	const xToken = localStorage.getItem("x-token");
 	const xRefreshToken = localStorage.getItem("x-refresh-token");
@@ -29,6 +37,8 @@ const App: React.FC = () => {
 
 	return (
 		<>
+			<Overlay isShowingPopup={isShowingPopup} handleClick={handleClick} />
+			<AddCollectionPopup />
 			<FlashMessage />
 			{user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
 		</>

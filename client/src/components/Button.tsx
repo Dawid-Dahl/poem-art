@@ -3,15 +3,18 @@ import styled from "styled-components";
 
 type Props = {
 	title: string;
-	kind: "primary" | "white" | "black";
+	kind: "primary" | "white" | "black" | "grey";
 	type: "button" | "submit";
+	onClickHandler?: (args: any) => any;
 };
 
-const Button: React.FC<Props> = ({title, kind, type}) => {
+const Button: React.FC<Props> = ({title, kind, type, onClickHandler}) => {
 	return (
 		<>
 			<Wrapper kind={kind}>
-				<button type={type}>{title}</button>
+				<button onClick={onClickHandler} type={type}>
+					{title}
+				</button>
 			</Wrapper>
 		</>
 	);
@@ -20,7 +23,7 @@ const Button: React.FC<Props> = ({title, kind, type}) => {
 export default Button;
 
 type WrapperProps = {
-	kind: "primary" | "white" | "black";
+	kind: "primary" | "white" | "black" | "grey";
 };
 
 const Wrapper = styled.div<WrapperProps>`
@@ -40,6 +43,8 @@ const Wrapper = styled.div<WrapperProps>`
 				? "white"
 				: props.kind === "black"
 				? "black"
+				: props.kind === "grey"
+				? "var(--main-grey-color)"
 				: "white"};
 		margin: 2em 0;
 		transition: all 0.2s;
@@ -54,6 +59,8 @@ const Wrapper = styled.div<WrapperProps>`
 				? "black"
 				: props.kind === "black"
 				? "white"
+				: props.kind === "grey"
+				? "white"
 				: "black"};
 		border: black;
 
@@ -63,6 +70,8 @@ const Wrapper = styled.div<WrapperProps>`
 			box-shadow: ${props =>
 				props.kind === "black"
 					? "inset 0px 0px 0px 5px var(--dark-grey-color)"
+					: props.kind === "grey"
+					? "0px 0px 13px 5px #00000005, inset 0px 0px 0px 5px #00000017"
 					: "var(--box-shadow), inset 0px 0px 0px 5px #00000017"};
 		}
 	}

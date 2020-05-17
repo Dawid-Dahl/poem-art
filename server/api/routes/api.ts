@@ -1,6 +1,7 @@
 import express from "express";
 import userRouter from "./userRouter";
-import poemArtRouter from "./poemArtRouter";
+import artPoemRouter from "./artPoemRouter";
+import collectionsRouter from "./collectionsRouter";
 import {jsonResponse} from "../utils/utils";
 import verifyXToken from "../middleware/verifyXToken";
 
@@ -12,6 +13,7 @@ apiRouter.get("/ping", (req, res, next) => {
 });
 
 apiRouter.use("/users", userRouter);
-apiRouter.use("/poemArt", verifyXToken, poemArtRouter);
+apiRouter.use("/artPoem", verifyXToken, artPoemRouter);
+apiRouter.use("/collections", verifyXToken, collectionsRouter);
 
 export default apiRouter;

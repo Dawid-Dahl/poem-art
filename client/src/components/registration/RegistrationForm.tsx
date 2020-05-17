@@ -5,6 +5,7 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 import styled from "styled-components";
 import {flashMessage, areStringsIdentical} from "../../utils/utils";
 import Button from "../Button";
+import TextInput from "../inputs/TextInput";
 
 interface Props extends RouteComponentProps {
 	postUrl: string;
@@ -57,8 +58,9 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 		<>
 			<StyledForm action="POST" className="form" onSubmit={handleSubmit}>
 				<h2>REGISTRATION</h2>
-				<Input
+				<TextInput
 					name="username"
+					value={username}
 					type="text"
 					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setUsername(e.target.value)
@@ -66,16 +68,18 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 					required
 					minLength={4}
 				/>
-				<Input
+				<TextInput
 					name="email"
+					value={email}
 					type="email"
 					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setEmail(e.target.value)
 					}
 					required
 				/>
-				<Input
+				<TextInput
 					name="password"
+					value={password}
 					type="password"
 					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setPassword(e.target.value)
@@ -83,8 +87,9 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 					required
 					minLength={4}
 				/>
-				<Input
+				<TextInput
 					name="confirm-password"
+					value={confirmPassword}
 					type="password"
 					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setconfirmPassword(e.target.value)

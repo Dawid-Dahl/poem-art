@@ -6,7 +6,8 @@ import TextAreaInput from "../inputs/TextAreaInput";
 import {ImageFile} from "../../types/types";
 import {Navbar} from "../Navbar";
 import FileInput from "../inputs/FileInput";
-import {refreshAndSetXToken} from "../../utils/utils";
+import {refreshAndSetXToken, flashMessage} from "../../utils/utils";
+import SelectElement from "../inputs/SelectElement";
 
 const Upload = () => {
 	const [title, setTitle] = useState("");
@@ -15,13 +16,19 @@ const Upload = () => {
 	const [poem, setPoem] = useState("");
 
 	const turnFormStateIntoObj = () => {
-		if (title && imageFile && poem) {
+		if (!imageFile) {
+			flashMessage("Please select an image to go with the poem!");
+			return;
+		}
+
+		if (!collection) {
+			setCollection("My Collection");
+		}
+
+		if (title && poem) {
 			const data = new FormData();
 			data.append("imageFile", imageFile);
 			data.append("poemFields", JSON.stringify({title, collection, poem}));
-
-			console.log(data.get("imageFile"));
-			console.log(data.get("poemFields"));
 
 			return data;
 		} else {
@@ -38,9 +45,13 @@ const Upload = () => {
 		try {
 			e.preventDefault();
 
+			const uploadPayload = turnFormStateIntoObj();
+
+			if (!uploadPayload) return;
+
 			await refreshAndSetXToken(localStorage.getItem("x-refresh-token"));
 
-			const res = await fetch(`${process.env.MAIN_FETCH_URL}/api/poemArt/upload`, {
+			const res = await fetch(`${process.env.MAIN_FETCH_URL}/api/artPoem/upload`, {
 				method: "POST",
 				headers: {"x-token": localStorage.getItem("x-token") ?? "null"},
 				body: turnFormStateIntoObj(),
@@ -48,7 +59,7 @@ const Upload = () => {
 
 			const data = await res.json();
 
-			console.log(data);
+			flashMessage(JSON.parse(data.payload).message);
 		} catch (e) {
 			console.log(e);
 		}
@@ -71,23 +82,22 @@ const Upload = () => {
 				>
 					<TextInput
 						name="title"
+						value={title}
 						type="text"
 						onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 							setTitle(e.target.value)
 						}
 						required
 					/>
-					<TextInput
-						name="collection"
-						type="text"
-						onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+					<SelectElement
+						onChangeHandle={(e: React.ChangeEvent<HTMLSelectElement>) =>
 							setCollection(e.target.value)
 						}
-						required
 					/>
-					<FileInput name="imageFile" onChangeHandle={onChangeHandle} required />
+					<FileInput name="imageFile" onChangeHandle={onChangeHandle} />
 					<TextAreaInput
 						name="poem"
+						value={poem}
 						onChangeHandle={(event: React.ChangeEvent<HTMLTextAreaElement>): void =>
 							setPoem(event.target.value)
 						}

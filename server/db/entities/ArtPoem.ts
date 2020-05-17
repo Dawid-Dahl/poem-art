@@ -13,7 +13,7 @@ import {Collection} from "./Collection";
 import {Comment} from "./Comment";
 
 @Entity()
-export class PoemArt extends BaseEntity {
+export class ArtPoem extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
@@ -31,9 +31,9 @@ export class PoemArt extends BaseEntity {
 
 	@ManyToMany(type => Collection)
 	@JoinTable()
-	collections: Collection;
+	collections: Collection[];
 
-	@OneToMany(type => Comment, comment => comment.PoemArt)
+	@OneToMany(type => Comment, comment => comment.ArtPoem)
 	comments: Comment;
 
 	@CreateDateColumn()

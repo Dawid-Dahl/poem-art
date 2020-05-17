@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import Collection from "./Collection";
+import AddCollection from "./AddCollection";
+import {useDispatch} from "react-redux";
+import {showPopup} from "../../actions/popupActions";
 
 const collectionMock = [
 	{
@@ -27,12 +30,17 @@ const collectionMock = [
 ];
 
 const CollectionsDisplay = () => {
+	const dispatch = useDispatch();
+
+	const onClickHandler = () => dispatch(showPopup());
+
 	return (
 		<>
 			<Wrapper>
 				{collectionMock.map(collection => (
 					<Collection key={collection.collection_id} name={collection.name} />
 				))}
+				<AddCollection onClickHandler={onClickHandler} />
 			</Wrapper>
 		</>
 	);

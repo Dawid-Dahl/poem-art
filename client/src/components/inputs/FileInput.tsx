@@ -4,19 +4,12 @@ import styled from "styled-components";
 type Props = {
 	name: string;
 	onChangeHandle: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	required?: boolean;
 };
 
-const FileInput: React.FC<Props> = ({name, onChangeHandle, required}) => {
+const FileInput: React.FC<Props> = ({name, onChangeHandle}) => {
 	return (
 		<StyledWrapper kind={"white"}>
-			<input
-				id={name}
-				onChange={onChangeHandle}
-				name={name}
-				type="file"
-				required={required}
-			/>
+			<input id={name} onChange={onChangeHandle} name={name} type="file" />
 			<label htmlFor="imageFile">
 				<span className="material-icons">add_photo_alternate</span>Choose File
 			</label>

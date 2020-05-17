@@ -16,7 +16,7 @@ export const Navbar: React.FC = () => {
 						window.scrollTo(0, 0);
 					}}
 				>
-					<Logo>poemArt.</Logo>
+					<Logo>artPoem.</Logo>
 				</Link>
 				<Buttons>
 					<LinkButton

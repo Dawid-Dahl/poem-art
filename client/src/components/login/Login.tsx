@@ -6,7 +6,7 @@ import styled from "styled-components";
 const Login = () => {
 	return (
 		<Wrapper>
-			<h1 className="registration">poemArt.</h1>
+			<h1 className="registration">artPoem.</h1>
 			<LoginForm postUrl={`${process.env.AUTH_FETCH_URL}/api/login`} redirectUrl="/main" />
 			<Link to="/register" className="registrationLink">
 				Go To Registration

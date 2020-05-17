@@ -6,6 +6,7 @@ import {authService} from "../../auth/authService";
 import Button from "../Button";
 import {flashMessage, constructUserFromId} from "../../utils/utils";
 import styled from "styled-components";
+import TextInput from "../inputs/TextInput";
 
 interface Props extends RouteComponentProps {
 	postUrl: string;
@@ -65,16 +66,18 @@ const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 				}}
 			>
 				<h2>LOGIN</h2>
-				<Input
+				<TextInput
 					name="email"
+					value={email}
 					type="email"
 					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setEmail(e.target.value)
 					}
 					required
 				/>
-				<Input
+				<TextInput
 					name="password"
+					value={password}
 					type="password"
 					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setPassword(e.target.value)

@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 type Props = {
 	name: string;
+	value: string;
 	type: "text" | "email" | "password";
 	onChangeHandle: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	required?: boolean;
@@ -13,6 +14,7 @@ type Props = {
 
 const TextInput: React.FC<Props> = ({
 	name,
+	value,
 	type,
 	onChangeHandle,
 	required,
@@ -22,6 +24,7 @@ const TextInput: React.FC<Props> = ({
 }) => (
 	<StyledInput
 		id={name}
+		value={value}
 		name={name}
 		type={type}
 		placeholder={[name[0].toUpperCase(), name.slice(1)].join("")}
@@ -41,4 +44,5 @@ const StyledInput = styled.input`
 	margin: 1em 0 0 0;
 	font-size: 1em;
 	border-radius: 5px;
+	text-align: center;
 `;
