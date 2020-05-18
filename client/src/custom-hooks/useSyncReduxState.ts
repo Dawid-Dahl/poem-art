@@ -4,6 +4,28 @@ import store from "../store";
 import {refreshAndSetXToken} from "../utils/utils";
 import {syncAllCollections} from "../actions/collectionActions";
 
+const syncReduxPoemsStateWithDb = async (user?: User) => {
+	if (!user) return;
+
+	await refreshAndSetXToken(localStorage.getItem("x-refresh-token"));
+
+	try {
+		const res = await fetch(`${process.env.MAIN_FETCH_URL}/api/artPoem/get-all`, {
+			headers: {
+				"x-token": localStorage.getItem("x-token") ?? "null",
+			},
+		});
+
+		/* const {payload} = await res.json();
+
+		store.dispatch(syncAllCollections(JSON.parse(payload))); */
+
+		console.log("Redux store synced!");
+	} catch (e) {
+		console.log(e);
+	}
+};
+
 const syncReduxCollectionsStateWithDb = async (user?: User) => {
 	if (!user) return;
 
@@ -23,8 +45,6 @@ const syncReduxCollectionsStateWithDb = async (user?: User) => {
 		console.log("Redux store synced!");
 	} catch (e) {
 		console.log(e);
-
-		return null;
 	}
 };
 
@@ -41,6 +61,14 @@ export const useSyncReduxState = (user: User, states?: ReduxStates | ReduxStates
 		if (!states) {
 			useEffect(() => {
 				syncReduxCollectionsStateWithDb(user);
+				syncReduxPoemsStateWithDb(user);
+			}, []);
+			return;
+		}
+
+		if (states === "poem" || states?.includes("poem")) {
+			useEffect(() => {
+				syncReduxPoemsStateWithDb(user);
 			}, []);
 			return;
 		}

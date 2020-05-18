@@ -16,8 +16,6 @@ export const uploadArtPoemController = async (req: Request, res: Response) => {
 
 		const query = await collectionRepo.find({where: {user: req.user}});
 
-		//TODO Finish the collection functionality. Now defaults to "My Collection" collection.
-
 		const filteredCollection = query.filter(x => x.name === collection)[0];
 
 		artPoem.title = title;

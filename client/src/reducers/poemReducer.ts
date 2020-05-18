@@ -1,4 +1,4 @@
-import {PoemActionTypes} from "../actions/poemAction";
+import {PoemActionTypes} from "../actions/poemActions";
 import {Artpoem} from "../types/types";
 import {range, createDummyPoem} from "../utils/utils";
 

@@ -5,7 +5,7 @@ import {removeAllCollections} from "../actions/collectionActions";
 import {hidePopup} from "../actions/popupActions";
 import {setFlashMessage, showFlash, hideFlash, removeFlashMessage} from "../actions/flashActions";
 import {removeUser} from "../actions/userActions";
-import {removeAllPoems} from "../actions/poemAction";
+import {removeAllPoems} from "../actions/poemActions";
 
 export const range = (start: number, end: number): number[] =>
 	end <= start ? [end] : [...range(start, end - 1), end];

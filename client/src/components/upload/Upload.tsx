@@ -14,7 +14,7 @@ import {RootState} from "../../store";
 
 const Upload = () => {
 	const [title, setTitle] = useState("");
-	const [collection, setCollection] = useState("");
+	const [collection, setCollection] = useState("My Collection");
 	const [imageFile, setImageFile] = useState<ImageFile>(null);
 	const [poem, setPoem] = useState("");
 

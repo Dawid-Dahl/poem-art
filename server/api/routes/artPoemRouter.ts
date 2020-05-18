@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import {uploadToGCS} from "../middleware/uploadToGCS";
 import {uploadArtPoemController} from "../controllers/uploadArtPoemController";
+import {getAllArtPoemController} from "../controllers/getAllArtPoemController";
 
 const upload = multer({
 	storage: multer.memoryStorage(),
@@ -11,6 +12,8 @@ const upload = multer({
 });
 
 const artPoemRouter = express.Router();
+
+artPoemRouter.get("/get-all", getAllArtPoemController);
 
 artPoemRouter.post("/upload", upload.single("imageFile"), uploadToGCS, uploadArtPoemController);
 

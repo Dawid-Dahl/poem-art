@@ -3,9 +3,15 @@ import styled from "styled-components";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store";
 import ArtPoem from "./ArtPoem";
+import {useSyncReduxState} from "../../custom-hooks/useSyncReduxState";
 
 export const ArtPoemGrid = () => {
+	const user = useSelector((state: RootState) => state.userReducer.user);
 	const poems = useSelector((state: RootState) => state.poemReducer.poems);
+
+	if (!user) return;
+
+	useSyncReduxState(user, "poem");
 
 	return (
 		<>

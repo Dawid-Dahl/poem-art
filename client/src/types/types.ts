@@ -1,6 +1,6 @@
 import {ReduxCollectionState} from "../actions/collectionActions";
 import {ReduxFlashState} from "../actions/flashActions";
-import {ReduxPoemState} from "../actions/poemAction";
+import {ReduxPoemState} from "../actions/poemActions";
 import {ReduxPopupState} from "../actions/popupActions";
 import {ReduxUserState} from "../actions/userActions";
 

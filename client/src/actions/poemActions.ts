@@ -1,6 +1,6 @@
-export const getPoems = () =>
+export const getAllPoems = () =>
 	({
-		type: "GET_POEMS",
+		type: "GET_ALL_POEMS",
 	} as const);
 
 export const removeAllPoems = () =>
