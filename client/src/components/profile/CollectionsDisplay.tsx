@@ -4,32 +4,13 @@ import Collection from "./Collection";
 import AddCollection from "./AddCollection";
 import {useDispatch} from "react-redux";
 import {showPopup} from "../../actions/popupActions";
+import {ReduxCollection} from "../../types/types";
 
-const collectionMock = [
-	{
-		collection_id: 4,
-		name: "Cat Poems",
-		poems: [{}, {}, {}],
-		date_added: Date.now(),
-		owner: 39,
-	},
-	{
-		collection_id: 1,
-		name: "Sad Poems",
-		poems: [{}, {}, {}],
-		date_added: Date.now(),
-		owner: 39,
-	},
-	{
-		collection_id: 8,
-		name: "Inspiring Poems",
-		poems: [{}, {}, {}],
-		date_added: Date.now(),
-		owner: 39,
-	},
-];
+type Props = {
+	collections: ReduxCollection[];
+};
 
-const CollectionsDisplay = () => {
+const CollectionsDisplay: React.FC<Props> = ({collections}) => {
 	const dispatch = useDispatch();
 
 	const onClickHandler = () => dispatch(showPopup());
@@ -37,8 +18,8 @@ const CollectionsDisplay = () => {
 	return (
 		<>
 			<Wrapper>
-				{collectionMock.map(collection => (
-					<Collection key={collection.collection_id} name={collection.name} />
+				{collections.map(collection => (
+					<Collection key={collection.id} name={collection.name} />
 				))}
 				<AddCollection onClickHandler={onClickHandler} />
 			</Wrapper>

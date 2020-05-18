@@ -23,7 +23,7 @@ export const addCollectionController = async (req: Request, res: Response) => {
 		collection.public = isPublic;
 		collection.user = user;
 
-		collectionRepo.save(collection);
+		const insertResult = await collectionRepo.save(collection);
 
 		res.status(201).json(
 			jsonResponse(
@@ -32,6 +32,11 @@ export const addCollectionController = async (req: Request, res: Response) => {
 					message: `Your ${
 						isPublic ? "public" : "private"
 					} collection ${collectionName} was successfully added!`,
+					collection: JSON.stringify({
+						id: insertResult.id,
+						name: collection.name,
+						public: collection.public,
+					}),
 				})
 			)
 		);

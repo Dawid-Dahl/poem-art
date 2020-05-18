@@ -19,8 +19,18 @@ const Upload = () => {
 	const [poem, setPoem] = useState("");
 
 	const user = useSelector((state: RootState) => state.userReducer.user);
+	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
 
-	if (user) useSyncReduxState(user, "collection");
+	if (!user) return;
+
+	useSyncReduxState(user, "collection");
+
+	const resetLocalState = () => {
+		setTitle("");
+		setCollection("My Collection");
+		setImageFile(null);
+		setPoem("");
+	};
 
 	const turnFormStateIntoObj = () => {
 		if (!imageFile) {
@@ -68,6 +78,8 @@ const Upload = () => {
 
 			const data = await res.json();
 
+			resetLocalState();
+
 			flashMessage(JSON.parse(data.payload).message);
 		} catch (e) {
 			console.log(e);
@@ -102,6 +114,7 @@ const Upload = () => {
 						onChangeHandle={(e: React.ChangeEvent<HTMLSelectElement>) =>
 							setCollection(e.target.value)
 						}
+						collections={collections}
 					/>
 					<FileInput name="imageFile" onChangeHandle={onChangeHandle} />
 					<TextAreaInput

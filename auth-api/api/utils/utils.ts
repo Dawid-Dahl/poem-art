@@ -1,10 +1,4 @@
-import {
-	SQLRefreshToken,
-	xTokenPayload,
-	AuthUser,
-	AuthJsonResponsePayload,
-	JsonResponse,
-} from "../types/types";
+import {SQLRefreshToken, xTokenPayload, AuthUser, AuthJsonResponsePayload} from "../types/types";
 import jwt from "jsonwebtoken";
 import sqlite from "sqlite3";
 import {config} from "dotenv";

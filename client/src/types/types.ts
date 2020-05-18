@@ -33,7 +33,8 @@ export type Artpoem = {
 	comments?: Comment[];
 };
 
-export type Collection = {
+export type ReduxCollection = {
+	id: string;
 	name: string;
 	public: boolean;
 };
@@ -78,9 +79,4 @@ export type ValidOrRefreshedXToken = string | null;
 
 export type RefreshedXToken = string | null;
 
-export type ReduxStates =
-	| ReduxCollectionState
-	| ReduxFlashState
-	| ReduxPoemState
-	| ReduxPopupState
-	| ReduxUserState;
+export type ReduxStates = ReduxCollectionState | ReduxPoemState | ReduxUserState;

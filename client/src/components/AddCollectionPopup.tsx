@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {hidePopup} from "../actions/popupActions";
 import {RootState} from "../store";
 import {refreshAndSetXToken, flashMessage} from "../utils/utils";
+import {addCollection} from "../actions/collectionActions";
 
 type Props = {};
 
@@ -58,6 +59,15 @@ const AddCollectionPopup: React.FC<Props> = () => {
 
 			setCollectionName("");
 
+			const {id, name, public: _public} = JSON.parse(JSON.parse(data.payload).collection);
+
+			dispatch(
+				addCollection({
+					id,
+					name,
+					public: _public,
+				})
+			);
 			dispatch(hidePopup());
 
 			flashMessage(JSON.parse(data.payload).message);

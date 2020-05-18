@@ -1,8 +1,8 @@
-import {Collection} from "../types/types";
+import {ReduxCollection} from "../types/types";
 import {CollectionActionTypes} from "../actions/collectionActions";
 
 export type CollectionReducerState = {
-	collections: Collection[] | null;
+	collections: ReduxCollection[];
 };
 
 const initialState: CollectionReducerState = {
@@ -14,6 +14,8 @@ export const collectionReducer = (
 	action: CollectionActionTypes
 ): CollectionReducerState => {
 	switch (action.type) {
+		case "ADD_COLLECTION":
+			return {...state, collections: [...state.collections, action.collection]};
 		case "SYNC_ALL_COLLECTIONS":
 			return {...state, collections: action.collections};
 		case "REMOVE_ALL_COLLECTIONS":

@@ -14,16 +14,16 @@ export const uploadArtPoemController = async (req: Request, res: Response) => {
 	try {
 		const artPoem = new ArtPoem();
 
-		const query = await collectionRepo.find({where: {userId: req.user}});
+		const query = await collectionRepo.find({where: {user: req.user}});
 
 		//TODO Finish the collection functionality. Now defaults to "My Collection" collection.
 
-		const myCollection = query.filter(x => x.name === "My Collection")[0];
+		const filteredCollection = query.filter(x => x.name === collection)[0];
 
 		artPoem.title = title;
 		artPoem.content = poem;
 		artPoem.imageUrl = req.gcsPublicUrl ?? "";
-		artPoem.collections = [myCollection];
+		artPoem.collections = [filteredCollection];
 
 		await artPoemRepo.save(artPoem);
 

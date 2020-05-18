@@ -9,10 +9,12 @@ import {useSyncReduxState} from "../../custom-hooks/useSyncReduxState";
 
 const Profile = () => {
 	const user = useSelector((state: RootState) => state.userReducer.user);
+	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
 
 	if (!user) return;
+	if (!collections) return;
 
-	useSyncReduxState(user);
+	useSyncReduxState(user, "collection");
 
 	return (
 		<>
@@ -21,7 +23,7 @@ const Profile = () => {
 				<Greeting>{`Welcome back, ${user.username}!`}</Greeting>
 				<ProfilePic />
 				<h2>Your Collections</h2>
-				<CollectionsDisplay />
+				<CollectionsDisplay collections={collections} />
 			</Wrapper>
 		</>
 	);

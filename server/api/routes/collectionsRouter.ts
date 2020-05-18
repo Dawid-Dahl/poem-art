@@ -13,7 +13,7 @@ collectionsRouter.get("/get-all", async (req, res) => {
 		const collectionRepo = getConnection(process.env.NODE_ENV).getRepository(Collection);
 
 		const collections = await collectionRepo.find({
-			select: ["name", "public"],
+			select: ["id", "name", "public"],
 			where: {user: req.user},
 		});
 

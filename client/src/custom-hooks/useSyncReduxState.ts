@@ -21,8 +21,6 @@ const syncReduxCollectionsStateWithDb = async (user?: User) => {
 		store.dispatch(syncAllCollections(JSON.parse(payload)));
 
 		console.log("Redux store synced!");
-
-		return payload;
 	} catch (e) {
 		console.log(e);
 
@@ -43,14 +41,14 @@ export const useSyncReduxState = (user: User, states?: ReduxStates | ReduxStates
 		if (!states) {
 			useEffect(() => {
 				syncReduxCollectionsStateWithDb(user);
-			});
+			}, []);
 			return;
 		}
 
 		if (states === "collection" || states?.includes("collection")) {
 			useEffect(() => {
 				syncReduxCollectionsStateWithDb(user);
-			});
+			}, []);
 			return;
 		}
 	} catch (e) {
