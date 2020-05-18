@@ -19,6 +19,8 @@ export const removeFlashMessage = () =>
 		type: "REMOVE_FLASH_MESSAGE",
 	} as const);
 
+export type ReduxFlashState = "flash";
+
 export type FlashActionTypes =
 	| ReturnType<typeof showFlash>
 	| ReturnType<typeof hideFlash>

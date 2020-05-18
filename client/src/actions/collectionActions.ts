@@ -11,6 +11,8 @@ export const removeAllCollections = () =>
 		type: "REMOVE_ALL_COLLECTIONS",
 	} as const);
 
+export type ReduxCollectionState = "collection";
+
 export type CollectionActionTypes =
 	| ReturnType<typeof syncAllCollections>
 	| ReturnType<typeof removeAllCollections>;

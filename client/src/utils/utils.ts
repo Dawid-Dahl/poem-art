@@ -1,16 +1,11 @@
 import {xTokenPayload, User, Artpoem, Comment, RefreshedXToken} from "../types/types";
 import store from "../store";
-import {
-	showFlash,
-	hideFlash,
-	setFlashMessage,
-	removeUser,
-	removeAllPoems,
-	removeFlashMessage,
-} from "../actions/actions";
 import {authService} from "../auth/authService";
-import {syncAllCollections, removeAllCollections} from "../actions/collectionActions";
+import {removeAllCollections} from "../actions/collectionActions";
 import {hidePopup} from "../actions/popupActions";
+import {setFlashMessage, showFlash, hideFlash, removeFlashMessage} from "../actions/flashActions";
+import {removeUser} from "../actions/userActions";
+import {removeAllPoems} from "../actions/poemAction";
 
 export const range = (start: number, end: number): number[] =>
 	end <= start ? [end] : [...range(start, end - 1), end];
@@ -158,26 +153,6 @@ export const addXTokenHeaderToFetch = (xToken: string | null) => async (
 	});
 
 	return response;
-};
-
-export const syncReduxCollectionsStateWithDb = async (user?: User) => {
-	if (!user) authService.logout("You're not allowed to access that page. Please log in!");
-
-	await refreshAndSetXToken(localStorage.getItem("x-refresh-token"));
-
-	try {
-		const res = await fetch(`${process.env.MAIN_FETCH_URL}/api/collections/get-all`, {
-			headers: {
-				"x-token": localStorage.getItem("x-token") ?? "null",
-			},
-		});
-
-		const {payload} = await res.json();
-
-		store.dispatch(syncAllCollections(JSON.parse(payload)));
-	} catch (e) {
-		console.log(e);
-	}
 };
 
 export const resetReduxState = () => {

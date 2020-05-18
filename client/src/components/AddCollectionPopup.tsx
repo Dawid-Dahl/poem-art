@@ -134,7 +134,7 @@ const Wrapper = styled.div<WrapperProps>`
 `;
 
 const StyledForm = styled.form`
-	min-width: 35%;
+	min-width: 30%;
 	position: fixed;
 	padding: 2em;
 	background-color: white;

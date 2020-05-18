@@ -1,7 +1,7 @@
 import store from "../store";
-import {setUser, removeUser} from "../actions/actions";
 import {xTokenPayload, User, ServerXTokenResponse} from "../types/types";
 import {getPayloadFromJwt, flashMessage, resetReduxState} from "../utils/utils";
+import {setUser} from "../actions/userActions";
 
 export const authService = {
 	setTokensInLocalStorage(data: any) {

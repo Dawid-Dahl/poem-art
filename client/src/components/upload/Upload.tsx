@@ -8,12 +8,19 @@ import {Navbar} from "../Navbar";
 import FileInput from "../inputs/FileInput";
 import {refreshAndSetXToken, flashMessage} from "../../utils/utils";
 import SelectElement from "../inputs/SelectElement";
+import {useSyncReduxState} from "../../custom-hooks/useSyncReduxState";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store";
 
 const Upload = () => {
 	const [title, setTitle] = useState("");
 	const [collection, setCollection] = useState("");
 	const [imageFile, setImageFile] = useState<ImageFile>(null);
 	const [poem, setPoem] = useState("");
+
+	const user = useSelector((state: RootState) => state.userReducer.user);
+
+	if (user) useSyncReduxState(user, "collection");
 
 	const turnFormStateIntoObj = () => {
 		if (!imageFile) {

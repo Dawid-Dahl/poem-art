@@ -11,4 +11,6 @@ export const removeUser = () =>
 		type: "REMOVE_USER",
 	} as const);
 
+export type ReduxUserState = "user";
+
 export type UserActionTypes = ReturnType<typeof setUser> | ReturnType<typeof removeUser>;

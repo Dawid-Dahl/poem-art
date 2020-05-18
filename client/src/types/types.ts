@@ -1,3 +1,9 @@
+import {ReduxCollectionState} from "../actions/collectionActions";
+import {ReduxFlashState} from "../actions/flashActions";
+import {ReduxPoemState} from "../actions/poemAction";
+import {ReduxPopupState} from "../actions/popupActions";
+import {ReduxUserState} from "../actions/userActions";
+
 export type FormState = {
 	username: string;
 	email: string;
@@ -71,3 +77,10 @@ export type ServerXTokenResponse = {
 export type ValidOrRefreshedXToken = string | null;
 
 export type RefreshedXToken = string | null;
+
+export type ReduxStates =
+	| ReduxCollectionState
+	| ReduxFlashState
+	| ReduxPoemState
+	| ReduxPopupState
+	| ReduxUserState;
