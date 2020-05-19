@@ -19,7 +19,7 @@ const FullscreenPicture: React.FC<Props> = ({artPoem}) => {
 			<Wrapper>
 				<StyledDiv imageUrl={artPoem.imageUrl ? artPoem.imageUrl : ""}>
 					<Grid>
-						<PoemSection />
+						<PoemSection poem={artPoem.content} />
 						<SidebarWrapper>
 							<LikesSection likes={artPoem.likes ? artPoem.likes : 0} />
 							<CommentSection />

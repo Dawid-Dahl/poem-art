@@ -33,7 +33,7 @@ export const uploadToGCS = (req: Request, res: Response, next: NextFunction) => 
 	})
 		.on("error", err => next(err))
 		.on("finish", () => {
-			const publicUrl = `https://storage.cloud.google.com/${bucket.name}/${fileName}`;
+			const publicUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
 
 			req.gcsPublicUrl = publicUrl;
 			req.gcsFileName = fileName;

@@ -1,26 +1,27 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
 import ArtPoem from "./ArtPoem";
-import {useSyncReduxState} from "../../custom-hooks/useSyncReduxState";
+import {thunkGetAllArtPoems} from "../../thunks/getAllArtPoems";
 
 export const ArtPoemGrid = () => {
-	const user = useSelector((state: RootState) => state.userReducer.user);
 	const poems = useSelector((state: RootState) => state.poemReducer.poems);
 
-	if (!user) return;
+	const dispatch = useDispatch();
 
-	useSyncReduxState(user, "poem");
+	useEffect(() => {
+		dispatch(thunkGetAllArtPoems());
+	}, []);
 
 	return (
 		<>
 			<Wrapper>
 				<Grid>
-					{poems?.map(({artpoem_id, title, content, imageUrl, createdAt, likes}) => (
+					{poems?.map(({id, title, content, imageUrl, createdAt, likes}) => (
 						<ArtPoem
-							key={artpoem_id}
-							artpoem_id={artpoem_id}
+							key={id}
+							id={id}
 							title={title}
 							imageUrl={imageUrl}
 							content={content}

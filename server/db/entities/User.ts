@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import {Collection} from "./Collection";
 import {Comment} from "./Comment";
+import {ArtPoem} from "./ArtPoem";
 
 @Entity()
 export class User extends BaseEntity {
@@ -24,11 +25,14 @@ export class User extends BaseEntity {
 	@Column({type: "varchar", nullable: true})
 	profilePicture: string;
 
+	@OneToMany(type => ArtPoem, artpoem => artpoem.user)
+	artpoems: ArtPoem;
+
 	@OneToMany(type => Collection, collection => collection.user)
 	collections: Collection;
 
 	@OneToMany(type => Comment, comment => comment.user)
-	comment: Collection;
+	comments: Comment;
 
 	@CreateDateColumn()
 	createdAt: Date;

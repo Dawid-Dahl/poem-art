@@ -21,8 +21,8 @@ export class Comment extends BaseEntity {
 	@Column({type: "integer", default: 0})
 	likes: number;
 
-	@ManyToOne(type => ArtPoem, ArtPoem => ArtPoem.comments)
-	ArtPoem: ArtPoem;
+	@ManyToOne(type => ArtPoem, artpoem => artpoem.comments)
+	artpoem: ArtPoem;
 
 	@ManyToOne(type => User, user => user.collections)
 	user: User;

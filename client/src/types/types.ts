@@ -24,13 +24,15 @@ export type UploadInformation = {
 export type ImageFile = string | Blob | null | undefined;
 
 export type Artpoem = {
-	artpoem_id: number;
+	id: number;
 	title: string;
 	content: string;
 	imageUrl: string;
-	createdAt: number;
 	likes?: number;
 	comments?: Comment[];
+	userId?: string;
+	createdAt?: number;
+	updatedAt?: number;
 };
 
 export type ReduxCollection = {

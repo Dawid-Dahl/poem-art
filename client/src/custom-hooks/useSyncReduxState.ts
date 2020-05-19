@@ -2,7 +2,8 @@ import {useEffect} from "react";
 import {User, ReduxStates} from "../types/types";
 import store from "../store";
 import {refreshAndSetXToken} from "../utils/utils";
-import {syncAllCollections} from "../actions/collectionActions";
+import {getAllCollections} from "../actions/collectionActions";
+import {getAllPoems} from "../actions/poemActions";
 
 const syncReduxPoemsStateWithDb = async (user?: User) => {
 	if (!user) return;
@@ -16,9 +17,9 @@ const syncReduxPoemsStateWithDb = async (user?: User) => {
 			},
 		});
 
-		/* const {payload} = await res.json();
+		const {payload} = await res.json();
 
-		store.dispatch(syncAllCollections(JSON.parse(payload))); */
+		if (JSON.parse(JSON.parse(payload).poems).length === 0) return;
 
 		console.log("Redux store synced!");
 	} catch (e) {
@@ -40,7 +41,7 @@ const syncReduxCollectionsStateWithDb = async (user?: User) => {
 
 		const {payload} = await res.json();
 
-		store.dispatch(syncAllCollections(JSON.parse(payload)));
+		store.dispatch(getAllCollections(JSON.parse(payload)));
 
 		console.log("Redux store synced!");
 	} catch (e) {

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import TopBar from "./TopBar";
 import {Navbar} from "../Navbar";
-import FullscreenPicture from "./FullscreenPicture";
+import FullscreenSection from "./FullscreenSection";
 import {useLocation} from "react-router";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store";
@@ -12,13 +12,14 @@ function useQuery() {
 }
 
 const backupPoem = {
-	artpoem_id: 0,
+	id: 0,
 	title: "",
 	content: "",
 	imageUrl: "",
 	createdAt: 0,
 	likes: 0,
 	comments: [],
+	userId: "user",
 };
 
 const Fullscreen = () => {
@@ -26,7 +27,7 @@ const Fullscreen = () => {
 
 	const artPoem = useSelector(
 		(state: RootState) =>
-			state.poemReducer.poems?.filter(poem => poem.artpoem_id === Number(query.get("id")))[0]
+			state.poemReducer.poems?.filter(poem => poem.id === Number(query.get("id")))[0]
 	);
 
 	return (
@@ -38,7 +39,7 @@ const Fullscreen = () => {
 					buttonKind="white"
 					backType="history"
 				/>
-				<FullscreenPicture artPoem={artPoem ? artPoem : backupPoem} />
+				<FullscreenSection artPoem={artPoem ? artPoem : backupPoem} />
 			</Wrapper>
 		</>
 	);

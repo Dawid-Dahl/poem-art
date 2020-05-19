@@ -3,9 +3,11 @@ import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
 import {ArtPoem} from "../../db/entities/ArtPoem";
 import {Collection} from "../../db/entities/Collection";
+import {User} from "../../db/entities/User";
 import {Storage} from "@google-cloud/storage";
 
 export const uploadArtPoemController = async (req: Request, res: Response) => {
+	const userRepo = getConnection(process.env.NODE_ENV).getRepository(User);
 	const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
 	const collectionRepo = getConnection(process.env.NODE_ENV).getRepository(Collection);
 
@@ -14,13 +16,19 @@ export const uploadArtPoemController = async (req: Request, res: Response) => {
 	try {
 		const artPoem = new ArtPoem();
 
-		const query = await collectionRepo.find({where: {user: req.user}});
+		const user = await userRepo.findOne(req.user);
+		const collectionQuery = await collectionRepo.find({where: {user: req.user}});
 
-		const filteredCollection = query.filter(x => x.name === collection)[0];
+		if (!user) throw new Error("No user could be found in DB");
+		if (!collectionQuery)
+			throw new Error("Something went wrong while trying to get the users collections");
+
+		const filteredCollection = collectionQuery.filter(x => x.name === collection)[0];
 
 		artPoem.title = title;
 		artPoem.content = poem;
 		artPoem.imageUrl = req.gcsPublicUrl ?? "";
+		artPoem.user = user;
 		artPoem.collections = [filteredCollection];
 
 		await artPoemRepo.save(artPoem);

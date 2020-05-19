@@ -162,23 +162,3 @@ export const resetReduxState = () => {
 	store.dispatch(removeFlashMessage());
 	store.dispatch(hidePopup());
 };
-
-// temporary dummy function - remove later
-
-export const createDummyPoem = (
-	artpoem_id: number,
-	title: string,
-	content: string,
-	imageUrl: string,
-	createdAt: number,
-	likes?: number,
-	comments?: Comment[]
-): Artpoem => ({
-	artpoem_id,
-	title,
-	content,
-	imageUrl,
-	likes,
-	comments,
-	createdAt,
-});

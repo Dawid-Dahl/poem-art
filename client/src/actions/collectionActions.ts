@@ -6,9 +6,9 @@ export const addCollection = (collection: ReduxCollection) =>
 		collection,
 	} as const);
 
-export const syncAllCollections = (collections: ReduxCollection[]) =>
+export const getAllCollections = (collections: ReduxCollection[]) =>
 	({
-		type: "SYNC_ALL_COLLECTIONS",
+		type: "GET_ALL_COLLECTIONS",
 		collections,
 	} as const);
 
@@ -21,5 +21,5 @@ export type ReduxCollectionState = "collection";
 
 export type CollectionActionTypes =
 	| ReturnType<typeof addCollection>
-	| ReturnType<typeof syncAllCollections>
+	| ReturnType<typeof getAllCollections>
 	| ReturnType<typeof removeAllCollections>;

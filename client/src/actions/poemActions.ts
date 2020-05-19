@@ -1,6 +1,9 @@
-export const getAllPoems = () =>
+import {Artpoem} from "../types/types";
+
+export const getAllPoems = (payload: Artpoem[]) =>
 	({
 		type: "GET_ALL_POEMS",
+		payload,
 	} as const);
 
 export const removeAllPoems = () =>
@@ -10,4 +13,4 @@ export const removeAllPoems = () =>
 
 export type ReduxPoemState = "poem";
 
-export type PoemActionTypes = ReturnType<typeof getPoems> | ReturnType<typeof removeAllPoems>;
+export type PoemActionTypes = ReturnType<typeof getAllPoems> | ReturnType<typeof removeAllPoems>;

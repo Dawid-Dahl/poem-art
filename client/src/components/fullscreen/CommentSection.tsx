@@ -5,10 +5,7 @@ export const CommentSection = () => {
 	return (
 		<>
 			<Wrapper>
-				<p>
-					TODO. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet,
-					wisi.
-				</p>
+				<p>TODO: COMMENTS.</p>
 			</Wrapper>
 		</>
 	);

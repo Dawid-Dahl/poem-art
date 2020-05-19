@@ -16,7 +16,7 @@ export const collectionReducer = (
 	switch (action.type) {
 		case "ADD_COLLECTION":
 			return {...state, collections: [...state.collections, action.collection]};
-		case "SYNC_ALL_COLLECTIONS":
+		case "GET_ALL_COLLECTIONS":
 			return {...state, collections: action.collections};
 		case "REMOVE_ALL_COLLECTIONS":
 			return {...state, collections: []};

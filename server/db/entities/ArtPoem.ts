@@ -8,9 +8,11 @@ import {
 	ManyToMany,
 	JoinTable,
 	OneToMany,
+	ManyToOne,
 } from "typeorm";
 import {Collection} from "./Collection";
 import {Comment} from "./Comment";
+import {User} from "./User";
 
 @Entity()
 export class ArtPoem extends BaseEntity {
@@ -29,11 +31,14 @@ export class ArtPoem extends BaseEntity {
 	@Column({type: "varchar", nullable: true})
 	imageUrl: string;
 
+	@ManyToOne(type => User, user => user.artpoems)
+	user: User;
+
 	@ManyToMany(type => Collection)
 	@JoinTable()
 	collections: Collection[];
 
-	@OneToMany(type => Comment, comment => comment.ArtPoem)
+	@OneToMany(type => Comment, comment => comment.artpoem)
 	comments: Comment;
 
 	@CreateDateColumn()
