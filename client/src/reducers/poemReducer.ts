@@ -1,14 +1,14 @@
-import {Artpoem} from "../types/types";
-import {FluxStandardAction} from "redux-promise-middleware";
+import {ArtPoem} from "../types/types";
+import {PoemActionTypes} from "../actions/poemActions";
 
 export type PoemReducerState = {
-	poems: Artpoem[] | null;
+	poems: ArtPoem[] | null;
 };
 
 const initialState: PoemReducerState = {
 	poems: [
 		{
-			id: 1000000,
+			id: 1,
 			title: "Add Your First Poem!",
 			content: "Unleash your creative self!",
 			imageUrl:
@@ -21,11 +21,11 @@ const initialState: PoemReducerState = {
 
 export const poemReducer = (
 	state: PoemReducerState = initialState,
-	action: FluxStandardAction
+	action: PoemActionTypes
 ): PoemReducerState => {
 	switch (action.type) {
-		case "GET_ALL_POEMS":
-			return {...state, poems: action.payload};
+		case "GET_ALL_POEMS_FULFILLED":
+			return {...state, poems: action.artPoems};
 		case "REMOVE_ALL_POEMS":
 			return {...state, poems: []};
 		default:

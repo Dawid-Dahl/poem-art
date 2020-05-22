@@ -3,15 +3,14 @@ import styled from "styled-components";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
 import ArtPoem from "./ArtPoem";
-import {thunkGetAllArtPoems} from "../../thunks/getAllArtPoems";
+import {getAllPoems} from "../../actions/poemActions";
 
 export const ArtPoemGrid = () => {
 	const poems = useSelector((state: RootState) => state.poemReducer.poems);
-
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(thunkGetAllArtPoems());
+		dispatch(getAllPoems());
 	}, []);
 
 	return (

@@ -7,8 +7,10 @@ import {
 	collectionReducer,
 } from "../reducers/reducers";
 import {composeWithDevTools} from "redux-devtools-extension";
-import ReduxThunk from "redux-thunk";
-import promise from "redux-promise-middleware";
+import createSagaMiddleware from "redux-saga";
+import rootSaga from "../sagas/rootSaga";
+
+const sagaMiddleware = createSagaMiddleware();
 
 export const rootReducer = combineReducers({
 	flashReducer,
@@ -20,8 +22,11 @@ export const rootReducer = combineReducers({
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-const middleware = applyMiddleware(ReduxThunk, promise);
+const middleware = applyMiddleware(sagaMiddleware);
 
 export const store = createStore(rootReducer, composeWithDevTools(middleware));
+
+// then run the saga
+sagaMiddleware.run(rootSaga);
 
 export default store;

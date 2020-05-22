@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import Button from "../Button";
 import TextInput from "../inputs/TextInput";
@@ -8,9 +8,9 @@ import {Navbar} from "../Navbar";
 import FileInput from "../inputs/FileInput";
 import {refreshAndSetXToken, flashMessage} from "../../utils/utils";
 import SelectElement from "../inputs/SelectElement";
-import {useSyncReduxState} from "../../custom-hooks/useSyncReduxState";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
+import {getAllCollections} from "../../actions/collectionActions";
 
 const Upload = () => {
 	const [title, setTitle] = useState("");
@@ -23,7 +23,11 @@ const Upload = () => {
 
 	if (!user) return;
 
-	useSyncReduxState(user, "collection");
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getAllCollections());
+	}, []);
 
 	const resetLocalState = () => {
 		setTitle("");

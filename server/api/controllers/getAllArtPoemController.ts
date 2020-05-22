@@ -9,16 +9,7 @@ export const getAllArtPoemController = async (req: Request, res: Response) => {
 	try {
 		const allArtPoems = await artPoemRepo.find({where: {user: req.user}});
 
-		console.log("ALL ", allArtPoems);
-
-		res.status(200).json(
-			jsonResponse(
-				true,
-				JSON.stringify({
-					poems: JSON.stringify(allArtPoems),
-				})
-			)
-		);
+		res.status(200).json(jsonResponse(true, JSON.stringify(allArtPoems)));
 	} catch (e) {
 		console.log(e);
 

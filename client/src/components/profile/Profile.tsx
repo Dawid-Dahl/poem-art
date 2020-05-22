@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import ProfilePic from "./ProfilePic";
 import CollectionsDisplay from "./CollectionsDisplay";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
 import {Navbar} from "../Navbar";
-import {useSyncReduxState} from "../../custom-hooks/useSyncReduxState";
+import {getAllCollections} from "../../actions/collectionActions";
 
 const Profile = () => {
 	const user = useSelector((state: RootState) => state.userReducer.user);
@@ -14,7 +14,11 @@ const Profile = () => {
 	if (!user) return;
 	if (!collections) return;
 
-	useSyncReduxState(user, "collection");
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getAllCollections());
+	}, []);
 
 	return (
 		<>

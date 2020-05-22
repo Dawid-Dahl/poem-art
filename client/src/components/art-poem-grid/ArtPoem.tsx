@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
-import {Artpoem} from "../../types/types";
+import {ArtPoem} from "../../types/types";
 
-const ArtPoem: React.FC<Artpoem> = ({id, title, likes, imageUrl}) => {
+const ArtPoem: React.FC<ArtPoem> = ({id, title, likes, imageUrl}) => {
 	return (
 		<>
 			<Wrapper>

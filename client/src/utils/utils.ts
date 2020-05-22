@@ -1,4 +1,4 @@
-import {xTokenPayload, User, Artpoem, Comment, RefreshedXToken} from "../types/types";
+import {xTokenPayload, User, ArtPoem, RefreshedXToken, MainApiJsonResponse} from "../types/types";
 import store from "../store";
 import {authService} from "../auth/authService";
 import {removeAllCollections} from "../actions/collectionActions";
@@ -161,4 +161,12 @@ export const resetReduxState = () => {
 	store.dispatch(removeAllPoems());
 	store.dispatch(removeFlashMessage());
 	store.dispatch(hidePopup());
+};
+
+export const parseMainApiResponse = (res: MainApiJsonResponse) => {
+	if (res.success) {
+		return JSON.parse(res.payload);
+	} else {
+		throw new Error("Something went wrong while calling the Api");
+	}
 };

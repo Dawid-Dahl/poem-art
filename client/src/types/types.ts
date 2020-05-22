@@ -1,7 +1,5 @@
 import {ReduxCollectionState} from "../actions/collectionActions";
-import {ReduxFlashState} from "../actions/flashActions";
 import {ReduxPoemState} from "../actions/poemActions";
-import {ReduxPopupState} from "../actions/popupActions";
 import {ReduxUserState} from "../actions/userActions";
 
 export type FormState = {
@@ -23,7 +21,7 @@ export type UploadInformation = {
 
 export type ImageFile = string | Blob | null | undefined;
 
-export type Artpoem = {
+export type ArtPoem = {
 	id: number;
 	title: string;
 	content: string;
@@ -70,6 +68,11 @@ export type AuthJsonResponse = {
 	payload?: AuthJsonResponsePayload;
 	xToken?: string;
 	xRefreshToken?: string;
+};
+
+export type MainApiJsonResponse = {
+	success: boolean;
+	payload?: any;
 };
 
 export type ServerXTokenResponse = {
