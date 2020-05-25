@@ -4,26 +4,20 @@ export const showFlash = (message: string) =>
 		message,
 	} as const);
 
-export const hideFlash = () =>
+export const showFlashFulfilled = (message: string) =>
 	({
-		type: "HIDE_FLASH",
-	} as const);
-
-export const setFlashMessage = (message: string) =>
-	({
-		type: "SET_FLASH_MESSAGE",
+		type: "SHOW_FLASH_FULFILLED",
 		message,
 	} as const);
 
-export const removeFlashMessage = () =>
+export const hideFlash = () =>
 	({
-		type: "REMOVE_FLASH_MESSAGE",
+		type: "HIDE_FLASH",
 	} as const);
 
 export type ReduxFlashState = "flash";
 
 export type FlashActionTypes =
 	| ReturnType<typeof showFlash>
-	| ReturnType<typeof hideFlash>
-	| ReturnType<typeof setFlashMessage>
-	| ReturnType<typeof removeFlashMessage>;
+	| ReturnType<typeof showFlashFulfilled>
+	| ReturnType<typeof hideFlash>;

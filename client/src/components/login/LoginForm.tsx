@@ -1,57 +1,29 @@
 import React, {useState} from "react";
 import {withRouter, RouteComponentProps} from "react-router-dom";
-import Input from "../inputs/TextInput";
-import {LoginInformation} from "../../types/types";
-import {authService} from "../../auth/authService";
+import {LoginCredentials} from "../../types/types";
 import Button from "../Button";
-import {flashMessage, constructUserFromId} from "../../utils/utils";
 import styled from "styled-components";
 import TextInput from "../inputs/TextInput";
+import {useDispatch} from "react-redux";
+import {login} from "../../actions/loginActions";
 
-interface Props extends RouteComponentProps {
-	postUrl: string;
-	redirectUrl: string;
-}
-
-const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
+const LoginForm: React.FC = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	const turnFormStateIntoObj = (): LoginInformation => ({
+	const dispatch = useDispatch();
+
+	const turnFormStateIntoObj = (email: string, password: string): LoginCredentials => ({
 		email,
 		password,
 	});
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		try {
-			e.preventDefault();
+		e.preventDefault();
 
-			const res = await fetch(postUrl, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(turnFormStateIntoObj()),
-			});
+		const credentials: LoginCredentials = turnFormStateIntoObj(email, password);
 
-			const data = await res.json();
-
-			if (data.success) {
-				const user = await constructUserFromId(data.payload.user.id);
-
-				if (data.success) {
-					authService.setTokensInLocalStorage(data);
-					authService.storeUserInState(user);
-					history.push(redirectUrl);
-				} else {
-					flashMessage(data.payload?.message ?? "");
-				}
-			} else {
-				flashMessage(data.payload?.message ?? "");
-			}
-		} catch (e) {
-			console.log(e);
-		}
+		dispatch(login(credentials));
 	};
 
 	return (
@@ -90,7 +62,7 @@ const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 	);
 };
 
-export default withRouter(LoginForm);
+export default LoginForm;
 
 const StyledForm = styled.form`
 	display: flex;

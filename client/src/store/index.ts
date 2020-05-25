@@ -5,6 +5,7 @@ import {
 	userReducer,
 	popupReducer,
 	collectionReducer,
+	loginReducer,
 } from "../reducers/reducers";
 import {composeWithDevTools} from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
@@ -18,6 +19,7 @@ export const rootReducer = combineReducers({
 	userReducer,
 	popupReducer,
 	collectionReducer,
+	loginReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

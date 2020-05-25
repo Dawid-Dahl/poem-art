@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import {Storage} from "@google-cloud/storage";
 import {Request, Response, NextFunction} from "express-serve-static-core";
+import {replaceSpacesInString} from "../utils/utils";
 
 const keyFile =
 	"/Volumes/Seagate Backup Plus Drive/Dawid Programming Files/Projects/PoemArt/server/poem-art-40049b821725.json";
@@ -18,9 +19,11 @@ export const uploadToGCS = (req: Request, res: Response, next: NextFunction) => 
 		return;
 	}
 
-	const fileName = `${Date.now()}-${crypto.randomBytes(3).toString("hex")}-${
-		req.file.originalname
-	}`;
+	const sanitizedFileName = req.file.originalname.includes(" ")
+		? replaceSpacesInString(req.file.originalname, "_")
+		: req.file.originalname;
+
+	const fileName = `${Date.now()}-${crypto.randomBytes(3).toString("hex")}-${sanitizedFileName}`;
 
 	const file = bucket.file(fileName);
 

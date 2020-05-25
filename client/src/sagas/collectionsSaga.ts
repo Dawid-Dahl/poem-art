@@ -33,7 +33,9 @@ function* workerAddCollectionSaga({collectionPayload}: ReturnType<typeof addColl
 			body: JSON.stringify(collectionPayload),
 		});
 
-		const data = parseMainApiResponse(res);
+		const json = yield call([res, "json"]);
+
+		const data = parseMainApiResponse(json);
 
 		const {id, name, public: _public} = JSON.parse(data.collection);
 

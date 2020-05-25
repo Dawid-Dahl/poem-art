@@ -1,48 +1,12 @@
-import store from "../store";
 import {xTokenPayload, User, ServerXTokenResponse} from "../types/types";
 import {getPayloadFromJwt, flashMessage, resetReduxState} from "../utils/utils";
-import {setUser} from "../actions/userActions";
 
 export const authService = {
-	setTokensInLocalStorage(data: any) {
-		localStorage.setItem("x-token", `Bearer ${data.xToken}`);
-		localStorage.setItem("x-refresh-token", `Bearer ${data.xRefreshToken}`);
-	},
-
-	setXToken(xToken: string | undefined) {
-		xToken && localStorage.setItem("x-token", `Bearer ${xToken}`);
-	},
-
-	removeTokensFromLocalStorage() {
-		localStorage.removeItem("x-token");
-		localStorage.removeItem("x-refresh-token");
-	},
-
-	logout(customFlashMessage: string = "You're now logged out!") {
-		if (!store.getState().userReducer.user) {
-			if (location.pathname === "/register" || location.pathname === "/login") {
-				return;
-			} else {
-				flashMessage(customFlashMessage);
-			}
-		}
-		resetReduxState();
-		this.removeTokensFromLocalStorage();
-		flashMessage(customFlashMessage);
-	},
-
 	isAdmin(user: User | undefined) {
 		if (user) {
 			return user.admin ? true : false;
 		} else {
 			return false;
-		}
-	},
-
-	storeUserInState(user?: User) {
-		if (!store.getState().userReducer.user) {
-			if (user) store.dispatch(setUser(user));
-			flashMessage("You're now logged in!");
 		}
 	},
 

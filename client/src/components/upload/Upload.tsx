@@ -6,23 +6,20 @@ import TextAreaInput from "../inputs/TextAreaInput";
 import {ImageFile} from "../../types/types";
 import {Navbar} from "../Navbar";
 import FileInput from "../inputs/FileInput";
-import {refreshAndSetXToken, flashMessage} from "../../utils/utils";
+import {flashMessage} from "../../utils/utils";
 import SelectElement from "../inputs/SelectElement";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
 import {getAllCollections} from "../../actions/collectionActions";
 import {apiService} from "../../api/apiService";
 
-const Upload = () => {
+const Upload: React.FC = () => {
 	const [title, setTitle] = useState("");
 	const [collection, setCollection] = useState("My Collection");
 	const [imageFile, setImageFile] = useState<ImageFile>(null);
 	const [poem, setPoem] = useState("");
 
-	const user = useSelector((state: RootState) => state.userReducer.user);
 	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
-
-	if (!user) return;
 
 	const dispatch = useDispatch();
 
