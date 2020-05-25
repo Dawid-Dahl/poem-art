@@ -8,6 +8,7 @@ import {hidePopup} from "../actions/popupActions";
 import {RootState} from "../store";
 import {refreshAndSetXToken, flashMessage} from "../utils/utils";
 import {addCollection} from "../actions/collectionActions";
+import {AddCollectionFormObject} from "../types/types";
 
 type Props = {};
 
@@ -19,8 +20,11 @@ const AddCollectionPopup: React.FC<Props> = () => {
 
 	const isShowingPopup = useSelector((state: RootState) => state.popupReducer.isShowingPopup);
 
-	const turnFormStateIntoObj = (collectionName: string, isPublic: boolean) => {
-		if (collectionName) {
+	const turnFormStateIntoObj = (
+		collectionName: string,
+		isPublic: boolean
+	): AddCollectionFormObject | undefined => {
+		if (collectionName && isPublic) {
 			return {
 				collectionName,
 				isPublic,
@@ -36,7 +40,7 @@ const AddCollectionPopup: React.FC<Props> = () => {
 		dispatch(hidePopup());
 	};
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault();
 
@@ -44,33 +48,9 @@ const AddCollectionPopup: React.FC<Props> = () => {
 
 			if (!collectionPayload) return;
 
-			await refreshAndSetXToken(localStorage.getItem("x-refresh-token"));
-
-			const res = await fetch(`${process.env.MAIN_FETCH_URL}/api/collections/add`, {
-				method: "POST",
-				headers: {
-					"x-token": localStorage.getItem("x-token") ?? "null",
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(collectionPayload),
-			});
-
-			const data = await res.json();
+			dispatch(addCollection(collectionPayload));
 
 			setCollectionName("");
-
-			const {id, name, public: _public} = JSON.parse(JSON.parse(data.payload).collection);
-
-			dispatch(
-				addCollection({
-					id,
-					name,
-					public: _public,
-				})
-			);
-			dispatch(hidePopup());
-
-			flashMessage(JSON.parse(data.payload).message);
 		} catch (e) {
 			console.log(e);
 		}

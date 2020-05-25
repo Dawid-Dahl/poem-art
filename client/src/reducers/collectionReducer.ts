@@ -14,7 +14,7 @@ export const collectionReducer = (
 	action: CollectionActionTypes
 ): CollectionReducerState => {
 	switch (action.type) {
-		case "ADD_COLLECTION":
+		case "ADD_COLLECTION_FULFILLED":
 			return {...state, collections: [...state.collections, action.collection]};
 		case "GET_ALL_COLLECTIONS_FULFILLED":
 			return {...state, collections: action.collections};

@@ -1,19 +1,25 @@
 import {refreshAndSetXToken} from "../utils/utils";
 
 export const apiService = {
-	async refreshAndFetch(url: string) {
+	async refreshAndFetch(input: RequestInfo, init: RequestInit = {}): Promise<Response> {
 		await refreshAndSetXToken(localStorage.getItem("x-refresh-token"));
 
-		try {
-			const res = await fetch(`${process.env.MAIN_FETCH_URL}/api/${url}`, {
-				headers: {
-					"x-token": localStorage.getItem("x-token") ?? "null",
-				},
-			});
+		const xTokenHeader = {
+			"x-token": localStorage.getItem("x-token") ?? "null",
+		};
 
-			return await res.json();
+		const initWithXTokenHeader = {...init, headers: {...init.headers, ...xTokenHeader}};
+
+		try {
+			const response = await fetch(
+				`${process.env.MAIN_FETCH_URL}/api/${input}`,
+				initWithXTokenHeader
+			);
+
+			return response;
 		} catch (e) {
 			console.log(e);
+			return e;
 		}
 	},
 };

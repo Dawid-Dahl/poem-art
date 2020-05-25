@@ -85,3 +85,10 @@ export type ValidOrRefreshedXToken = string | null;
 export type RefreshedXToken = string | null;
 
 export type ReduxStates = ReduxCollectionState | ReduxPoemState | ReduxUserState;
+
+//FORM OBJECT TYPES:
+
+export type AddCollectionFormObject = {
+	collectionName: string;
+	isPublic: boolean;
+};

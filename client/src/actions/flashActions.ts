@@ -1,6 +1,7 @@
-export const showFlash = () =>
+export const showFlash = (message: string) =>
 	({
 		type: "SHOW_FLASH",
+		message,
 	} as const);
 
 export const hideFlash = () =>

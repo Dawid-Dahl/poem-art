@@ -4,11 +4,13 @@ import {getAllPoemsFulfilled} from "../actions/poemActions";
 import {parseMainApiResponse} from "../utils/utils";
 import {ArtPoem} from "../types/types";
 
-function* getPoemsSagaWorker() {
+function* workerGetPoemsSaga() {
 	try {
 		const res = yield call(apiService.refreshAndFetch, "artPoem/get-all");
 
-		const artPoems: ArtPoem[] = parseMainApiResponse(res);
+		const json = yield call([res, "json"]);
+
+		const artPoems: ArtPoem[] = parseMainApiResponse(json);
 
 		yield put(getAllPoemsFulfilled(artPoems));
 	} catch (e) {
@@ -16,8 +18,8 @@ function* getPoemsSagaWorker() {
 	}
 }
 
-function* getPoemsSaga() {
-	yield takeEvery("GET_ALL_POEMS_ASYNC", getPoemsSagaWorker);
+function* poemsSaga() {
+	yield takeEvery("GET_ALL_POEMS_ASYNC", workerGetPoemsSaga);
 }
 
-export default getPoemsSaga;
+export default poemsSaga;

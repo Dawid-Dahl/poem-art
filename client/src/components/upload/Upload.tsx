@@ -11,6 +11,7 @@ import SelectElement from "../inputs/SelectElement";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
 import {getAllCollections} from "../../actions/collectionActions";
+import {apiService} from "../../api/apiService";
 
 const Upload = () => {
 	const [title, setTitle] = useState("");
@@ -70,13 +71,8 @@ const Upload = () => {
 
 			if (!uploadPayload) return;
 
-			await refreshAndSetXToken(localStorage.getItem("x-refresh-token"));
-
-			const res = await fetch(`${process.env.MAIN_FETCH_URL}/api/artPoem/upload`, {
+			const res = await apiService.refreshAndFetch(`artPoem/upload`, {
 				method: "POST",
-				headers: {
-					"x-token": localStorage.getItem("x-token") ?? "null",
-				},
 				body: turnFormStateIntoObj(),
 			});
 
