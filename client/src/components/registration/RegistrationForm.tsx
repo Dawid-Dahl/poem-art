@@ -3,9 +3,11 @@ import Input from "../inputs/TextInput";
 import {FormState, AuthJsonResponse} from "../../types/types";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import styled from "styled-components";
-import {flashMessage, areStringsIdentical} from "../../utils/utils";
+import {areStringsIdentical} from "../../utils/utils";
 import Button from "../Button";
 import TextInput from "../inputs/TextInput";
+import {useDispatch} from "react-redux";
+import {showFlash} from "../../actions/flashActions";
 
 interface Props extends RouteComponentProps {
 	postUrl: string;
@@ -13,6 +15,8 @@ interface Props extends RouteComponentProps {
 }
 
 const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
+	const dispatch = useDispatch();
+
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -38,19 +42,19 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 				.then(res => res.json())
 				.then((data: AuthJsonResponse) => {
 					if (data.success) {
-						flashMessage(data.payload?.message ?? "");
+						dispatch(showFlash(data.payload?.message ?? ""));
 						history.push(redirectUrl);
 					} else {
-						flashMessage(data.payload?.message ?? "");
+						dispatch(showFlash(data.payload?.message ?? ""));
 					}
 				})
 				.catch(err => {
-					flashMessage("Cannot log in right now, try again soon!");
+					dispatch(showFlash("Cannot log in right now, try again soon!"));
 					console.error(err);
 				});
 			e.currentTarget.reset();
 		} else {
-			flashMessage("Passwords do not match.");
+			dispatch(showFlash("Passwords do not match."));
 		}
 	};
 

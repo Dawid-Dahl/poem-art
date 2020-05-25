@@ -1,7 +1,8 @@
 import store from "../store";
 import {xTokenPayload, User, ServerXTokenResponse} from "../types/types";
-import {getPayloadFromJwt, flashMessage, resetReduxState} from "../utils/utils";
+import {getPayloadFromJwt, resetReduxState} from "../utils/utils";
 import {setUser} from "../actions/userActions";
+import {showFlash} from "../actions/flashActions";
 
 export const authService = {
 	setTokensInLocalStorage(data: any) {
@@ -23,12 +24,12 @@ export const authService = {
 			if (location.pathname === "/register" || location.pathname === "/login") {
 				return;
 			} else {
-				flashMessage(customFlashMessage);
+				store.dispatch(showFlash(customFlashMessage));
 			}
 		}
 		resetReduxState();
 		this.removeTokensFromLocalStorage();
-		flashMessage(customFlashMessage);
+		store.dispatch(showFlash(customFlashMessage));
 	},
 
 	isAdmin(user: User | undefined) {
@@ -42,7 +43,7 @@ export const authService = {
 	storeUserInState(user?: User) {
 		if (!store.getState().userReducer.user) {
 			if (user) store.dispatch(setUser(user));
-			flashMessage("You're now logged in!");
+			store.dispatch(showFlash("You're now logged in!"));
 		}
 	},
 
@@ -85,7 +86,7 @@ export const authService = {
 				: {isVerified: false, refreshedXToken: null};
 		} catch (e) {
 			console.log(e);
-			flashMessage("Could not connect to the server, please try again soon!");
+			store.dispatch(showFlash("Could not connect to the server, please try again soon!"));
 			return {isVerified: false, refreshedXToken: null};
 		}
 	},

@@ -6,7 +6,6 @@ import CheckBoxInput from "./inputs/CheckBoxInput";
 import {useDispatch, useSelector} from "react-redux";
 import {hidePopup} from "../actions/popupActions";
 import {RootState} from "../store";
-import {refreshAndSetXToken, flashMessage} from "../utils/utils";
 import {addCollection} from "../actions/collectionActions";
 import {AddCollectionFormObject} from "../types/types";
 
@@ -24,7 +23,7 @@ const AddCollectionPopup: React.FC<Props> = () => {
 		collectionName: string,
 		isPublic: boolean
 	): AddCollectionFormObject | undefined => {
-		if (collectionName && isPublic) {
+		if (collectionName) {
 			return {
 				collectionName,
 				isPublic,

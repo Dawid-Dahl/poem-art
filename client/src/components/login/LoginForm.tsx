@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import {withRouter, RouteComponentProps} from "react-router-dom";
-import Input from "../inputs/TextInput";
 import {LoginInformation} from "../../types/types";
 import {authService} from "../../auth/authService";
 import Button from "../Button";
-import {flashMessage, constructUserFromId} from "../../utils/utils";
+import {constructUserFromId} from "../../utils/utils";
 import styled from "styled-components";
 import TextInput from "../inputs/TextInput";
+import {useDispatch} from "react-redux";
+import {showFlash} from "../../actions/flashActions";
 
 interface Props extends RouteComponentProps {
 	postUrl: string;
@@ -14,6 +15,8 @@ interface Props extends RouteComponentProps {
 }
 
 const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
+	const dispatch = useDispatch();
+
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -44,10 +47,10 @@ const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 					authService.storeUserInState(user);
 					history.push(redirectUrl);
 				} else {
-					flashMessage(data.payload?.message ?? "");
+					dispatch(showFlash(data.payload?.message ?? ""));
 				}
 			} else {
-				flashMessage(data.payload?.message ?? "");
+				dispatch(showFlash(data.payload?.message ?? ""));
 			}
 		} catch (e) {
 			console.log(e);

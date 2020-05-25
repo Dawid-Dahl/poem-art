@@ -6,12 +6,12 @@ import TextAreaInput from "../inputs/TextAreaInput";
 import {ImageFile} from "../../types/types";
 import {Navbar} from "../Navbar";
 import FileInput from "../inputs/FileInput";
-import {refreshAndSetXToken, flashMessage} from "../../utils/utils";
 import SelectElement from "../inputs/SelectElement";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
 import {getAllCollections} from "../../actions/collectionActions";
 import {apiService} from "../../api/apiService";
+import {showFlash} from "../../actions/flashActions";
 
 const Upload = () => {
 	const [title, setTitle] = useState("");
@@ -39,7 +39,7 @@ const Upload = () => {
 
 	const turnFormStateIntoObj = () => {
 		if (!imageFile) {
-			flashMessage("Please select an image to go with the poem!");
+			dispatch(showFlash("Please select an image to go with the poem!"));
 			return;
 		}
 
@@ -80,7 +80,7 @@ const Upload = () => {
 
 			resetLocalState();
 
-			flashMessage(JSON.parse(data.payload).message);
+			dispatch(showFlash(JSON.parse(data.payload).message));
 		} catch (e) {
 			console.log(e);
 		}

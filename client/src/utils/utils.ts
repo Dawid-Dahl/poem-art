@@ -3,7 +3,7 @@ import store from "../store";
 import {authService} from "../auth/authService";
 import {removeAllCollections} from "../actions/collectionActions";
 import {hidePopup} from "../actions/popupActions";
-import {showFlash, removeFlashMessage} from "../actions/flashActions";
+import {removeFlashMessage} from "../actions/flashActions";
 import {removeUser} from "../actions/userActions";
 import {removeAllPoems} from "../actions/poemActions";
 
@@ -49,10 +49,6 @@ export const constructUserFromId = (
 		});
 	}
 	return;
-};
-
-export const flashMessage = (message: string) => {
-	store.dispatch(showFlash(message));
 };
 
 export const areStringsIdentical = (str1: string, str2: string) =>
