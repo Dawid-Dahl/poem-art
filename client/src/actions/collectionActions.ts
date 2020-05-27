@@ -1,8 +1,19 @@
 import {ReduxCollection, AddCollectionFormObject} from "../types/types";
 
+export const selectCollection = (collection: ReduxCollection) =>
+	({
+		type: "SELECT_COLLECTION",
+		collection,
+	} as const);
+
+export const deselectCollection = () =>
+	({
+		type: "DESELECT_COLLECTION",
+	} as const);
+
 export const addCollection = (collectionPayload: AddCollectionFormObject) =>
 	({
-		type: "ADD_COLLECTION_ASYNC",
+		type: "ADD_COLLECTION",
 		collectionPayload,
 	} as const);
 
@@ -12,27 +23,15 @@ export const addCollectionFulfilled = (collection: ReduxCollection) =>
 		collection,
 	} as const);
 
-export const addCollectionFailure = (error: Error) =>
-	({
-		type: "ADD_COLLECTION_FAILURE",
-		error,
-	} as const);
-
 export const getAllCollections = () =>
 	({
-		type: "GET_ALL_COLLECTIONS_ASYNC",
+		type: "GET_ALL_COLLECTIONS",
 	} as const);
 
 export const getAllCollectionsFulfilled = (collections: ReduxCollection[]) =>
 	({
 		type: "GET_ALL_COLLECTIONS_FULFILLED",
 		collections,
-	} as const);
-
-export const getAllCollectionsFailure = (error: Error) =>
-	({
-		type: "GET_ALL_COLLECTIONS_FAILURE",
-		error,
 	} as const);
 
 export const removeAllCollections = () =>
@@ -43,10 +42,10 @@ export const removeAllCollections = () =>
 export type ReduxCollectionState = "collection";
 
 export type CollectionActionTypes =
+	| ReturnType<typeof selectCollection>
+	| ReturnType<typeof deselectCollection>
 	| ReturnType<typeof addCollection>
 	| ReturnType<typeof addCollectionFulfilled>
-	| ReturnType<typeof addCollectionFailure>
 	| ReturnType<typeof getAllCollections>
 	| ReturnType<typeof getAllCollectionsFulfilled>
-	| ReturnType<typeof getAllCollectionsFailure>
 	| ReturnType<typeof removeAllCollections>;

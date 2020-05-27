@@ -1,14 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import {ReduxCollection} from "../../types/types";
+import {selectCollection} from "../../actions/collectionActions";
 
 type Props = {
-	name: string;
+	id: ReduxCollection["id"];
+	name: ReduxCollection["name"];
+	onClickHandler: (id: string) => ReturnType<typeof selectCollection>;
 };
 
-const Collection: React.FC<Props> = ({name}) => {
+const Collection: React.FC<Props> = ({id, name, onClickHandler}) => {
 	return (
 		<>
-			<Wrapper>
+			<Wrapper onClick={() => onClickHandler(id)}>
 				<CollectionTitle>{name}</CollectionTitle>
 			</Wrapper>
 		</>

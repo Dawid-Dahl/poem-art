@@ -1,11 +1,14 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Switch, Route} from "react-router";
 import Main from "../Main";
 import Fullscreen from "../fullscreen/Fullscreen";
 import Upload from "../upload/Upload";
 import Profile from "../profile/Profile";
+import {useDeselectCollectionOnRouteChange} from "../../custom-hooks/useDeselectCollectionOnRouteChange";
 
 export const AuthenticatedApp = () => {
+	useDeselectCollectionOnRouteChange();
+
 	return (
 		<>
 			<Switch>

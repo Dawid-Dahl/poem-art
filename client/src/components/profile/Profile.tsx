@@ -21,7 +21,7 @@ const Profile: React.FC = () => {
 		<>
 			<Navbar />
 			<Wrapper>
-				<Greeting>{`Welcome back, ${user.username}!`}</Greeting>
+				<Greeting>{`Welcome back, ${user?.username ?? ""}!`}</Greeting>
 				<ProfilePic />
 				<h2>Your Collections</h2>
 				<CollectionsDisplay collections={collections} />

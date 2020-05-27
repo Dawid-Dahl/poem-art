@@ -55,8 +55,8 @@ function* workerAddCollectionSaga({collectionPayload}: ReturnType<typeof addColl
 }
 
 function* collectionsSaga() {
-	yield takeEvery("GET_ALL_COLLECTIONS_ASYNC", workerGetCollectionsSaga);
-	yield takeEvery("ADD_COLLECTION_ASYNC", workerAddCollectionSaga);
+	yield takeEvery("GET_ALL_COLLECTIONS", workerGetCollectionsSaga);
+	yield takeEvery("ADD_COLLECTION", workerAddCollectionSaga);
 }
 
 export default collectionsSaga;

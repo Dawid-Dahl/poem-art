@@ -5,6 +5,7 @@ import AddCollection from "./AddCollection";
 import {useDispatch} from "react-redux";
 import {showPopup} from "../../actions/popupActions";
 import {ReduxCollection} from "../../types/types";
+import {selectCollection} from "../../actions/collectionActions";
 
 type Props = {
 	collections: ReduxCollection[];
@@ -13,15 +14,23 @@ type Props = {
 const CollectionsDisplay: React.FC<Props> = ({collections}) => {
 	const dispatch = useDispatch();
 
-	const onClickHandler = () => dispatch(showPopup());
+	const onClickHandlerSelectCollection = (id: ReduxCollection["id"]) =>
+		dispatch(selectCollection(collections.filter(x => x.id === id)[0]));
+
+	const onClickHandlerAddCollection = () => dispatch(showPopup());
 
 	return (
 		<>
 			<Wrapper>
 				{collections.map(collection => (
-					<Collection key={collection.id} name={collection.name} />
+					<Collection
+						key={collection.id}
+						id={collection.id}
+						name={collection.name}
+						onClickHandler={onClickHandlerSelectCollection}
+					/>
 				))}
-				<AddCollection onClickHandler={onClickHandler} />
+				<AddCollection onClickHandler={onClickHandlerAddCollection} />
 			</Wrapper>
 		</>
 	);
