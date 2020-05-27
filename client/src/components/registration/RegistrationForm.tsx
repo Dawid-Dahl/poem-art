@@ -1,13 +1,12 @@
 import React, {useState} from "react";
-import Input from "../inputs/TextInput";
 import {FormState, AuthJsonResponse} from "../../types/types";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import styled from "styled-components";
 import {areStringsIdentical} from "../../utils/utils";
 import Button from "../Button";
 import TextInput from "../inputs/TextInput";
-import {useDispatch} from "react-redux";
 import {showFlash} from "../../actions/flashActions";
+import {useDispatch} from "react-redux";
 
 interface Props extends RouteComponentProps {
 	postUrl: string;
@@ -21,6 +20,8 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setconfirmPassword] = useState("");
+
+	const dispatch = useDispatch();
 
 	const turnFormStateIntoObj = (): FormState => ({
 		username,

@@ -47,9 +47,7 @@ function* workerAddCollectionSaga({collectionPayload}: ReturnType<typeof addColl
 				public: _public,
 			})
 		);
-
 		yield put(hidePopup());
-
 		yield put(showFlash(data.message));
 	} catch (e) {
 		console.log(e);

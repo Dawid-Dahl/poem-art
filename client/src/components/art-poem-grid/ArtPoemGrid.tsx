@@ -4,9 +4,11 @@ import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
 import ArtPoem from "./ArtPoem";
 import {getAllPoems} from "../../actions/poemActions";
+import Loading from "../Loading";
 
-export const ArtPoemGrid = () => {
+const ArtPoemGrid = () => {
 	const poems = useSelector((state: RootState) => state.poemReducer.poems);
+	const isLoading = useSelector((state: RootState) => state.loadingReducer.isLoading);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -17,22 +19,28 @@ export const ArtPoemGrid = () => {
 		<>
 			<Wrapper>
 				<Grid>
-					{poems?.map(({id, title, content, imageUrl, createdAt, likes}) => (
-						<ArtPoem
-							key={id}
-							id={id}
-							title={title}
-							imageUrl={imageUrl}
-							content={content}
-							createdAt={createdAt}
-							likes={likes}
-						/>
-					))}
+					{isLoading ? (
+						<Loading />
+					) : (
+						poems?.map(({id, title, content, imageUrl, createdAt, likes}) => (
+							<ArtPoem
+								key={id}
+								id={id}
+								title={title}
+								imageUrl={imageUrl}
+								content={content}
+								createdAt={createdAt}
+								likes={likes}
+							/>
+						))
+					)}
 				</Grid>
 			</Wrapper>
 		</>
 	);
 };
+
+export default ArtPoemGrid;
 
 const Wrapper = styled.div`
 	width: 80%;

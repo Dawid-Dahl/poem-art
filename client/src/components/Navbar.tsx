@@ -3,9 +3,13 @@ import styled from "styled-components";
 import {authService} from "../auth/authService";
 import LinkButton from "./LinkButton";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {logout} from "../actions/loginActions";
 
 export const Navbar: React.FC = () => {
 	const [rolldownState, setRolldownState] = useState(false);
+
+	const dispatch = useDispatch();
 
 	return (
 		<>
@@ -35,7 +39,7 @@ export const Navbar: React.FC = () => {
 						title="Logout"
 						linkTo="login"
 						onClick={() => {
-							authService.logout();
+							dispatch(logout());
 						}}
 						kind="white"
 						customization="desktopButton"
@@ -56,7 +60,7 @@ export const Navbar: React.FC = () => {
 						title="Logout"
 						linkTo="login"
 						onClick={() => {
-							authService.removeTokensFromLocalStorage();
+							dispatch(logout());
 						}}
 						kind="white"
 					/>

@@ -15,3 +15,6 @@ export const extractPayloadFromBase64JWT = (jwt: string | undefined): xTokenPayl
 				.map(x => Buffer.from(x, "base64"))
 				.map(x => x.toString("utf8"))
 				.map(x => JSON.parse(x))[0];
+
+export const replaceSpacesInString = (str: string, replaceWith: string): string =>
+	str.replace(/\s/g, replaceWith);

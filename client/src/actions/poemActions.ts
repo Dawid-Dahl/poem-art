@@ -1,8 +1,19 @@
 import {ArtPoem} from "../types/types";
 
+export const uploadPoem = (payload: FormData) =>
+	({
+		type: "UPLOAD_POEM",
+		payload,
+	} as const);
+
+export const uploadPoemFulfilled = () =>
+	({
+		type: "UPLOAD_POEM_FULFILLED",
+	} as const);
+
 export const getAllPoems = () =>
 	({
-		type: "GET_ALL_POEMS_ASYNC",
+		type: "GET_ALL_POEMS",
 	} as const);
 
 export const getAllPoemsFulfilled = (artPoems: ArtPoem[]) =>
@@ -25,6 +36,8 @@ export const removeAllPoems = () =>
 export type ReduxPoemState = "poem";
 
 export type PoemActionTypes =
+	| ReturnType<typeof uploadPoem>
+	| ReturnType<typeof uploadPoemFulfilled>
 	| ReturnType<typeof getAllPoems>
 	| ReturnType<typeof getAllPoemsFulfilled>
 	| ReturnType<typeof getAllPoemsFailed>

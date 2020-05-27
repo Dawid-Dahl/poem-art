@@ -1,49 +1,15 @@
-import store from "../store";
 import {xTokenPayload, User, ServerXTokenResponse} from "../types/types";
-import {getPayloadFromJwt, resetReduxState} from "../utils/utils";
-import {setUser} from "../actions/userActions";
+import {getPayloadFromJwt} from "../utils/utils";
+import store from "../store";
+import {logout} from "../actions/loginActions";
 import {showFlash} from "../actions/flashActions";
 
 export const authService = {
-	setTokensInLocalStorage(data: any) {
-		localStorage.setItem("x-token", `Bearer ${data.xToken}`);
-		localStorage.setItem("x-refresh-token", `Bearer ${data.xRefreshToken}`);
-	},
-
-	setXToken(xToken: string | undefined) {
-		xToken && localStorage.setItem("x-token", `Bearer ${xToken}`);
-	},
-
-	removeTokensFromLocalStorage() {
-		localStorage.removeItem("x-token");
-		localStorage.removeItem("x-refresh-token");
-	},
-
-	logout(customFlashMessage: string = "You're now logged out!") {
-		if (!store.getState().userReducer.user) {
-			if (location.pathname === "/register" || location.pathname === "/login") {
-				return;
-			} else {
-				store.dispatch(showFlash(customFlashMessage));
-			}
-		}
-		resetReduxState();
-		this.removeTokensFromLocalStorage();
-		store.dispatch(showFlash(customFlashMessage));
-	},
-
 	isAdmin(user: User | undefined) {
 		if (user) {
 			return user.admin ? true : false;
 		} else {
 			return false;
-		}
-	},
-
-	storeUserInState(user?: User) {
-		if (!store.getState().userReducer.user) {
-			if (user) store.dispatch(setUser(user));
-			store.dispatch(showFlash("You're now logged in!"));
 		}
 	},
 
@@ -79,14 +45,21 @@ export const authService = {
 				},
 			});
 
-			const xToken = res.headers.get("x-token");
+			const {success, payload} = await res.json();
 
-			return xToken
-				? {isVerified: true, refreshedXToken: xToken}
-				: {isVerified: false, refreshedXToken: null};
+			if (success) {
+				const xToken = res.headers.get("x-token");
+
+				return xToken
+					? {isVerified: true, refreshedXToken: xToken}
+					: {isVerified: false, refreshedXToken: null};
+			} else {
+				store.dispatch(showFlash(payload.message));
+				store.dispatch(logout());
+				return {isVerified: false, refreshedXToken: null};
+			}
 		} catch (e) {
 			console.log(e);
-			store.dispatch(showFlash("Could not connect to the server, please try again soon!"));
 			return {isVerified: false, refreshedXToken: null};
 		}
 	},

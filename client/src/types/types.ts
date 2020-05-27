@@ -9,7 +9,7 @@ export type FormState = {
 	confirmPassword: string;
 };
 
-export type LoginInformation = {
+export type LoginCredentials = {
 	email: string;
 	password: string;
 };
@@ -78,6 +78,14 @@ export type MainApiJsonResponse = {
 export type ServerXTokenResponse = {
 	isVerified: boolean;
 	refreshedXToken: string | null;
+};
+
+export type xToken = string | null;
+export type xRefreshToken = string | null;
+
+export type Tokens = {
+	xToken: xToken;
+	xRefreshToken: xRefreshToken;
 };
 
 export type ValidOrRefreshedXToken = string | null;

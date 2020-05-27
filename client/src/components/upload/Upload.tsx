@@ -10,19 +10,16 @@ import SelectElement from "../inputs/SelectElement";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
 import {getAllCollections} from "../../actions/collectionActions";
-import {apiService} from "../../api/apiService";
 import {showFlash} from "../../actions/flashActions";
+import {uploadPoem} from "../../actions/poemActions";
 
-const Upload = () => {
+const Upload: React.FC = () => {
 	const [title, setTitle] = useState("");
 	const [collection, setCollection] = useState("My Collection");
 	const [imageFile, setImageFile] = useState<ImageFile>(null);
 	const [poem, setPoem] = useState("");
 
-	const user = useSelector((state: RootState) => state.userReducer.user);
 	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
-
-	if (!user) return;
 
 	const dispatch = useDispatch();
 
@@ -71,16 +68,9 @@ const Upload = () => {
 
 			if (!uploadPayload) return;
 
-			const res = await apiService.refreshAndFetch(`artPoem/upload`, {
-				method: "POST",
-				body: turnFormStateIntoObj(),
-			});
-
-			const data = await res.json();
+			dispatch(uploadPoem(uploadPayload));
 
 			resetLocalState();
-
-			dispatch(showFlash(JSON.parse(data.payload).message));
 		} catch (e) {
 			console.log(e);
 		}
@@ -116,7 +106,11 @@ const Upload = () => {
 						}
 						collections={collections}
 					/>
-					<FileInput name="imageFile" onChangeHandle={onChangeHandle} />
+					<FileInput
+						name="imageFile"
+						isFileSelected={Boolean(imageFile)}
+						onChangeHandle={onChangeHandle}
+					/>
 					<TextAreaInput
 						name="poem"
 						value={poem}
