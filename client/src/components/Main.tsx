@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {CollectionSelector} from "./CollectionSelector";
 import {Navbar} from "./Navbar";
-import {ArtPoemGrid} from "./art-poem-grid/ArtPoemGrid";
+import ArtPoemGrid from "./art-poem-grid/ArtPoemGrid";
 
 const Main = () => {
 	return (

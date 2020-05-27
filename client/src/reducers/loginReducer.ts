@@ -1,4 +1,3 @@
-import {User} from "../types/types";
 import {LoginActionTypes} from "../actions/loginActions";
 
 export type LoginReducerState = {

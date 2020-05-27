@@ -4,3 +4,4 @@ export * from "./userReducer";
 export * from "./popupReducer";
 export * from "./collectionReducer";
 export * from "./loginReducer";
+export * from "./loadingReducer";

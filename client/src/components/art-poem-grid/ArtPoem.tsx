@@ -41,6 +41,7 @@ const StyledDiv = styled.div<Props>`
 	flex-direction: column;
 	background-image: ${props => `url(${props.imageUrl})`};
 	background-size: cover;
+	background-position: center;
 	border-radius: var(--border-radius);
 	height: 300px;
 	width: 300px;

@@ -3,15 +3,19 @@ import styled from "styled-components";
 
 type Props = {
 	name: string;
+	isFileSelected: boolean;
 	onChangeHandle: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const FileInput: React.FC<Props> = ({name, onChangeHandle}) => {
+const FileInput: React.FC<Props> = ({name, isFileSelected, onChangeHandle}) => {
 	return (
 		<StyledWrapper kind={"white"}>
 			<input id={name} onChange={onChangeHandle} name={name} type="file" />
 			<label htmlFor="imageFile">
-				<span className="material-icons">add_photo_alternate</span>Choose File
+				<span className="material-icons">
+					{isFileSelected ? "done_outline" : "add_photo_alternate"}
+				</span>
+				{isFileSelected ? "" : "Choose File"}
 			</label>
 		</StyledWrapper>
 	);

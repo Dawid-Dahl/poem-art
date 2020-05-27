@@ -8,7 +8,7 @@ import {
 } from "../actions/loginActions";
 import {
 	constructUserFromId,
-	refreshTokenIfNeeded,
+	verifyAndRefreshTokenIfNeeded,
 	localStorageService,
 	getPayloadFromJwt,
 } from "../utils/utils";
@@ -19,8 +19,12 @@ import {removeAllPoems} from "../actions/poemActions";
 import {hidePopup} from "../actions/popupActions";
 
 function* workerCheckIfLoggedIn({tokens}: ReturnType<typeof checkIfLoggedIn>) {
+	if (location.pathname === "/register" || location.pathname === "/login") {
+		return;
+	}
+
 	try {
-		const validOrRefreshedXToken = yield call(refreshTokenIfNeeded, tokens);
+		const validOrRefreshedXToken = yield call(verifyAndRefreshTokenIfNeeded, tokens);
 
 		if (validOrRefreshedXToken) {
 			const {sub} = yield call(getPayloadFromJwt, validOrRefreshedXToken);
@@ -31,12 +35,11 @@ function* workerCheckIfLoggedIn({tokens}: ReturnType<typeof checkIfLoggedIn>) {
 				yield put(loginFulfilled());
 			}
 		} else {
-			console.log("SHOULD LOG OUT");
 			yield put(logout());
 			yield put(showFlash("You're not allowed to access that page. Please log in!"));
 		}
 	} catch (e) {
-		console.log(e);
+		console.log("You're not allowed to access that page. Please log in!");
 	}
 }
 

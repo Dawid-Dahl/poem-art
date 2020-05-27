@@ -74,13 +74,8 @@ export const constructUserFromId = (
 	return;
 };
 
-export const flashMessage = (message: string) => {
-	store.dispatch(showFlash(message));
-};
-
-export const areStringsIdentical = (str1: string, str2: string) => {
+export const areStringsIdentical = (str1: string, str2: string) =>
 	str1.match(RegExp(`^${str2}$`)) ? true : false;
-};
 
 export const removeBearerFromTokenHeader = (tokenHeader: string | undefined | null) => {
 	if (!tokenHeader) return;
@@ -115,7 +110,7 @@ export const refreshXToken = (xRefreshToken: string | null): Promise<RefreshedXT
 
 /** This function takes an x-refresh-token and uses it to return a new and refreshed x-token.
  *
- * Compared to "refreshXToken", this function also sets x-token in localStorage before returning it.
+ * Compared to "refreshXToken", this function also has the side effect of setting the x-token in localStorage before returning it.
  *
  * Returns null if something went wrong.
  */
@@ -181,18 +176,22 @@ export const parseMainApiResponse = (res: MainApiJsonResponse) => {
 
 /** This function takes a xToken/xRefreshToken-pair and uses them for verification.
  *
- * Returns the x-token if valid, or a refreshed x-token if not valid but x-refresh-token is valid.
+ * Returns the x-token if valid, or a refreshed x-token if not valid but x-refresh-token is valid. The user is thereby successfully verified.
  *
- * Otherwise returns null.
+ * Otherwise the user is unsuccessfully verified and the function returns null.
  */
-export const refreshTokenIfNeeded = ({
+export const verifyAndRefreshTokenIfNeeded = ({
 	xToken,
 	xRefreshToken,
 }: Tokens): Promise<ValidOrRefreshedXToken> => {
 	return new Promise((resolve, reject) => {
+		if (!xRefreshToken) {
+			reject(null);
+			return;
+		}
+
 		if (!xToken) {
 			console.log("Verifying server side!");
-
 			authService
 				.verifyXRefreshTokenServerSide(xRefreshToken)
 				.then(res => {
@@ -203,10 +202,7 @@ export const refreshTokenIfNeeded = ({
 					}
 				})
 				.catch(e => (console.log(e), reject(null)));
-		}
-
-		if (!xRefreshToken) {
-			reject(null);
+			return;
 		}
 
 		if (authService.isClientSideXTokenValid(xToken)) {
@@ -224,6 +220,7 @@ export const refreshTokenIfNeeded = ({
 					}
 				})
 				.catch(e => (console.log(e), reject(null)));
+			return;
 		}
 	});
 };

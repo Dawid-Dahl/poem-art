@@ -1,5 +1,8 @@
 import {xTokenPayload, User, ServerXTokenResponse} from "../types/types";
-import {getPayloadFromJwt, flashMessage, resetReduxState} from "../utils/utils";
+import {getPayloadFromJwt} from "../utils/utils";
+import store from "../store";
+import {logout} from "../actions/loginActions";
+import {showFlash} from "../actions/flashActions";
 
 export const authService = {
 	isAdmin(user: User | undefined) {
@@ -42,14 +45,21 @@ export const authService = {
 				},
 			});
 
-			const xToken = res.headers.get("x-token");
+			const {success, payload} = await res.json();
 
-			return xToken
-				? {isVerified: true, refreshedXToken: xToken}
-				: {isVerified: false, refreshedXToken: null};
+			if (success) {
+				const xToken = res.headers.get("x-token");
+
+				return xToken
+					? {isVerified: true, refreshedXToken: xToken}
+					: {isVerified: false, refreshedXToken: null};
+			} else {
+				store.dispatch(showFlash(payload.message));
+				store.dispatch(logout());
+				return {isVerified: false, refreshedXToken: null};
+			}
 		} catch (e) {
 			console.log(e);
-			flashMessage("Could not connect to the server, please try again soon!");
 			return {isVerified: false, refreshedXToken: null};
 		}
 	},

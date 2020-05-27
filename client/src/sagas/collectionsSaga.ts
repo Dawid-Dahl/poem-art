@@ -1,6 +1,6 @@
 import {takeEvery, call, put} from "redux-saga/effects";
 import {apiService} from "../api/apiService";
-import {parseMainApiResponse, flashMessage} from "../utils/utils";
+import {parseMainApiResponse} from "../utils/utils";
 import {ReduxCollection} from "../types/types";
 import {
 	getAllCollectionsFulfilled,
@@ -8,6 +8,7 @@ import {
 	addCollectionFulfilled,
 } from "../actions/collectionActions";
 import {hidePopup} from "../actions/popupActions";
+import {showFlash} from "../actions/flashActions";
 
 function* workerGetCollectionsSaga() {
 	try {
@@ -46,10 +47,8 @@ function* workerAddCollectionSaga({collectionPayload}: ReturnType<typeof addColl
 				public: _public,
 			})
 		);
-
 		yield put(hidePopup());
-
-		flashMessage(data.message);
+		yield put(showFlash(data.message));
 	} catch (e) {
 		console.log(e);
 	}

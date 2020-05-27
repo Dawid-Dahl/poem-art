@@ -6,12 +6,12 @@ import TextAreaInput from "../inputs/TextAreaInput";
 import {ImageFile} from "../../types/types";
 import {Navbar} from "../Navbar";
 import FileInput from "../inputs/FileInput";
-import {flashMessage} from "../../utils/utils";
 import SelectElement from "../inputs/SelectElement";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
 import {getAllCollections} from "../../actions/collectionActions";
-import {apiService} from "../../api/apiService";
+import {showFlash} from "../../actions/flashActions";
+import {uploadPoem} from "../../actions/poemActions";
 
 const Upload: React.FC = () => {
 	const [title, setTitle] = useState("");
@@ -36,7 +36,7 @@ const Upload: React.FC = () => {
 
 	const turnFormStateIntoObj = () => {
 		if (!imageFile) {
-			flashMessage("Please select an image to go with the poem!");
+			dispatch(showFlash("Please select an image to go with the poem!"));
 			return;
 		}
 
@@ -68,16 +68,9 @@ const Upload: React.FC = () => {
 
 			if (!uploadPayload) return;
 
-			const res = await apiService.refreshAndFetch(`artPoem/upload`, {
-				method: "POST",
-				body: turnFormStateIntoObj(),
-			});
-
-			const data = await res.json();
+			dispatch(uploadPoem(uploadPayload));
 
 			resetLocalState();
-
-			flashMessage(JSON.parse(data.payload).message);
 		} catch (e) {
 			console.log(e);
 		}
@@ -113,7 +106,11 @@ const Upload: React.FC = () => {
 						}
 						collections={collections}
 					/>
-					<FileInput name="imageFile" onChangeHandle={onChangeHandle} />
+					<FileInput
+						name="imageFile"
+						isFileSelected={Boolean(imageFile)}
+						onChangeHandle={onChangeHandle}
+					/>
 					<TextAreaInput
 						name="poem"
 						value={poem}
