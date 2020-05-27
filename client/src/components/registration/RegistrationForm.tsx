@@ -14,8 +14,6 @@ interface Props extends RouteComponentProps {
 }
 
 const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
-	const dispatch = useDispatch();
-
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
