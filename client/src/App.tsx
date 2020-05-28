@@ -4,7 +4,7 @@ import {RootState} from "./store";
 import FlashMessage from "./components/FlashMessage";
 import {AuthenticatedApp} from "./components/authenticated-app/AuthenticatedApp";
 import {UnauthenticatedApp} from "./components/unauthenticated-app/UnauthenticatedApp";
-import AddCollectionPopup from "./components/AddCollectionPopup";
+import AddCollectionPopup from "./components/popup/AddCollectionPopup";
 import {Overlay} from "./components/Overlay";
 import {hidePopup} from "./actions/popupActions";
 import {checkIfLoggedIn} from "./actions/loginActions";

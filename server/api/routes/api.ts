@@ -13,7 +13,7 @@ apiRouter.get("/ping", (req, res, next) => {
 });
 
 apiRouter.use("/users", userRouter);
-apiRouter.use("/artPoem", verifyXToken, artPoemRouter);
+apiRouter.use("/artpoem", verifyXToken, artPoemRouter);
 apiRouter.use("/collections", verifyXToken, collectionsRouter);
 
 export default apiRouter;

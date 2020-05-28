@@ -6,6 +6,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
 import {Navbar} from "../Navbar";
 import {getAllCollections} from "../../actions/collectionActions";
+import ArtPoemGrid from "../art-poem-grid/ArtPoemGrid";
 
 const Profile: React.FC = () => {
 	const user = useSelector((state: RootState) => state.userReducer.user);
@@ -25,6 +26,8 @@ const Profile: React.FC = () => {
 				<ProfilePic />
 				<h2>Your Collections</h2>
 				<CollectionsDisplay collections={collections} />
+				<h2>Your ArtPoems</h2>
+				<ArtPoemGrid />
 			</Wrapper>
 		</>
 	);
@@ -37,6 +40,10 @@ const Wrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+
+	h2 {
+		margin: 2em 0;
+	}
 `;
 
 const Greeting = styled.h1`

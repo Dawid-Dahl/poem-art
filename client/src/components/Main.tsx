@@ -10,6 +10,7 @@ const Main = () => {
 			<Navbar />
 			<InnerWrapper>
 				<CollectionSelector />
+				<h1>Discover</h1>
 				<ArtPoemGrid />
 			</InnerWrapper>
 		</Wrapper>

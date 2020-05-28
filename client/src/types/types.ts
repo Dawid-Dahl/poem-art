@@ -21,7 +21,7 @@ export type UploadInformation = {
 
 export type ImageFile = string | Blob | null | undefined;
 
-export type ArtPoem = {
+export type ReduxArtPoem = {
 	id: number;
 	title: string;
 	content: string;

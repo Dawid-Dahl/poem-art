@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
-import {ArtPoem} from "../../types/types";
+import {ReduxArtPoem} from "../../types/types";
 
-const ArtPoem: React.FC<ArtPoem> = ({id, title, likes, imageUrl}) => {
+const ArtPoem: React.FC<ReduxArtPoem> = ({id, title, likes, imageUrl}) => {
 	return (
 		<>
 			<Wrapper>
@@ -55,7 +55,7 @@ const StyledDiv = styled.div<Props>`
 	}
 
 	@media only screen and (max-width: 805px) {
-		width: 90%;
+		width: 100%;
 	}
 `;
 

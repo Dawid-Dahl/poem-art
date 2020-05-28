@@ -30,7 +30,7 @@ const Wrapper = styled.div`
 	border-radius: var(--border-radius);
 	background-color: white;
 	padding: 1em;
-	margin: 1em;
+	margin: 1em 2em;
 	text-align: center;
 	box-shadow: var(--box-shadow);
 	cursor: pointer;

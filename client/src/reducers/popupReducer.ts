@@ -13,9 +13,9 @@ export const popupReducer = (
 	action: PopupActionTypes
 ): PopupReducerState => {
 	switch (action.type) {
-		case "SHOW_POPUP":
+		case "SHOW_ADD_COLLECTION_POPUP":
 			return {...state, isShowingPopup: true};
-		case "HIDE_POPUP":
+		case "HIDE_ADD_COLLECTION_POPUP":
 			return {...state, isShowingPopup: false};
 		default:
 			return state;

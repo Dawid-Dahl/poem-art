@@ -3,25 +3,40 @@ import styled from "styled-components";
 import PoemSection from "./PoemSection";
 import CommentSection from "./CommentSection";
 import LikesSection from "./LikesSection";
-import {ArtPoem} from "../../types/types";
+import {useQuery} from "../../custom-hooks/useQuery";
+import {useDispatch, useSelector} from "react-redux";
+import {getPoem} from "../../actions/poemActions";
+import {RootState} from "../../store";
 
-type Props = {
-	artPoem: ArtPoem;
-};
+type Props = {};
 
-const FullscreenPicture: React.FC<Props> = ({artPoem}) => {
+const FullscreenPicture: React.FC<Props> = () => {
+	const dispatch = useDispatch();
+
+	const query = useQuery();
+
+	const artPoemId = Number(query.get("id"));
+
+	const selectedArtPoem = useSelector((state: RootState) => state.poemReducer.poemSelected);
+
 	useEffect(() => {
 		window.scrollTo(0, 0);
+	}, []);
+
+	useEffect(() => {
+		selectedArtPoem.id === 0 && dispatch(getPoem(artPoemId));
 	}, []);
 
 	return (
 		<>
 			<Wrapper>
-				<StyledDiv imageUrl={artPoem.imageUrl ? artPoem.imageUrl : ""}>
+				<StyledDiv imageUrl={selectedArtPoem.imageUrl ? selectedArtPoem.imageUrl : ""}>
 					<Grid>
-						<PoemSection poem={artPoem.content} />
+						<PoemSection poem={selectedArtPoem.content} />
 						<SidebarWrapper>
-							<LikesSection likes={artPoem.likes ? artPoem.likes : 0} />
+							<LikesSection
+								likes={selectedArtPoem.likes ? selectedArtPoem.likes : 0}
+							/>
 							<CommentSection />
 						</SidebarWrapper>
 					</Grid>
@@ -76,7 +91,7 @@ const Grid = styled.div`
 		width: 90%;
 
 		p {
-			padding: 15px;
+			padding: 1em;
 		}
 	}
 

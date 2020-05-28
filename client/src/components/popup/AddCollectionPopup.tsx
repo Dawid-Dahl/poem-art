@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import styled, {css} from "styled-components";
-import TextInput from "./inputs/TextInput";
-import Button from "./Button";
-import CheckBoxInput from "./inputs/CheckBoxInput";
+import TextInput from "../inputs/TextInput";
+import Button from "../Button";
+import CheckBoxInput from "../inputs/CheckBoxInput";
 import {useDispatch, useSelector} from "react-redux";
-import {hidePopup} from "../actions/popupActions";
-import {RootState} from "../store";
-import {addCollection} from "../actions/collectionActions";
-import {AddCollectionFormObject} from "../types/types";
+import {hidePopup} from "../../actions/popupActions";
+import {RootState} from "../../store";
+import {addCollection} from "../../actions/collectionActions";
+import {AddCollectionFormObject} from "../../types/types";
 
 type Props = {};
 

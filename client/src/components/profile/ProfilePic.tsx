@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 	overflow: hidden;
 	height: 10em;
 	width: 10em;
-	margin: 2em 0;
+	margin: 2em 0 0 0;
 	box-shadow: var(--box-shadow);
 
 	img {

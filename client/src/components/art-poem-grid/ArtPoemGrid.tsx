@@ -6,7 +6,7 @@ import ArtPoem from "./ArtPoem";
 import {getAllPoems} from "../../actions/poemActions";
 import Loading from "../Loading";
 
-const ArtPoemGrid = () => {
+const ArtPoemGrid: React.FC = () => {
 	const poems = useSelector((state: RootState) => state.poemReducer.poems);
 	const isLoading = useSelector((state: RootState) => state.loadingReducer.isLoading);
 	const dispatch = useDispatch();
@@ -43,18 +43,20 @@ const ArtPoemGrid = () => {
 export default ArtPoemGrid;
 
 const Wrapper = styled.div`
-	width: 80%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	background-color: var(--light-grey-color);
+	border-radius: var(--border-radius);
+	width: 90%;
 `;
 
 const Grid = styled.div`
-	height: 500px;
 	width: 100%;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	gap: 2em;
 	align-items: center;
 	justify-content: center;
+	margin: 1em 2em;
 `;

@@ -1,11 +1,11 @@
 export const showPopup = () =>
 	({
-		type: "SHOW_POPUP",
+		type: "SHOW_ADD_COLLECTION_POPUP",
 	} as const);
 
 export const hidePopup = () =>
 	({
-		type: "HIDE_POPUP",
+		type: "HIDE_ADD_COLLECTION_POPUP",
 	} as const);
 
 export type ReduxPopupState = "popup";

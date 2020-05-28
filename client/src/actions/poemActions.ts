@@ -1,4 +1,26 @@
-import {ArtPoem} from "../types/types";
+import {ReduxArtPoem} from "../types/types";
+
+export const getPoem = (artPoemId: ReduxArtPoem["id"]) =>
+	({
+		type: "GET_POEM",
+		artPoemId,
+	} as const);
+
+export const getPoemFulfilled = (artPoem: ReduxArtPoem) =>
+	({
+		type: "GET_POEM_FULFILLED",
+		artPoem,
+	} as const);
+
+export const getPoemFailed = () =>
+	({
+		type: "GET_POEM_FAILED",
+	} as const);
+
+export const deselectPoem = () =>
+	({
+		type: "DESELECT_POEM",
+	} as const);
 
 export const uploadPoem = (payload: FormData) =>
 	({
@@ -16,7 +38,7 @@ export const getAllPoems = () =>
 		type: "GET_ALL_POEMS",
 	} as const);
 
-export const getAllPoemsFulfilled = (artPoems: ArtPoem[]) =>
+export const getAllPoemsFulfilled = (artPoems: ReduxArtPoem[]) =>
 	({
 		type: "GET_ALL_POEMS_FULFILLED",
 		artPoems,
@@ -36,6 +58,10 @@ export const removeAllPoems = () =>
 export type ReduxPoemState = "poem";
 
 export type PoemActionTypes =
+	| ReturnType<typeof getPoem>
+	| ReturnType<typeof getPoemFulfilled>
+	| ReturnType<typeof getPoemFailed>
+	| ReturnType<typeof deselectPoem>
 	| ReturnType<typeof uploadPoem>
 	| ReturnType<typeof uploadPoemFulfilled>
 	| ReturnType<typeof getAllPoems>

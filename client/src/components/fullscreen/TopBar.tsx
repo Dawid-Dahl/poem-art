@@ -26,7 +26,7 @@ const TopBar: React.FC<Props> = ({title, buttonKind, backType}) => {
 					<LinkButton title="Back" linkTo="/main" kind={buttonKind} />
 				) : null}
 				<TitleWrapper>
-					<TopBarTitle>{title}</TopBarTitle>
+					<TopBarTitle title={title}>{title}</TopBarTitle>
 				</TitleWrapper>
 			</Wrapper>
 		</>
@@ -57,7 +57,12 @@ const TitleWrapper = styled.div`
 	}
 `;
 
-const TopBarTitle = styled.h1`
+type TopBarTitleProps = {
+	title: string;
+};
+
+const TopBarTitle = styled.h1<TopBarTitleProps>`
+	display: ${({title}) => (title ? "block" : "none")};
 	margin: 0px 10px;
 	color: white;
 	max-width: 200px;

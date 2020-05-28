@@ -3,43 +3,31 @@ import styled from "styled-components";
 import TopBar from "./TopBar";
 import {Navbar} from "../Navbar";
 import FullscreenSection from "./FullscreenSection";
-import {useLocation} from "react-router";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store";
+import {useQuery} from "../../custom-hooks/useQuery";
+import Loading from "../Loading";
 
-function useQuery() {
-	return new URLSearchParams(useLocation().search);
-}
-
-const backupPoem = {
-	id: 0,
-	title: "",
-	content: "",
-	imageUrl: "",
-	createdAt: 0,
-	likes: 0,
-	comments: [],
-	userId: "user",
-};
-
-const Fullscreen = () => {
+const Fullscreen: React.FC = () => {
 	const query = useQuery();
 
 	const artPoem = useSelector(
 		(state: RootState) =>
 			state.poemReducer.poems?.filter(poem => poem.id === Number(query.get("id")))[0]
 	);
+	const isLoading = useSelector((state: RootState) => state.loadingReducer.isLoading);
+	const selectedArtPoem = useSelector((state: RootState) => state.poemReducer.poemSelected);
 
 	return (
 		<>
 			<Wrapper>
 				<Navbar />
 				<TopBar
-					title={artPoem ? artPoem.title : ""}
+					title={isLoading ? "" : selectedArtPoem.title}
 					buttonKind="white"
 					backType="history"
 				/>
-				<FullscreenSection artPoem={artPoem ? artPoem : backupPoem} />
+				{isLoading ? <Loading /> : <FullscreenSection />}
 			</Wrapper>
 		</>
 	);

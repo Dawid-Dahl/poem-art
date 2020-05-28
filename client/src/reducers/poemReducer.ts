@@ -1,8 +1,20 @@
-import {ArtPoem} from "../types/types";
+import {ReduxArtPoem} from "../types/types";
 import {PoemActionTypes} from "../actions/poemActions";
 
 export type PoemReducerState = {
-	poems: ArtPoem[] | null;
+	poems: ReduxArtPoem[] | null;
+	poemSelected: ReduxArtPoem;
+};
+
+const initPoem: ReduxArtPoem = {
+	id: 0,
+	title: "",
+	content: "",
+	imageUrl: "",
+	createdAt: 0,
+	likes: 0,
+	comments: [],
+	userId: "user",
 };
 
 const initialState: PoemReducerState = {
@@ -17,6 +29,16 @@ const initialState: PoemReducerState = {
 			userId: "user",
 		},
 	],
+	poemSelected: {
+		id: 0,
+		title: "",
+		content: "",
+		imageUrl: "",
+		createdAt: 0,
+		likes: 0,
+		comments: [],
+		userId: "user",
+	},
 };
 
 export const poemReducer = (
@@ -24,6 +46,12 @@ export const poemReducer = (
 	action: PoemActionTypes
 ): PoemReducerState => {
 	switch (action.type) {
+		case "GET_POEM_FULFILLED":
+			return {...state, poemSelected: action.artPoem};
+		case "GET_POEM_FAILED":
+			return {...state, poemSelected: initPoem};
+		case "DESELECT_POEM":
+			return {...state, poemSelected: initPoem};
 		case "GET_ALL_POEMS_FULFILLED":
 			return {...state, poems: action.artPoems};
 		case "REMOVE_ALL_POEMS":

@@ -43,7 +43,7 @@ const Wrapper = styled.div`
 	align-items: center;
 	justify-content: center;
 	flex-wrap: wrap;
-	background-color: lightgrey;
+	background-color: var(--light-grey-color);
 	width: 90%;
 	border-radius: var(--border-radius);
 `;
