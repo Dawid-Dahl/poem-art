@@ -75,7 +75,7 @@ const StyledDiv = styled.div<StyledProps>`
 		box-shadow: ${props =>
 			props.kind === "black"
 				? "inset 0px 0px 0px 5px var(--dark-grey-color)"
-				: "var(--box-shadow), inset 0px 0px 0px 0px #00000017"};
+				: "var(--box-shadow), inset 0px 0px 0px 5px #00000017"};
 	}
 
 	/* This media query is here to make sure that the desktop nav buttons don't take up space at tablet and mobile devices. */

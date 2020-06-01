@@ -29,7 +29,7 @@ export const popupReducer = (
 		case "SHOW_EDIT_POEM_POPUP":
 			return R.set(R.lensPath(["editPoemPopup", "active"]), true, state);
 		case "HIDE_POPUP":
-			return R.map<Popup, Popup, any>(x => R.over(R.lensProp("active"), x => !x, x))(state);
+			return R.map<Popup, Popup, any>(x => R.set(R.lensProp("active"), false, x))(state);
 		default:
 			return state;
 	}

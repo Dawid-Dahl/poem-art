@@ -100,3 +100,9 @@ export type AddCollectionFormObject = {
 	collectionName: string;
 	isPublic: boolean;
 };
+
+export type EditPoemFormObject = {
+	poemId: number;
+	poemTitle: string;
+	poemContent: string;
+};

@@ -6,8 +6,9 @@ import {
 	getPoem,
 	getPoemFulfilled,
 	getPoemFailed,
+	editPoem,
 } from "../actions/poemActions";
-import {parseMainApiResponse} from "../utils/utils";
+import {parseMainApiResponse, convertToBytes} from "../utils/utils";
 import {ReduxArtPoem} from "../types/types";
 import {showFlash} from "../actions/flashActions";
 import {startLoading, completeLoading} from "../actions/loadingActions";
@@ -61,25 +62,54 @@ function* workerGetPoems() {
 function* workerUploadPoems({payload}: ReturnType<typeof uploadPoem>) {
 	const image = payload.get("imageFile") as File;
 
-	if (image.size >= 5242880) {
-		yield put(showFlash("Please choose an image smaller than 5 MB in size"));
-		return;
+	try {
+		const bytes = convertToBytes("5 mb");
+
+		if (!bytes) return;
+
+		if (image.size >= bytes) {
+			yield put(showFlash("Please choose an image smaller than 5 MB in size"));
+			return;
+		}
+
+		const res = yield call(apiService.refreshAndFetch, "artpoem/upload", {
+			method: "POST",
+			body: payload,
+		});
+
+		const data = yield call([res, "json"]);
+
+		yield put(showFlash(JSON.parse(data.payload).message));
+	} catch (e) {
+		console.log(e);
 	}
-
-	const res = yield call(apiService.refreshAndFetch, "artpoem/upload", {
-		method: "POST",
-		body: payload,
-	});
-
-	const data = yield call([res, "json"]);
-
-	yield put(showFlash(JSON.parse(data.payload).message));
 }
 
+function* workerEditPoems({payload}: ReturnType<typeof editPoem>) {
+	console.log(JSON.stringify(payload));
+	try {
+		const res = yield call(apiService.refreshAndFetch, "artpoem/edit", {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(payload),
+		});
+
+		const data = yield call([res, "json"]);
+
+		yield put(getPoem(payload.poemId));
+
+		yield put(showFlash(JSON.parse(data.payload).message));
+	} catch (e) {
+		console.log(e);
+	}
+}
 function* poemsSaga() {
 	yield takeEvery("GET_POEM", workerGetPoem);
 	yield takeEvery("GET_ALL_POEMS", workerGetPoems);
 	yield takeEvery("UPLOAD_POEM", workerUploadPoems);
+	yield takeEvery("EDIT_POEM", workerEditPoems);
 }
 
 export default poemsSaga;

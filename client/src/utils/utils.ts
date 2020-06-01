@@ -30,6 +30,21 @@ export const localStorageService = {
 	},
 };
 
+export const convertToBytes = (text: string) => {
+	if (!text.match(/k|m|g|t/)) return;
+
+	var powers = {k: 1, m: 2, g: 3, t: 4};
+	var regex = /(\d+(?:\.\d+)?)\s?(k|m|g|t)?b?/i;
+
+	var res = regex.exec(text);
+
+	if (!res) return;
+
+	return (
+		parseFloat(res[1]) * Math.pow(1024, powers[res[2].toLowerCase() as "k" | "m" | "g" | "t"])
+	);
+};
+
 export const range = (start: number, end: number): number[] =>
 	end <= start ? [end] : [...range(start, end - 1), end];
 

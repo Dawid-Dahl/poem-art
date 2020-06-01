@@ -15,7 +15,7 @@ const AddCollectionPopup: React.FC = () => {
 
 	const dispatch = useDispatch();
 
-	const isShowingAddCollectionPopup = useSelector(
+	const addCollectionPopup = useSelector(
 		(state: RootState) => state.popupReducer.addCollectionPopup
 	);
 
@@ -60,9 +60,9 @@ const AddCollectionPopup: React.FC = () => {
 			<StyledForm
 				action="POST"
 				onSubmit={e => handleSubmit(e)}
-				active={isShowingAddCollectionPopup.active}
+				active={addCollectionPopup.active}
 			>
-				<h2>{isShowingAddCollectionPopup ? "Add Collection" : ""}</h2>
+				<h2>{addCollectionPopup.active ? addCollectionPopup.name : ""}</h2>
 				<NameRow>
 					<p>Name</p>
 					<div>
@@ -147,6 +147,7 @@ const NameRow = styled.div`
 
 	p {
 		padding-right: 30px;
+		width: 20%;
 	}
 
 	div {
@@ -185,6 +186,7 @@ const PublicRow = styled.div`
 
 	p {
 		padding-right: 30px;
+		width: 20%;
 	}
 
 	input {

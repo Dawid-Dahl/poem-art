@@ -50,7 +50,6 @@ const TitleWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 2em 0;
 
 	@media only screen and (max-width: 800px) {
 		justify-content: flex-end;

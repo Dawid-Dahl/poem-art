@@ -3,13 +3,14 @@ import styled from "styled-components";
 
 type Props = {
 	name: string;
+	kind: "primary" | "white" | "black" | "grey";
 	isFileSelected: boolean;
 	onChangeHandle: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const FileInput: React.FC<Props> = ({name, isFileSelected, onChangeHandle}) => {
+const FileInput: React.FC<Props> = ({name, kind, isFileSelected, onChangeHandle}) => {
 	return (
-		<StyledWrapper kind={"white"}>
+		<StyledWrapper kind={kind}>
 			<input id={name} onChange={onChangeHandle} name={name} type="file" />
 			<label htmlFor="imageFile">
 				<span className="material-icons">
@@ -24,7 +25,7 @@ const FileInput: React.FC<Props> = ({name, isFileSelected, onChangeHandle}) => {
 export default FileInput;
 
 type WrapperProps = {
-	kind: "primary" | "white" | "black";
+	kind: "primary" | "white" | "black" | "grey";
 };
 
 const StyledWrapper = styled.div<WrapperProps>`
@@ -49,6 +50,8 @@ const StyledWrapper = styled.div<WrapperProps>`
 				? "white"
 				: props.kind === "black"
 				? "black"
+				: props.kind === "grey"
+				? "var(--main-grey-color)"
 				: "white"};
 		margin: 2em 0;
 		transition: all 0.2s;
@@ -63,6 +66,8 @@ const StyledWrapper = styled.div<WrapperProps>`
 				? "black"
 				: props.kind === "black"
 				? "white"
+				: props.kind === "grey"
+				? "white"
 				: "black"};
 		border: black;
 
@@ -72,6 +77,8 @@ const StyledWrapper = styled.div<WrapperProps>`
 			box-shadow: ${props =>
 				props.kind === "black"
 					? "inset 0px 0px 0px 5px var(--dark-grey-color)"
+					: props.kind === "grey"
+					? "0px 0px 13px 5px #00000005, inset 0px 0px 0px 5px #00000017"
 					: "var(--box-shadow), inset 0px 0px 0px 5px #00000017"};
 		}
 	}

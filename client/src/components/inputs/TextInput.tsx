@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 type Props = {
-	name: string;
+	name?: string;
 	value: string;
 	type: "text" | "email" | "password";
 	onChangeHandle: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -27,7 +27,7 @@ const TextInput: React.FC<Props> = ({
 		value={value}
 		name={name}
 		type={type}
-		placeholder={[name[0].toUpperCase(), name.slice(1)].join("")}
+		placeholder={name ? [name[0].toUpperCase(), name.slice(1)].join("") : ""}
 		onChange={onChangeHandle}
 		required={required}
 		pattern={pattern}

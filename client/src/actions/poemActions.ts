@@ -1,4 +1,6 @@
-import {ReduxArtPoem} from "../types/types";
+import {ReduxArtPoem, EditPoemFormObject} from "../types/types";
+
+//READ
 
 export const getPoem = (artPoemId: ReduxArtPoem["id"]) =>
 	({
@@ -22,17 +24,6 @@ export const deselectPoem = () =>
 		type: "DESELECT_POEM",
 	} as const);
 
-export const uploadPoem = (payload: FormData) =>
-	({
-		type: "UPLOAD_POEM",
-		payload,
-	} as const);
-
-export const uploadPoemFulfilled = () =>
-	({
-		type: "UPLOAD_POEM_FULFILLED",
-	} as const);
-
 export const getAllPoems = () =>
 	({
 		type: "GET_ALL_POEMS",
@@ -49,6 +40,34 @@ export const getAllPoemsFailed = (error: Error) =>
 		type: "GET_ALL_POEMS_FAILED",
 		error,
 	} as const);
+
+//CREATE
+
+export const uploadPoem = (payload: FormData) =>
+	({
+		type: "UPLOAD_POEM",
+		payload,
+	} as const);
+
+export const uploadPoemFulfilled = () =>
+	({
+		type: "UPLOAD_POEM_FULFILLED",
+	} as const);
+
+//UPDATE
+
+export const editPoem = (payload: EditPoemFormObject) =>
+	({
+		type: "EDIT_POEM",
+		payload,
+	} as const);
+
+export const editPoemFulfilled = () =>
+	({
+		type: "EDIT_POEM_FULFILLED",
+	} as const);
+
+//DELETE
 
 export const removeAllPoems = () =>
 	({

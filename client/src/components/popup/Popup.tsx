@@ -3,6 +3,7 @@ import styled, {css} from "styled-components";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store";
 import AddCollectionPopup from "./AddCollectionPopup";
+import EditPoemPopup from "./EditPoemPopup";
 
 const Popup: React.FC = () => {
 	const addCollectionPopup = useSelector(
@@ -12,8 +13,9 @@ const Popup: React.FC = () => {
 
 	return (
 		<>
-			<Wrapper active={addCollectionPopup.active}>
+			<Wrapper active={addCollectionPopup.active || editPoemPopup.active ? true : false}>
 				<AddCollectionPopup />
+				<EditPoemPopup />
 			</Wrapper>
 		</>
 	);

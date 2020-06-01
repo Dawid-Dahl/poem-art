@@ -11,9 +11,11 @@ import Popup from "./components/popup/Popup";
 
 const App: React.FC = () => {
 	const isLoggedIn = useSelector((state: RootState) => state.loginReducer.isLoggedIn);
-	const isShowingPopup = useSelector(
-		(state: RootState) => state.popupReducer.isShowingAddCollectionPopup
+	const addCollectionPopup = useSelector(
+		(state: RootState) => state.popupReducer.addCollectionPopup
 	);
+
+	const editPoemPopup = useSelector((state: RootState) => state.popupReducer.editPoemPopup);
 
 	const dispatch = useDispatch();
 
@@ -30,7 +32,10 @@ const App: React.FC = () => {
 
 	return (
 		<>
-			<Overlay isShowingPopup={isShowingPopup} handleClick={handleClick} />
+			<Overlay
+				isShowingPopup={addCollectionPopup.active || editPoemPopup.active ? true : false}
+				handleClick={handleClick}
+			/>
 			<Popup />
 			<FlashMessage />
 			{isLoggedIn ? <AuthenticatedApp /> : <UnauthenticatedApp />}

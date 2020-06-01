@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 type Props = {
-	name: string;
+	name?: string;
 	value: string;
 	onChangeHandle: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 	required?: boolean;
@@ -14,7 +14,7 @@ const TextAreaInput: React.FC<Props> = ({name, value, onChangeHandle, required, 
 		id={name}
 		name={name}
 		value={value}
-		placeholder={[name[0].toUpperCase(), name.slice(1)].join("")}
+		placeholder={name ? [name[0].toUpperCase(), name.slice(1)].join("") : ""}
 		onChange={onChangeHandle}
 		required={required}
 		minLength={minLength}
@@ -30,6 +30,7 @@ const StyledTextArea = styled.textarea`
 	padding: 1em 3em;
 	font-size: 1em;
 	border-radius: var(--border-radius-inputs);
+	border: var(--light-grey-color) 2px solid;
 	outline: none;
 
 	&:focus {

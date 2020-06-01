@@ -4,6 +4,7 @@ import {uploadToGCS} from "../middleware/uploadToGCS";
 import {uploadArtPoemController} from "../controllers/uploadArtPoemController";
 import {getAllArtPoemController} from "../controllers/getAllArtPoemController";
 import {getArtPoemController} from "../controllers/getArtPoemController";
+import {editArtPoemController} from "../controllers/editArtPoemController";
 
 const upload = multer({
 	storage: multer.memoryStorage(),
@@ -19,5 +20,7 @@ artPoemRouter.get("/get-all", getAllArtPoemController);
 artPoemRouter.get("/get-artpoem", getArtPoemController);
 
 artPoemRouter.post("/upload", upload.single("imageFile"), uploadToGCS, uploadArtPoemController);
+
+artPoemRouter.put("/edit", editArtPoemController);
 
 export default artPoemRouter;

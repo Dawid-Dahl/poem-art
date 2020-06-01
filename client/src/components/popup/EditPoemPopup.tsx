@@ -1,32 +1,41 @@
-/* import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styled, {css} from "styled-components";
 import TextInput from "../inputs/TextInput";
 import Button from "../Button";
-import CheckBoxInput from "../inputs/CheckBoxInput";
 import {useDispatch, useSelector} from "react-redux";
 import {hidePopup} from "../../actions/popupActions";
 import {RootState} from "../../store";
-import {addCollection} from "../../actions/collectionActions";
-import {AddCollectionFormObject} from "../../types/types";
+import {EditPoemFormObject} from "../../types/types";
+import TextAreaInput from "../inputs/TextAreaInput";
+import {editPoem} from "../../actions/poemActions";
+import FileInput from "../inputs/FileInput";
+import {ImageFile} from "../../types/types";
 
 const EditPoemPopup: React.FC = () => {
-	const [collectionName, setCollectionName] = useState("");
-	const [isPublic, setisPublic] = useState(true);
+	const poemSelected = useSelector((state: RootState) => state.poemReducer.poemSelected);
+	const editPoemPopup = useSelector((state: RootState) => state.popupReducer.editPoemPopup);
+
+	useEffect(() => {
+		setpoemTitle(poemSelected.title);
+		setPoemContent(poemSelected.content);
+	}, [poemSelected]);
+
+	const [poemTitle, setpoemTitle] = useState(poemSelected.title);
+	const [imageFile, setImageFile] = useState<ImageFile>(null);
+	const [poemContent, setPoemContent] = useState(poemSelected.content);
 
 	const dispatch = useDispatch();
 
-	const isShowingAddCollectionPopup = useSelector(
-		(state: RootState) => state.popupReducer.isShowingAddCollectionPopup
-	);
-
 	const turnFormStateIntoObj = (
-		collectionName: string,
-		isPublic: boolean
-	): AddCollectionFormObject | undefined => {
-		if (collectionName) {
+		poemId: number,
+		poemTitle: string,
+		poemContent: string
+	): EditPoemFormObject | undefined => {
+		if (poemTitle && poemContent) {
 			return {
-				collectionName,
-				isPublic,
+				poemId,
+				poemTitle,
+				poemContent,
 			};
 		} else {
 			console.log("No data sent. Fill in all the required fields.");
@@ -34,8 +43,13 @@ const EditPoemPopup: React.FC = () => {
 		}
 	};
 
+	const onChangeHandle = (event: React.ChangeEvent<HTMLInputElement>): void => {
+		setImageFile(event.target.files?.[0]);
+	};
+
 	const handleClick = () => {
-		setCollectionName("");
+		setpoemTitle(poemSelected.title);
+		setPoemContent(poemSelected.content);
 		dispatch(hidePopup());
 	};
 
@@ -43,13 +57,15 @@ const EditPoemPopup: React.FC = () => {
 		try {
 			e.preventDefault();
 
-			const collectionPayload = turnFormStateIntoObj(collectionName, isPublic);
+			const editPoemPayload = turnFormStateIntoObj(poemSelected.id, poemTitle, poemContent);
 
-			if (!collectionPayload) return;
+			if (!editPoemPayload) return;
 
-			dispatch(addCollection(collectionPayload));
+			dispatch(editPoem(editPoemPayload));
 
-			setCollectionName("");
+			setpoemTitle(poemSelected.title);
+			setPoemContent(poemSelected.content);
+			dispatch(hidePopup());
 		} catch (e) {
 			console.log(e);
 		}
@@ -57,40 +73,47 @@ const EditPoemPopup: React.FC = () => {
 
 	return (
 		<>
-			<StyledForm
-				action="POST"
-				onSubmit={e => handleSubmit(e)}
-				active={isShowingAddCollectionPopup}
-			>
-				<h2>{isShowingAddCollectionPopup ? "Add Collection" : ""}</h2>
-				<NameRow>
-					<p>Name</p>
+			<StyledForm action="POST" onSubmit={e => handleSubmit(e)} active={editPoemPopup.active}>
+				<h2>{editPoemPopup.active ? editPoemPopup.name : ""}</h2>
+				<Row>
+					<p>Edit Title</p>
 					<div>
 						<TextInput
-							name="Enter Name"
-							value={collectionName}
+							value={poemTitle}
 							type="text"
 							onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
-								setCollectionName(e.target.value)
+								setpoemTitle(e.target.value)
 							}
 							required
 						/>
 					</div>
-				</NameRow>
-				<PublicRow>
-					<p>Public</p>
-					<CheckBoxInput
-						name="public"
-						isChecked={isPublic}
-						checked
-						onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
-							setisPublic(e.target.checked)
-						}
-					/>
-				</PublicRow>
+				</Row>
+				<Row>
+					<p>Update Art</p>
+					<div>
+						<FileInput
+							name="imageFile"
+							kind="black"
+							isFileSelected={Boolean(imageFile)}
+							onChangeHandle={onChangeHandle}
+						/>
+					</div>
+				</Row>
+				<Row>
+					<p>Edit ArtPoem</p>
+					<div>
+						<TextAreaInput
+							value={poemContent}
+							onChangeHandle={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+								setPoemContent(e.target.value)
+							}
+							required
+						/>
+					</div>
+				</Row>
 				<ButtonRow>
 					<Button title="Cancel" kind="grey" type="button" onClickHandler={handleClick} />
-					<Button title="Add" kind="primary" type="submit" />
+					<Button title="Edit" kind="primary" type="submit" />
 				</ButtonRow>
 			</StyledForm>
 		</>
@@ -137,7 +160,7 @@ const StyledForm = styled.form<StyledFormProps>`
 	}
 `;
 
-const NameRow = styled.div`
+const Row = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -147,6 +170,7 @@ const NameRow = styled.div`
 
 	p {
 		padding-right: 30px;
+		width: 20%;
 	}
 
 	div {
@@ -175,30 +199,8 @@ const NameRow = styled.div`
 	}
 `;
 
-const PublicRow = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: start;
-	margin-top: 3em;
-	padding-top: 2em;
-	border-top: 1px var(--light-grey-color) solid;
- 
-	p {
-		padding-right: 30px;
-	}
-
-	input {
-		margin: 0;
-	}
-
-	@media only screen and (max-width: 500px) {
-		margin: 2em;
-	}
-`;
-
 const ButtonRow = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
 `;
- */

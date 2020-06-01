@@ -108,6 +108,7 @@ const Upload: React.FC = () => {
 					/>
 					<FileInput
 						name="imageFile"
+						kind="white"
 						isFileSelected={Boolean(imageFile)}
 						onChangeHandle={onChangeHandle}
 					/>
