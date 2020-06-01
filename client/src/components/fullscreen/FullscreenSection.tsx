@@ -56,11 +56,12 @@ type StyledDivProps = {
 
 const StyledDiv = styled.div<StyledDivProps>`
 	position: absolute;
-	height: 100vh;
+	height: 70vh;
 	width: 100%;
 	background-image: ${props => `url(${props.imageUrl})`};
 	background-repeat: no-repeat;
-	background-size: contain;
+	background-position: 100% 0;
+	background-size: cover;
 	z-index: -1;
 
 	@media only screen and (max-width: 800px) {

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+/* import React, {useState} from "react";
 import styled, {css} from "styled-components";
 import TextInput from "../inputs/TextInput";
 import Button from "../Button";
@@ -9,14 +9,14 @@ import {RootState} from "../../store";
 import {addCollection} from "../../actions/collectionActions";
 import {AddCollectionFormObject} from "../../types/types";
 
-const AddCollectionPopup: React.FC = () => {
+const EditPoemPopup: React.FC = () => {
 	const [collectionName, setCollectionName] = useState("");
 	const [isPublic, setisPublic] = useState(true);
 
 	const dispatch = useDispatch();
 
 	const isShowingAddCollectionPopup = useSelector(
-		(state: RootState) => state.popupReducer.addCollectionPopup
+		(state: RootState) => state.popupReducer.isShowingAddCollectionPopup
 	);
 
 	const turnFormStateIntoObj = (
@@ -60,7 +60,7 @@ const AddCollectionPopup: React.FC = () => {
 			<StyledForm
 				action="POST"
 				onSubmit={e => handleSubmit(e)}
-				active={isShowingAddCollectionPopup.active}
+				active={isShowingAddCollectionPopup}
 			>
 				<h2>{isShowingAddCollectionPopup ? "Add Collection" : ""}</h2>
 				<NameRow>
@@ -97,7 +97,7 @@ const AddCollectionPopup: React.FC = () => {
 	);
 };
 
-export default AddCollectionPopup;
+export default EditPoemPopup;
 
 type StyledFormProps = {
 	active: boolean;
@@ -182,7 +182,7 @@ const PublicRow = styled.div`
 	margin-top: 3em;
 	padding-top: 2em;
 	border-top: 1px var(--light-grey-color) solid;
-
+ 
 	p {
 		padding-right: 30px;
 	}
@@ -201,3 +201,4 @@ const ButtonRow = styled.div`
 	align-items: center;
 	justify-content: space-evenly;
 `;
+ */

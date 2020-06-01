@@ -1,15 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+import store from "../../store";
+import {showEditPoemPopup} from "../../actions/popupActions";
 
 type Props = {
 	poem: string;
 };
 
+const onClickHandle = () => store.dispatch(showEditPoemPopup());
+
 export const PoemSection: React.FC<Props> = ({poem}) => {
 	return (
 		<>
 			<Wrapper>
-				<span className="material-icons">edit</span>
+				<span className="material-icons" onClick={onClickHandle}>
+					edit
+				</span>
 				<p>{poem}</p>
 			</Wrapper>
 		</>

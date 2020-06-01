@@ -10,7 +10,7 @@ import store from "../store";
 import {authService} from "../auth/authService";
 import {removeAllCollections} from "../actions/collectionActions";
 import {hidePopup} from "../actions/popupActions";
-import {showFlash, hideFlash} from "../actions/flashActions";
+import {hideFlash} from "../actions/flashActions";
 import {removeUser} from "../actions/userActions";
 import {removeAllPoems} from "../actions/poemActions";
 

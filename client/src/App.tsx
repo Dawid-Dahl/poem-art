@@ -4,14 +4,16 @@ import {RootState} from "./store";
 import FlashMessage from "./components/FlashMessage";
 import {AuthenticatedApp} from "./components/authenticated-app/AuthenticatedApp";
 import {UnauthenticatedApp} from "./components/unauthenticated-app/UnauthenticatedApp";
-import AddCollectionPopup from "./components/popup/AddCollectionPopup";
 import {Overlay} from "./components/Overlay";
 import {hidePopup} from "./actions/popupActions";
 import {checkIfLoggedIn} from "./actions/loginActions";
+import Popup from "./components/popup/Popup";
 
 const App: React.FC = () => {
 	const isLoggedIn = useSelector((state: RootState) => state.loginReducer.isLoggedIn);
-	const isShowingPopup = useSelector((state: RootState) => state.popupReducer.isShowingPopup);
+	const isShowingPopup = useSelector(
+		(state: RootState) => state.popupReducer.isShowingAddCollectionPopup
+	);
 
 	const dispatch = useDispatch();
 
@@ -29,7 +31,7 @@ const App: React.FC = () => {
 	return (
 		<>
 			<Overlay isShowingPopup={isShowingPopup} handleClick={handleClick} />
-			<AddCollectionPopup />
+			<Popup />
 			<FlashMessage />
 			{isLoggedIn ? <AuthenticatedApp /> : <UnauthenticatedApp />}
 		</>

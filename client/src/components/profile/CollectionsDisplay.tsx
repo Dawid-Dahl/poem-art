@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Collection from "./Collection";
 import AddCollection from "./AddCollection";
 import {useDispatch} from "react-redux";
-import {showPopup} from "../../actions/popupActions";
+import {showAddCollectionPopup} from "../../actions/popupActions";
 import {ReduxCollection} from "../../types/types";
 import {selectCollection} from "../../actions/collectionActions";
 
@@ -17,7 +17,7 @@ const CollectionsDisplay: React.FC<Props> = ({collections}) => {
 	const onClickHandlerSelectCollection = (id: ReduxCollection["id"]) =>
 		dispatch(selectCollection(collections.filter(x => x.id === id)[0]));
 
-	const onClickHandlerAddCollection = () => dispatch(showPopup());
+	const onClickHandlerAddCollection = () => dispatch(showAddCollectionPopup());
 
 	return (
 		<>

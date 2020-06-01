@@ -44,7 +44,7 @@ const StyledDiv = styled.div<Props>`
 	background-position: center;
 	border-radius: var(--border-radius);
 	height: 300px;
-	width: 300px;
+	width: 100%;
 	background-color: lightgray;
 	overflow: hidden;
 	box-shadow: var(--box-shadow);
