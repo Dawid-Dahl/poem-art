@@ -42,7 +42,7 @@ const Wrapper = styled.div`
 	}
 
 	:hover {
-		transform: scale(1.01) rotate(1deg);
+		transform: scale(1.005);
 	}
 `;
 

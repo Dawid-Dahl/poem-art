@@ -11,9 +11,11 @@ const Popup: React.FC = () => {
 	);
 	const editPoemPopup = useSelector((state: RootState) => state.popupReducer.editPoemPopup);
 
+	const popups = [addCollectionPopup, editPoemPopup];
+
 	return (
 		<>
-			<Wrapper active={addCollectionPopup.active || editPoemPopup.active ? true : false}>
+			<Wrapper active={popups.some(x => x.active)}>
 				<AddCollectionPopup />
 				<EditPoemPopup />
 			</Wrapper>
