@@ -7,6 +7,7 @@ import {useQuery} from "../../custom-hooks/useQuery";
 import {useDispatch, useSelector} from "react-redux";
 import {getPoem} from "../../actions/poemActions";
 import {RootState} from "../../store";
+import TopBar from "./TopBar";
 
 type Props = {};
 
@@ -18,6 +19,7 @@ const FullscreenPicture: React.FC<Props> = () => {
 	const artPoemId = Number(query.get("id"));
 
 	const selectedArtPoem = useSelector((state: RootState) => state.poemReducer.poemSelected);
+	const isLoading = useSelector((state: RootState) => state.loadingReducer.isLoading);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -31,6 +33,11 @@ const FullscreenPicture: React.FC<Props> = () => {
 		<>
 			<Wrapper>
 				<StyledDiv imageUrl={selectedArtPoem.imageUrl ? selectedArtPoem.imageUrl : ""}>
+					<TopBar
+						title={isLoading ? "" : selectedArtPoem.title}
+						buttonKind="white"
+						backType="history"
+					/>
 					<Grid>
 						<PoemSection poem={selectedArtPoem.content} />
 						<SidebarWrapper>
@@ -73,7 +80,7 @@ const StyledDiv = styled.div<StyledDivProps>`
 
 const Grid = styled.div`
 	width: 60%;
-	margin: 7em auto;
+	margin: 1em auto;
 	justify-content: center;
 	display: grid;
 	grid-template-columns: 1fr 1fr;

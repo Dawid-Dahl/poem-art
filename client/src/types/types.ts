@@ -101,7 +101,7 @@ export type AddCollectionFormObject = {
 	isPublic: boolean;
 };
 
-export type EditPoemFormObject = {
+export type EditPoemFields = {
 	poemId: number;
 	poemTitle: string;
 	poemContent: string;

@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import {uploadToGCS} from "../middleware/uploadToGCS";
+import {uploadGCSFile} from "../middleware/uploadGCSFile";
 import {uploadArtPoemController} from "../controllers/uploadArtPoemController";
 import {getAllArtPoemController} from "../controllers/getAllArtPoemController";
 import {getArtPoemController} from "../controllers/getArtPoemController";
@@ -19,8 +19,8 @@ artPoemRouter.get("/get-all", getAllArtPoemController);
 
 artPoemRouter.get("/get-artpoem", getArtPoemController);
 
-artPoemRouter.post("/upload", upload.single("imageFile"), uploadToGCS, uploadArtPoemController);
+artPoemRouter.post("/upload", upload.single("imageFile"), uploadGCSFile, uploadArtPoemController);
 
-artPoemRouter.put("/edit", editArtPoemController);
+artPoemRouter.put("/edit", upload.single("editImageFile"), uploadGCSFile, editArtPoemController);
 
 export default artPoemRouter;

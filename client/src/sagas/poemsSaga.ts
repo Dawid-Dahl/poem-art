@@ -9,7 +9,7 @@ import {
 	editPoem,
 } from "../actions/poemActions";
 import {parseMainApiResponse, convertToBytes} from "../utils/utils";
-import {ReduxArtPoem} from "../types/types";
+import {ReduxArtPoem, EditPoemFields} from "../types/types";
 import {showFlash} from "../actions/flashActions";
 import {startLoading, completeLoading} from "../actions/loadingActions";
 
@@ -86,19 +86,29 @@ function* workerUploadPoems({payload}: ReturnType<typeof uploadPoem>) {
 }
 
 function* workerEditPoems({payload}: ReturnType<typeof editPoem>) {
-	console.log(JSON.stringify(payload));
+	const image = payload.get("editImageFile") as File;
+	const poemFields = JSON.parse(payload.get("editPoemFields") as string) as EditPoemFields;
+
 	try {
+		if (image) {
+			const bytes = convertToBytes("5 mb");
+
+			if (!bytes) return;
+
+			if (image.size >= bytes) {
+				yield put(showFlash("Please choose an image smaller than 5 MB in size"));
+				return;
+			}
+		}
+
 		const res = yield call(apiService.refreshAndFetch, "artpoem/edit", {
 			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(payload),
+			body: payload,
 		});
 
 		const data = yield call([res, "json"]);
 
-		yield put(getPoem(payload.poemId));
+		yield put(getPoem(poemFields.poemId));
 
 		yield put(showFlash(JSON.parse(data.payload).message));
 	} catch (e) {

@@ -25,6 +25,7 @@ export default TextAreaInput;
 
 const StyledTextArea = styled.textarea`
 	border: solid var(--main-grey-color) 1px;
+	margin: 1em 0;
 	height: 20vh;
 	min-width: 20%;
 	padding: 1em 3em;

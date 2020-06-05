@@ -15,11 +15,6 @@ const Fullscreen: React.FC = () => {
 		<>
 			<Wrapper>
 				<Navbar />
-				<TopBar
-					title={isLoading ? "" : selectedArtPoem.title}
-					buttonKind="white"
-					backType="history"
-				/>
 				{isLoading ? <Loading /> : <FullscreenSection />}
 			</Wrapper>
 		</>

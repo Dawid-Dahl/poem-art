@@ -1,4 +1,4 @@
-import {ReduxArtPoem, EditPoemFormObject} from "../types/types";
+import {ReduxArtPoem} from "../types/types";
 
 //READ
 
@@ -56,7 +56,7 @@ export const uploadPoemFulfilled = () =>
 
 //UPDATE
 
-export const editPoem = (payload: EditPoemFormObject) =>
+export const editPoem = (payload: FormData) =>
 	({
 		type: "EDIT_POEM",
 		payload,

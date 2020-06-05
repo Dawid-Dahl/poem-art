@@ -3,7 +3,7 @@ import styled, {css} from "styled-components";
 
 type Props = {
 	isShowingPopup: boolean;
-	handleClick?: (args: any) => any;
+	handleClick?: () => void;
 };
 
 export const Overlay: React.FC<Props> = ({isShowingPopup, handleClick}) => {

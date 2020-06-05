@@ -46,7 +46,7 @@ const Wrapper = styled.div<WrapperProps>`
 				: props.kind === "grey"
 				? "var(--main-grey-color)"
 				: "white"};
-		margin: 2em 0;
+		margin: 1em 0;
 		transition: all 0.2s;
 		cursor: pointer;
 		text-decoration: none;

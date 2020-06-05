@@ -141,8 +141,8 @@ const NameRow = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-top: 3em;
-	padding-top: 2em;
+	margin-top: 2em;
+	padding: 2em 0 1em 0;
 	border-top: 1px var(--light-grey-color) solid;
 
 	p {
@@ -180,8 +180,8 @@ const PublicRow = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: start;
-	margin-top: 3em;
-	padding-top: 2em;
+	margin: 1em;
+	padding: 1em;
 	border-top: 1px var(--light-grey-color) solid;
 
 	p {

@@ -56,8 +56,8 @@ const Upload: React.FC = () => {
 		}
 	};
 
-	const onChangeHandle = (event: React.ChangeEvent<HTMLInputElement>): void => {
-		setImageFile(event.target.files?.[0]);
+	const onChangeHandle = (e: React.ChangeEvent<HTMLInputElement>): void => {
+		setImageFile(e.target.files?.[0]);
 	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -107,7 +107,7 @@ const Upload: React.FC = () => {
 						collections={collections}
 					/>
 					<FileInput
-						name="imageFile"
+						name="uploadImageFile"
 						kind="white"
 						isFileSelected={Boolean(imageFile)}
 						onChangeHandle={onChangeHandle}

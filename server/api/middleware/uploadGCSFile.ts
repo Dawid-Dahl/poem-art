@@ -13,9 +13,10 @@ const gcs = new Storage({
 
 const bucket = gcs.bucket(process.env.GCLOUD_STORAGE_BUCKET || "");
 
-export const uploadToGCS = (req: Request, res: Response, next: NextFunction) => {
+export const uploadGCSFile = (req: Request, res: Response, next: NextFunction) => {
 	if (!req.file) {
-		res.status(404).send("No file uploaded.");
+		console.log("No file was supplied, bypassing replaceGCSFile middleware.");
+		next();
 		return;
 	}
 

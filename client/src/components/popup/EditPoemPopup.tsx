@@ -5,7 +5,6 @@ import Button from "../Button";
 import {useDispatch, useSelector} from "react-redux";
 import {hidePopup} from "../../actions/popupActions";
 import {RootState} from "../../store";
-import {EditPoemFormObject} from "../../types/types";
 import TextAreaInput from "../inputs/TextAreaInput";
 import {editPoem} from "../../actions/poemActions";
 import FileInput from "../inputs/FileInput";
@@ -29,18 +28,13 @@ const EditPoemPopup: React.FC = () => {
 	const turnFormStateIntoObj = (
 		poemId: number,
 		poemTitle: string,
+		imageFile: ImageFile,
 		poemContent: string
-	): EditPoemFormObject | undefined => {
-		if (poemTitle && poemContent) {
-			return {
-				poemId,
-				poemTitle,
-				poemContent,
-			};
-		} else {
-			console.log("No data sent. Fill in all the required fields.");
-			return;
-		}
+	): FormData => {
+		const data = new FormData();
+		if (imageFile) data.append("editImageFile", imageFile);
+		data.append("editPoemFields", JSON.stringify({poemId, poemTitle, poemContent}));
+		return data;
 	};
 
 	const onChangeHandle = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -49,6 +43,7 @@ const EditPoemPopup: React.FC = () => {
 
 	const handleClick = () => {
 		setpoemTitle(poemSelected.title);
+		setImageFile(null);
 		setPoemContent(poemSelected.content);
 		dispatch(hidePopup());
 	};
@@ -57,13 +52,19 @@ const EditPoemPopup: React.FC = () => {
 		try {
 			e.preventDefault();
 
-			const editPoemPayload = turnFormStateIntoObj(poemSelected.id, poemTitle, poemContent);
+			const editPoemPayload = turnFormStateIntoObj(
+				poemSelected.id,
+				poemTitle,
+				imageFile,
+				poemContent
+			);
 
 			if (!editPoemPayload) return;
 
 			dispatch(editPoem(editPoemPayload));
 
 			setpoemTitle(poemSelected.title);
+			setImageFile(null);
 			setPoemContent(poemSelected.content);
 			dispatch(hidePopup());
 		} catch (e) {
@@ -92,8 +93,8 @@ const EditPoemPopup: React.FC = () => {
 					<p>Update Art</p>
 					<div>
 						<FileInput
-							name="imageFile"
-							kind="black"
+							name="popupImageFile"
+							kind="grey"
 							isFileSelected={Boolean(imageFile)}
 							onChangeHandle={onChangeHandle}
 						/>
@@ -164,8 +165,7 @@ const Row = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-top: 3em;
-	padding-top: 2em;
+	margin: 0.1em;
 	border-top: 1px var(--light-grey-color) solid;
 
 	p {

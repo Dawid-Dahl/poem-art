@@ -1,14 +1,16 @@
 import React from "react";
 import styled, {css} from "styled-components";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../store";
+import {hideFlash} from "../actions/flashActions";
 
 const FlashMessage: React.FC = () => {
 	const isShowingFlash = useSelector((state: RootState) => state.flashReducer.isShowingFlash);
 	const flashMessage = useSelector((state: RootState) => state.flashReducer.flashMessage);
+	const dispatch = useDispatch();
 
 	return (
-		<Wrapper>
+		<Wrapper onClick={_e => dispatch(hideFlash())}>
 			<StyledDiv active={isShowingFlash}>
 				<Paragraph>{flashMessage}</Paragraph>
 			</StyledDiv>
@@ -28,6 +30,7 @@ const Wrapper = styled.div`
 	align-items: center;
 	justify-content: center;
 	z-index: 30;
+	cursor: pointer;
 `;
 
 const StyledDiv = styled.div<WrapperProps>`

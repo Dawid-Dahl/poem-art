@@ -17,6 +17,17 @@ const initPoem: ReduxArtPoem = {
 	userId: "user",
 };
 
+const poemNotFound: ReduxArtPoem = {
+	id: -1,
+	title: "POEM NOT FOUND",
+	content: "Sorry!",
+	imageUrl: "",
+	createdAt: 0,
+	likes: 0,
+	comments: [],
+	userId: "user",
+};
+
 const initialState: PoemReducerState = {
 	poems: [
 		{
@@ -29,16 +40,7 @@ const initialState: PoemReducerState = {
 			userId: "user",
 		},
 	],
-	poemSelected: {
-		id: 0,
-		title: "",
-		content: "",
-		imageUrl: "",
-		createdAt: 0,
-		likes: 0,
-		comments: [],
-		userId: "user",
-	},
+	poemSelected: initPoem,
 };
 
 export const poemReducer = (
@@ -49,7 +51,7 @@ export const poemReducer = (
 		case "GET_POEM_FULFILLED":
 			return {...state, poemSelected: action.artPoem};
 		case "GET_POEM_FAILED":
-			return {...state, poemSelected: initPoem};
+			return {...state, poemSelected: poemNotFound};
 		case "DESELECT_POEM":
 			return {...state, poemSelected: initPoem};
 		case "GET_ALL_POEMS_FULFILLED":

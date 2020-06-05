@@ -2,10 +2,9 @@ import {jsonResponse} from "../utils/utils";
 import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
 import {ArtPoem} from "../../db/entities/ArtPoem";
-import {Storage} from "@google-cloud/storage";
 
 export const editArtPoemController = async (req: Request, res: Response) => {
-	const {poemId, poemTitle, poemContent} = req.body;
+	const {poemId, poemTitle, poemContent} = JSON.parse(req.body.editPoemFields);
 
 	try {
 		await getConnection(process.env.NODE_ENV)

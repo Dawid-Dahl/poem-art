@@ -26,7 +26,7 @@ const StyledSelectElement = styled.select`
 	width: 265px;
 	height: 52px;
 	padding: 0em 3em;
-	margin: 1.5em 0 0 0;
+	margin: 1.5em 0;
 	font-size: 1em;
 	border-radius: var(--border-radius-inputs);
 	cursor: pointer;

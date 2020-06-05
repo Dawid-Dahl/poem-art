@@ -12,7 +12,7 @@ const FileInput: React.FC<Props> = ({name, kind, isFileSelected, onChangeHandle}
 	return (
 		<StyledWrapper kind={kind}>
 			<input id={name} onChange={onChangeHandle} name={name} type="file" />
-			<label htmlFor="imageFile">
+			<label htmlFor={name}>
 				<span className="material-icons">
 					{isFileSelected ? "done_outline" : "add_photo_alternate"}
 				</span>
@@ -53,7 +53,7 @@ const StyledWrapper = styled.div<WrapperProps>`
 				: props.kind === "grey"
 				? "var(--main-grey-color)"
 				: "white"};
-		margin: 2em 0;
+		margin: 1em 0;
 		transition: all 0.2s;
 		cursor: pointer;
 		text-decoration: none;
