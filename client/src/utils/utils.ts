@@ -12,7 +12,7 @@ import {removeAllCollections} from "../actions/collectionActions";
 import {hidePopup} from "../actions/popupActions";
 import {hideFlash} from "../actions/flashActions";
 import {removeUser} from "../actions/userActions";
-import {removeAllPoems} from "../actions/poemActions";
+import {deleteAllPoems} from "../actions/poemActions";
 
 export const localStorageService = {
 	setTokensInLocalStorage(tokens: Tokens) {
@@ -176,7 +176,7 @@ export const addXTokenHeaderToFetch = (xToken: string | null) => async (
 export const resetReduxState = () => {
 	store.dispatch(removeUser());
 	store.dispatch(removeAllCollections());
-	store.dispatch(removeAllPoems());
+	store.dispatch(deleteAllPoems());
 	store.dispatch(hideFlash());
 	store.dispatch(hidePopup());
 };

@@ -69,9 +69,20 @@ export const editPoemFulfilled = () =>
 
 //DELETE
 
-export const removeAllPoems = () =>
+export const deletePoem = (artPoemId: ReduxArtPoem["id"]) =>
 	({
-		type: "REMOVE_ALL_POEMS",
+		type: "DELETE_POEM",
+		artPoemId,
+	} as const);
+
+export const deletePoemFulfilled = () =>
+	({
+		type: "DELETE_POEM_FULFILLED",
+	} as const);
+
+export const deleteAllPoems = () =>
+	({
+		type: "DELETE_ALL_POEMS",
 	} as const);
 
 export type ReduxPoemState = "poem";
@@ -86,4 +97,6 @@ export type PoemActionTypes =
 	| ReturnType<typeof getAllPoems>
 	| ReturnType<typeof getAllPoemsFulfilled>
 	| ReturnType<typeof getAllPoemsFailed>
-	| ReturnType<typeof removeAllPoems>;
+	| ReturnType<typeof deleteAllPoems>
+	| ReturnType<typeof deletePoem>
+	| ReturnType<typeof deletePoemFulfilled>;

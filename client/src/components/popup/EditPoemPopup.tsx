@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {hidePopup} from "../../actions/popupActions";
 import {RootState} from "../../store";
 import TextAreaInput from "../inputs/TextAreaInput";
-import {editPoem} from "../../actions/poemActions";
+import {editPoem, deletePoem} from "../../actions/poemActions";
 import FileInput from "../inputs/FileInput";
 import {ImageFile} from "../../types/types";
 
@@ -38,14 +38,20 @@ const EditPoemPopup: React.FC = () => {
 	};
 
 	const onChangeHandle = (event: React.ChangeEvent<HTMLInputElement>): void => {
+		console.log("FIRED", event.target.files);
 		setImageFile(event.target.files?.[0]);
 	};
 
-	const handleClick = () => {
+	const handleCancelClick = () => {
 		setpoemTitle(poemSelected.title);
 		setImageFile(null);
 		setPoemContent(poemSelected.content);
 		dispatch(hidePopup());
+	};
+
+	const handleDeleteClick = () => {
+		const isConfirmingDeletion = confirm("Are you sure you want to delete this Artpoem?");
+		if (isConfirmingDeletion) dispatch(deletePoem(poemSelected.id));
 	};
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -113,7 +119,18 @@ const EditPoemPopup: React.FC = () => {
 					</div>
 				</Row>
 				<ButtonRow>
-					<Button title="Cancel" kind="grey" type="button" onClickHandler={handleClick} />
+					<Button
+						title="Cancel"
+						kind="grey"
+						type="button"
+						onClickHandler={handleCancelClick}
+					/>
+					<Button
+						title="Delete"
+						kind="delete"
+						type="button"
+						onClickHandler={handleDeleteClick}
+					/>
 					<Button title="Edit" kind="primary" type="submit" />
 				</ButtonRow>
 			</StyledForm>

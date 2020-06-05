@@ -5,6 +5,7 @@ import {uploadArtPoemController} from "../controllers/uploadArtPoemController";
 import {getAllArtPoemController} from "../controllers/getAllArtPoemController";
 import {getArtPoemController} from "../controllers/getArtPoemController";
 import {editArtPoemController} from "../controllers/editArtPoemController";
+import {deleteArtPoemController} from "../controllers/deleteArtPoemController";
 
 const upload = multer({
 	storage: multer.memoryStorage(),
@@ -21,6 +22,13 @@ artPoemRouter.get("/get-artpoem", getArtPoemController);
 
 artPoemRouter.post("/upload", upload.single("imageFile"), uploadGCSFile, uploadArtPoemController);
 
-artPoemRouter.put("/edit", upload.single("editImageFile"), uploadGCSFile, editArtPoemController);
+artPoemRouter.put(
+	"/edit-artpoem",
+	upload.single("editImageFile"),
+	uploadGCSFile,
+	editArtPoemController
+);
+
+artPoemRouter.delete("/delete-artpoem", deleteArtPoemController);
 
 export default artPoemRouter;

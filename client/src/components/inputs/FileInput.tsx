@@ -8,10 +8,21 @@ type Props = {
 	onChangeHandle: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
+const onClickHandle = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+	const element = e.target as HTMLInputElement;
+	element.value = "";
+};
+
 const FileInput: React.FC<Props> = ({name, kind, isFileSelected, onChangeHandle}) => {
 	return (
 		<StyledWrapper kind={kind}>
-			<input id={name} onChange={onChangeHandle} name={name} type="file" />
+			<input
+				id={name}
+				onChange={onChangeHandle}
+				onClick={onClickHandle}
+				name={name}
+				type="file"
+			/>
 			<label htmlFor={name}>
 				<span className="material-icons">
 					{isFileSelected ? "done_outline" : "add_photo_alternate"}

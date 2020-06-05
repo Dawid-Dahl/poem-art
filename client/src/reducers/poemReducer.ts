@@ -6,6 +6,16 @@ export type PoemReducerState = {
 	poemSelected: ReduxArtPoem;
 };
 
+export const welcomePoem: ReduxArtPoem = {
+	id: 1,
+	title: "Unleash Your Creative Self!",
+	content: "Click the Upload button up above to add your very first Artpoem!",
+	imageUrl:
+		"https://www.xrite.com/-/media/xrite/images/flex-promos/homepage-hero-banner-interactive/main-hero-lg.jpg?la=en&hash=25DAE70673CEF2F6874D650304F76768B71CE19C",
+	likes: 0,
+	userId: "welcomePoem",
+};
+
 const initPoem: ReduxArtPoem = {
 	id: 0,
 	title: "",
@@ -29,17 +39,7 @@ const poemNotFound: ReduxArtPoem = {
 };
 
 const initialState: PoemReducerState = {
-	poems: [
-		{
-			id: 1,
-			title: "Add Your First Poem!",
-			content: "Unleash your creative self!",
-			imageUrl:
-				"https://www.xrite.com/-/media/xrite/images/flex-promos/homepage-hero-banner-interactive/main-hero-lg.jpg?la=en&hash=25DAE70673CEF2F6874D650304F76768B71CE19C",
-			likes: 0,
-			userId: "user",
-		},
-	],
+	poems: [welcomePoem],
 	poemSelected: initPoem,
 };
 
@@ -51,12 +51,14 @@ export const poemReducer = (
 		case "GET_POEM_FULFILLED":
 			return {...state, poemSelected: action.artPoem};
 		case "GET_POEM_FAILED":
-			return {...state, poemSelected: poemNotFound};
+			return state.poems?.length === 1 && state.poems[0].userId === "welcomePoem"
+				? {...state, poemSelected: welcomePoem}
+				: {...state, poemSelected: poemNotFound};
 		case "DESELECT_POEM":
 			return {...state, poemSelected: initPoem};
 		case "GET_ALL_POEMS_FULFILLED":
 			return {...state, poems: action.artPoems};
-		case "REMOVE_ALL_POEMS":
+		case "DELETE_ALL_POEMS":
 			return {...state, poems: []};
 		default:
 			return state;

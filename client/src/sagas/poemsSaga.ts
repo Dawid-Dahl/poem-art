@@ -7,11 +7,14 @@ import {
 	getPoemFulfilled,
 	getPoemFailed,
 	editPoem,
+	deletePoem,
+	getAllPoems,
 } from "../actions/poemActions";
 import {parseMainApiResponse, convertToBytes} from "../utils/utils";
 import {ReduxArtPoem, EditPoemFields} from "../types/types";
 import {showFlash} from "../actions/flashActions";
 import {startLoading, completeLoading} from "../actions/loadingActions";
+import {hidePopup} from "../actions/popupActions";
 
 function* workerGetPoem({artPoemId}: ReturnType<typeof getPoem>) {
 	try {
@@ -53,7 +56,9 @@ function* workerGetPoems() {
 
 		yield put(completeLoading());
 
-		yield put(getAllPoemsFulfilled(artPoems));
+		if (artPoems.length !== 0) {
+			yield put(getAllPoemsFulfilled(artPoems));
+		}
 	} catch (e) {
 		console.log(e);
 	}
@@ -101,7 +106,7 @@ function* workerEditPoems({payload}: ReturnType<typeof editPoem>) {
 			}
 		}
 
-		const res = yield call(apiService.refreshAndFetch, "artpoem/edit", {
+		const res = yield call(apiService.refreshAndFetch, "artpoem/edit-artpoem", {
 			method: "PUT",
 			body: payload,
 		});
@@ -115,11 +120,39 @@ function* workerEditPoems({payload}: ReturnType<typeof editPoem>) {
 		console.log(e);
 	}
 }
+
+function* workerDeletePoem({artPoemId}: ReturnType<typeof deletePoem>) {
+	try {
+		const res = yield call(apiService.refreshAndFetch, "artpoem/delete-artpoem", {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({artPoemId}),
+		});
+
+		console.log(res);
+
+		const data = yield call([res, "json"]);
+
+		console.log(data);
+
+		if (data.success) {
+			yield put(getAllPoems());
+			yield put(showFlash(JSON.parse(data.payload).message));
+			yield put(hidePopup());
+		}
+	} catch (e) {
+		console.log(e);
+	}
+}
+
 function* poemsSaga() {
 	yield takeEvery("GET_POEM", workerGetPoem);
 	yield takeEvery("GET_ALL_POEMS", workerGetPoems);
 	yield takeEvery("UPLOAD_POEM", workerUploadPoems);
 	yield takeEvery("EDIT_POEM", workerEditPoems);
+	yield takeEvery("DELETE_POEM", workerDeletePoem);
 }
 
 export default poemsSaga;

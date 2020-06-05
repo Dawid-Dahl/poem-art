@@ -4,8 +4,19 @@ import {getConnection} from "typeorm";
 import {ArtPoem} from "../../db/entities/ArtPoem";
 import {Storage, Bucket, File} from "@google-cloud/storage";
 
-export const editArtPoemController = async (req: Request, res: Response) => {
-	const {poemId, poemTitle, poemContent} = JSON.parse(req.body.editPoemFields);
+export const deleteArtPoemController = async (req: Request, res: Response) => {
+	const artPoemId = req.body.artPoemId as number;
+
+	if (!artPoemId) {
+		res.status(404).json(
+			jsonResponse(
+				false,
+				JSON.stringify({
+					message: "Didn't receive an Artpoem ID!",
+				})
+			)
+		);
+	}
 
 	const keyFile =
 		"/Volumes/Seagate Backup Plus Drive/Dawid Programming Files/Projects/PoemArt/server/poem-art-40049b821725.json";
@@ -24,37 +35,26 @@ export const editArtPoemController = async (req: Request, res: Response) => {
 	};
 
 	try {
-		if (req.file) {
-			const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
+		const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
 
-			const artPoem = await artPoemRepo.findOne(req.query.id as string);
+		const artPoem = await artPoemRepo.findOne(artPoemId);
 
-			if (!artPoem) throw new Error("No Artpoem was found in the database!");
+		if (!artPoem) throw new Error("No Artpoem was found in the database!");
 
-			await deleteGCSFile(bucket, artPoem.imageUrl.split("/").slice(-1)[0]).catch(
-				console.error
-			);
-
-			await getConnection(process.env.NODE_ENV)
-				.createQueryBuilder()
-				.update(ArtPoem)
-				.set({imageUrl: req.gcsPublicUrl})
-				.where("id = :id", {id: poemId})
-				.execute();
-		}
+		await deleteGCSFile(bucket, artPoem.imageUrl.split("/").slice(-1)[0]).catch(console.error);
 
 		await getConnection(process.env.NODE_ENV)
 			.createQueryBuilder()
-			.update(ArtPoem)
-			.set({title: poemTitle, content: poemContent})
-			.where("id = :id", {id: poemId})
+			.delete()
+			.from(ArtPoem)
+			.where("id = :id", {id: artPoemId})
 			.execute();
 
-		res.status(201).json(
+		res.status(200).json(
 			jsonResponse(
 				true,
 				JSON.stringify({
-					message: "ArtPoem was edited successfully!",
+					message: "ArtPoem was deleted successfully!",
 				})
 			)
 		);
@@ -65,7 +65,7 @@ export const editArtPoemController = async (req: Request, res: Response) => {
 			jsonResponse(
 				false,
 				JSON.stringify({
-					message: "Something went wrong while trying to edit the ArtPoem!",
+					message: "Something went wrong while trying to delete the ArtPoem!",
 				})
 			)
 		);

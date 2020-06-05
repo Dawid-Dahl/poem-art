@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 type Props = {
 	title: string;
-	kind: "primary" | "white" | "black" | "grey";
+	kind: "primary" | "white" | "black" | "grey" | "delete";
 	type: "button" | "submit";
 	onClickHandler?: (args: any) => any;
 };
@@ -23,7 +23,7 @@ const Button: React.FC<Props> = ({title, kind, type, onClickHandler}) => {
 export default Button;
 
 type WrapperProps = {
-	kind: "primary" | "white" | "black" | "grey";
+	kind: "primary" | "white" | "black" | "grey" | "delete";
 };
 
 const Wrapper = styled.div<WrapperProps>`
@@ -45,6 +45,8 @@ const Wrapper = styled.div<WrapperProps>`
 				? "black"
 				: props.kind === "grey"
 				? "var(--main-grey-color)"
+				: props.kind === "delete"
+				? "var(--delete-color)"
 				: "white"};
 		margin: 1em 0;
 		transition: all 0.2s;
@@ -60,6 +62,8 @@ const Wrapper = styled.div<WrapperProps>`
 				: props.kind === "black"
 				? "white"
 				: props.kind === "grey"
+				? "white"
+				: props.kind === "delete"
 				? "white"
 				: "black"};
 		border: black;

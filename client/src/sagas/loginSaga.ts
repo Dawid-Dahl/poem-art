@@ -15,7 +15,7 @@ import {
 import {showFlash} from "../actions/flashActions";
 import {setUser, removeUser} from "../actions/userActions";
 import {removeAllCollections} from "../actions/collectionActions";
-import {removeAllPoems} from "../actions/poemActions";
+import {deleteAllPoems} from "../actions/poemActions";
 import {hidePopup} from "../actions/popupActions";
 
 function* workerCheckIfLoggedIn({tokens}: ReturnType<typeof checkIfLoggedIn>) {
@@ -82,7 +82,7 @@ function* workerLogout() {
 	yield call(localStorageService.removeTokensFromLocalStorage);
 	yield put(removeUser());
 	yield put(removeAllCollections());
-	yield put(removeAllPoems());
+	yield put(deleteAllPoems());
 	yield put(hidePopup());
 	yield put(showFlash("You're now logged out!"));
 }
