@@ -15,6 +15,7 @@ import {ReduxArtPoem, EditPoemFields} from "../types/types";
 import {showFlash} from "../actions/flashActions";
 import {startLoading, completeLoading} from "../actions/loadingActions";
 import {hidePopup} from "../actions/popupActions";
+import history from "../history";
 
 function* workerGetPoem({artPoemId}: ReturnType<typeof getPoem>) {
 	try {
@@ -114,7 +115,6 @@ function* workerEditPoems({payload}: ReturnType<typeof editPoem>) {
 		const data = yield call([res, "json"]);
 
 		yield put(getPoem(poemFields.poemId));
-
 		yield put(showFlash(JSON.parse(data.payload).message));
 	} catch (e) {
 		console.log(e);
@@ -131,16 +131,13 @@ function* workerDeletePoem({artPoemId}: ReturnType<typeof deletePoem>) {
 			body: JSON.stringify({artPoemId}),
 		});
 
-		console.log(res);
-
 		const data = yield call([res, "json"]);
-
-		console.log(data);
 
 		if (data.success) {
 			yield put(getAllPoems());
 			yield put(showFlash(JSON.parse(data.payload).message));
 			yield put(hidePopup());
+			history.push("/");
 		}
 	} catch (e) {
 		console.log(e);

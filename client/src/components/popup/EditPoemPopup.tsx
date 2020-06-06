@@ -9,8 +9,11 @@ import TextAreaInput from "../inputs/TextAreaInput";
 import {editPoem, deletePoem} from "../../actions/poemActions";
 import FileInput from "../inputs/FileInput";
 import {ImageFile} from "../../types/types";
+import {RouteComponentProps} from "react-router";
 
-const EditPoemPopup: React.FC = () => {
+interface Props {}
+
+const EditPoemPopup: React.FC<Props> = () => {
 	const poemSelected = useSelector((state: RootState) => state.poemReducer.poemSelected);
 	const editPoemPopup = useSelector((state: RootState) => state.popupReducer.editPoemPopup);
 
@@ -38,7 +41,6 @@ const EditPoemPopup: React.FC = () => {
 	};
 
 	const onChangeHandle = (event: React.ChangeEvent<HTMLInputElement>): void => {
-		console.log("FIRED", event.target.files);
 		setImageFile(event.target.files?.[0]);
 	};
 
