@@ -8,9 +8,9 @@ import {
 	getPoemFailed,
 	editPoem,
 	deletePoem,
-	getAllPoems,
+	deletePoemFulfilled,
 } from "../actions/poemActions";
-import {parseMainApiResponse, convertToBytes} from "../utils/utils";
+import {parseMainApiResponse, convertToBytes, forwardTo} from "../utils/utils";
 import {ReduxArtPoem, EditPoemFields} from "../types/types";
 import {showFlash} from "../actions/flashActions";
 import {startLoading, completeLoading} from "../actions/loadingActions";
@@ -134,10 +134,10 @@ function* workerDeletePoem({artPoemId}: ReturnType<typeof deletePoem>) {
 		const data = yield call([res, "json"]);
 
 		if (data.success) {
-			yield put(getAllPoems());
 			yield put(showFlash(JSON.parse(data.payload).message));
 			yield put(hidePopup());
-			history.push("/");
+			yield put(deletePoemFulfilled(artPoemId));
+			yield call(forwardTo, history, "/");
 		}
 	} catch (e) {
 		console.log(e);

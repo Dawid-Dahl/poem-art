@@ -5,6 +5,7 @@ import {RootState} from "../../store";
 import ArtPoem from "./ArtPoem";
 import {getAllPoems} from "../../actions/poemActions";
 import Loading from "../Loading";
+import {getAllCollections} from "../../actions/collectionActions";
 
 const ArtPoemGrid: React.FC = () => {
 	const poems = useSelector((state: RootState) => state.poemReducer.poems);
@@ -13,6 +14,7 @@ const ArtPoemGrid: React.FC = () => {
 
 	useEffect(() => {
 		dispatch(getAllPoems());
+		dispatch(getAllCollections());
 	}, []);
 
 	return (

@@ -2,7 +2,7 @@ import {ReduxArtPoem} from "../types/types";
 import {PoemActionTypes} from "../actions/poemActions";
 
 export type PoemReducerState = {
-	poems: ReduxArtPoem[] | null;
+	poems: ReduxArtPoem[];
 	poemSelected: ReduxArtPoem;
 };
 
@@ -60,6 +60,8 @@ export const poemReducer = (
 			return {...state, poems: action.artPoems};
 		case "DELETE_ALL_POEMS":
 			return {...state, poems: []};
+		case "DELETE_POEM_FULFILLED":
+			return {...state, poems: state.poems.filter(poem => poem.id !== action.artPoemId)};
 		default:
 			return state;
 	}

@@ -1,22 +1,15 @@
-import React, {useEffect} from "react";
+import React from "react";
 import styled from "styled-components";
 import ProfilePic from "./ProfilePic";
 import CollectionsDisplay from "./CollectionsDisplay";
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
 import {RootState} from "../../store";
 import {Navbar} from "../Navbar";
-import {getAllCollections} from "../../actions/collectionActions";
 import ArtPoemGrid from "../art-poem-grid/ArtPoemGrid";
 
 const Profile: React.FC = () => {
 	const user = useSelector((state: RootState) => state.userReducer.user);
 	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
-
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		dispatch(getAllCollections());
-	}, []);
 
 	return (
 		<>

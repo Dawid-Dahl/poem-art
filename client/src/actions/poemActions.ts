@@ -75,9 +75,10 @@ export const deletePoem = (artPoemId: ReduxArtPoem["id"]) =>
 		artPoemId,
 	} as const);
 
-export const deletePoemFulfilled = () =>
+export const deletePoemFulfilled = (artPoemId: ReduxArtPoem["id"]) =>
 	({
 		type: "DELETE_POEM_FULFILLED",
+		artPoemId,
 	} as const);
 
 export const deleteAllPoems = () =>

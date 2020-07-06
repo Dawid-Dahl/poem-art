@@ -13,6 +13,7 @@ import {hidePopup} from "../actions/popupActions";
 import {hideFlash} from "../actions/flashActions";
 import {removeUser} from "../actions/userActions";
 import {deleteAllPoems} from "../actions/poemActions";
+import {History} from "history";
 
 export const localStorageService = {
 	setTokensInLocalStorage(tokens: Tokens) {
@@ -239,3 +240,6 @@ export const verifyAndRefreshTokenIfNeeded = ({
 		}
 	});
 };
+
+export const forwardTo = (history: History<History.PoorMansUnknown>, location: string) =>
+	history.push(location);

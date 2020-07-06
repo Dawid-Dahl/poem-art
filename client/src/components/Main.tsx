@@ -1,15 +1,33 @@
 import React from "react";
 import styled from "styled-components";
-import {CollectionSelector} from "./CollectionSelector";
 import {Navbar} from "./Navbar";
 import ArtPoemGrid from "./art-poem-grid/ArtPoemGrid";
+import {selectCollection, deselectCollection} from "../actions/collectionActions";
+import SelectElement from "./inputs/SelectElement";
+import {useSelector, useDispatch} from "react-redux";
+import {RootState} from "../store";
 
 const Main = () => {
+	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
+	const dispatch = useDispatch();
+
 	return (
 		<Wrapper>
 			<Navbar />
 			<InnerWrapper>
-				<CollectionSelector />
+				<SelectElement
+					onChangeHandle={(e: React.ChangeEvent<HTMLSelectElement>) =>
+						e.target.value === "Social Feed"
+							? dispatch(deselectCollection())
+							: dispatch(
+									selectCollection(
+										collections.filter(x => x.name === e.target.value)[0]
+									)
+							  )
+					}
+					isSocialFeedSelectable
+					collections={collections}
+				/>
 				<h1>Discover</h1>
 				<ArtPoemGrid />
 			</InnerWrapper>
@@ -29,7 +47,7 @@ const Wrapper = styled.div`
 
 const InnerWrapper = styled.div`
 	position: absolute;
-	top: 7em;
+	top: 8em;
 	width: 100%;
 	display: flex;
 	align-items: center;

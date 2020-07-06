@@ -180,8 +180,8 @@ const PublicRow = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: start;
-	margin: 1em;
-	padding: 1em;
+	margin: 1em 0em;
+	padding: 1em 0em;
 	border-top: 1px var(--light-grey-color) solid;
 
 	p {
