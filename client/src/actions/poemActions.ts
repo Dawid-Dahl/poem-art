@@ -1,4 +1,4 @@
-import {ReduxArtPoem} from "../types/types";
+import {ReduxArtPoem, ReduxCollection} from "../types/types";
 
 //READ
 
@@ -22,6 +22,24 @@ export const getPoemFailed = () =>
 export const deselectPoem = () =>
 	({
 		type: "DESELECT_POEM",
+	} as const);
+
+export const getAllPoemsByCollection = (collection: ReduxCollection) =>
+	({
+		type: "GET_ALL_POEMS",
+		collection,
+	} as const);
+
+export const getAllPoemsByCollectionFulfilled = (artPoems: ReduxArtPoem[]) =>
+	({
+		type: "GET_ALL_POEMS_FULFILLED",
+		artPoems,
+	} as const);
+
+export const getAllPoemsByCollectionFailed = (error: Error) =>
+	({
+		type: "GET_ALL_POEMS_FAILED",
+		error,
 	} as const);
 
 export const getAllPoems = () =>
@@ -98,6 +116,9 @@ export type PoemActionTypes =
 	| ReturnType<typeof getAllPoems>
 	| ReturnType<typeof getAllPoemsFulfilled>
 	| ReturnType<typeof getAllPoemsFailed>
+	| ReturnType<typeof getAllPoemsByCollection>
+	| ReturnType<typeof getAllPoemsByCollectionFulfilled>
+	| ReturnType<typeof getAllPoemsByCollectionFailed>
 	| ReturnType<typeof deleteAllPoems>
 	| ReturnType<typeof deletePoem>
 	| ReturnType<typeof deletePoemFulfilled>;

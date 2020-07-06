@@ -9,6 +9,9 @@ import {RootState} from "../store";
 
 const Main = () => {
 	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
+	const collectionSelected = useSelector(
+		(state: RootState) => state.collectionReducer.collectionSelected
+	);
 	const dispatch = useDispatch();
 
 	return (
@@ -28,7 +31,7 @@ const Main = () => {
 					isSocialFeedSelectable
 					collections={collections}
 				/>
-				<h1>Discover</h1>
+				{collectionSelected ? <h1></h1> : <h1>Discover</h1>}
 				<ArtPoemGrid />
 			</InnerWrapper>
 		</Wrapper>
