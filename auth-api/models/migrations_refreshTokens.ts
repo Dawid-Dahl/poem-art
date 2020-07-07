@@ -1,5 +1,5 @@
 import sqlite from "sqlite3";
-import {Tables} from "../types/enums";
+import {Tables} from "../api/types/enums";
 import {config} from "dotenv";
 
 config({

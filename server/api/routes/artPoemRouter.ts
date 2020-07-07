@@ -6,6 +6,7 @@ import {getAllArtPoemController} from "../controllers/getAllArtPoemController";
 import {getArtPoemController} from "../controllers/getArtPoemController";
 import {editArtPoemController} from "../controllers/editArtPoemController";
 import {deleteArtPoemController} from "../controllers/deleteArtPoemController";
+import {getArtPoemsByCollectionController} from "../controllers/getArtPoemsByCollectionController";
 
 const upload = multer({
 	storage: multer.memoryStorage(),
@@ -17,6 +18,8 @@ const upload = multer({
 const artPoemRouter = express.Router();
 
 artPoemRouter.get("/get-all", getAllArtPoemController);
+
+artPoemRouter.get("/collection", getArtPoemsByCollectionController);
 
 artPoemRouter.get("/get-artpoem", getArtPoemController);
 
