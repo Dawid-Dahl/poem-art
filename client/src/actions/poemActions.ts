@@ -24,24 +24,6 @@ export const deselectPoem = () =>
 		type: "DESELECT_POEM",
 	} as const);
 
-export const getAllPoemsByCollection = (collection: ReduxCollection) =>
-	({
-		type: "GET_ALL_POEMS",
-		collection,
-	} as const);
-
-export const getAllPoemsByCollectionFulfilled = (artPoems: ReduxArtPoem[]) =>
-	({
-		type: "GET_ALL_POEMS_FULFILLED",
-		artPoems,
-	} as const);
-
-export const getAllPoemsByCollectionFailed = (error: Error) =>
-	({
-		type: "GET_ALL_POEMS_FAILED",
-		error,
-	} as const);
-
 export const getAllPoems = () =>
 	({
 		type: "GET_ALL_POEMS",
@@ -56,6 +38,25 @@ export const getAllPoemsFulfilled = (artPoems: ReduxArtPoem[]) =>
 export const getAllPoemsFailed = (error: Error) =>
 	({
 		type: "GET_ALL_POEMS_FAILED",
+		error,
+	} as const);
+
+export const getPoemsByCollection = (collection: ReduxCollection | null, numberOfPoems = 10) =>
+	({
+		type: "GET_ALL_POEMS_BY_COLLECTION",
+		collection,
+		numberOfPoems,
+	} as const);
+
+export const getPoemsByCollectionFulfilled = (artPoems: ReduxArtPoem[]) =>
+	({
+		type: "GET_ALL_POEMS_BY_COLLECTION_FULFILLED",
+		artPoems,
+	} as const);
+
+export const getPoemsByCollectionFailed = (error: Error) =>
+	({
+		type: "GET_ALL_POEMS_BY_COLLECTION_FAILED",
 		error,
 	} as const);
 
@@ -116,9 +117,9 @@ export type PoemActionTypes =
 	| ReturnType<typeof getAllPoems>
 	| ReturnType<typeof getAllPoemsFulfilled>
 	| ReturnType<typeof getAllPoemsFailed>
-	| ReturnType<typeof getAllPoemsByCollection>
-	| ReturnType<typeof getAllPoemsByCollectionFulfilled>
-	| ReturnType<typeof getAllPoemsByCollectionFailed>
+	| ReturnType<typeof getPoemsByCollection>
+	| ReturnType<typeof getPoemsByCollectionFulfilled>
+	| ReturnType<typeof getPoemsByCollectionFailed>
 	| ReturnType<typeof deleteAllPoems>
 	| ReturnType<typeof deletePoem>
 	| ReturnType<typeof deletePoemFulfilled>;

@@ -4,6 +4,7 @@ import {PoemActionTypes} from "../actions/poemActions";
 export type PoemReducerState = {
 	poems: ReduxArtPoem[];
 	poemSelected: ReduxArtPoem;
+	error: null | Error;
 };
 
 export const welcomePoem: ReduxArtPoem = {
@@ -41,6 +42,7 @@ const poemNotFound: ReduxArtPoem = {
 const initialState: PoemReducerState = {
 	poems: [welcomePoem],
 	poemSelected: initPoem,
+	error: null,
 };
 
 export const poemReducer = (
@@ -58,6 +60,12 @@ export const poemReducer = (
 			return {...state, poemSelected: initPoem};
 		case "GET_ALL_POEMS_FULFILLED":
 			return {...state, poems: action.artPoems};
+		case "GET_ALL_POEMS_FAILED":
+			return {...state, error: action.error};
+		case "GET_ALL_POEMS_BY_COLLECTION_FULFILLED":
+			return {...state, poems: action.artPoems};
+		case "GET_ALL_POEMS_BY_COLLECTION_FAILED":
+			return {...state, error: action.error};
 		case "DELETE_ALL_POEMS":
 			return {...state, poems: []};
 		case "DELETE_POEM_FULFILLED":

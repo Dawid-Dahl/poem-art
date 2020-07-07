@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import {Navbar} from "./Navbar";
 import ArtPoemGrid from "./art-poem-grid/ArtPoemGrid";
@@ -6,6 +6,7 @@ import {selectCollection, deselectCollection} from "../actions/collectionActions
 import SelectElement from "./inputs/SelectElement";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../store";
+import {getPoemsByCollection} from "../actions/poemActions";
 
 const Main = () => {
 	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
@@ -14,19 +15,24 @@ const Main = () => {
 	);
 	const dispatch = useDispatch();
 
+	useEffect(() => {
+		collectionSelected && dispatch(getPoemsByCollection(collectionSelected));
+	}, [collectionSelected]);
+
+	const handleSelectCollection = (
+		e: React.ChangeEvent<HTMLSelectElement>
+	): ReturnType<typeof selectCollection> | ReturnType<typeof deselectCollection> =>
+		e.target.value === "Social Feed"
+			? deselectCollection()
+			: selectCollection(collections.filter(x => x.name === e.target.value)[0]);
+
 	return (
 		<Wrapper>
 			<Navbar />
 			<InnerWrapper>
 				<SelectElement
 					onChangeHandle={(e: React.ChangeEvent<HTMLSelectElement>) =>
-						e.target.value === "Social Feed"
-							? dispatch(deselectCollection())
-							: dispatch(
-									selectCollection(
-										collections.filter(x => x.name === e.target.value)[0]
-									)
-							  )
+						dispatch(handleSelectCollection(e))
 					}
 					isSocialFeedSelectable
 					collections={collections}

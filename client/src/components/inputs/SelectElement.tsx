@@ -37,8 +37,9 @@ const StyledSelectElement = styled.select`
 	outline: none;
 	appearance: none;
 	text-align-last: center;
+	transition: all 0.2s;
 
-	&:focus {
+	&:hover {
 		box-shadow: 0 0 0 2pt var(--main-btn-color);
 	}
 `;
