@@ -84,15 +84,13 @@ function* workergetPoemsByCollection({
 
 		const json = yield call([res, "json"]);
 
-		const artPoems: ReduxArtPoem[] = parseMainApiResponse(json);
+		const artPoemsFilteredByCollection: ReduxArtPoem[] = parseMainApiResponse(json);
 
 		yield put(completeLoading());
 
-		console.log(artPoems);
-
-		/* if (artPoems.length !== 0) {
-			yield put(getPoemsByCollectionFulfilled(artPoems));
-		} */
+		if (artPoemsFilteredByCollection.length !== 0) {
+			yield put(getPoemsByCollectionFulfilled(artPoemsFilteredByCollection));
+		}
 	} catch (e) {
 		console.log(e);
 		yield put(getPoemsByCollectionFailed(new Error("LOL")));

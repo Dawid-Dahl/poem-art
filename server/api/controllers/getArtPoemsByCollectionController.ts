@@ -11,7 +11,7 @@ export const getArtPoemsByCollectionController = async (req: Request, res: Respo
 	try {
 		const artPoemsFromCollection = await connection.query(
 			`
-			SELECT *
+			SELECT art_poem.*
 			FROM art_poem
 			LEFT JOIN art_poem_collections_collection AS jt ON art_poem.id = jt.artPoemId
 			LEFT JOIN collection ON jt.collectionId = collection.id

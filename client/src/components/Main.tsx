@@ -6,7 +6,7 @@ import {selectCollection, deselectCollection} from "../actions/collectionActions
 import SelectElement from "./inputs/SelectElement";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../store";
-import {getPoemsByCollection} from "../actions/poemActions";
+import {getPoemsByCollection, getAllPoems} from "../actions/poemActions";
 
 const Main = () => {
 	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
@@ -21,9 +21,12 @@ const Main = () => {
 
 	const handleSelectCollection = (
 		e: React.ChangeEvent<HTMLSelectElement>
-	): ReturnType<typeof selectCollection> | ReturnType<typeof deselectCollection> =>
+	):
+		| ReturnType<typeof selectCollection>
+		| ReturnType<typeof deselectCollection>
+		| ReturnType<typeof getAllPoems> =>
 		e.target.value === "Social Feed"
-			? deselectCollection()
+			? (deselectCollection(), getAllPoems())
 			: selectCollection(collections.filter(x => x.name === e.target.value)[0]);
 
 	return (
