@@ -1,4 +1,4 @@
-import {ReduxArtPoem, ReduxCollection} from "../types/types";
+import {ReduxArtPoem, ReduxCollection, User} from "../types/types";
 
 //READ
 
@@ -41,22 +41,41 @@ export const getAllPoemsFailed = (error: Error) =>
 		error,
 	} as const);
 
+export const getPoemsByUserId = (id: User["id"], numberOfPoems = 10) =>
+	({
+		type: "GET_POEMS_BY_USER_ID",
+		id,
+		numberOfPoems,
+	} as const);
+
+export const getPoemsByUserIdFulfilled = (artPoems: ReduxArtPoem[]) =>
+	({
+		type: "GET_POEMS_BY_USER_ID_FULFILLED",
+		artPoems,
+	} as const);
+
+export const getPoemsByUserIdFailed = (error: Error) =>
+	({
+		type: "GET_POEMS_BY_USER_ID_FAILED",
+		error,
+	} as const);
+
 export const getPoemsByCollection = (collection: ReduxCollection | null, numberOfPoems = 10) =>
 	({
-		type: "GET_ALL_POEMS_BY_COLLECTION",
+		type: "GET_POEMS_BY_COLLECTION",
 		collection,
 		numberOfPoems,
 	} as const);
 
 export const getPoemsByCollectionFulfilled = (artPoems: ReduxArtPoem[]) =>
 	({
-		type: "GET_ALL_POEMS_BY_COLLECTION_FULFILLED",
+		type: "GET_POEMS_BY_COLLECTION_FULFILLED",
 		artPoems,
 	} as const);
 
 export const getPoemsByCollectionFailed = (error: Error) =>
 	({
-		type: "GET_ALL_POEMS_BY_COLLECTION_FAILED",
+		type: "GET_POEMS_BY_COLLECTION_FAILED",
 		error,
 	} as const);
 
@@ -117,6 +136,9 @@ export type PoemActionTypes =
 	| ReturnType<typeof getAllPoems>
 	| ReturnType<typeof getAllPoemsFulfilled>
 	| ReturnType<typeof getAllPoemsFailed>
+	| ReturnType<typeof getPoemsByUserId>
+	| ReturnType<typeof getPoemsByUserIdFulfilled>
+	| ReturnType<typeof getPoemsByUserIdFailed>
 	| ReturnType<typeof getPoemsByCollection>
 	| ReturnType<typeof getPoemsByCollectionFulfilled>
 	| ReturnType<typeof getPoemsByCollectionFailed>

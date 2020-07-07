@@ -23,6 +23,8 @@ const ArtPoemGrid: React.FC = () => {
 				<Grid>
 					{isLoading ? (
 						<Loading />
+					) : poems.length === 0 ? (
+						<h2>Couldn't find any Art Poems...</h2>
 					) : (
 						poems?.map(({id, title, content, imageUrl, createdAt, likes}) => (
 							<ArtPoem
@@ -51,6 +53,7 @@ const Wrapper = styled.div`
 	background-color: var(--light-grey-color);
 	border-radius: var(--border-radius);
 	width: 90%;
+	margin: 0 0 3em 0;
 `;
 
 const Grid = styled.div`
@@ -61,4 +64,9 @@ const Grid = styled.div`
 	align-items: center;
 	justify-content: center;
 	margin: 1em 2em;
+
+	h2 {
+		color: var(--main-grey-color);
+		text-align: center;
+	}
 `;

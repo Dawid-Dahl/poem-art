@@ -62,9 +62,13 @@ export const poemReducer = (
 			return {...state, poems: action.artPoems};
 		case "GET_ALL_POEMS_FAILED":
 			return {...state, error: action.error};
-		case "GET_ALL_POEMS_BY_COLLECTION_FULFILLED":
+		case "GET_POEMS_BY_COLLECTION_FULFILLED":
 			return {...state, poems: action.artPoems};
-		case "GET_ALL_POEMS_BY_COLLECTION_FAILED":
+		case "GET_POEMS_BY_COLLECTION_FAILED":
+			return {...state, error: action.error};
+		case "GET_POEMS_BY_USER_ID_FULFILLED":
+			return {...state, poems: action.artPoems};
+		case "GET_POEMS_BY_USER_ID_FAILED":
 			return {...state, error: action.error};
 		case "DELETE_ALL_POEMS":
 			return {...state, poems: []};

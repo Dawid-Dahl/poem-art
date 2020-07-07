@@ -13,6 +13,7 @@ import {
 	getAllPoemsFailed,
 	getPoemsByCollectionFailed,
 	getPoemsByCollectionFulfilled,
+	getPoemsByUserId,
 } from "../actions/poemActions";
 import {parseMainApiResponse, convertToBytes, forwardTo} from "../utils/utils";
 import {ReduxArtPoem, EditPoemFields} from "../types/types";
@@ -20,6 +21,7 @@ import {showFlash} from "../actions/flashActions";
 import {startLoading, completeLoading} from "../actions/loadingActions";
 import {hidePopup} from "../actions/popupActions";
 import history from "../history";
+import {deselectCollection} from "../actions/collectionActions";
 
 function* workerGetPoem({artPoemId}: ReturnType<typeof getPoem>) {
 	try {
@@ -52,6 +54,7 @@ function* workerGetPoem({artPoemId}: ReturnType<typeof getPoem>) {
 function* workerGetAllPoems() {
 	try {
 		yield put(startLoading());
+		yield put(deselectCollection());
 
 		const res = yield call(apiService.refreshAndFetch, "artpoem/get-all");
 
@@ -67,6 +70,35 @@ function* workerGetAllPoems() {
 	} catch (e) {
 		console.log(e);
 		yield put(getAllPoemsFailed(new Error("Something went wrong while getting the ArtPoems!")));
+	}
+}
+
+function* workergetPoemsByUserId({id, numberOfPoems}: ReturnType<typeof getPoemsByUserId>) {
+	try {
+		yield put(startLoading());
+		yield put(deselectCollection());
+
+		const res = yield call(
+			apiService.refreshAndFetch,
+			`artpoem/user-id?id=${id}&numberOfPoems=${numberOfPoems}`
+		);
+
+		const json = yield call([res, "json"]);
+
+		const artPoemsFilteredById: ReduxArtPoem[] = parseMainApiResponse(json);
+
+		yield put(completeLoading());
+
+		if (artPoemsFilteredById.length !== 0) {
+			yield put(getPoemsByCollectionFulfilled(artPoemsFilteredById));
+		}
+	} catch (e) {
+		console.log(e);
+		yield put(
+			getPoemsByCollectionFailed(
+				new Error("Something went wrong while getting the ArtPoems!")
+			)
+		);
 	}
 }
 
@@ -88,12 +120,14 @@ function* workergetPoemsByCollection({
 
 		yield put(completeLoading());
 
-		if (artPoemsFilteredByCollection.length !== 0) {
-			yield put(getPoemsByCollectionFulfilled(artPoemsFilteredByCollection));
-		}
+		yield put(getPoemsByCollectionFulfilled(artPoemsFilteredByCollection));
 	} catch (e) {
 		console.log(e);
-		yield put(getPoemsByCollectionFailed(new Error("LOL")));
+		yield put(
+			getPoemsByCollectionFailed(
+				new Error("Something went wrong while getting the ArtPoems!")
+			)
+		);
 	}
 }
 
@@ -179,7 +213,8 @@ function* workerDeletePoem({artPoemId}: ReturnType<typeof deletePoem>) {
 function* poemsSaga() {
 	yield takeEvery("GET_POEM", workerGetPoem);
 	yield takeEvery("GET_ALL_POEMS", workerGetAllPoems);
-	yield takeEvery("GET_ALL_POEMS_BY_COLLECTION", workergetPoemsByCollection);
+	yield takeEvery("GET_POEMS_BY_USER_ID", workergetPoemsByUserId);
+	yield takeEvery("GET_POEMS_BY_COLLECTION", workergetPoemsByCollection);
 	yield takeEvery("UPLOAD_POEM", workerUploadPoems);
 	yield takeEvery("EDIT_POEM", workerEditPoems);
 	yield takeEvery("DELETE_POEM", workerDeletePoem);

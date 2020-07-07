@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import styled from "styled-components";
 import {Navbar} from "./Navbar";
 import ArtPoemGrid from "./art-poem-grid/ArtPoemGrid";
-import {selectCollection, deselectCollection} from "../actions/collectionActions";
+import {selectCollection} from "../actions/collectionActions";
 import SelectElement from "./inputs/SelectElement";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../store";
@@ -21,12 +21,9 @@ const Main = () => {
 
 	const handleSelectCollection = (
 		e: React.ChangeEvent<HTMLSelectElement>
-	):
-		| ReturnType<typeof selectCollection>
-		| ReturnType<typeof deselectCollection>
-		| ReturnType<typeof getAllPoems> =>
+	): ReturnType<typeof selectCollection> | ReturnType<typeof getAllPoems> =>
 		e.target.value === "Social Feed"
-			? (deselectCollection(), getAllPoems())
+			? getAllPoems()
 			: selectCollection(collections.filter(x => x.name === e.target.value)[0]);
 
 	return (

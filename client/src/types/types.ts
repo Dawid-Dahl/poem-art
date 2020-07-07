@@ -52,7 +52,7 @@ export type xTokenPayload = {
 };
 
 export type User = {
-	id: number;
+	id: string;
 	username: string;
 	admin: number;
 	profilePicture?: string;

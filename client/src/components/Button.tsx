@@ -67,6 +67,7 @@ const Wrapper = styled.div<WrapperProps>`
 				? "white"
 				: "black"};
 		border: black;
+		outline: none;
 
 		:hover {
 			transform: scale(1.05);
