@@ -15,6 +15,7 @@ export const welcomePoem: ReduxArtPoem = {
 		"https://www.xrite.com/-/media/xrite/images/flex-promos/homepage-hero-banner-interactive/main-hero-lg.jpg?la=en&hash=25DAE70673CEF2F6874D650304F76768B71CE19C",
 	likes: 0,
 	userId: "welcomePoem",
+	collections: [],
 };
 
 const initPoem: ReduxArtPoem = {
@@ -26,6 +27,7 @@ const initPoem: ReduxArtPoem = {
 	likes: 0,
 	comments: [],
 	userId: "user",
+	collections: [],
 };
 
 const poemNotFound: ReduxArtPoem = {
@@ -37,6 +39,7 @@ const poemNotFound: ReduxArtPoem = {
 	likes: 0,
 	comments: [],
 	userId: "user",
+	collections: [],
 };
 
 const initialState: PoemReducerState = {

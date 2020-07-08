@@ -73,14 +73,14 @@ function* workerGetAllPoems() {
 	}
 }
 
-function* workergetPoemsByUserId({id, numberOfPoems}: ReturnType<typeof getPoemsByUserId>) {
+function* workergetPoemsByUserId({id, poemCount}: ReturnType<typeof getPoemsByUserId>) {
 	try {
 		yield put(startLoading());
 		yield put(deselectCollection());
 
 		const res = yield call(
 			apiService.refreshAndFetch,
-			`artpoem/user-id?id=${id}&numberOfPoems=${numberOfPoems}`
+			`artpoem/user-id?id=${id}&poemCount=${poemCount}`
 		);
 
 		const json = yield call([res, "json"]);
@@ -104,14 +104,14 @@ function* workergetPoemsByUserId({id, numberOfPoems}: ReturnType<typeof getPoems
 
 function* workergetPoemsByCollection({
 	collection,
-	numberOfPoems,
+	poemCount,
 }: ReturnType<typeof getPoemsByCollection>) {
 	try {
 		yield put(startLoading());
 
 		const res = yield call(
 			apiService.refreshAndFetch,
-			`artpoem/collection?collection=${collection?.name}&numberOfPoems=${numberOfPoems}`
+			`artpoem/collection?collection=${collection?.name}&poemCount=${poemCount}`
 		);
 
 		const json = yield call([res, "json"]);

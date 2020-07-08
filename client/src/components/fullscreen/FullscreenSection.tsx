@@ -67,7 +67,7 @@ const StyledDiv = styled.div<StyledDivProps>`
 	width: 100%;
 	background-image: ${props => `url(${props.imageUrl})`};
 	background-repeat: no-repeat;
-	background-position: 100% 0;
+	background-position: center;
 	background-size: cover;
 	z-index: -1;
 

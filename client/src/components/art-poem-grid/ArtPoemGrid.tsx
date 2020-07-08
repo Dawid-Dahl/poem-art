@@ -26,17 +26,20 @@ const ArtPoemGrid: React.FC = () => {
 					) : poems.length === 0 ? (
 						<h2>Couldn't find any Art Poems...</h2>
 					) : (
-						poems?.map(({id, title, content, imageUrl, createdAt, likes}) => (
-							<ArtPoem
-								key={id}
-								id={id}
-								title={title}
-								imageUrl={imageUrl}
-								content={content}
-								createdAt={createdAt}
-								likes={likes}
-							/>
-						))
+						poems?.map(
+							({id, title, content, imageUrl, createdAt, likes, collections}) => (
+								<ArtPoem
+									key={id}
+									id={id}
+									title={title}
+									imageUrl={imageUrl}
+									content={content}
+									createdAt={createdAt}
+									likes={likes}
+									collections={collections}
+								/>
+							)
+						)
 					)}
 				</Grid>
 			</Wrapper>

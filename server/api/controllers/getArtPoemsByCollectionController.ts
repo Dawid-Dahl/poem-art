@@ -6,7 +6,7 @@ export const getArtPoemsByCollectionController = async (req: Request, res: Respo
 	const connection = getConnection(process.env.NODE_ENV);
 
 	const collectionName = req.query.collection;
-	const numberOfPoems = parseInt(req.query.numberOfPoems as string);
+	const poemCount = parseInt(req.query.poemCount as string);
 
 	try {
 		const artPoemsFromCollection = await connection.query(
@@ -18,7 +18,7 @@ export const getArtPoemsByCollectionController = async (req: Request, res: Respo
 			WHERE collection.name = ?
 			LIMIT ?;
 		`,
-			[collectionName, numberOfPoems]
+			[collectionName, poemCount]
 		);
 
 		res.status(200).json(jsonResponse(true, JSON.stringify(artPoemsFromCollection)));

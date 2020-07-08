@@ -7,12 +7,12 @@ export const getArtPoemsByUserIdController = async (req: Request, res: Response)
 	const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
 
 	const userId = req.query.id;
-	const numberOfPoems = parseInt(req.query.numberOfPoems as string);
+	const poemCount = parseInt(req.query.poemCount as string);
 
 	try {
 		const artPoemsByUserId = await artPoemRepo.find({
 			where: {userId: userId},
-			take: numberOfPoems,
+			take: poemCount,
 		});
 
 		res.status(200).json(jsonResponse(true, JSON.stringify(artPoemsByUserId)));

@@ -31,6 +31,15 @@ export type ReduxArtPoem = {
 	userId?: string;
 	createdAt?: number;
 	updatedAt?: number;
+	collections: Collection[] | [];
+};
+
+export type Collection = {
+	id: number;
+	name: string;
+	public: boolean;
+	createdAt: string;
+	updatedAt: string;
 };
 
 export type ReduxCollection = {

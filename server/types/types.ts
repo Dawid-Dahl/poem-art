@@ -9,6 +9,7 @@ export type ArtPoem = {
 	image_url: string;
 	created_at: number;
 	updated_at: number;
+	collections: Collection[];
 };
 
 export type CollectionId = Pick<Collection, "collection_id">;
@@ -16,10 +17,9 @@ export type CollectionId = Pick<Collection, "collection_id">;
 export type Collection = {
 	collection_id: number;
 	name: string;
-	poems: ArtPoemId[];
-	owner: UserId;
-	created_at: number;
-	updated_at: number;
+	public: boolean;
+	createdAt: string;
+	updatedAt: string;
 };
 
 export type CommentId = Pick<Comment, "comment_id">;

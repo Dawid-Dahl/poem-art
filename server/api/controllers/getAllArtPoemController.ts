@@ -7,7 +7,12 @@ export const getAllArtPoemController = async (req: Request, res: Response) => {
 	const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
 
 	try {
-		const allArtPoems = await artPoemRepo.find({where: {user: req.user}});
+		const allArtPoems = await artPoemRepo.find({
+			where: {user: req.user},
+			relations: ["collections"],
+		});
+
+		console.log("All ArtPoems: ", allArtPoems);
 
 		res.status(200).json(jsonResponse(true, JSON.stringify(allArtPoems)));
 	} catch (e) {
