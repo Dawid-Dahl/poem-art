@@ -11,6 +11,7 @@ import Button from "../Button";
 
 const Profile: React.FC = () => {
 	const user = useSelector((state: RootState) => state.userReducer.user);
+	const cachedPoems = useSelector((state: RootState) => state.poemReducer.cachedPoems);
 	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
 	const collectionSelected = useSelector(
 		(state: RootState) => state.collectionReducer.collectionSelected

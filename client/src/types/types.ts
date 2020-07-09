@@ -29,9 +29,9 @@ export type ReduxArtPoem = {
 	likes?: number;
 	comments?: Comment[];
 	userId?: string;
-	createdAt?: number;
-	updatedAt?: number;
-	collections: Collection[] | [];
+	createdAt?: string;
+	updatedAt?: string;
+	collections: Collection[];
 };
 
 export type Collection = {

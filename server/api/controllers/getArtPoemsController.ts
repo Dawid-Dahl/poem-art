@@ -3,18 +3,18 @@ import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
 import {ArtPoem} from "../../db/entities/ArtPoem";
 
-export const getAllArtPoemController = async (req: Request, res: Response) => {
+export const getArtPoemsController = async (req: Request, res: Response) => {
 	const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
+	const poemCount = parseInt(req.query.poemCount as string);
 
 	try {
-		const allArtPoems = await artPoemRepo.find({
+		const artPoems = await artPoemRepo.find({
 			where: {user: req.user},
 			relations: ["collections"],
+			take: poemCount,
 		});
 
-		console.log("All ArtPoems: ", allArtPoems);
-
-		res.status(200).json(jsonResponse(true, JSON.stringify(allArtPoems)));
+		res.status(200).json(jsonResponse(true, JSON.stringify(artPoems)));
 	} catch (e) {
 		console.log(e);
 

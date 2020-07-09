@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 import {uploadGCSFile} from "../middleware/uploadGCSFile";
 import {uploadArtPoemController} from "../controllers/uploadArtPoemController";
-import {getAllArtPoemController} from "../controllers/getAllArtPoemController";
+import {getArtPoemsController} from "../controllers/getArtPoemsController";
 import {getArtPoemController} from "../controllers/getArtPoemController";
 import {editArtPoemController} from "../controllers/editArtPoemController";
 import {deleteArtPoemController} from "../controllers/deleteArtPoemController";
@@ -18,7 +18,7 @@ const upload = multer({
 
 const artPoemRouter = express.Router();
 
-artPoemRouter.get("/get-all", getAllArtPoemController);
+artPoemRouter.get("/get-artpoems", getArtPoemsController);
 
 artPoemRouter.get("/user-id", getArtPoemsByUserIdController);
 

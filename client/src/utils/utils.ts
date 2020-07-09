@@ -5,6 +5,8 @@ import {
 	MainApiJsonResponse,
 	Tokens,
 	ValidOrRefreshedXToken,
+	ReduxArtPoem,
+	ReduxCollection,
 } from "../types/types";
 import store from "../store";
 import {authService} from "../auth/authService";
@@ -14,6 +16,7 @@ import {hideFlash} from "../actions/flashActions";
 import {removeUser} from "../actions/userActions";
 import {deleteAllPoems} from "../actions/poemActions";
 import {History} from "history";
+import {sampleArtPoems, sampleReduxCollection1, sampleReduxCollection2} from "./dummyData";
 
 export const localStorageService = {
 	setTokensInLocalStorage(tokens: Tokens) {
@@ -243,3 +246,16 @@ export const verifyAndRefreshTokenIfNeeded = ({
 
 export const forwardTo = (history: History<History.PoorMansUnknown>, location: string) =>
 	history.push(location);
+
+export const sortArtPoemsByCollection = (
+	poems: ReduxArtPoem[],
+	reduxCollection: ReduxCollection | null
+) =>
+	poems.reduce<ReduxArtPoem[]>((acc, cur) => {
+		return cur.collections.filter(collection => collection.name === reduxCollection?.name)
+			.length > 0
+			? [...acc, cur]
+			: [...acc];
+	}, []);
+
+sortArtPoemsByCollection(sampleArtPoems, sampleReduxCollection1); //?

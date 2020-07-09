@@ -3,17 +3,17 @@ import styled from "styled-components";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
 import ArtPoem from "./ArtPoem";
-import {getAllPoems} from "../../actions/poemActions";
+import {getPoems} from "../../actions/poemActions";
 import Loading from "../Loading";
 import {getAllCollections} from "../../actions/collectionActions";
 
 const ArtPoemGrid: React.FC = () => {
-	const poems = useSelector((state: RootState) => state.poemReducer.poems);
+	const cachedPoems = useSelector((state: RootState) => state.poemReducer.cachedPoems);
 	const isLoading = useSelector((state: RootState) => state.loadingReducer.isLoading);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(getAllPoems());
+		dispatch(getPoems(20));
 		dispatch(getAllCollections());
 	}, []);
 
@@ -23,10 +23,10 @@ const ArtPoemGrid: React.FC = () => {
 				<Grid>
 					{isLoading ? (
 						<Loading />
-					) : poems.length === 0 ? (
+					) : cachedPoems.length === 0 ? (
 						<h2>Couldn't find any Art Poems...</h2>
 					) : (
-						poems?.map(
+						cachedPoems?.map(
 							({id, title, content, imageUrl, createdAt, likes, collections}) => (
 								<ArtPoem
 									key={id}

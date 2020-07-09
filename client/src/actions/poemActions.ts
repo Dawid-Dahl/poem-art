@@ -1,5 +1,9 @@
 import {ReduxArtPoem, ReduxCollection, User} from "../types/types";
 
+/*
+ * ASYNC
+ */
+
 //READ
 
 export const getPoem = (artPoemId: ReduxArtPoem["id"]) =>
@@ -19,25 +23,21 @@ export const getPoemFailed = () =>
 		type: "GET_POEM_FAILED",
 	} as const);
 
-export const deselectPoem = () =>
+export const getPoems = (poemCount = 10) =>
 	({
-		type: "DESELECT_POEM",
+		type: "GET_POEMS",
+		poemCount,
 	} as const);
 
-export const getAllPoems = () =>
+export const getPoemsFulfilled = (artPoems: ReduxArtPoem[]) =>
 	({
-		type: "GET_ALL_POEMS",
-	} as const);
-
-export const getAllPoemsFulfilled = (artPoems: ReduxArtPoem[]) =>
-	({
-		type: "GET_ALL_POEMS_FULFILLED",
+		type: "GET_POEMS_FULFILLED",
 		artPoems,
 	} as const);
 
-export const getAllPoemsFailed = (error: Error) =>
+export const getPoemsFailed = (error: Error) =>
 	({
-		type: "GET_ALL_POEMS_FAILED",
+		type: "GET_POEMS_FAILED",
 		error,
 	} as const);
 
@@ -57,25 +57,6 @@ export const getPoemsByUserIdFulfilled = (artPoems: ReduxArtPoem[]) =>
 export const getPoemsByUserIdFailed = (error: Error) =>
 	({
 		type: "GET_POEMS_BY_USER_ID_FAILED",
-		error,
-	} as const);
-
-export const getPoemsByCollection = (collection: ReduxCollection | null, poemCount = 10) =>
-	({
-		type: "GET_POEMS_BY_COLLECTION",
-		collection,
-		poemCount,
-	} as const);
-
-export const getPoemsByCollectionFulfilled = (artPoems: ReduxArtPoem[]) =>
-	({
-		type: "GET_POEMS_BY_COLLECTION_FULFILLED",
-		artPoems,
-	} as const);
-
-export const getPoemsByCollectionFailed = (error: Error) =>
-	({
-		type: "GET_POEMS_BY_COLLECTION_FAILED",
 		error,
 	} as const);
 
@@ -124,6 +105,29 @@ export const deleteAllPoems = () =>
 		type: "DELETE_ALL_POEMS",
 	} as const);
 
+/*
+ * SYNC
+ */
+
+//READ
+
+export const deselectPoem = () =>
+	({
+		type: "DESELECT_POEM",
+	} as const);
+
+export const getPoemsByCollection = (reduxCollection: ReduxCollection | null) =>
+	({
+		type: "GET_POEMS_BY_COLLECTION",
+		reduxCollection,
+	} as const);
+
+//CREATE
+
+//UPDATE
+
+//DELETE
+
 export type ReduxPoemState = "poem";
 
 export type PoemActionTypes =
@@ -133,15 +137,13 @@ export type PoemActionTypes =
 	| ReturnType<typeof deselectPoem>
 	| ReturnType<typeof uploadPoem>
 	| ReturnType<typeof uploadPoemFulfilled>
-	| ReturnType<typeof getAllPoems>
-	| ReturnType<typeof getAllPoemsFulfilled>
-	| ReturnType<typeof getAllPoemsFailed>
+	| ReturnType<typeof getPoems>
+	| ReturnType<typeof getPoemsFulfilled>
+	| ReturnType<typeof getPoemsFailed>
 	| ReturnType<typeof getPoemsByUserId>
 	| ReturnType<typeof getPoemsByUserIdFulfilled>
 	| ReturnType<typeof getPoemsByUserIdFailed>
 	| ReturnType<typeof getPoemsByCollection>
-	| ReturnType<typeof getPoemsByCollectionFulfilled>
-	| ReturnType<typeof getPoemsByCollectionFailed>
 	| ReturnType<typeof deleteAllPoems>
 	| ReturnType<typeof deletePoem>
 	| ReturnType<typeof deletePoemFulfilled>;
