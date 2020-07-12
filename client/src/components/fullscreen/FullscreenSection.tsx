@@ -10,7 +10,7 @@ import {RootState} from "../../store";
 import TopBar from "./TopBar";
 import {selectPoem} from "../../actions/syncPoemAction";
 import {ReduxArtPoem} from "../../types/types";
-import {welcomePoem} from "../../utils/defaultPoems";
+import {welcomePoem, poemNotFound, initPoem} from "../../utils/defaultPoems";
 
 type Props = {};
 
@@ -35,7 +35,11 @@ const FullscreenPicture: React.FC<Props> = () => {
 	}, []);
 
 	useEffect(() => {
-		if (cachedPoems.length === 0 && artPoemId <= 1) {
+		if (cachedPoems.length === 0 && artPoemId === -1) {
+			dispatch(selectPoem(poemNotFound));
+		} else if (cachedPoems.length === 0 && artPoemId === 0) {
+			dispatch(selectPoem(initPoem));
+		} else if (cachedPoems.length === 0 && artPoemId === 1) {
 			dispatch(selectPoem(welcomePoem));
 		} else {
 			const artPoem = selectArtPoemFromCache(cachedPoems, artPoemId);

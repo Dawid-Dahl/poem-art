@@ -23,8 +23,13 @@ import {startLoading, completeLoading} from "../actions/loadingActions";
 import {hidePopup} from "../actions/popupActions";
 import history from "../history";
 import {deselectCollection} from "../actions/collectionActions";
-import {renderSocialFeed, selectPoem, renderPoemsFulfilled} from "../actions/syncPoemAction";
-import {poemNotFound} from "../utils/defaultPoems";
+import {
+	renderSocialFeed,
+	selectPoem,
+	renderPoemsFulfilled,
+	renderPoems,
+} from "../actions/syncPoemAction";
+import {poemNotFound, welcomePoem} from "../utils/defaultPoems";
 
 function* workerGetPoem({artPoemId}: ReturnType<typeof getPoem>) {
 	try {
@@ -44,6 +49,7 @@ function* workerGetPoem({artPoemId}: ReturnType<typeof getPoem>) {
 
 			yield put(completeLoading());
 			yield put(selectPoem(poemNotFound));
+			yield put(renderPoems(new Array(poemNotFound)));
 
 			yield showFlash(JSON.parse(payload).message);
 
