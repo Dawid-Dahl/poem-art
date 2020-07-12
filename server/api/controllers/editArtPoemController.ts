@@ -27,7 +27,9 @@ export const editArtPoemController = async (req: Request, res: Response) => {
 		if (req.file) {
 			const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
 
-			const artPoem = await artPoemRepo.findOne(req.query.id as string);
+			const artPoem = await artPoemRepo.findOne(poemId.toString() as string);
+
+			console.log("THE ART POEM INSIDE REQ.FILE TO BE DELETED: ", artPoem);
 
 			if (!artPoem) throw new Error("No Artpoem was found in the database!");
 

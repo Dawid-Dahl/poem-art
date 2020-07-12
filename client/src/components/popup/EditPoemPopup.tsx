@@ -69,6 +69,8 @@ const EditPoemPopup: React.FC<Props> = () => {
 
 			if (!editPoemPayload) return;
 
+			console.log("EDIT POEM PAYLOAD", editPoemPayload.get("editPoemFields"));
+
 			dispatch(editPoem(editPoemPayload));
 
 			setpoemTitle(poemSelected.title);
