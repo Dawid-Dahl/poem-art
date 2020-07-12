@@ -1,21 +1,14 @@
-import React, {useEffect} from "react";
+import React from "react";
 import styled from "styled-components";
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
 import {RootState} from "../../store";
 import ArtPoem from "./ArtPoem";
-import {getPoems} from "../../actions/poemActions";
 import Loading from "../Loading";
-import {getAllCollections} from "../../actions/collectionActions";
 
 const ArtPoemGrid: React.FC = () => {
-	const cachedPoems = useSelector((state: RootState) => state.poemReducer.cachedPoems);
+	const cachedPoems = useSelector((state: RootState) => state.asyncPoemReducer.cachedPoems);
+	const renderedPoems = useSelector((state: RootState) => state.syncPoemReducer.renderedPoems);
 	const isLoading = useSelector((state: RootState) => state.loadingReducer.isLoading);
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		dispatch(getPoems(20));
-		dispatch(getAllCollections());
-	}, []);
 
 	return (
 		<>
@@ -23,17 +16,25 @@ const ArtPoemGrid: React.FC = () => {
 				<Grid>
 					{isLoading ? (
 						<Loading />
-					) : cachedPoems.length === 0 ? (
-						<h2>Couldn't find any Art Poems...</h2>
 					) : (
-						cachedPoems?.map(
-							({id, title, content, imageUrl, createdAt, likes, collections}) => (
+						renderedPoems.map(
+							({
+								id,
+								title,
+								content,
+								imageUrl,
+								createdAt,
+								likes,
+								collections,
+								userId,
+							}) => (
 								<ArtPoem
 									key={id}
 									id={id}
 									title={title}
 									imageUrl={imageUrl}
 									content={content}
+									userId={userId}
 									createdAt={createdAt}
 									likes={likes}
 									collections={collections}

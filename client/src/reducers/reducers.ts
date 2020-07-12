@@ -1,5 +1,6 @@
 export * from "./flashReducer";
-export * from "./poemReducer";
+export * from "./asyncPoemReducer";
+export * from "./syncPoemReducer";
 export * from "./userReducer";
 export * from "./popupReducer";
 export * from "./collectionReducer";

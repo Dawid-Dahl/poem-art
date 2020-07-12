@@ -1,9 +1,5 @@
 import {ReduxArtPoem, ReduxCollection, User} from "../types/types";
 
-/*
- * ASYNC
- */
-
 //READ
 
 export const getPoem = (artPoemId: ReduxArtPoem["id"]) =>
@@ -12,7 +8,7 @@ export const getPoem = (artPoemId: ReduxArtPoem["id"]) =>
 		artPoemId,
 	} as const);
 
-export const getPoemFulfilled = (artPoem: ReduxArtPoem) =>
+export const getPoemFulfilled = (artPoem: ReduxArtPoem[]) =>
 	({
 		type: "GET_POEM_FULFILLED",
 		artPoem,
@@ -100,41 +96,17 @@ export const deletePoemFulfilled = (artPoemId: ReduxArtPoem["id"]) =>
 		artPoemId,
 	} as const);
 
-export const deleteAllPoems = () =>
+export const removeAllPoemsFromCache = () =>
 	({
-		type: "DELETE_ALL_POEMS",
+		type: "REMOVE_ALL_POEMS_FROM_CACHE",
 	} as const);
-
-/*
- * SYNC
- */
-
-//READ
-
-export const deselectPoem = () =>
-	({
-		type: "DESELECT_POEM",
-	} as const);
-
-export const getPoemsByCollection = (reduxCollection: ReduxCollection | null) =>
-	({
-		type: "GET_POEMS_BY_COLLECTION",
-		reduxCollection,
-	} as const);
-
-//CREATE
-
-//UPDATE
-
-//DELETE
 
 export type ReduxPoemState = "poem";
 
-export type PoemActionTypes =
+export type AsyncPoemActionTypes =
 	| ReturnType<typeof getPoem>
 	| ReturnType<typeof getPoemFulfilled>
 	| ReturnType<typeof getPoemFailed>
-	| ReturnType<typeof deselectPoem>
 	| ReturnType<typeof uploadPoem>
 	| ReturnType<typeof uploadPoemFulfilled>
 	| ReturnType<typeof getPoems>
@@ -143,7 +115,8 @@ export type PoemActionTypes =
 	| ReturnType<typeof getPoemsByUserId>
 	| ReturnType<typeof getPoemsByUserIdFulfilled>
 	| ReturnType<typeof getPoemsByUserIdFailed>
-	| ReturnType<typeof getPoemsByCollection>
-	| ReturnType<typeof deleteAllPoems>
+	| ReturnType<typeof editPoem>
+	| ReturnType<typeof editPoemFulfilled>
 	| ReturnType<typeof deletePoem>
-	| ReturnType<typeof deletePoemFulfilled>;
+	| ReturnType<typeof deletePoemFulfilled>
+	| ReturnType<typeof removeAllPoemsFromCache>;

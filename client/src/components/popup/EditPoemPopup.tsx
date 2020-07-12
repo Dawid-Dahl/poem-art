@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {hidePopup} from "../../actions/popupActions";
 import {RootState} from "../../store";
 import TextAreaInput from "../inputs/TextAreaInput";
-import {editPoem, deletePoem} from "../../actions/poemActions";
+import {editPoem, deletePoem} from "../../actions/asyncPoemActions";
 import FileInput from "../inputs/FileInput";
 import {ImageFile} from "../../types/types";
 import {RouteComponentProps} from "react-router";
@@ -14,7 +14,7 @@ import {RouteComponentProps} from "react-router";
 interface Props {}
 
 const EditPoemPopup: React.FC<Props> = () => {
-	const poemSelected = useSelector((state: RootState) => state.poemReducer.poemSelected);
+	const poemSelected = useSelector((state: RootState) => state.syncPoemReducer.poemSelected);
 	const editPoemPopup = useSelector((state: RootState) => state.popupReducer.editPoemPopup);
 
 	useEffect(() => {

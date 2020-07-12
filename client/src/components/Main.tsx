@@ -2,22 +2,32 @@ import React, {useEffect} from "react";
 import styled from "styled-components";
 import {Navbar} from "./Navbar";
 import ArtPoemGrid from "./art-poem-grid/ArtPoemGrid";
-import {selectCollection} from "../actions/collectionActions";
+import {selectCollection, getAllCollections} from "../actions/collectionActions";
 import SelectElement from "./inputs/SelectElement";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../store";
-import {getPoemsByCollection, getPoems} from "../actions/poemActions";
+import {getPoems} from "../actions/asyncPoemActions";
+import {getPoemsByCollection} from "../actions/syncPoemAction";
 
 const Main = () => {
 	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
+	const cachedPoems = useSelector((state: RootState) => state.asyncPoemReducer.cachedPoems);
 	const collectionSelected = useSelector(
 		(state: RootState) => state.collectionReducer.collectionSelected
 	);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		collectionSelected && dispatch(getPoemsByCollection(collectionSelected));
+		collectionSelected && dispatch(getPoemsByCollection(cachedPoems, collectionSelected));
 	}, [collectionSelected]);
+
+	useEffect(() => {
+		dispatch(getAllCollections());
+	}, []);
+
+	useEffect(() => {
+		dispatch(dispatch(getPoems(20)));
+	}, []);
 
 	const handleSelectCollection = (
 		e: React.ChangeEvent<HTMLSelectElement>

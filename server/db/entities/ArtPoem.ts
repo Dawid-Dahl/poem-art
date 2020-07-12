@@ -9,6 +9,7 @@ import {
 	JoinTable,
 	OneToMany,
 	ManyToOne,
+	JoinColumn,
 } from "typeorm";
 import {Collection} from "./Collection";
 import {Comment} from "./Comment";
@@ -31,7 +32,11 @@ export class ArtPoem extends BaseEntity {
 	@Column({type: "varchar", nullable: true})
 	imageUrl: string;
 
+	@Column({nullable: true})
+	userId: string;
+
 	@ManyToOne(type => User, user => user.artpoems)
+	@JoinColumn()
 	user: User;
 
 	@ManyToMany(type => Collection)

@@ -27,7 +27,13 @@ describe("sortArtPoemsByCollection", () => {
 			const expected: ReduxArtPoem[] = [];
 			expect(sortArtPoemsByCollection([], reduxCollection)).toEqual(expected);
 		});
-		it("should return an empty array if given null array as a reduxCollection", () => {
+		it("should return an empty array if given null as a list", () => {
+			const reduxCollection = sampleReduxCollection1;
+			const expected: ReduxArtPoem[] = [];
+			//@ts-ignore
+			expect(sortArtPoemsByCollection(null, reduxCollection)).toEqual(expected);
+		});
+		it("should return an empty array if given null as a reduxCollection", () => {
 			const reduxCollection: ReduxCollection | null = null;
 			const expected: ReduxArtPoem[] = [];
 			expect(sortArtPoemsByCollection([], reduxCollection)).toEqual(expected);

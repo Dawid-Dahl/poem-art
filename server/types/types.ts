@@ -7,6 +7,7 @@ export type ArtPoem = {
 	likes: number;
 	comments: CommentId[];
 	image_url: string;
+	userId: string;
 	created_at: number;
 	updated_at: number;
 	collections: Collection[];

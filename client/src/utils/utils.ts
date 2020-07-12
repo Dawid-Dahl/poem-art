@@ -14,7 +14,6 @@ import {removeAllCollections} from "../actions/collectionActions";
 import {hidePopup} from "../actions/popupActions";
 import {hideFlash} from "../actions/flashActions";
 import {removeUser} from "../actions/userActions";
-import {deleteAllPoems} from "../actions/poemActions";
 import {History} from "history";
 import {sampleArtPoems, sampleReduxCollection1, sampleReduxCollection2} from "./dummyData";
 
@@ -180,7 +179,6 @@ export const addXTokenHeaderToFetch = (xToken: string | null) => async (
 export const resetReduxState = () => {
 	store.dispatch(removeUser());
 	store.dispatch(removeAllCollections());
-	store.dispatch(deleteAllPoems());
 	store.dispatch(hideFlash());
 	store.dispatch(hidePopup());
 };
@@ -251,11 +249,13 @@ export const sortArtPoemsByCollection = (
 	poems: ReduxArtPoem[],
 	reduxCollection: ReduxCollection | null
 ) =>
-	poems.reduce<ReduxArtPoem[]>((acc, cur) => {
-		return cur.collections.filter(collection => collection.name === reduxCollection?.name)
-			.length > 0
-			? [...acc, cur]
-			: [...acc];
-	}, []);
-
-sortArtPoemsByCollection(sampleArtPoems, sampleReduxCollection1); //?
+	poems
+		? poems.reduce<ReduxArtPoem[]>(
+				(acc, cur) =>
+					cur.collections.filter(collection => collection.name === reduxCollection?.name)
+						.length > 0
+						? [...acc, cur]
+						: [...acc],
+				[]
+		  )
+		: [];

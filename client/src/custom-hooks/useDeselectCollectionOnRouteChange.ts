@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router";
 import {RootState} from "../store";
 import {deselectCollection} from "../actions/collectionActions";
-import {deselectPoem} from "../actions/poemActions";
+import {deselectPoem} from "../actions/syncPoemAction";
 
 export const useDeselectCollectionOnRouteChange = () => {
 	const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export const useDeselectCollectionOnRouteChange = () => {
 	const collectionsSelected = useSelector(
 		(state: RootState) => state.collectionReducer.collectionSelected
 	);
-	const poemSelected = useSelector((state: RootState) => state.poemReducer.poemSelected);
+	const poemSelected = useSelector((state: RootState) => state.syncPoemReducer.poemSelected);
 
 	useEffect(() => {
 		const unlisten = history.listen(

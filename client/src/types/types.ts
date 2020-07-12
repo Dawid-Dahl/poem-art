@@ -1,5 +1,5 @@
 import {ReduxCollectionState} from "../actions/collectionActions";
-import {ReduxPoemState} from "../actions/poemActions";
+import {ReduxPoemState} from "../actions/asyncPoemActions";
 import {ReduxUserState} from "../actions/userActions";
 
 export type FormState = {
@@ -28,7 +28,7 @@ export type ReduxArtPoem = {
 	imageUrl: string;
 	likes?: number;
 	comments?: Comment[];
-	userId?: string;
+	userId: string;
 	createdAt?: string;
 	updatedAt?: string;
 	collections: Collection[];

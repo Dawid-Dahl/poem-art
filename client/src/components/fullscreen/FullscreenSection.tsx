@@ -5,9 +5,12 @@ import CommentSection from "./CommentSection";
 import LikesSection from "./LikesSection";
 import {useQuery} from "../../custom-hooks/useQuery";
 import {useDispatch, useSelector} from "react-redux";
-import {getPoem} from "../../actions/poemActions";
+import {getPoem} from "../../actions/asyncPoemActions";
 import {RootState} from "../../store";
 import TopBar from "./TopBar";
+import {selectPoem} from "../../actions/syncPoemAction";
+import {ReduxArtPoem} from "../../types/types";
+import {welcomePoem} from "../../utils/defaultPoems";
 
 type Props = {};
 
@@ -18,16 +21,32 @@ const FullscreenPicture: React.FC<Props> = () => {
 
 	const artPoemId = Number(query.get("id"));
 
-	const selectedArtPoem = useSelector((state: RootState) => state.poemReducer.poemSelected);
+	const selectedArtPoem = useSelector((state: RootState) => state.syncPoemReducer.poemSelected);
+	const cachedPoems = useSelector((state: RootState) => state.asyncPoemReducer.cachedPoems);
 	const isLoading = useSelector((state: RootState) => state.loadingReducer.isLoading);
+
+	const selectArtPoemFromCache = (
+		cachedPoems: ReduxArtPoem[],
+		id: ReduxArtPoem["id"]
+	): ReduxArtPoem | undefined => cachedPoems.filter(poem => poem.id === id)[0];
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, []);
 
 	useEffect(() => {
-		selectedArtPoem.id === 0 && dispatch(getPoem(artPoemId));
-	}, []);
+		if (cachedPoems.length === 0 && artPoemId <= 1) {
+			dispatch(selectPoem(welcomePoem));
+		} else {
+			const artPoem = selectArtPoemFromCache(cachedPoems, artPoemId);
+
+			if (artPoem) {
+				dispatch(selectPoem(artPoem));
+			} else {
+				dispatch(getPoem(artPoemId));
+			}
+		}
+	}, [cachedPoems]);
 
 	return (
 		<>
@@ -39,7 +58,10 @@ const FullscreenPicture: React.FC<Props> = () => {
 						backType="history"
 					/>
 					<Grid>
-						<PoemSection poem={selectedArtPoem.content} />
+						<PoemSection
+							poemUserId={selectedArtPoem.userId}
+							poem={selectedArtPoem.content}
+						/>
 						<SidebarWrapper>
 							<LikesSection
 								likes={selectedArtPoem.likes ? selectedArtPoem.likes : 0}

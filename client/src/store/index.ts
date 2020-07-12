@@ -1,7 +1,8 @@
 import {createStore, combineReducers, applyMiddleware} from "redux";
 import {
 	flashReducer,
-	poemReducer,
+	asyncPoemReducer,
+	syncPoemReducer,
 	userReducer,
 	popupReducer,
 	collectionReducer,
@@ -16,7 +17,8 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const rootReducer = combineReducers({
 	flashReducer,
-	poemReducer,
+	asyncPoemReducer,
+	syncPoemReducer,
 	userReducer,
 	popupReducer,
 	collectionReducer,

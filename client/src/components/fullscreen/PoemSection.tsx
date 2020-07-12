@@ -1,21 +1,28 @@
 import React from "react";
 import styled from "styled-components";
-import store from "../../store";
+import store, {RootState} from "../../store";
 import {showEditPoemPopup} from "../../actions/popupActions";
+import {ReduxArtPoem} from "../../types/types";
+import {useSelector} from "react-redux";
 
 type Props = {
-	poem: string;
+	poemUserId: ReduxArtPoem["userId"];
+	poem: ReduxArtPoem["content"];
 };
 
 const onClickHandle = () => store.dispatch(showEditPoemPopup());
 
-export const PoemSection: React.FC<Props> = ({poem}) => {
+export const PoemSection: React.FC<Props> = ({poemUserId, poem}) => {
+	const user = useSelector((state: RootState) => state.userReducer.user);
+
 	return (
 		<>
 			<Wrapper>
-				<span className="material-icons" onClick={onClickHandle}>
-					edit
-				</span>
+				{poemUserId === user?.id && (
+					<span className="material-icons" onClick={onClickHandle}>
+						edit
+					</span>
+				)}
 				<p>{poem}</p>
 			</Wrapper>
 		</>

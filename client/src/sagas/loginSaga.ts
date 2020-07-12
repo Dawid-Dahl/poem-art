@@ -15,8 +15,9 @@ import {
 import {showFlash} from "../actions/flashActions";
 import {setUser, removeUser} from "../actions/userActions";
 import {removeAllCollections} from "../actions/collectionActions";
-import {deleteAllPoems} from "../actions/poemActions";
 import {hidePopup} from "../actions/popupActions";
+import {removeAllPoemsFromRenderedPoems} from "../actions/syncPoemAction";
+import {removeAllPoemsFromCache} from "../actions/asyncPoemActions";
 
 function* workerCheckIfLoggedIn({tokens}: ReturnType<typeof checkIfLoggedIn>) {
 	if (location.pathname === "/register" || location.pathname === "/login") {
@@ -82,8 +83,9 @@ function* workerLogout() {
 	yield call(localStorageService.removeTokensFromLocalStorage);
 	yield put(removeUser());
 	yield put(removeAllCollections());
-	yield put(deleteAllPoems());
 	yield put(hidePopup());
+	yield put(removeAllPoemsFromRenderedPoems());
+	yield put(removeAllPoemsFromCache());
 	yield put(showFlash("You're now logged out!"));
 }
 

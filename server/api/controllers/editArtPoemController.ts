@@ -2,7 +2,7 @@ import {jsonResponse} from "../utils/utils";
 import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
 import {ArtPoem} from "../../db/entities/ArtPoem";
-import {Storage, Bucket, File} from "@google-cloud/storage";
+import {Storage, Bucket} from "@google-cloud/storage";
 
 export const editArtPoemController = async (req: Request, res: Response) => {
 	const {poemId, poemTitle, poemContent} = JSON.parse(req.body.editPoemFields);
@@ -20,7 +20,7 @@ export const editArtPoemController = async (req: Request, res: Response) => {
 	const deleteGCSFile = async (bucket: Bucket, name: string) => {
 		await bucket.file(name).delete();
 
-		console.log(`gs://${bucket.name}/${name} deleted.`);
+		console.log(`gs://${bucket.name}/${name} --- DELETED.`);
 	};
 
 	try {

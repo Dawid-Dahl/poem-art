@@ -6,12 +6,14 @@ import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
 import {Navbar} from "../Navbar";
 import ArtPoemGrid from "../art-poem-grid/ArtPoemGrid";
-import {getPoemsByCollection, getPoemsByUserId} from "../../actions/poemActions";
+import {getPoemsByUserId} from "../../actions/asyncPoemActions";
 import Button from "../Button";
+import {getPoemsByCollection, renderSocialFeed} from "../../actions/syncPoemAction";
+import {getAllCollections} from "../../actions/collectionActions";
 
 const Profile: React.FC = () => {
 	const user = useSelector((state: RootState) => state.userReducer.user);
-	const cachedPoems = useSelector((state: RootState) => state.poemReducer.cachedPoems);
+	const cachedPoems = useSelector((state: RootState) => state.asyncPoemReducer.cachedPoems);
 	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
 	const collectionSelected = useSelector(
 		(state: RootState) => state.collectionReducer.collectionSelected
@@ -19,11 +21,19 @@ const Profile: React.FC = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		collectionSelected && dispatch(getPoemsByCollection(collectionSelected));
+		dispatch(getAllCollections());
+	}, []);
+
+	useEffect(() => {
+		if (user) dispatch(getPoemsByUserId(user.id));
+	}, []);
+
+	useEffect(() => {
+		collectionSelected && dispatch(getPoemsByCollection(cachedPoems, collectionSelected));
 	}, [collectionSelected]);
 
 	const handleClick = () => {
-		if (user) dispatch(getPoemsByUserId(user.id));
+		dispatch(renderSocialFeed(cachedPoems));
 	};
 
 	return (

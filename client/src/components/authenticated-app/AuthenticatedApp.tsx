@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Switch, Route} from "react-router";
 import Main from "../Main";
 import Fullscreen from "../fullscreen/Fullscreen";

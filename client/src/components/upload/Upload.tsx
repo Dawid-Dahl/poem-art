@@ -11,7 +11,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
 import {getAllCollections} from "../../actions/collectionActions";
 import {showFlash} from "../../actions/flashActions";
-import {uploadPoem} from "../../actions/poemActions";
+import {uploadPoem} from "../../actions/asyncPoemActions";
 
 const Upload: React.FC = () => {
 	const [title, setTitle] = useState("");
