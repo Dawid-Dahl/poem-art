@@ -247,15 +247,19 @@ export const forwardTo = (history: History<History.PoorMansUnknown>, location: s
 
 export const sortArtPoemsByCollection = (
 	poems: ReduxArtPoem[],
-	reduxCollection: ReduxCollection | null
+	reduxCollection: ReduxCollection | null,
+	user: User
 ) =>
 	poems
-		? poems.reduce<ReduxArtPoem[]>(
-				(acc, cur) =>
-					cur.collections.filter(collection => collection.name === reduxCollection?.name)
-						.length > 0
-						? [...acc, cur]
-						: [...acc],
-				[]
-		  )
+		? poems
+				.filter(poem => poem.userId === user.id)
+				.reduce<ReduxArtPoem[]>(
+					(acc, cur) =>
+						cur.collections.filter(
+							collection => collection.name === reduxCollection?.name
+						).length > 0
+							? [...acc, cur]
+							: [...acc],
+					[]
+				)
 		: [];

@@ -6,7 +6,6 @@ import ArtPoem from "./ArtPoem";
 import Loading from "../Loading";
 
 const ArtPoemGrid: React.FC = () => {
-	const cachedPoems = useSelector((state: RootState) => state.asyncPoemReducer.cachedPoems);
 	const renderedPoems = useSelector((state: RootState) => state.syncPoemReducer.renderedPoems);
 	const isLoading = useSelector((state: RootState) => state.loadingReducer.isLoading);
 

@@ -29,7 +29,9 @@ const Profile: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		collectionSelected && dispatch(getPoemsByCollection(cachedPoems, collectionSelected));
+		collectionSelected &&
+			user &&
+			dispatch(getPoemsByCollection(cachedPoems, collectionSelected, user));
 	}, [collectionSelected]);
 
 	const handleClick = () => {

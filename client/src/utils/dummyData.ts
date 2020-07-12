@@ -358,9 +358,148 @@ export const sampleArrWithDifferentData: ReduxArtPoem[] = [
 	},
 ];
 
+export const sampleArrWithPoemsFromSeparateUsers: ReduxArtPoem[] = [
+	{
+		id: 126,
+		title: "My First Poem",
+		content: "The first!",
+		likes: 0,
+		imageUrl:
+			"https://storage.googleapis.com/poem-art-bucket/1594584366412-41a042-angry-chameleon.jpg",
+		userId: "diwr0o84w97kae3xq2p",
+		createdAt: "2020-07-12T20:06:07.020Z",
+		updatedAt: "2020-07-12T20:07:10.000Z",
+		collections: [
+			{
+				id: 54,
+				name: "My Collection",
+				public: true,
+				createdAt: "2020-05-19T16:04:04.386Z",
+				updatedAt: "2020-05-19T16:04:04.386Z",
+			},
+		],
+	},
+	{
+		id: 127,
+		title: "Victor's Poem",
+		content: "So Good!",
+		likes: 0,
+		imageUrl:
+			"https://storage.googleapis.com/poem-art-bucket/1594585034509-37cdcd-the-road-cityscape.jpg",
+		userId: "6ww9dh7q21kae4xr9q",
+		createdAt: "2020-07-12T20:17:14.960Z",
+		updatedAt: "2020-07-12T20:17:14.960Z",
+		collections: [
+			{
+				id: 56,
+				name: "My Collection",
+				public: true,
+				createdAt: "2020-05-19T16:32:05.220Z",
+				updatedAt: "2020-05-19T16:32:05.220Z",
+			},
+		],
+	},
+	{
+		id: 128,
+		title: "So sad",
+		content: "So very sad!",
+		likes: 0,
+		imageUrl:
+			"https://storage.googleapis.com/poem-art-bucket/1594585128110-2a084f-post_apocalyptic_beach_by_clapham1994-d62n6a3.jpg",
+		userId: "diwr0o84w97kae3xq2p",
+		createdAt: "2020-07-12T20:18:48.510Z",
+		updatedAt: "2020-07-12T20:18:48.510Z",
+		collections: [
+			{
+				id: 55,
+				name: "Sad Poems",
+				public: true,
+				createdAt: "2020-05-19T16:31:18.156Z",
+				updatedAt: "2020-05-19T16:31:18.156Z",
+			},
+		],
+	},
+	{
+		id: 129,
+		title: "My Second Poem",
+		content: "Second!",
+		likes: 0,
+		imageUrl:
+			"https://storage.googleapis.com/poem-art-bucket/1594589451652-f4276c-0eab10cca14a22f2e63d9a3612be1101.jpg",
+		userId: "diwr0o84w97kae3xq2p",
+		createdAt: "2020-07-12T21:30:52.214Z",
+		updatedAt: "2020-07-12T21:30:52.214Z",
+		collections: [
+			{
+				id: 54,
+				name: "My Collection",
+				public: true,
+				createdAt: "2020-05-19T16:04:04.386Z",
+				updatedAt: "2020-05-19T16:04:04.386Z",
+			},
+		],
+	},
+];
+
+export const sampleArrWithoutPoemsFromSeparateUsers: ReduxArtPoem[] = [
+	{
+		id: 126,
+		title: "My First Poem",
+		content: "The first!",
+		likes: 0,
+		imageUrl:
+			"https://storage.googleapis.com/poem-art-bucket/1594584366412-41a042-angry-chameleon.jpg",
+		userId: "diwr0o84w97kae3xq2p",
+		createdAt: "2020-07-12T20:06:07.020Z",
+		updatedAt: "2020-07-12T20:07:10.000Z",
+		collections: [
+			{
+				id: 54,
+				name: "My Collection",
+				public: true,
+				createdAt: "2020-05-19T16:04:04.386Z",
+				updatedAt: "2020-05-19T16:04:04.386Z",
+			},
+		],
+	},
+	{
+		id: 129,
+		title: "My Second Poem",
+		content: "Second!",
+		likes: 0,
+		imageUrl:
+			"https://storage.googleapis.com/poem-art-bucket/1594589451652-f4276c-0eab10cca14a22f2e63d9a3612be1101.jpg",
+		userId: "diwr0o84w97kae3xq2p",
+		createdAt: "2020-07-12T21:30:52.214Z",
+		updatedAt: "2020-07-12T21:30:52.214Z",
+		collections: [
+			{
+				id: 54,
+				name: "My Collection",
+				public: true,
+				createdAt: "2020-05-19T16:04:04.386Z",
+				updatedAt: "2020-05-19T16:04:04.386Z",
+			},
+		],
+	},
+];
+
 export const sampleReduxCollection1: ReduxCollection = {
 	id: "64",
 	name: "Inspiring Poems",
 	public: true,
 };
+
 export const sampleReduxCollection2: ReduxCollection = {id: "55", name: "Sad Poems", public: true};
+
+export const sampleReduxCollection3: ReduxCollection = {
+	id: "54",
+	name: "My Collection",
+	public: true,
+};
+
+export const user = {
+	id: "diwr0o84w97kae3xq2p",
+	username: "Dawid",
+	admin: false,
+};

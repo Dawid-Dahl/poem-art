@@ -105,6 +105,9 @@ function* workergetPoemsByUserId({id, poemCount}: ReturnType<typeof getPoemsByUs
 		if (artPoemsFilteredById.length !== 0) {
 			yield put(getPoemsByUserIdFulfilled(artPoemsFilteredById));
 			yield put(renderPoemsFulfilled(artPoemsFilteredById));
+		} else {
+			yield put(getPoemsByUserIdFulfilled(new Array(welcomePoem)));
+			yield put(renderPoemsFulfilled(new Array(welcomePoem)));
 		}
 	} catch (e) {
 		console.log(e);

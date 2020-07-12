@@ -1,6 +1,6 @@
 //READ
 
-import {ReduxCollection, ReduxArtPoem} from "../types/types";
+import {ReduxCollection, ReduxArtPoem, User} from "../types/types";
 
 export const renderPoems = (artPoems: ReduxArtPoem[]) =>
 	({
@@ -40,12 +40,14 @@ export const deselectPoem = () =>
 
 export const getPoemsByCollection = (
 	cachedPoems: ReduxArtPoem[],
-	reduxCollection: ReduxCollection | null
+	reduxCollection: ReduxCollection | null,
+	user: User
 ) =>
 	({
 		type: "GET_POEMS_BY_COLLECTION",
 		cachedPoems,
 		reduxCollection,
+		user,
 	} as const);
 
 //CREATE

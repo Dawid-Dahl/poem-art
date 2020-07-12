@@ -12,13 +12,16 @@ import {getPoemsByCollection} from "../actions/syncPoemAction";
 const Main = () => {
 	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
 	const cachedPoems = useSelector((state: RootState) => state.asyncPoemReducer.cachedPoems);
+	const user = useSelector((state: RootState) => state.userReducer.user);
 	const collectionSelected = useSelector(
 		(state: RootState) => state.collectionReducer.collectionSelected
 	);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		collectionSelected && dispatch(getPoemsByCollection(cachedPoems, collectionSelected));
+		collectionSelected &&
+			user &&
+			dispatch(getPoemsByCollection(cachedPoems, collectionSelected, user));
 	}, [collectionSelected]);
 
 	useEffect(() => {

@@ -31,7 +31,11 @@ export const syncPoemReducer = (
 		case "GET_POEMS_BY_COLLECTION":
 			return {
 				...state,
-				renderedPoems: sortArtPoemsByCollection(action.cachedPoems, action.reduxCollection),
+				renderedPoems: sortArtPoemsByCollection(
+					action.cachedPoems,
+					action.reduxCollection,
+					action.user
+				),
 			};
 		case "REMOVE_ALL_POEMS_FROM_RENDERED_POEMS":
 			return {...state, renderedPoems: []};
