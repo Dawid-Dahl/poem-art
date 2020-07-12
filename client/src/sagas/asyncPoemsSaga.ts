@@ -23,12 +23,7 @@ import {startLoading, completeLoading} from "../actions/loadingActions";
 import {hidePopup} from "../actions/popupActions";
 import history from "../history";
 import {deselectCollection} from "../actions/collectionActions";
-import {
-	renderSocialFeed,
-	selectPoem,
-	renderPoems,
-	renderPoemsFulfilled,
-} from "../actions/syncPoemAction";
+import {renderSocialFeed, selectPoem, renderPoemsFulfilled} from "../actions/syncPoemAction";
 import {poemNotFound} from "../utils/defaultPoems";
 
 function* workerGetPoem({artPoemId}: ReturnType<typeof getPoem>) {
