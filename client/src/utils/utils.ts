@@ -245,21 +245,19 @@ export const verifyAndRefreshTokenIfNeeded = ({
 export const forwardTo = (history: History<History.PoorMansUnknown>, location: string) =>
 	history.push(location);
 
+export const doesArtPoemBelongToUser = (poem: ReduxArtPoem, user: User) => poem.userId === user.id;
+
 export const sortArtPoemsByCollection = (
 	poems: ReduxArtPoem[],
-	reduxCollection: ReduxCollection | null,
-	user: User
+	reduxCollection: ReduxCollection | null
 ) =>
 	poems
-		? poems
-				.filter(poem => poem.userId === user.id)
-				.reduce<ReduxArtPoem[]>(
-					(acc, cur) =>
-						cur.collections.filter(
-							collection => collection.name === reduxCollection?.name
-						).length > 0
-							? [...acc, cur]
-							: [...acc],
-					[]
-				)
+		? poems.reduce<ReduxArtPoem[]>(
+				(acc, cur) =>
+					cur.collections.filter(collection => collection.name === reduxCollection?.name)
+						.length > 0
+						? [...acc, cur]
+						: [...acc],
+				[]
+		  )
 		: [];

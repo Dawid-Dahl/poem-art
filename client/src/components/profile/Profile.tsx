@@ -8,7 +8,7 @@ import {Navbar} from "../Navbar";
 import ArtPoemGrid from "../art-poem-grid/ArtPoemGrid";
 import {getPoemsByUserId} from "../../actions/asyncPoemActions";
 import Button from "../Button";
-import {getPoemsByCollection, renderSocialFeed} from "../../actions/syncPoemAction";
+import {getPoemsByUserAndCollection, renderSocialFeed} from "../../actions/syncPoemAction";
 import {getAllCollections} from "../../actions/collectionActions";
 
 const Profile: React.FC = () => {
@@ -31,7 +31,7 @@ const Profile: React.FC = () => {
 	useEffect(() => {
 		collectionSelected &&
 			user &&
-			dispatch(getPoemsByCollection(cachedPoems, collectionSelected, user));
+			dispatch(getPoemsByUserAndCollection(cachedPoems, collectionSelected, user));
 	}, [collectionSelected]);
 
 	const handleClick = () => {

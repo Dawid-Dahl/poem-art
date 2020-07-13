@@ -5,12 +5,14 @@ import {
 	renderPoems,
 	renderPoemsFulfilled,
 } from "../actions/syncPoemAction";
+import {deselectCollection} from "../actions/collectionActions";
 
 function* workerRenderPoems({artPoems}: ReturnType<typeof renderPoems>) {
 	yield put(renderPoemsFulfilled(artPoems));
 }
 
 function* workerRenderSocialFeed({cachedPoems, poemCount}: ReturnType<typeof renderSocialFeed>) {
+	yield put(deselectCollection());
 	yield put(renderSocialFeedFulfilled(cachedPoems));
 }
 

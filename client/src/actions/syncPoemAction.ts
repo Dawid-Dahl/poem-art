@@ -38,13 +38,13 @@ export const deselectPoem = () =>
 		type: "DESELECT_POEM",
 	} as const);
 
-export const getPoemsByCollection = (
+export const getPoemsByUserAndCollection = (
 	cachedPoems: ReduxArtPoem[],
 	reduxCollection: ReduxCollection | null,
 	user: User
 ) =>
 	({
-		type: "GET_POEMS_BY_COLLECTION",
+		type: "GET_POEMS_BY_USER_AND_COLLECTION",
 		cachedPoems,
 		reduxCollection,
 		user,
@@ -69,4 +69,4 @@ export type SyncPoemActionTypes =
 	| ReturnType<typeof selectPoem>
 	| ReturnType<typeof deselectPoem>
 	| ReturnType<typeof removeAllPoemsFromRenderedPoems>
-	| ReturnType<typeof getPoemsByCollection>;
+	| ReturnType<typeof getPoemsByUserAndCollection>;

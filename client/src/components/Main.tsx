@@ -7,7 +7,7 @@ import SelectElement from "./inputs/SelectElement";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../store";
 import {getPoems} from "../actions/asyncPoemActions";
-import {getPoemsByCollection} from "../actions/syncPoemAction";
+import {getPoemsByUserAndCollection} from "../actions/syncPoemAction";
 
 const Main = () => {
 	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
@@ -21,7 +21,7 @@ const Main = () => {
 	useEffect(() => {
 		collectionSelected &&
 			user &&
-			dispatch(getPoemsByCollection(cachedPoems, collectionSelected, user));
+			dispatch(getPoemsByUserAndCollection(cachedPoems, collectionSelected, user));
 	}, [collectionSelected]);
 
 	useEffect(() => {

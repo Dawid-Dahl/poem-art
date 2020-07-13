@@ -1,5 +1,5 @@
 import {ReduxArtPoem} from "../types/types";
-import {sortArtPoemsByCollection} from "../utils/utils";
+import {sortArtPoemsByCollection, doesArtPoemBelongToUser} from "../utils/utils";
 import {SyncPoemActionTypes} from "../actions/syncPoemAction";
 import {welcomePoem, initPoem} from "../utils/defaultPoems";
 
@@ -28,14 +28,13 @@ export const syncPoemReducer = (
 			return {...state, poemSelected: action.artPoem};
 		case "DESELECT_POEM":
 			return {...state, poemSelected: initPoem};
-		case "GET_POEMS_BY_COLLECTION":
+		case "GET_POEMS_BY_USER_AND_COLLECTION":
 			return {
 				...state,
 				renderedPoems: sortArtPoemsByCollection(
 					action.cachedPoems,
-					action.reduxCollection,
-					action.user
-				),
+					action.reduxCollection
+				).filter(poem => doesArtPoemBelongToUser(poem, action.user)),
 			};
 		case "REMOVE_ALL_POEMS_FROM_RENDERED_POEMS":
 			return {...state, renderedPoems: []};
