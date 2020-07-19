@@ -1,5 +1,5 @@
 import {removeBearerFromTokenHeader, doesPoemIncludeCollection} from "./utils";
-import {poemWithOneCollection} from "./mockData";
+import {poemWithOneCollection, poemWithThreeCollections, poemWithNoCollections} from "./mockData";
 
 describe("removeBearerFromTokenHeader", () => {
 	test("it should remove bearer from x-token string", () => {
@@ -17,13 +17,44 @@ describe("removeBearerFromTokenHeader", () => {
 
 describe("doesPoemIncludeCollection", () => {
 	describe("happy path", () => {
-		it("should return true if current poem collections contains the input collection", () => {
+		it("should return true if poem with one collection contains the input collection", () => {
 			const mockPoem = poemWithOneCollection;
 			const collectionId = 55;
-			expect(doesPoemIncludeCollection(mockPoem, collectionId));
+			expect(doesPoemIncludeCollection(mockPoem, collectionId)).toBe(true);
+		});
+		it("should return false if poem with one collection does not contain the input collection", () => {
+			const mockPoem = poemWithOneCollection;
+			const collectionId = 666;
+			expect(doesPoemIncludeCollection(mockPoem, collectionId)).toBe(false);
+		});
+		it("should return true if poem with more than one collection contains the input collection", () => {
+			const mockPoem = poemWithThreeCollections;
+			const collectionId = 55;
+			expect(doesPoemIncludeCollection(mockPoem, collectionId)).toBe(true);
+		});
+		it("should return false if poem with more than one collection does not contain the input collection", () => {
+			const mockPoem = poemWithThreeCollections;
+			const collectionId = 666;
+			expect(doesPoemIncludeCollection(mockPoem, collectionId)).toBe(false);
+		});
+		it("should return false if poem with no collections is passed", () => {
+			const mockPoem = poemWithNoCollections;
+			const collectionId = 55;
+			expect(doesPoemIncludeCollection(mockPoem, collectionId)).toBe(false);
 		});
 	});
 	describe("sad path", () => {
-		it("", () => {});
+		it("should throw an error if undefined is passed as poem", () => {
+			const mockPoem = undefined;
+			const collectionId = 55;
+			//@ts-ignore
+			expect(() => doesPoemIncludeCollection(mockPoem, collectionId)).toThrow();
+		});
+		it("should throw an error if undefined is passed as collectionId", () => {
+			const mockPoem = poemWithOneCollection;
+			const collectionId = undefined;
+			//@ts-ignore
+			expect(() => doesPoemIncludeCollection(mockPoem, collectionId)).toThrow();
+		});
 	});
 });

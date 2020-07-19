@@ -5,11 +5,10 @@ export type ArtPoem = {
 	title: string;
 	content: string;
 	likes: number;
-	comments: CommentId[];
 	imageUrl: string;
 	userId: string;
-	createdAt: string;
-	updatedAt: string;
+	createdAt: string | Date;
+	updatedAt: string | Date;
 	collections: Collection[];
 };
 
@@ -19,8 +18,8 @@ export type Collection = {
 	id: number;
 	name: string;
 	public: boolean;
-	createdAt: string;
-	updatedAt: string;
+	createdAt: string | Date;
+	updatedAt: string | Date;
 };
 
 export type CommentId = Pick<Comment, "id">;
@@ -30,8 +29,8 @@ export type Comment = {
 	author: ArtPoemId;
 	comment: string;
 	likes: number;
-	createdAt: string;
-	updatedAt: string;
+	createdAt: string | Date;
+	updatedAt: string | Date;
 };
 
 export type UserId = User["id"];
@@ -40,10 +39,9 @@ export type User = {
 	id: string;
 	username: string;
 	email: string;
-	password?: string;
-	admin: number;
-	profile_picture?: string;
-	date_added?: string;
+	profilePicture?: string;
+	createdAt: string | Date;
+	updatedAt: string | Date;
 };
 
 export type xTokenPayload = {

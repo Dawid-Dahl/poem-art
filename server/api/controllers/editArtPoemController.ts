@@ -1,9 +1,12 @@
-import {jsonResponse} from "../utils/utils";
+import {
+	jsonResponse,
+	addCollectionToPoemAndRemoveAllOtherCollections,
+	doesPoemIncludeCollection,
+} from "../utils/utils";
 import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
 import {ArtPoem} from "../../db/entities/ArtPoem";
 import {Storage, Bucket} from "@google-cloud/storage";
-import util from "util";
 
 export const editArtPoemController = async (req: Request, res: Response) => {
 	const {poemId, poemTitle, poemCollectionId, poemContent} = JSON.parse(req.body.editPoemFields);
@@ -18,7 +21,9 @@ export const editArtPoemController = async (req: Request, res: Response) => {
 
 	const bucket = gcs.bucket(process.env.GCLOUD_STORAGE_BUCKET || "");
 
-	const deleteGCSFile = async (bucket: Bucket, name: string) => {
+	const deleteGCSFile = async (bucket: Bucket, name: string | undefined) => {
+		if (!name) throw new Error("Name arg wasn't properly passed");
+
 		await bucket.file(name).delete();
 
 		console.log(`gs://${bucket.name}/${name} --- DELETED.`);
@@ -32,9 +37,7 @@ export const editArtPoemController = async (req: Request, res: Response) => {
 
 			console.log("THE ART POEM INSIDE REQ.FILE TO BE DELETED: ", artPoem);
 
-			if (!artPoem) throw new Error("No Artpoem was found in the database!");
-
-			await deleteGCSFile(bucket, artPoem.imageUrl.split("/").slice(-1)[0]).catch(
+			await deleteGCSFile(bucket, artPoem?.imageUrl.split("/").slice(-1)[0]).catch(
 				console.error
 			);
 
@@ -48,15 +51,11 @@ export const editArtPoemController = async (req: Request, res: Response) => {
 
 		const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
 
-		/* if (doesPoemIncludeCollection(poemId, poemCollectionId)) {
-			addCollectionToPoemAndRemoveAllOtherCollections(poemId, poemCollectionId)
-		} */
+		const artPoem = await artPoemRepo.findOne(poemId.toString() as string);
 
-		const artPoem = await artPoemRepo.findOne(poemId, {
-			relations: ["collections"],
-		});
-
-		console.log(`This is the artpoem: ${util.inspect(artPoem)}`);
+		if (doesPoemIncludeCollection(artPoem, poemCollectionId)) {
+			addCollectionToPoemAndRemoveAllOtherCollections(artPoemRepo)(poemId, poemCollectionId);
+		}
 
 		await getConnection(process.env.NODE_ENV)
 			.createQueryBuilder()
