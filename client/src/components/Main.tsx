@@ -43,13 +43,18 @@ const Main = () => {
 		<Wrapper>
 			<Navbar />
 			<InnerWrapper>
-				<SelectElement
-					onChangeHandle={(e: React.ChangeEvent<HTMLSelectElement>) =>
-						dispatch(handleSelectCollection(e))
-					}
-					isSocialFeedSelectable
-					collections={collections}
-				/>
+				<SelectWrapper>
+					<SelectElement
+						onChangeHandle={(e: React.ChangeEvent<HTMLSelectElement>) =>
+							dispatch(handleSelectCollection(e))
+						}
+						selectedCollection={
+							collectionSelected ? collectionSelected.name : "Social Feed"
+						}
+						isSocialFeedSelectable
+						collections={collections}
+					/>
+				</SelectWrapper>
 				{collectionSelected ? <h1></h1> : <h1>Discover</h1>}
 				<ArtPoemGrid />
 			</InnerWrapper>
@@ -79,4 +84,11 @@ const InnerWrapper = styled.div`
 	h1 {
 		margin: 0 0 0.5em 0;
 	}
+`;
+
+const SelectWrapper = styled.div`
+	width: 30%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;

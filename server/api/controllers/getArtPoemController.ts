@@ -7,7 +7,9 @@ export const getArtPoemController = async (req: Request, res: Response) => {
 	const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
 
 	try {
-		const artPoem = await artPoemRepo.findOne(req.query.id as string);
+		const artPoem = await artPoemRepo.findOne(req.query.id as string, {
+			relations: ["collections"],
+		});
 
 		if (artPoem) {
 			res.status(200).json(jsonResponse(true, JSON.stringify(artPoem)));

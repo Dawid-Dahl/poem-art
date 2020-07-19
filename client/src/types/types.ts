@@ -31,7 +31,7 @@ export type ReduxArtPoem = {
 	userId: string;
 	createdAt?: string;
 	updatedAt?: string;
-	collections: Collection[];
+	collections: ReduxCollection[];
 };
 
 export type Collection = {
@@ -43,7 +43,7 @@ export type Collection = {
 };
 
 export type ReduxCollection = {
-	id: string;
+	id: number;
 	name: string;
 	public: boolean;
 };

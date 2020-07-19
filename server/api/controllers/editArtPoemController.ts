@@ -3,9 +3,10 @@ import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
 import {ArtPoem} from "../../db/entities/ArtPoem";
 import {Storage, Bucket} from "@google-cloud/storage";
+import util from "util";
 
 export const editArtPoemController = async (req: Request, res: Response) => {
-	const {poemId, poemTitle, poemContent} = JSON.parse(req.body.editPoemFields);
+	const {poemId, poemTitle, poemCollectionId, poemContent} = JSON.parse(req.body.editPoemFields);
 
 	const keyFile =
 		"/Volumes/Seagate Backup Plus Drive/Dawid Programming Files/Projects/PoemArt/server/poem-art-40049b821725.json";
@@ -44,6 +45,18 @@ export const editArtPoemController = async (req: Request, res: Response) => {
 				.where("id = :id", {id: poemId})
 				.execute();
 		}
+
+		const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
+
+		/* if (doesPoemIncludeCollection(poemId, poemCollectionId)) {
+			addCollectionToPoemAndRemoveAllOtherCollections(poemId, poemCollectionId)
+		} */
+
+		const artPoem = await artPoemRepo.findOne(poemId, {
+			relations: ["collections"],
+		});
+
+		console.log(`This is the artpoem: ${util.inspect(artPoem)}`);
 
 		await getConnection(process.env.NODE_ENV)
 			.createQueryBuilder()

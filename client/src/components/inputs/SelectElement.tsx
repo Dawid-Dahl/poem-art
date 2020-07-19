@@ -5,17 +5,18 @@ import {ReduxCollection} from "../../types/types";
 
 type Props = {
 	onChangeHandle: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+	selectedCollection: string;
 	isSocialFeedSelectable?: boolean;
 	collections: ReduxCollection[];
 };
 
 const SelectElement: React.FC<Props> = ({
 	onChangeHandle,
+	selectedCollection,
 	isSocialFeedSelectable = false,
 	collections,
 }) => (
-	<StyledSelectElement onChange={onChangeHandle}>
-		<option style={{display: "none"}}>Choose collection 📁</option>
+	<StyledSelectElement onChange={onChangeHandle} value={selectedCollection}>
 		{isSocialFeedSelectable && <OptionElement key={0} value="Social Feed" />}
 		{collections.map(collection => (
 			<OptionElement key={collection.id} value={collection.name} />
@@ -27,7 +28,7 @@ export default SelectElement;
 
 const StyledSelectElement = styled.select`
 	border: solid transparent 1px;
-	width: 265px;
+	width: 100%;
 	height: 52px;
 	padding: 0em 3em;
 	margin: 1.5em 0;

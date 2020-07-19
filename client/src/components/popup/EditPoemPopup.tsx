@@ -9,18 +9,30 @@ import TextAreaInput from "../inputs/TextAreaInput";
 import {editPoem, deletePoem} from "../../actions/asyncPoemActions";
 import FileInput from "../inputs/FileInput";
 import {ImageFile} from "../../types/types";
-import {RouteComponentProps} from "react-router";
+import SelectElement from "../inputs/SelectElement";
+import {selectCollection, getAllCollections} from "../../actions/collectionActions";
 
 interface Props {}
 
 const EditPoemPopup: React.FC<Props> = () => {
 	const poemSelected = useSelector((state: RootState) => state.syncPoemReducer.poemSelected);
 	const editPoemPopup = useSelector((state: RootState) => state.popupReducer.editPoemPopup);
+	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
+	const collectionSelected = useSelector(
+		(state: RootState) => state.collectionReducer.collectionSelected
+	);
 
 	useEffect(() => {
 		setpoemTitle(poemSelected.title);
 		setPoemContent(poemSelected.content);
+		dispatch(selectCollection(poemSelected.collections[0]));
 	}, [poemSelected]);
+
+	useEffect(() => {
+		dispatch(getAllCollections());
+	}, []);
+
+	useEffect(() => {}, [collectionSelected]);
 
 	const [poemTitle, setpoemTitle] = useState(poemSelected.title);
 	const [imageFile, setImageFile] = useState<ImageFile>(null);
@@ -32,11 +44,15 @@ const EditPoemPopup: React.FC<Props> = () => {
 		poemId: number,
 		poemTitle: string,
 		imageFile: ImageFile,
+		poemCollectionId: number,
 		poemContent: string
 	): FormData => {
 		const data = new FormData();
 		if (imageFile) data.append("editImageFile", imageFile);
-		data.append("editPoemFields", JSON.stringify({poemId, poemTitle, poemContent}));
+		data.append(
+			"editPoemFields",
+			JSON.stringify({poemId, poemTitle, poemCollectionId, poemContent})
+		);
 		return data;
 	};
 
@@ -44,10 +60,16 @@ const EditPoemPopup: React.FC<Props> = () => {
 		setImageFile(event.target.files?.[0]);
 	};
 
+	const handleSelectCollection = (
+		e: React.ChangeEvent<HTMLSelectElement>
+	): ReturnType<typeof selectCollection> =>
+		selectCollection(collections.filter(x => x.name === e.target.value)[0]);
+
 	const handleCancelClick = () => {
 		setpoemTitle(poemSelected.title);
 		setImageFile(null);
 		setPoemContent(poemSelected.content);
+		dispatch(selectCollection(poemSelected.collections[0]));
 		dispatch(hidePopup());
 	};
 
@@ -60,16 +82,20 @@ const EditPoemPopup: React.FC<Props> = () => {
 		try {
 			e.preventDefault();
 
+			if (!collectionSelected) {
+				console.error("A collection need to be selected");
+				return;
+			}
+
 			const editPoemPayload = turnFormStateIntoObj(
 				poemSelected.id,
 				poemTitle,
 				imageFile,
+				collectionSelected.id,
 				poemContent
 			);
 
 			if (!editPoemPayload) return;
-
-			console.log("EDIT POEM PAYLOAD", editPoemPayload.get("editPoemFields"));
 
 			dispatch(editPoem(editPoemPayload));
 
@@ -107,6 +133,21 @@ const EditPoemPopup: React.FC<Props> = () => {
 							kind="grey"
 							isFileSelected={Boolean(imageFile)}
 							onChangeHandle={onChangeHandle}
+						/>
+					</div>
+				</Row>
+				<Row>
+					<p>Edit Collection</p>
+					<div>
+						<SelectElement
+							onChangeHandle={(e: React.ChangeEvent<HTMLSelectElement>) =>
+								dispatch(handleSelectCollection(e))
+							}
+							selectedCollection={
+								collectionSelected ? collectionSelected.name : "My Collection"
+							}
+							isSocialFeedSelectable={false}
+							collections={collections}
 						/>
 					</div>
 				</Row>
@@ -195,7 +236,7 @@ const Row = styled.div`
 	}
 
 	div {
-		width: 100%;
+		width: 70%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -211,11 +252,18 @@ const Row = styled.div`
 	}
 
 	@media only screen and (max-width: 500px) {
-		margin: 2em;
+		margin: 0em 1em;
 
 		input {
 			width: 50%;
-			margin: 0;
+		}
+
+		textarea {
+			width: 50%;
+		}
+
+		select {
+			width: 90%;
 		}
 	}
 `;

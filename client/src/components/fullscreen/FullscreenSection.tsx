@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getPoem} from "../../actions/asyncPoemActions";
 import {RootState} from "../../store";
 import TopBar from "./TopBar";
-import {selectPoem} from "../../actions/syncPoemAction";
+import {selectPoem, renderPoems} from "../../actions/syncPoemAction";
 import {ReduxArtPoem} from "../../types/types";
 import {welcomePoem, poemNotFound, initPoem} from "../../utils/defaultPoems";
 
@@ -32,6 +32,10 @@ const FullscreenPicture: React.FC<Props> = () => {
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
+	}, []);
+
+	useEffect(() => {
+		dispatch(renderPoems(new Array(initPoem)));
 	}, []);
 
 	useEffect(() => {

@@ -1,4 +1,5 @@
-import {removeBearerFromTokenHeader} from "./utils";
+import {removeBearerFromTokenHeader, doesPoemIncludeCollection} from "./utils";
+import {poemWithOneCollection} from "./mockData";
 
 describe("removeBearerFromTokenHeader", () => {
 	test("it should remove bearer from x-token string", () => {
@@ -11,5 +12,18 @@ describe("removeBearerFromTokenHeader", () => {
 		const token = undefined;
 		const processedToken = removeBearerFromTokenHeader(token);
 		expect(processedToken).toEqual(undefined);
+	});
+});
+
+describe("doesPoemIncludeCollection", () => {
+	describe("happy path", () => {
+		it("should return true if current poem collections contains the input collection", () => {
+			const mockPoem = poemWithOneCollection;
+			const collectionId = 55;
+			expect(doesPoemIncludeCollection(mockPoem, collectionId));
+		});
+	});
+	describe("sad path", () => {
+		it("", () => {});
 	});
 });

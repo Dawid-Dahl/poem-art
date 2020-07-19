@@ -1,43 +1,43 @@
-export type ArtPoemId = Pick<ArtPoem, "artpoem_id">;
+export type ArtPoemId = Pick<ArtPoem, "id">;
 
 export type ArtPoem = {
-	artpoem_id: number;
+	id: number;
 	title: string;
 	content: string;
 	likes: number;
 	comments: CommentId[];
-	image_url: string;
+	imageUrl: string;
 	userId: string;
-	created_at: number;
-	updated_at: number;
+	createdAt: string;
+	updatedAt: string;
 	collections: Collection[];
 };
 
-export type CollectionId = Pick<Collection, "collection_id">;
+export type CollectionId = Pick<Collection, "id">;
 
 export type Collection = {
-	collection_id: number;
+	id: number;
 	name: string;
 	public: boolean;
 	createdAt: string;
 	updatedAt: string;
 };
 
-export type CommentId = Pick<Comment, "comment_id">;
+export type CommentId = Pick<Comment, "id">;
 
 export type Comment = {
-	comment_id: number;
+	id: number;
 	author: ArtPoemId;
 	comment: string;
 	likes: number;
-	created_at: number;
-	updated_at: number;
+	createdAt: string;
+	updatedAt: string;
 };
 
-export type UserId = User["user_id"];
+export type UserId = User["id"];
 
 export type User = {
-	user_id: string;
+	id: string;
 	username: string;
 	email: string;
 	password?: string;

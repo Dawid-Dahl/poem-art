@@ -44,7 +44,12 @@ const Wrapper = styled.div`
 		margin: 5px;
 		top: 0;
 		right: 0;
+		transition: all 0.2s;
 		cursor: pointer;
+	}
+
+	span:hover {
+		color: var(--hover-btn-color);
 	}
 
 	p {

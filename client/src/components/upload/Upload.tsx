@@ -100,12 +100,15 @@ const Upload: React.FC = () => {
 						}
 						required
 					/>
-					<SelectElement
-						onChangeHandle={(e: React.ChangeEvent<HTMLSelectElement>) =>
-							setCollection(e.target.value)
-						}
-						collections={collections}
-					/>
+					<SelectWrapper>
+						<SelectElement
+							onChangeHandle={(e: React.ChangeEvent<HTMLSelectElement>) =>
+								setCollection(e.target.value)
+							}
+							selectedCollection={collection}
+							collections={collections}
+						/>
+					</SelectWrapper>
 					<FileInput
 						name="uploadImageFile"
 						kind="white"
@@ -141,7 +144,15 @@ const Wrapper = styled.div`
 	h1 {
 		letter-spacing: 1px;
 		margin-top: 1em;
+		text-align: center;
 	}
+`;
+
+const SelectWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 16.3em;
 `;
 
 const StyledForm = styled.form`

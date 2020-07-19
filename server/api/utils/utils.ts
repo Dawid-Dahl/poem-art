@@ -1,4 +1,4 @@
-import {AuthJsonResponse, xTokenPayload} from "../../types/types";
+import {AuthJsonResponse, xTokenPayload, ArtPoem} from "../../types/types";
 
 export const removeBearerFromTokenHeader = (tokenHeader?: string) => tokenHeader?.split(" ")[1];
 
@@ -18,3 +18,7 @@ export const extractPayloadFromBase64JWT = (jwt: string | undefined): xTokenPayl
 
 export const replaceSpacesInString = (str: string, replaceWith: string): string =>
 	str.replace(/\s/g, replaceWith);
+
+export const doesPoemIncludeCollection = (poem: ArtPoem, collectionId: number) => {
+	return true;
+};
