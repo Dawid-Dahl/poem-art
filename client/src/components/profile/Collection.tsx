@@ -6,13 +6,23 @@ import {selectCollection} from "../../actions/collectionActions";
 type Props = {
 	id: ReduxCollection["id"];
 	name: ReduxCollection["name"];
-	onClickHandler: (id: string) => ReturnType<typeof selectCollection>;
+	onClickHandler: (
+		e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+		id: number
+	) => ReturnType<typeof selectCollection> | undefined;
+};
+
+const handleRemoveClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+	console.log("REMOVING!");
 };
 
 const Collection: React.FC<Props> = ({id, name, onClickHandler}) => {
 	return (
 		<>
-			<Wrapper onClick={() => onClickHandler(id)}>
+			<Wrapper>
+				<SpanWrapper onClick={e => onClickHandler(e, id)}>
+					<span onClick={handleRemoveClick}>❌</span>
+				</SpanWrapper>
 				<CollectionTitle>{name}</CollectionTitle>
 			</Wrapper>
 		</>
@@ -23,6 +33,7 @@ export default Collection;
 
 const Wrapper = styled.div`
 	display: flex;
+	position: relative;
 	align-items: center;
 	justify-content: center;
 	height: 200px;
@@ -38,6 +49,34 @@ const Wrapper = styled.div`
 
 	:hover {
 		transform: scale(1.01) rotate(1deg);
+	}
+`;
+
+const SpanWrapper = styled.div`
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	text-align: right;
+	transition: all 1s;
+
+	&:hover {
+		span {
+			opacity: 80%;
+		}
+	}
+
+	span {
+		position: absolute;
+		display: block;
+		opacity: 0%;
+		top: 5%;
+		right: 5%;
+		transition: all 0.3s;
+		z-index: 10;
+
+		&:hover {
+			transform: scale(1.1);
+		}
 	}
 `;
 

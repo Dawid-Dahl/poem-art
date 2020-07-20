@@ -14,8 +14,14 @@ type Props = {
 const CollectionsDisplay: React.FC<Props> = ({collections}) => {
 	const dispatch = useDispatch();
 
-	const onClickHandlerSelectCollection = (id: ReduxCollection["id"]) =>
-		dispatch(selectCollection(collections.filter(x => x.id === id)[0]));
+	const onClickHandlerSelectCollection = (
+		e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+		id: ReduxCollection["id"]
+	) => {
+		if (e.target === e.currentTarget) {
+			return dispatch(selectCollection(collections.filter(x => x.id === id)[0]));
+		}
+	};
 
 	const onClickHandlerAddCollection = () => dispatch(showAddCollectionPopup());
 
