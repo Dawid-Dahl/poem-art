@@ -7,9 +7,20 @@ import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
 import {ArtPoem} from "../../db/entities/ArtPoem";
 import {Storage, Bucket} from "@google-cloud/storage";
+import {Collection} from "../../db/entities/Collection";
 
 export const editArtPoemController = async (req: Request, res: Response) => {
-	const {poemId, poemTitle, poemCollectionId, poemContent} = JSON.parse(req.body.editPoemFields);
+	const {
+		poemId,
+		poemTitle,
+		poemCollectionId,
+		poemContent,
+	}: {
+		poemId: number;
+		poemTitle: string;
+		poemCollectionId: number;
+		poemContent: string;
+	} = JSON.parse(req.body.editPoemFields);
 
 	const keyFile =
 		"/Volumes/Seagate Backup Plus Drive/Dawid Programming Files/Projects/PoemArt/server/poem-art-40049b821725.json";
@@ -30,7 +41,10 @@ export const editArtPoemController = async (req: Request, res: Response) => {
 	};
 
 	const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
-	const artPoem = await artPoemRepo.findOne(poemId.toString() as string);
+	const artPoem = await artPoemRepo.findOne(poemId.toString() as string, {
+		relations: ["collections"],
+	});
+	const collectionRepo = getConnection(process.env.NODE_ENV).getRepository(Collection);
 
 	try {
 		if (req.file) {
@@ -48,9 +62,12 @@ export const editArtPoemController = async (req: Request, res: Response) => {
 				.execute();
 		}
 
-		/* if (doesPoemIncludeCollection(artPoem, poemCollectionId)) {
-			addCollectionToPoemAndRemoveAllOtherCollections(artPoemRepo)(poemId, poemCollectionId);
-		} */
+		if (!doesPoemIncludeCollection(artPoem, poemCollectionId)) {
+			addCollectionToPoemAndRemoveAllOtherCollections(artPoemRepo, collectionRepo)(
+				poemId,
+				poemCollectionId
+			);
+		}
 
 		await getConnection(process.env.NODE_ENV)
 			.createQueryBuilder()

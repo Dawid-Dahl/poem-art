@@ -1,5 +1,10 @@
 import {removeBearerFromTokenHeader, doesPoemIncludeCollection} from "./utils";
-import {poemWithOneCollection, poemWithThreeCollections, poemWithNoCollections} from "./mockData";
+import {
+	poemWithOneCollection,
+	poemWithThreeCollections,
+	poemWithNoCollections,
+	poemWithNoCollectionsField,
+} from "./mockData";
 
 describe("removeBearerFromTokenHeader", () => {
 	test("it should remove bearer from x-token string", () => {
@@ -55,6 +60,14 @@ describe("doesPoemIncludeCollection", () => {
 			const collectionId = undefined;
 			//@ts-ignore
 			expect(() => doesPoemIncludeCollection(mockPoem, collectionId)).toThrow();
+		});
+		it("should throw an error if the poem does not contain a collection field", () => {
+			const mockPoem = poemWithNoCollectionsField;
+			const collectionId = undefined;
+			//@ts-ignore
+			expect(() => doesPoemIncludeCollection(mockPoem, collectionId)).toThrowError(
+				"poem doesn't contain collection field"
+			);
 		});
 	});
 });

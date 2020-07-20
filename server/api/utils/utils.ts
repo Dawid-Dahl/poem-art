@@ -1,4 +1,4 @@
-import {AuthJsonResponse, xTokenPayload, ArtPoem} from "../../types/types";
+import {AuthJsonResponse, xTokenPayload, ArtPoem, Collection} from "../../types/types";
 import {Repository} from "typeorm";
 
 export const removeBearerFromTokenHeader = (tokenHeader?: string) => tokenHeader?.split(" ")[1];
@@ -25,15 +25,24 @@ export const doesPoemIncludeCollection = (poem: ArtPoem | undefined, collectionI
 		throw new Error(
 			"poem argument wasn't properly passed or couldn't be found in the database"
 		);
+	if (!poem.collections) throw new Error("poem doesn't contain collection field");
 	if (!collectionId) throw new Error("collectionId argument wasn't properly passed");
 
 	return poem.collections.find(poem => poem.id === collectionId) ? true : false;
 };
 
 export const addCollectionToPoemAndRemoveAllOtherCollections = (
-	artPoemRepo: Repository<ArtPoem>
-) => async (poem: ArtPoem, poemCollectionId: number) => {
-	const artPoem = await artPoemRepo.findOne(poem, {
-		relations: ["collections"],
-	});
+	artPoemRepo: Repository<ArtPoem>,
+	collectionRepo: Repository<Collection>
+) => async (poemId: number, poemCollectionId: number) => {
+	const artPoem = await artPoemRepo.findOne(poemId);
+	const collectionToChangeTo = await collectionRepo.findOne(poemCollectionId);
+
+	if (!artPoem) throw new Error(`No poem with ID: ${poemId} could be found in DB`);
+	if (!collectionToChangeTo)
+		throw new Error(`No collection with ID: ${poemCollectionId} could be found in DB`);
+
+	artPoem.collections = [collectionToChangeTo];
+
+	artPoemRepo.save(artPoem);
 };
