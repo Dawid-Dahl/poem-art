@@ -1,4 +1,4 @@
-import {ReduxCollection, AddCollectionFormObject} from "../types/types";
+import {ReduxCollection, AddCollectionFormObject, Collection} from "../types/types";
 
 export const selectCollection = (collection: ReduxCollection) =>
 	({
@@ -34,6 +34,22 @@ export const getAllCollectionsFulfilled = (collections: ReduxCollection[]) =>
 		collections,
 	} as const);
 
+export const deleteCollection = (collectionId: ReduxCollection["id"]) =>
+	({
+		type: "DELETE_COLLECTION",
+		collectionId,
+	} as const);
+
+export const deleteCollectionFulfilled = () =>
+	({
+		type: "DELETE_COLLECTION_FULFILLED",
+	} as const);
+
+export const deleteCollectionFailed = () =>
+	({
+		type: "DELETE_COLLECTION_FAILED",
+	} as const);
+
 export const removeAllCollections = () =>
 	({
 		type: "REMOVE_ALL_COLLECTIONS",
@@ -48,4 +64,7 @@ export type CollectionActionTypes =
 	| ReturnType<typeof addCollectionFulfilled>
 	| ReturnType<typeof getAllCollections>
 	| ReturnType<typeof getAllCollectionsFulfilled>
+	| ReturnType<typeof deleteCollection>
+	| ReturnType<typeof deleteCollectionFulfilled>
+	| ReturnType<typeof deleteCollectionFailed>
 	| ReturnType<typeof removeAllCollections>;

@@ -1,5 +1,5 @@
 import {AuthJsonResponse, xTokenPayload, ArtPoem, Collection} from "../../types/types";
-import {Repository} from "typeorm";
+import {Repository, Connection} from "typeorm";
 
 export const removeBearerFromTokenHeader = (tokenHeader?: string) => tokenHeader?.split(" ")[1];
 
@@ -45,4 +45,22 @@ export const addCollectionToPoemAndRemoveAllOtherCollections = (
 	artPoem.collections = [collectionToChangeTo];
 
 	artPoemRepo.save(artPoem);
+};
+
+export const deleteAllPoemsAssociatedWithCollection = (
+	connection: Connection,
+	artPoemRepo: Repository<ArtPoem>
+) => async (collectionId: string) => {
+	const artPoemsFromCollection: ArtPoem[] = await connection.query(
+		`
+        SELECT art_poem.*
+        FROM art_poem
+        LEFT JOIN art_poem_collections_collection AS jt ON art_poem.id = jt.artPoemId
+        LEFT JOIN collection ON jt.collectionId = collection.id
+        WHERE collection.id = ?;
+    `,
+		[collectionId]
+	);
+
+	artPoemRepo.delete(artPoemsFromCollection.map(poem => poem.id));
 };

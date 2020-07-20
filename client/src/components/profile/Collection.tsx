@@ -1,27 +1,40 @@
 import React from "react";
 import styled from "styled-components";
 import {ReduxCollection} from "../../types/types";
-import {selectCollection} from "../../actions/collectionActions";
+import {selectCollection, deleteCollection} from "../../actions/collectionActions";
+import {useDispatch} from "react-redux";
 
 type Props = {
 	id: ReduxCollection["id"];
 	name: ReduxCollection["name"];
 	onClickHandler: (
 		e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-		id: number
+		id: ReduxCollection["id"]
 	) => ReturnType<typeof selectCollection> | undefined;
 };
 
-const handleRemoveClick = (e: React.MouseEvent<HTMLSpanElement>) => {
-	console.log("REMOVING!");
-};
+const handleRemoveClick = (
+	e: React.MouseEvent<HTMLSpanElement>,
+	id: ReduxCollection["id"]
+): ReturnType<typeof deleteCollection> | undefined =>
+	e.target === e.currentTarget ? deleteCollection(id) : undefined;
 
 const Collection: React.FC<Props> = ({id, name, onClickHandler}) => {
+	const dispatch = useDispatch();
+
 	return (
 		<>
 			<Wrapper>
 				<SpanWrapper onClick={e => onClickHandler(e, id)}>
-					<span onClick={handleRemoveClick}>❌</span>
+					<span
+						onClick={e =>
+							confirm(
+								"Are you sure you want to delete this collection? All the associated Artpoems will be deleted as well!"
+							) && dispatch(handleRemoveClick(e, id))
+						}
+					>
+						❌
+					</span>
 				</SpanWrapper>
 				<CollectionTitle>{name}</CollectionTitle>
 			</Wrapper>

@@ -3,6 +3,7 @@ import {addCollectionController} from "../controllers/addCollectionController";
 import {getConnection} from "typeorm";
 import {Collection} from "../../db/entities/Collection";
 import {jsonResponse} from "../utils/utils";
+import {deleteCollectionController} from "../controllers/deleteCollectionController";
 
 const collectionsRouter = express.Router();
 
@@ -33,5 +34,6 @@ collectionsRouter.get("/get-all", async (req, res) => {
 });
 
 collectionsRouter.post("/add", addCollectionController);
+collectionsRouter.delete("/delete", deleteCollectionController);
 
 export default collectionsRouter;

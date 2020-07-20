@@ -6,6 +6,8 @@ import {
 	getAllCollectionsFulfilled,
 	addCollection,
 	addCollectionFulfilled,
+	deleteCollection,
+	getAllCollections,
 } from "../actions/collectionActions";
 import {hidePopup} from "../actions/popupActions";
 import {showFlash} from "../actions/flashActions";
@@ -54,9 +56,31 @@ function* workerAddCollectionSaga({collectionPayload}: ReturnType<typeof addColl
 	}
 }
 
+function* workerDeleteCollectionSaga({collectionId}: ReturnType<typeof deleteCollection>) {
+	try {
+		const res = yield call(
+			apiService.refreshAndFetch,
+			`collections/delete?collectionId=${collectionId}`,
+			{
+				method: "DELETE",
+			}
+		);
+
+		const json = yield call([res, "json"]);
+
+		const data = parseMainApiResponse(json);
+
+		yield put(getAllCollections());
+		yield put(showFlash(data.message));
+	} catch (e) {
+		console.log(e);
+	}
+}
+
 function* collectionsSaga() {
 	yield takeEvery("GET_ALL_COLLECTIONS", workerGetCollectionsSaga);
 	yield takeEvery("ADD_COLLECTION", workerAddCollectionSaga);
+	yield takeEvery("DELETE_COLLECTION", workerDeleteCollectionSaga);
 }
 
 export default collectionsSaga;
