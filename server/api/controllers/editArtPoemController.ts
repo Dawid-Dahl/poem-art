@@ -29,12 +29,11 @@ export const editArtPoemController = async (req: Request, res: Response) => {
 		console.log(`gs://${bucket.name}/${name} --- DELETED.`);
 	};
 
+	const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
+	const artPoem = await artPoemRepo.findOne(poemId.toString() as string);
+
 	try {
 		if (req.file) {
-			const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
-
-			const artPoem = await artPoemRepo.findOne(poemId.toString() as string);
-
 			console.log("THE ART POEM INSIDE REQ.FILE TO BE DELETED: ", artPoem);
 
 			await deleteGCSFile(bucket, artPoem?.imageUrl.split("/").slice(-1)[0]).catch(
@@ -49,13 +48,9 @@ export const editArtPoemController = async (req: Request, res: Response) => {
 				.execute();
 		}
 
-		const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
-
-		const artPoem = await artPoemRepo.findOne(poemId.toString() as string);
-
-		if (doesPoemIncludeCollection(artPoem, poemCollectionId)) {
+		/* if (doesPoemIncludeCollection(artPoem, poemCollectionId)) {
 			addCollectionToPoemAndRemoveAllOtherCollections(artPoemRepo)(poemId, poemCollectionId);
-		}
+		} */
 
 		await getConnection(process.env.NODE_ENV)
 			.createQueryBuilder()

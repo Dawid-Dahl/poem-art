@@ -1,29 +1,28 @@
 import React, {useState, useEffect} from "react";
 import styled, {css} from "styled-components";
-import TextInput from "../inputs/TextInput";
 import Button from "../Button";
 import {useDispatch, useSelector} from "react-redux";
 import {hidePopup} from "../../actions/popupActions";
 import {RootState} from "../../store";
-import TextAreaInput from "../inputs/TextAreaInput";
 import {editPoem, deletePoem} from "../../actions/asyncPoemActions";
-import FileInput from "../inputs/FileInput";
 import {ImageFile} from "../../types/types";
-import SelectElement from "../inputs/SelectElement";
 import {selectCollection, getAllCollections} from "../../actions/collectionActions";
+import EditPoemPopupTitle from "./EditPoemPopupTitle";
+import EditPoemPopupArt from "./EditPoemPopupArt";
+import EditPoemPopupCollection from "./EditPoemPopupCollection";
+import EditPoemPopupContent from "./EditPoemPopupContent";
 
-interface Props {}
+type Props = {};
 
 const EditPoemPopup: React.FC<Props> = () => {
 	const poemSelected = useSelector((state: RootState) => state.syncPoemReducer.poemSelected);
 	const editPoemPopup = useSelector((state: RootState) => state.popupReducer.editPoemPopup);
-	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
 	const collectionSelected = useSelector(
 		(state: RootState) => state.collectionReducer.collectionSelected
 	);
 
 	useEffect(() => {
-		setpoemTitle(poemSelected.title);
+		setPoemTitle(poemSelected.title);
 		setPoemContent(poemSelected.content);
 		dispatch(selectCollection(poemSelected.collections[0]));
 	}, [poemSelected]);
@@ -32,9 +31,7 @@ const EditPoemPopup: React.FC<Props> = () => {
 		dispatch(getAllCollections());
 	}, []);
 
-	useEffect(() => {}, [collectionSelected]);
-
-	const [poemTitle, setpoemTitle] = useState(poemSelected.title);
+	const [poemTitle, setPoemTitle] = useState(poemSelected.title);
 	const [imageFile, setImageFile] = useState<ImageFile>(null);
 	const [poemContent, setPoemContent] = useState(poemSelected.content);
 
@@ -56,17 +53,8 @@ const EditPoemPopup: React.FC<Props> = () => {
 		return data;
 	};
 
-	const onChangeHandle = (event: React.ChangeEvent<HTMLInputElement>): void => {
-		setImageFile(event.target.files?.[0]);
-	};
-
-	const handleSelectCollection = (
-		e: React.ChangeEvent<HTMLSelectElement>
-	): ReturnType<typeof selectCollection> =>
-		selectCollection(collections.filter(x => x.name === e.target.value)[0]);
-
 	const handleCancelClick = () => {
-		setpoemTitle(poemSelected.title);
+		setPoemTitle(poemSelected.title);
 		setImageFile(null);
 		setPoemContent(poemSelected.content);
 		dispatch(selectCollection(poemSelected.collections[0]));
@@ -99,7 +87,7 @@ const EditPoemPopup: React.FC<Props> = () => {
 
 			dispatch(editPoem(editPoemPayload));
 
-			setpoemTitle(poemSelected.title);
+			setPoemTitle(poemSelected.title);
 			setImageFile(null);
 			setPoemContent(poemSelected.content);
 			dispatch(hidePopup());
@@ -112,57 +100,10 @@ const EditPoemPopup: React.FC<Props> = () => {
 		<>
 			<StyledForm action="POST" onSubmit={e => handleSubmit(e)} active={editPoemPopup.active}>
 				<h2>{editPoemPopup.active ? editPoemPopup.name : ""}</h2>
-				<Row>
-					<p>Edit Title</p>
-					<div>
-						<TextInput
-							value={poemTitle}
-							type="text"
-							onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
-								setpoemTitle(e.target.value)
-							}
-							required
-						/>
-					</div>
-				</Row>
-				<Row>
-					<p>Update Art</p>
-					<div>
-						<FileInput
-							name="popupImageFile"
-							kind="grey"
-							isFileSelected={Boolean(imageFile)}
-							onChangeHandle={onChangeHandle}
-						/>
-					</div>
-				</Row>
-				<Row>
-					<p>Edit Collection</p>
-					<div>
-						<SelectElement
-							onChangeHandle={(e: React.ChangeEvent<HTMLSelectElement>) =>
-								dispatch(handleSelectCollection(e))
-							}
-							selectedCollection={
-								collectionSelected ? collectionSelected.name : "My Collection"
-							}
-							isSocialFeedSelectable={false}
-							collections={collections}
-						/>
-					</div>
-				</Row>
-				<Row>
-					<p>Edit ArtPoem</p>
-					<div>
-						<TextAreaInput
-							value={poemContent}
-							onChangeHandle={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-								setPoemContent(e.target.value)
-							}
-							required
-						/>
-					</div>
-				</Row>
+				<EditPoemPopupTitle poemTitle={poemTitle} setPoemTitle={setPoemTitle} />
+				<EditPoemPopupArt imageFile={imageFile} setImageFile={setImageFile} />
+				<EditPoemPopupCollection />
+				<EditPoemPopupContent poemContent={poemContent} setPoemContent={setPoemContent} />
 				<ButtonRow>
 					<Button
 						title="Cancel"
@@ -220,51 +161,6 @@ const StyledForm = styled.form<StyledFormProps>`
 		width: 100%;
 		border-radius: 0;
 		align-self: stretch;
-	}
-`;
-
-const Row = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin: 0.1em;
-	border-top: 1px var(--light-grey-color) solid;
-
-	p {
-		padding-right: 30px;
-		width: 20%;
-	}
-
-	div {
-		width: 70%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	input {
-		border: var(--light-grey-color) 2px solid;
-		outline: none;
-
-		&:focus {
-			box-shadow: 0 0 0 2pt var(--main-btn-color);
-		}
-	}
-
-	@media only screen and (max-width: 500px) {
-		margin: 0em 1em;
-
-		input {
-			width: 50%;
-		}
-
-		textarea {
-			width: 50%;
-		}
-
-		select {
-			width: 90%;
-		}
 	}
 `;
 
