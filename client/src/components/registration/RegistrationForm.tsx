@@ -7,6 +7,7 @@ import Button from "../Button";
 import TextInput from "../inputs/TextInput";
 import {showFlash} from "../../actions/flashActions";
 import {useDispatch} from "react-redux";
+import LoginRow from "../styled-components/LoginRow";
 
 interface Props extends RouteComponentProps {
 	postUrl: string;
@@ -61,44 +62,52 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 		<>
 			<StyledForm action="POST" className="form" onSubmit={handleSubmit}>
 				<h2>REGISTRATION</h2>
-				<TextInput
-					name="username"
-					value={username}
-					type="text"
-					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setUsername(e.target.value)
-					}
-					required
-					minLength={4}
-				/>
-				<TextInput
-					name="email"
-					value={email}
-					type="email"
-					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setEmail(e.target.value)
-					}
-					required
-				/>
-				<TextInput
-					name="password"
-					value={password}
-					type="password"
-					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setPassword(e.target.value)
-					}
-					required
-					minLength={4}
-				/>
-				<TextInput
-					name="confirm-password"
-					value={confirmPassword}
-					type="password"
-					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setconfirmPassword(e.target.value)
-					}
-					required
-				/>
+				<LoginRow>
+					<TextInput
+						name="username"
+						value={username}
+						type="text"
+						onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+							setUsername(e.target.value)
+						}
+						required
+						minLength={4}
+					/>
+				</LoginRow>
+				<LoginRow>
+					<TextInput
+						name="email"
+						value={email}
+						type="email"
+						onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+							setEmail(e.target.value)
+						}
+						required
+					/>
+				</LoginRow>
+				<LoginRow>
+					<TextInput
+						name="password"
+						value={password}
+						type="password"
+						onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+							setPassword(e.target.value)
+						}
+						required
+						minLength={4}
+					/>
+				</LoginRow>
+				<LoginRow>
+					<TextInput
+						name="confirm-password"
+						value={confirmPassword}
+						type="password"
+						onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+							setconfirmPassword(e.target.value)
+						}
+						required
+					/>
+				</LoginRow>
 				<Button title="Register" kind="white" type="submit" />
 			</StyledForm>
 		</>

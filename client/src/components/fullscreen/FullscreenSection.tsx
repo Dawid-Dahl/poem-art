@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import styled from "styled-components";
 import PoemSection from "./PoemSection";
-import CommentSection from "./CommentSection";
 import LikesSection from "./LikesSection";
 import {useQuery} from "../../custom-hooks/useQuery";
 import {useDispatch, useSelector} from "react-redux";
@@ -11,6 +10,7 @@ import TopBar from "./TopBar";
 import {selectPoem, renderPoems} from "../../actions/syncPoemAction";
 import {ReduxArtPoem} from "../../types/types";
 import {welcomePoem, poemNotFound, initPoem} from "../../utils/defaultPoems";
+import CommentSection from "../comments/CommentSection";
 
 type Props = {};
 
@@ -119,10 +119,6 @@ const Grid = styled.div`
 
 	@media only screen and (max-width: 1280px) {
 		width: 70%;
-
-		p {
-			padding: 20px;
-		}
 	}
 
 	@media only screen and (max-width: 800px) {

@@ -36,6 +36,7 @@ const Wrapper = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	width: 100%;
 `;
 
 const ProfilePicWrapper = styled.div`
@@ -43,5 +44,6 @@ const ProfilePicWrapper = styled.div`
 `;
 
 const TextInputWrapper = styled.div`
+	width: 100%;
 	margin: 1em;
 `;

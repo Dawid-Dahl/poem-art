@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import Comment from "./Comment";
 
 const CommentsDisplay = () => {
 	return (
 		<>
-			<Wrapper></Wrapper>
+			<Wrapper>
+				<Comment />
+			</Wrapper>
 		</>
 	);
 };

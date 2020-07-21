@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 	border-radius: 5px;
 
 	p {
-		margin: 0;
+		margin: 1em 0;
 		padding: 0;
 		text-align: center;
 		font-size: 1.3em;

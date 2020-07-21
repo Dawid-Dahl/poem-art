@@ -1,11 +1,11 @@
 import React, {useState} from "react";
-import {withRouter, RouteComponentProps} from "react-router-dom";
 import {LoginCredentials} from "../../types/types";
 import Button from "../Button";
 import styled from "styled-components";
 import TextInput from "../inputs/TextInput";
 import {useDispatch} from "react-redux";
 import {login} from "../../actions/loginActions";
+import LoginRow from "../styled-components/LoginRow";
 
 const LoginForm: React.FC = () => {
 	const [email, setEmail] = useState("");
@@ -38,24 +38,28 @@ const LoginForm: React.FC = () => {
 				}}
 			>
 				<h2>LOGIN</h2>
-				<TextInput
-					name="email"
-					value={email}
-					type="email"
-					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setEmail(e.target.value)
-					}
-					required
-				/>
-				<TextInput
-					name="password"
-					value={password}
-					type="password"
-					onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setPassword(e.target.value)
-					}
-					required
-				/>
+				<LoginRow>
+					<TextInput
+						name="email"
+						value={email}
+						type="email"
+						onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+							setEmail(e.target.value)
+						}
+						required
+					/>
+				</LoginRow>
+				<LoginRow>
+					<TextInput
+						name="password"
+						value={password}
+						type="password"
+						onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+							setPassword(e.target.value)
+						}
+						required
+					/>
+				</LoginRow>
 				<Button title="Login" kind="white" type="submit" />
 			</StyledForm>
 		</>
