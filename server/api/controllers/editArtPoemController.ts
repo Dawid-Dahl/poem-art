@@ -63,7 +63,7 @@ export const editArtPoemController = async (req: Request, res: Response) => {
 		}
 
 		if (!doesPoemIncludeCollection(artPoem, poemCollectionId)) {
-			addCollectionToPoemAndRemoveAllOtherCollections(artPoemRepo, collectionRepo)(
+			await addCollectionToPoemAndRemoveAllOtherCollections(artPoemRepo, collectionRepo)(
 				poemId,
 				poemCollectionId
 			);
