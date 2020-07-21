@@ -50,4 +50,8 @@ const StyledInput = styled.input`
 	&:focus {
 		box-shadow: 0 0 0 2pt var(--main-btn-color);
 	}
+
+	@media only screen and (max-width: 400px) {
+		padding: 0.2em 1em;
+	}
 `;
