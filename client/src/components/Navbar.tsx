@@ -1,13 +1,16 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import {authService} from "../auth/authService";
 import LinkButton from "./LinkButton";
 import {Link} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../actions/loginActions";
+import {renderSocialFeed} from "../actions/syncPoemAction";
+import {RootState} from "../store";
 
 export const Navbar: React.FC = () => {
 	const [rolldownState, setRolldownState] = useState(false);
+
+	const cachedPoems = useSelector((state: RootState) => state.asyncPoemReducer.cachedPoems);
 
 	const dispatch = useDispatch();
 
@@ -17,6 +20,7 @@ export const Navbar: React.FC = () => {
 				<Link
 					to={"/"}
 					onClick={() => {
+						dispatch(renderSocialFeed(cachedPoems));
 						window.scrollTo(0, 0);
 					}}
 				>

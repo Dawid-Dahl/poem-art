@@ -11,6 +11,8 @@ import {
 } from "../actions/collectionActions";
 import {hidePopup} from "../actions/popupActions";
 import {showFlash} from "../actions/flashActions";
+import {removePoemsFromCache} from "../actions/asyncPoemActions";
+import {removePoemsFromRenderedPoems} from "../actions/syncPoemAction";
 
 function* workerGetCollectionsSaga() {
 	try {
@@ -70,6 +72,10 @@ function* workerDeleteCollectionSaga({collectionId}: ReturnType<typeof deleteCol
 
 		const data = parseMainApiResponse(json);
 
+		const deletedArtPoemIds = data.deletedArtPoemIds as number[];
+
+		yield put(removePoemsFromCache(deletedArtPoemIds));
+		yield put(removePoemsFromRenderedPoems(deletedArtPoemIds));
 		yield put(getAllCollections());
 		yield put(showFlash(data.message));
 	} catch (e) {

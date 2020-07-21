@@ -29,7 +29,7 @@ const Collection: React.FC<Props> = ({id, name, onClickHandler}) => {
 					<span
 						onClick={e =>
 							confirm(
-								"Are you sure you want to delete this collection? All the associated Artpoems will be deleted as well!"
+								"Are you sure you want to delete this collection? Any associated Artpoems will be deleted as well!"
 							) && dispatch(handleRemoveClick(e, id))
 						}
 					>
@@ -59,6 +59,7 @@ const Wrapper = styled.div`
 	box-shadow: var(--box-shadow);
 	cursor: pointer;
 	transition: transform 0.3s;
+	overflow: hidden;
 
 	:hover {
 		transform: scale(1.01) rotate(1deg);

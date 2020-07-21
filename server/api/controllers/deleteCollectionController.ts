@@ -12,7 +12,10 @@ export const deleteCollectionController = async (req: Request, res: Response) =>
 
 	//Note: all Artpoems associated with the deleted collection will be deleted as well:
 
-	deleteAllPoemsAssociatedWithCollection(connection, artPoemRepo)(collectionId as string);
+	const deletedArtPoemIds = await deleteAllPoemsAssociatedWithCollection(
+		connection,
+		artPoemRepo
+	)(collectionId as string);
 
 	try {
 		const deleteResult = await collectionRepo.delete(collectionId as string);
@@ -35,6 +38,7 @@ export const deleteCollectionController = async (req: Request, res: Response) =>
 					true,
 					JSON.stringify({
 						message: `The collection was successfully deleted!`,
+						deletedArtPoemIds,
 					})
 				)
 			);

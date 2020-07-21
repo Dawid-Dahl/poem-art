@@ -62,5 +62,9 @@ export const deleteAllPoemsAssociatedWithCollection = (
 		[collectionId]
 	);
 
-	artPoemRepo.delete(artPoemsFromCollection.map(poem => poem.id));
+	const artPoemIds = artPoemsFromCollection.map(poem => poem.id);
+
+	artPoemRepo.delete(artPoemIds);
+
+	return artPoemIds;
 };

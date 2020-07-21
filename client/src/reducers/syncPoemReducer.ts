@@ -36,6 +36,13 @@ export const syncPoemReducer = (
 					action.reduxCollection
 				).filter(poem => doesArtPoemBelongToUser(poem, action.user)),
 			};
+		case "REMOVE_POEMS_FROM_RENDERED_POEMS":
+			return {
+				...state,
+				renderedPoems: state.renderedPoems.filter(
+					poem => !action.artPoemIds.includes(poem.id)
+				),
+			};
 		case "REMOVE_ALL_POEMS_FROM_RENDERED_POEMS":
 			return {...state, renderedPoems: []};
 		default:

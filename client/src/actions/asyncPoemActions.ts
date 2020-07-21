@@ -96,6 +96,12 @@ export const deletePoemFulfilled = (artPoemId: ReduxArtPoem["id"]) =>
 		artPoemId,
 	} as const);
 
+export const removePoemsFromCache = (artPoemIds: Array<ReduxArtPoem["id"]>) =>
+	({
+		type: "REMOVE_POEMS_FROM_CACHE",
+		artPoemIds,
+	} as const);
+
 export const removeAllPoemsFromCache = () =>
 	({
 		type: "REMOVE_ALL_POEMS_FROM_CACHE",
@@ -119,4 +125,5 @@ export type AsyncPoemActionTypes =
 	| ReturnType<typeof editPoemFulfilled>
 	| ReturnType<typeof deletePoem>
 	| ReturnType<typeof deletePoemFulfilled>
+	| ReturnType<typeof removePoemsFromCache>
 	| ReturnType<typeof removeAllPoemsFromCache>;

@@ -33,6 +33,11 @@ export const asyncPoemReducer = (
 				...state,
 				cachedPoems: state.cachedPoems.filter(poem => poem.id !== action.artPoemId),
 			};
+		case "REMOVE_POEMS_FROM_CACHE":
+			return {
+				...state,
+				cachedPoems: state.cachedPoems.filter(poem => !action.artPoemIds.includes(poem.id)),
+			};
 		case "REMOVE_ALL_POEMS_FROM_CACHE":
 			return {
 				...state,

@@ -30,7 +30,6 @@ const StyledSelectElement = styled.select`
 	border: solid transparent 1px;
 	width: 97%;
 	height: 52px;
-	padding: 0em 3em;
 	margin: 1.5em 0;
 	font-size: 1em;
 	border-radius: var(--border-radius-inputs);

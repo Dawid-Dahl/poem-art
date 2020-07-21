@@ -56,6 +56,12 @@ export const getPoemsByUserAndCollection = (
 
 //DELETE
 
+export const removePoemsFromRenderedPoems = (artPoemIds: Array<ReduxArtPoem["id"]>) =>
+	({
+		type: "REMOVE_POEMS_FROM_RENDERED_POEMS",
+		artPoemIds,
+	} as const);
+
 export const removeAllPoemsFromRenderedPoems = () =>
 	({
 		type: "REMOVE_ALL_POEMS_FROM_RENDERED_POEMS",
@@ -68,5 +74,6 @@ export type SyncPoemActionTypes =
 	| ReturnType<typeof renderSocialFeedFulfilled>
 	| ReturnType<typeof selectPoem>
 	| ReturnType<typeof deselectPoem>
+	| ReturnType<typeof removePoemsFromRenderedPoems>
 	| ReturnType<typeof removeAllPoemsFromRenderedPoems>
 	| ReturnType<typeof getPoemsByUserAndCollection>;

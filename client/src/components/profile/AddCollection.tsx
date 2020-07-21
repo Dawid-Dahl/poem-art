@@ -36,6 +36,7 @@ const Wrapper = styled.div`
 	box-shadow: var(--box-shadow);
 	cursor: pointer;
 	transition: transform 0.3s;
+	overflow: hidden;
 
 	span {
 		font-size: 2em;
