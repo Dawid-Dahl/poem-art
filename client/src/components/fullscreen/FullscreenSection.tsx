@@ -123,10 +123,6 @@ const Grid = styled.div`
 
 	@media only screen and (max-width: 800px) {
 		width: 90%;
-
-		p {
-			padding: 1em;
-		}
 	}
 
 	@media only screen and (max-width: 500px) {

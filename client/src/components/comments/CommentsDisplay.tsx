@@ -7,6 +7,8 @@ const CommentsDisplay = () => {
 		<>
 			<Wrapper>
 				<Comment />
+				<Comment />
+				<Comment />
 			</Wrapper>
 		</>
 	);
@@ -14,4 +16,7 @@ const CommentsDisplay = () => {
 
 export default CommentsDisplay;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+	width: 100%;
+	margin: 0 0 1em 0;
+`;

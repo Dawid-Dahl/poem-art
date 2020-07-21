@@ -17,7 +17,7 @@ const CommentInput = () => {
 				</Link>
 				<TextInputWrapper>
 					<TextInput
-						name="Add a comment"
+						name="Add a comment ✍🏻"
 						value={comment}
 						type="text"
 						onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -37,6 +37,7 @@ const Wrapper = styled.div`
 	align-items: center;
 	justify-content: center;
 	width: 100%;
+	border-top: var(--main-grey-color) 1px solid;
 `;
 
 const ProfilePicWrapper = styled.div`

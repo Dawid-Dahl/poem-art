@@ -7,7 +7,7 @@ const CommentSection = () => {
 	return (
 		<>
 			<Wrapper>
-				<p>Comments</p>
+				<p className="comments-h1">Comments</p>
 				<CommentsDisplay />
 				<CommentInput />
 			</Wrapper>
@@ -26,8 +26,8 @@ const Wrapper = styled.div`
 	box-shadow: var(--box-shadow);
 	border-radius: 5px;
 
-	p {
-		margin: 1em 0;
+	.comments-h1 {
+		margin: 1em 0 0.5em 0;
 		padding: 0;
 		text-align: center;
 		font-size: 1.3em;
