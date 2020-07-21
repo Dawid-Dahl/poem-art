@@ -43,7 +43,9 @@ const Profile: React.FC = () => {
 			<Navbar />
 			<Wrapper>
 				<Greeting>{`Welcome back, ${user?.username ?? ""}!`}</Greeting>
-				<ProfilePic />
+				<ProfilePicWrapper>
+					<ProfilePic size={8} isAnimating />
+				</ProfilePicWrapper>
 				<h2>Your Collections</h2>
 				<CollectionsDisplay collections={collections} />
 				<h2>Your ArtPoems</h2>
@@ -70,8 +72,12 @@ const Wrapper = styled.div`
 	justify-content: center;
 
 	h2 {
-		margin: 2em 0;
+		margin: 1.5em;
 	}
+`;
+
+const ProfilePicWrapper = styled.div`
+	margin: 1.5em 0 0 0;
 `;
 
 const Greeting = styled.h1`

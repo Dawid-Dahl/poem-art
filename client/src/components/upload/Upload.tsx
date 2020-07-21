@@ -91,15 +91,17 @@ const Upload: React.FC = () => {
 						e.currentTarget.reset();
 					}}
 				>
-					<TextInput
-						name="title"
-						value={title}
-						type="text"
-						onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
-							setTitle(e.target.value)
-						}
-						required
-					/>
+					<TextInputWrapper>
+						<TextInput
+							name="title"
+							value={title}
+							type="text"
+							onChangeHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+								setTitle(e.target.value)
+							}
+							required
+						/>
+					</TextInputWrapper>
 					<SelectWrapper>
 						<SelectElement
 							onChangeHandle={(e: React.ChangeEvent<HTMLSelectElement>) =>
@@ -109,20 +111,24 @@ const Upload: React.FC = () => {
 							collections={collections}
 						/>
 					</SelectWrapper>
-					<FileInput
-						name="uploadImageFile"
-						kind="white"
-						isFileSelected={Boolean(imageFile)}
-						onChangeHandle={onChangeHandle}
-					/>
-					<TextAreaInput
-						name="poem"
-						value={poem}
-						onChangeHandle={(event: React.ChangeEvent<HTMLTextAreaElement>): void =>
-							setPoem(event.target.value)
-						}
-						required
-					/>
+					<FileInputWrapper>
+						<FileInput
+							name="uploadImageFile"
+							kind="white"
+							isFileSelected={Boolean(imageFile)}
+							onChangeHandle={onChangeHandle}
+						/>
+					</FileInputWrapper>
+					<TextAreaInputWrapper>
+						<TextAreaInput
+							name="poem"
+							value={poem}
+							onChangeHandle={(event: React.ChangeEvent<HTMLTextAreaElement>): void =>
+								setPoem(event.target.value)
+							}
+							required
+						/>
+					</TextAreaInputWrapper>
 					<Button title="Upload" kind="primary" type="submit" />
 				</StyledForm>
 			</Wrapper>
@@ -153,6 +159,17 @@ const SelectWrapper = styled.div`
 	align-items: center;
 	justify-content: center;
 	width: 16.3em;
+	margin: 0.7em 0;
+`;
+
+const TextInputWrapper = styled.div`
+	margin: 0.7em 0;
+`;
+const FileInputWrapper = styled.div`
+	margin: 0.7em 0;
+`;
+const TextAreaInputWrapper = styled.div`
+	margin: 0.7em 0;
 `;
 
 const StyledForm = styled.form`

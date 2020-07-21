@@ -23,7 +23,7 @@ const EditPoemPopupCollection: React.FC<Props> = ({}) => {
 	return (
 		<>
 			<Row>
-				<p>Edit Collection</p>
+				<p style={{margin: 0}}>Edit Collection</p>
 				<div>
 					<SelectElement
 						onChangeHandle={(e: React.ChangeEvent<HTMLSelectElement>) =>

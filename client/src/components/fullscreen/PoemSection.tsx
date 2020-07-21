@@ -12,7 +12,7 @@ type Props = {
 
 const onClickHandle = () => store.dispatch(showEditPoemPopup());
 
-export const PoemSection: React.FC<Props> = ({poemUserId, poem}) => {
+const PoemSection: React.FC<Props> = ({poemUserId, poem}) => {
 	const user = useSelector((state: RootState) => state.userReducer.user);
 
 	return (

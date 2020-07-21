@@ -5,7 +5,7 @@ type Props = {
 	likes: number;
 };
 
-export const LikesSection: React.FC<Props> = ({likes}) => {
+const LikesSection: React.FC<Props> = ({likes}) => {
 	return (
 		<>
 			<Wrapper>

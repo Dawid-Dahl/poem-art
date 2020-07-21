@@ -4,7 +4,7 @@ const Row = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin: 0.1em;
+	padding: 1em 0;
 	border-top: 1px var(--light-grey-color) solid;
 
 	p {

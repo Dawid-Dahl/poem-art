@@ -41,11 +41,11 @@ export default TextInput;
 const StyledInput = styled.input`
 	border: solid var(--main-grey-color) 1px;
 	padding: 1em 3em;
-	margin: 1em 0;
 	font-size: 1em;
 	border-radius: var(--border-radius-inputs);
 	text-align: center;
 	outline: none;
+	transition: all 0.3s;
 
 	&:focus {
 		box-shadow: 0 0 0 2pt var(--main-btn-color);

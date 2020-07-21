@@ -87,8 +87,9 @@ const InnerWrapper = styled.div`
 `;
 
 const SelectWrapper = styled.div`
-	min-width: 35%;
+	width: 50%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	margin: 2em 0;
 `;

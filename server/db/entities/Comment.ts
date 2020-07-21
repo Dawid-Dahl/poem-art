@@ -24,7 +24,7 @@ export class Comment extends BaseEntity {
 	@ManyToOne(type => ArtPoem, artpoem => artpoem.comments)
 	artpoem: ArtPoem;
 
-	@ManyToOne(type => User, user => user.collections)
+	@ManyToOne(type => User, user => user.comments)
 	user: User;
 
 	@CreateDateColumn()

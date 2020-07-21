@@ -104,6 +104,7 @@ const EditPoemPopup: React.FC<Props> = () => {
 				<EditPoemPopupArt imageFile={imageFile} setImageFile={setImageFile} />
 				<EditPoemPopupCollection />
 				<EditPoemPopupContent poemContent={poemContent} setPoemContent={setPoemContent} />
+
 				<ButtonRow>
 					<Button
 						title="Cancel"
@@ -162,6 +163,10 @@ const StyledForm = styled.form<StyledFormProps>`
 		border-radius: 0;
 		align-self: stretch;
 	}
+`;
+
+const SectionWrapper = styled.div`
+	margin: 0.7em;
 `;
 
 const ButtonRow = styled.div`

@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import CommentsDisplay from "./CommentsDisplay";
+import CommentInput from "./CommentInput";
 
-export const CommentSection = () => {
+const CommentSection = () => {
 	return (
 		<>
 			<Wrapper>
-				<p>TODO: COMMENTS.</p>
+				<p>Comments</p>
+				<CommentsDisplay />
+				<CommentInput />
 			</Wrapper>
 		</>
 	);
@@ -14,15 +18,19 @@ export const CommentSection = () => {
 export default CommentSection;
 
 const Wrapper = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 	background-color: white;
 	box-shadow: var(--box-shadow);
 	border-radius: 5px;
-	height: fit-content;
 
 	p {
 		margin: 0;
-		padding: 50px;
+		padding: 0;
 		text-align: center;
-		font-size: 1.5em;
+		font-size: 1.3em;
+		font-weight: bold;
 	}
 `;
