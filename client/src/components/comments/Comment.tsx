@@ -4,8 +4,9 @@ import ProfilePic from "../profile/ProfilePic";
 import CommentBox from "./CommentBox";
 import {Link} from "react-router-dom";
 import {User, ReduxComment} from "../../types/types";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {deleteComment} from "../../actions/commentActions";
+import {RootState} from "../../store";
 
 type Props = {
 	id: ReduxComment["id"];
@@ -17,20 +18,24 @@ type Props = {
 const Comment: React.FC<Props> = ({id, comment, user, createdAt}) => {
 	const dispatch = useDispatch();
 
+	const userId = useSelector((state: RootState) => state.userReducer.user?.id);
+
 	return (
 		<>
 			<Wrapper>
-				<SpanWrapper>
-					<span onClick={e => undefined}>🖋️</span>
-					<span
-						onClick={e =>
-							confirm("Are you sure you want to delete this comment?") &&
-							dispatch(deleteComment(id))
-						}
-					>
-						❌
-					</span>
-				</SpanWrapper>
+				{user.id === userId && (
+					<SpanWrapper>
+						<span onClick={e => undefined}>🖋️</span>
+						<span
+							onClick={e =>
+								confirm("Are you sure you want to delete this comment?") &&
+								dispatch(deleteComment(id))
+							}
+						>
+							❌
+						</span>
+					</SpanWrapper>
+				)}
 				<ProfilePicWrapper>
 					<Link to={"/profile"}>
 						<ProfilePic size={3} />

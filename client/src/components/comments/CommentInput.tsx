@@ -7,6 +7,7 @@ import CommentSubmitSection from "./CommentSubmitSection";
 import {useDispatch, useSelector} from "react-redux";
 import {postComment, openCommentSubmitSection} from "../../actions/commentActions";
 import {RootState} from "../../store";
+import {showFlash} from "../../actions/flashActions";
 
 const CommentInput = () => {
 	const [comment, setComment] = useState("");
@@ -21,6 +22,11 @@ const CommentInput = () => {
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault();
+
+			if (comment.length === 0) {
+				dispatch(showFlash("You can't post an empty comment."));
+				return;
+			}
 
 			dispatch(postComment(comment, artPoemId));
 
