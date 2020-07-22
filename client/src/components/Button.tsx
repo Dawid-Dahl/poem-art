@@ -6,12 +6,21 @@ type Props = {
 	kind: "primary" | "white" | "black" | "grey" | "delete";
 	type: "button" | "submit";
 	onClickHandler?: (args: any) => any;
+	minimalMinWidth?: boolean;
+	noMargin?: boolean;
 };
 
-const Button: React.FC<Props> = ({title, kind, type, onClickHandler}) => {
+const Button: React.FC<Props> = ({
+	title,
+	kind,
+	type,
+	onClickHandler,
+	minimalMinWidth,
+	noMargin,
+}) => {
 	return (
 		<>
-			<Wrapper kind={kind}>
+			<Wrapper kind={kind} minimalMinWidth={minimalMinWidth} noMargin={noMargin}>
 				<button onClick={onClickHandler} type={type}>
 					{title}
 				</button>
@@ -24,6 +33,8 @@ export default Button;
 
 type WrapperProps = {
 	kind: "primary" | "white" | "black" | "grey" | "delete";
+	minimalMinWidth?: boolean;
+	noMargin?: boolean;
 };
 
 const Wrapper = styled.div<WrapperProps>`
@@ -31,7 +42,7 @@ const Wrapper = styled.div<WrapperProps>`
 
 	button {
 		height: 3em;
-		min-width: 7em;
+		min-width: ${props => (props.minimalMinWidth ? "3em" : "7em")};
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -48,7 +59,7 @@ const Wrapper = styled.div<WrapperProps>`
 				: props.kind === "delete"
 				? "var(--delete-color)"
 				: "white"};
-		margin: 1em 0;
+		margin: ${props => (props.noMargin ? "0" : "1em 0")};
 		transition: all 0.2s;
 		cursor: pointer;
 		text-decoration: none;
@@ -76,8 +87,8 @@ const Wrapper = styled.div<WrapperProps>`
 				props.kind === "black"
 					? "inset 0px 0px 0px 5px var(--dark-grey-color)"
 					: props.kind === "grey"
-					? "0px 0px 13px 5px #00000005, inset 0px 0px 0px 5px #00000017"
-					: "var(--box-shadow), inset 0px 0px 0px 5px #00000017"};
+					? "0px 0px 13px 5px #00000005, inset 0px 0px 0px 5px #0000001a"
+					: "var(--box-shadow), inset 0px 0px 0px 5px #0000001a"};
 		}
 	}
 `;

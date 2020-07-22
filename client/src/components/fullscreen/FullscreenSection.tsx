@@ -117,6 +117,10 @@ const Grid = styled.div`
 	gap: 1em 1em;
 	grid-template-areas: "PoemSection Sidebar" "PoemSection Sidebar";
 
+	@media only screen and (max-width: 1600px) {
+		width: 80%;
+	}
+
 	@media only screen and (max-width: 1280px) {
 		width: 80%;
 	}

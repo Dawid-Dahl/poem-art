@@ -49,9 +49,12 @@ export type ReduxCollection = {
 };
 
 export type Comment = {
-	content: string;
-	createdAt: number;
+	id: number;
+	comment: string;
+	likes: number;
 	username: string;
+	createdAt?: string;
+	updatedAt?: string;
 };
 
 export type xTokenPayload = {

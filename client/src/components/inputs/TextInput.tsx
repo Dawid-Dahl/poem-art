@@ -21,20 +21,22 @@ const TextInput: React.FC<Props> = ({
 	pattern,
 	title,
 	minLength,
-}) => (
-	<StyledInput
-		id={name}
-		value={value}
-		name={name}
-		type={type}
-		placeholder={name ? [name[0].toUpperCase(), name.slice(1)].join("") : ""}
-		onChange={onChangeHandle}
-		required={required}
-		pattern={pattern}
-		title={title}
-		minLength={minLength}
-	/>
-);
+}) => {
+	return (
+		<StyledInput
+			id={name}
+			value={value}
+			name={name}
+			type={type}
+			placeholder={name ? [name[0].toUpperCase(), name.slice(1)].join("") : ""}
+			onChange={onChangeHandle}
+			required={required}
+			pattern={pattern}
+			title={title}
+			minLength={minLength}
+		/>
+	);
+};
 
 export default TextInput;
 

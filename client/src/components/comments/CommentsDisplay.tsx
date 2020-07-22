@@ -8,7 +8,6 @@ const CommentsDisplay = () => {
 			<Wrapper>
 				<Comment />
 				<Comment />
-				<Comment />
 			</Wrapper>
 		</>
 	);
