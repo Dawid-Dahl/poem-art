@@ -4,13 +4,29 @@ import TextInput from "../inputs/TextInput";
 import ProfilePic from "../profile/ProfilePic";
 import {Link} from "react-router-dom";
 import CommentSubmitSection from "./CommentSubmitSection";
+import {useDispatch} from "react-redux";
+import {postComment} from "../../actions/commentActions";
 
 const CommentInput = () => {
 	const [comment, setComment] = useState("");
 
+	const dispatch = useDispatch();
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		try {
+			e.preventDefault();
+
+			dispatch(postComment(comment));
+
+			setComment("");
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
 	return (
 		<>
-			<Wrapper>
+			<StyledForm action="POST" onSubmit={e => handleSubmit(e)}>
 				<CommentInputSectionWrapper>
 					<Link to={"/profile"}>
 						<ProfilePicWrapper>
@@ -29,16 +45,16 @@ const CommentInput = () => {
 					</TextInputWrapper>
 				</CommentInputSectionWrapper>
 				<CommentSubmitSectionWrapper className="comment-submit-section-wrapper">
-					<CommentSubmitSection comment={comment} />
+					<CommentSubmitSection />
 				</CommentSubmitSectionWrapper>
-			</Wrapper>
+			</StyledForm>
 		</>
 	);
 };
 
 export default CommentInput;
 
-const Wrapper = styled.div`
+const StyledForm = styled.form`
 	display: flex;
 	align-items: center;
 	justify-content: center;

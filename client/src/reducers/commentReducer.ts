@@ -2,19 +2,21 @@ import {CommentActionTypes} from "../actions/commentActions";
 import {Comment} from "../types/types";
 
 export type CommentReducerState = {
-	comments: Comment[];
+	renderedComments: Comment[];
 };
 
 const initialState: CommentReducerState = {
-	comments: [],
+	renderedComments: [],
 };
 
-export const flashReducer = (
+export const commentReducer = (
 	state: CommentReducerState = initialState,
 	action: CommentActionTypes
 ): CommentReducerState => {
 	switch (action.type) {
 		case "POST_COMMENT_FULFILLED":
+			return {...state};
+		case "EDIT_COMMENT_FULFILLED":
 			return {...state};
 		case "REMOVE_COMMENT_FULFILLED":
 			return {...state};

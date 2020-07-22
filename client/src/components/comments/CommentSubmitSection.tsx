@@ -1,48 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../Button";
-import {useDispatch} from "react-redux";
 
-type Props = {
-	comment: string;
-};
+type Props = {};
 
-const CommentSubmitSection: React.FC<Props> = ({comment}) => {
-	const dispatch = useDispatch();
-
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		try {
-			e.preventDefault();
-		} catch (e) {
-			console.log(e);
-		}
-	};
-
+const CommentSubmitSection: React.FC<Props> = () => {
 	return (
 		<>
-			<StyledForm
-				action="POST"
-				className="form"
-				onSubmit={e => {
-					e.persist();
-					handleSubmit(e);
-					e.currentTarget.reset();
-				}}
-			>
+			<Wrapper>
 				<ButtonWrapper>
 					<Button title="Cancel" kind="grey" type="button" minimalMinWidth noMargin />
 				</ButtonWrapper>
 				<ButtonWrapper>
 					<Button title="Post" kind="primary" type="submit" minimalMinWidth noMargin />
 				</ButtonWrapper>
-			</StyledForm>
+			</Wrapper>
 		</>
 	);
 };
 
 export default CommentSubmitSection;
 
-const StyledForm = styled.form`
+const Wrapper = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	margin: 0 1.5em 0.5em 0;
