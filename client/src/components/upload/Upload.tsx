@@ -156,6 +156,7 @@ const Wrapper = styled.div`
 
 const TextInputWrapper = styled.div`
 	width: 30%;
+	max-width: 25em;
 	min-width: 15em;
 	margin: 0.7em 0;
 `;
@@ -166,6 +167,7 @@ const SelectWrapper = styled.div`
 	justify-content: center;
 	margin: 0.7em 0;
 	width: 30%;
+	max-width: 25em;
 	min-width: 15em;
 `;
 
@@ -178,6 +180,7 @@ const TextAreaInputWrapper = styled.div`
 	justify-content: center;
 	margin: 0.7em 0;
 	width: 30%;
+	max-width: 25em;
 	min-width: 15em;
 `;
 

@@ -88,8 +88,13 @@ const InnerWrapper = styled.div`
 
 const SelectWrapper = styled.div`
 	width: 50%;
+	max-width: 25em;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	margin: 2em 0;
+
+	@media only screen and (max-width: 500px) {
+		margin: 1em 0;
+	}
 `;
