@@ -1,8 +1,8 @@
-import {jsonResponse} from "../utils/utils";
+import {jsonResponse} from "../../utils/utils";
 import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
-import {Collection} from "../../db/entities/Collection";
-import {User} from "../../db/entities/User";
+import {Collection} from "../../../db/entities/Collection";
+import {User} from "../../../db/entities/User";
 
 export const addCollectionController = async (req: Request, res: Response) => {
 	const collectionRepo = getConnection(process.env.NODE_ENV).getRepository(Collection);
@@ -15,7 +15,7 @@ export const addCollectionController = async (req: Request, res: Response) => {
 
 		const user = await userRepo.findOne(req.user);
 
-		if (!user) throw new Error("No user was fetched from the DB");
+		if (!user) throw new Error("No user could be fetched from the DB");
 
 		const collection = new Collection();
 

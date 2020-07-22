@@ -1,15 +1,33 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../Button";
+import {useDispatch} from "react-redux";
+import {closeCommentSubmitSection} from "../../actions/commentActions";
 
-type Props = {};
+type Props = {
+	setComment: React.Dispatch<React.SetStateAction<string>>;
+};
 
-const CommentSubmitSection: React.FC<Props> = () => {
+const CommentSubmitSection: React.FC<Props> = ({setComment}) => {
+	const dispatch = useDispatch();
+
+	const handleCancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+		setComment("");
+		dispatch(closeCommentSubmitSection());
+	};
+
 	return (
 		<>
 			<Wrapper>
 				<ButtonWrapper>
-					<Button title="Cancel" kind="grey" type="button" minimalMinWidth noMargin />
+					<Button
+						title="Cancel"
+						kind="grey"
+						type="button"
+						minimalMinWidth
+						noMargin
+						onClickHandler={handleCancelClick}
+					/>
 				</ButtonWrapper>
 				<ButtonWrapper>
 					<Button title="Post" kind="primary" type="submit" minimalMinWidth noMargin />

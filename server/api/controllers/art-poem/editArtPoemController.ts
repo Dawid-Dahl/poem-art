@@ -2,12 +2,12 @@ import {
 	jsonResponse,
 	addCollectionToPoemAndRemoveAllOtherCollections,
 	doesPoemIncludeCollection,
-} from "../utils/utils";
+} from "../../utils/utils";
 import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
-import {ArtPoem} from "../../db/entities/ArtPoem";
+import {ArtPoem} from "../../../db/entities/ArtPoem";
 import {Storage, Bucket} from "@google-cloud/storage";
-import {Collection} from "../../db/entities/Collection";
+import {Collection} from "../../../db/entities/Collection";
 
 export const editArtPoemController = async (req: Request, res: Response) => {
 	const {

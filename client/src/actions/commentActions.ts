@@ -1,7 +1,12 @@
-export const postComment = (commentContent: string) =>
+//ASYNC
+
+import {ReduxArtPoem, ReduxComment} from "../types/types";
+
+export const postComment = (commentContent: string, artPoemId: ReduxArtPoem["id"]) =>
 	({
 		type: "POST_COMMENT",
 		commentContent,
+		artPoemId,
 	} as const);
 export const postCommentFulfilled = () =>
 	({
@@ -36,6 +41,26 @@ export const removeCommentFailed = () =>
 		type: "REMOVE_COMMENT_FAILED",
 	} as const);
 
+//SYNC
+
+export const addCommentsToRenderedComments = (comments: ReduxComment[]) =>
+	({
+		type: "ADD_COMMENTS_TO_RENDERED_COMMENTS",
+		comments,
+	} as const);
+export const emptyRenderedComments = () =>
+	({
+		type: "EMPTY_RENDERED_COMMENTS",
+	} as const);
+export const openCommentSubmitSection = () =>
+	({
+		type: "OPEN_COMMENT_SUBMIT_SECTION",
+	} as const);
+export const closeCommentSubmitSection = () =>
+	({
+		type: "CLOSE_COMMENT_SUBMIT_SECTION",
+	} as const);
+
 export type CommentActionTypes =
 	| ReturnType<typeof postComment>
 	| ReturnType<typeof postCommentFulfilled>
@@ -45,4 +70,8 @@ export type CommentActionTypes =
 	| ReturnType<typeof editCommentFailed>
 	| ReturnType<typeof removeComment>
 	| ReturnType<typeof removeCommentFulfilled>
-	| ReturnType<typeof removeCommentFailed>;
+	| ReturnType<typeof removeCommentFailed>
+	| ReturnType<typeof addCommentsToRenderedComments>
+	| ReturnType<typeof emptyRenderedComments>
+	| ReturnType<typeof openCommentSubmitSection>
+	| ReturnType<typeof closeCommentSubmitSection>;

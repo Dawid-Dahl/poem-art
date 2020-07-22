@@ -1,10 +1,10 @@
-import {jsonResponse} from "../utils/utils";
 import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
-import {ArtPoem} from "../../db/entities/ArtPoem";
-import {Collection} from "../../db/entities/Collection";
-import {User} from "../../db/entities/User";
+import {ArtPoem} from "../../../db/entities/ArtPoem";
+import {Collection} from "../../../db/entities/Collection";
+import {User} from "../../../db/entities/User";
 import {Storage} from "@google-cloud/storage";
+import {jsonResponse} from "../../utils/utils";
 
 export const uploadArtPoemController = async (req: Request, res: Response) => {
 	const userRepo = getConnection(process.env.NODE_ENV).getRepository(User);

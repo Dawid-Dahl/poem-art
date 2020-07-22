@@ -1,13 +1,13 @@
 import express from "express";
 import multer from "multer";
 import {uploadGCSFile} from "../middleware/uploadGCSFile";
-import {uploadArtPoemController} from "../controllers/uploadArtPoemController";
-import {getArtPoemsController} from "../controllers/getArtPoemsController";
-import {getArtPoemController} from "../controllers/getArtPoemController";
-import {editArtPoemController} from "../controllers/editArtPoemController";
-import {deleteArtPoemController} from "../controllers/deleteArtPoemController";
-import {getArtPoemsByCollectionController} from "../controllers/getArtPoemsByCollectionController";
-import {getArtPoemsByUserIdController} from "../controllers/getArtPoemsByIdController";
+import {uploadArtPoemController} from "../controllers/art-poem/uploadArtPoemController";
+import {getArtPoemsController} from "../controllers/art-poem/getArtPoemsController";
+import {getArtPoemController} from "../controllers/art-poem/getArtPoemController";
+import {editArtPoemController} from "../controllers/art-poem/editArtPoemController";
+import {deleteArtPoemController} from "../controllers/art-poem/deleteArtPoemController";
+import {getArtPoemsByCollectionController} from "../controllers/art-poem/getArtPoemsByCollectionController";
+import {getArtPoemsByUserIdController} from "../controllers/art-poem/getArtPoemsByIdController";
 
 const upload = multer({
 	storage: multer.memoryStorage(),

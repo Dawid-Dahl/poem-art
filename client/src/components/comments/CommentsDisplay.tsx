@@ -1,13 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import Comment from "./Comment";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store";
 
 const CommentsDisplay = () => {
+	const renderedComments = useSelector(
+		(state: RootState) => state.commentReducer.renderedComments
+	);
+
 	return (
 		<>
 			<Wrapper>
-				<Comment />
-				<Comment />
+				{renderedComments.map(comment => (
+					<Comment
+						key={comment.id}
+						comment={comment.comment}
+						user={comment.user}
+						createdAt={comment.createdAt}
+					/>
+				))}
 			</Wrapper>
 		</>
 	);

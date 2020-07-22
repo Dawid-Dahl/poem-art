@@ -7,6 +7,7 @@ import {
 	ValidOrRefreshedXToken,
 	ReduxArtPoem,
 	ReduxCollection,
+	ReduxComment,
 } from "../types/types";
 import store from "../store";
 import {authService} from "../auth/authService";
@@ -15,7 +16,6 @@ import {hidePopup} from "../actions/popupActions";
 import {hideFlash} from "../actions/flashActions";
 import {removeUser} from "../actions/userActions";
 import {History} from "history";
-import {sampleArtPoems, sampleReduxCollection1, sampleReduxCollection2} from "./dummyData";
 
 export const localStorageService = {
 	setTokensInLocalStorage(tokens: Tokens) {
@@ -261,3 +261,23 @@ export const sortArtPoemsByCollection = (
 				[]
 		  )
 		: [];
+
+export const comment = () => ({
+	create(
+		id: number,
+		comment: string,
+		likes: number,
+		user: User,
+		createdAt: string,
+		updatedAt?: string
+	): ReduxComment {
+		return {
+			id,
+			comment,
+			likes,
+			user,
+			createdAt,
+			updatedAt,
+		};
+	},
+});

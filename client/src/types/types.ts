@@ -48,12 +48,12 @@ export type ReduxCollection = {
 	public: boolean;
 };
 
-export type Comment = {
+export type ReduxComment = {
 	id: number;
 	comment: string;
 	likes: number;
-	username: string;
-	createdAt?: string;
+	user: User;
+	createdAt: string;
 	updatedAt?: string;
 };
 

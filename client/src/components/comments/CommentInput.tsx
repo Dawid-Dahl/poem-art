@@ -4,19 +4,25 @@ import TextInput from "../inputs/TextInput";
 import ProfilePic from "../profile/ProfilePic";
 import {Link} from "react-router-dom";
 import CommentSubmitSection from "./CommentSubmitSection";
-import {useDispatch} from "react-redux";
-import {postComment} from "../../actions/commentActions";
+import {useDispatch, useSelector} from "react-redux";
+import {postComment, openCommentSubmitSection} from "../../actions/commentActions";
+import {RootState} from "../../store";
 
 const CommentInput = () => {
 	const [comment, setComment] = useState("");
 
 	const dispatch = useDispatch();
 
+	const isCommentSubmitSectionActive = useSelector(
+		(state: RootState) => state.commentReducer.isCommentSubmitSectionActive
+	);
+	const artPoemId = useSelector((state: RootState) => state.syncPoemReducer.poemSelected.id);
+
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault();
 
-			dispatch(postComment(comment));
+			dispatch(postComment(comment, artPoemId));
 
 			setComment("");
 		} catch (e) {
@@ -26,14 +32,18 @@ const CommentInput = () => {
 
 	return (
 		<>
-			<StyledForm action="POST" onSubmit={e => handleSubmit(e)}>
+			<StyledForm action="POST" autoComplete="off" onSubmit={e => handleSubmit(e)}>
 				<CommentInputSectionWrapper>
 					<Link to={"/profile"}>
 						<ProfilePicWrapper>
 							<ProfilePic size={3} />
 						</ProfilePicWrapper>
 					</Link>
-					<TextInputWrapper>
+					<TextInputWrapper
+						onClick={e =>
+							!isCommentSubmitSectionActive && dispatch(openCommentSubmitSection())
+						}
+					>
 						<TextInput
 							name="Add a comment ✍🏻"
 							value={comment}
@@ -44,8 +54,10 @@ const CommentInput = () => {
 						/>
 					</TextInputWrapper>
 				</CommentInputSectionWrapper>
-				<CommentSubmitSectionWrapper className="comment-submit-section-wrapper">
-					<CommentSubmitSection />
+				<CommentSubmitSectionWrapper
+					isCommentSubmitSectionActive={isCommentSubmitSectionActive}
+				>
+					<CommentSubmitSection setComment={setComment} />
 				</CommentSubmitSectionWrapper>
 			</StyledForm>
 		</>
@@ -61,12 +73,6 @@ const StyledForm = styled.form`
 	flex-direction: column;
 	width: 100%;
 	border-top: var(--light-grey-color) 1px solid;
-
-	&:focus-within {
-		.comment-submit-section-wrapper {
-			display: block;
-		}
-	}
 `;
 
 const CommentInputSectionWrapper = styled.div`
@@ -76,8 +82,12 @@ const CommentInputSectionWrapper = styled.div`
 	width: 100%;
 `;
 
-const CommentSubmitSectionWrapper = styled.div`
-	display: none;
+type CommentSubmitSectionWrapperProps = {
+	isCommentSubmitSectionActive: boolean;
+};
+
+const CommentSubmitSectionWrapper = styled.div<CommentSubmitSectionWrapperProps>`
+	display: ${props => (props.isCommentSubmitSectionActive ? "block" : "none")};
 	width: 100%;
 `;
 
@@ -87,7 +97,7 @@ const ProfilePicWrapper = styled.div`
 
 const TextInputWrapper = styled.div`
 	width: 100%;
-	margin: 1em 1em 0.5em 1em;
+	margin: 1em 1em 1em 1em;
 
 	@media only screen and (max-width: 400px) {
 		input {

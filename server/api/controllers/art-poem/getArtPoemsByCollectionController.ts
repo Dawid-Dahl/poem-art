@@ -1,4 +1,4 @@
-import {jsonResponse} from "../utils/utils";
+import {jsonResponse} from "../../utils/utils";
 import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
 

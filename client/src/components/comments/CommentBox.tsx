@@ -2,8 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 import ProfilePic from "../profile/ProfilePic";
+import {User, ReduxComment} from "../../types/types";
 
-const CommentBox = () => {
+type Props = {
+	username: User["username"];
+	createdAt: ReduxComment["createdAt"];
+	comment: ReduxComment["comment"];
+};
+
+const CommentBox: React.FC<Props> = ({username, createdAt, comment}) => {
 	return (
 		<>
 			<Wrapper>
@@ -13,14 +20,10 @@ const CommentBox = () => {
 							<ProfilePic size={3} />
 						</Link>
 					</ProfilePicWrapper>
-					<h2>Integral Monastery</h2>
-					<h3>1h</h3>
+					<h2>{username}</h2>
+					<h3>{createdAt}</h3>
 				</PresentationWrapper>
-				<p>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus repudiandae
-					labore nobis ipsum, placeat consequuntur sed, at eius beatae inventore eos ut
-					fugit delectus hic odit!
-				</p>
+				<p>{comment}</p>
 			</Wrapper>
 		</>
 	);

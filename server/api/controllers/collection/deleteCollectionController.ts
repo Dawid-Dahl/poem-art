@@ -1,8 +1,8 @@
-import {jsonResponse, deleteAllPoemsAssociatedWithCollection} from "../utils/utils";
+import {jsonResponse, deleteAllPoemsAssociatedWithCollection} from "../../utils/utils";
 import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
-import {Collection} from "../../db/entities/Collection";
-import {ArtPoem} from "../../db/entities/ArtPoem";
+import {Collection} from "../../../db/entities/Collection";
+import {ArtPoem} from "../../../db/entities/ArtPoem";
 
 export const deleteCollectionController = async (req: Request, res: Response) => {
 	const connection = getConnection(process.env.NODE_ENV);

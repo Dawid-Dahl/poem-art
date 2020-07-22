@@ -1,7 +1,7 @@
-import {jsonResponse} from "../utils/utils";
+import {jsonResponse} from "../../utils/utils";
 import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
-import {ArtPoem} from "../../db/entities/ArtPoem";
+import {ArtPoem} from "../../../db/entities/ArtPoem";
 import {Storage, Bucket, File} from "@google-cloud/storage";
 
 export const deleteArtPoemController = async (req: Request, res: Response) => {

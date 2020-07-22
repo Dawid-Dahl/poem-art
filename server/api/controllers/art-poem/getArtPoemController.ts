@@ -1,7 +1,7 @@
-import {jsonResponse} from "../utils/utils";
+import {jsonResponse} from "../../utils/utils";
 import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
-import {ArtPoem} from "../../db/entities/ArtPoem";
+import {ArtPoem} from "../../../db/entities/ArtPoem";
 
 export const getArtPoemController = async (req: Request, res: Response) => {
 	const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
