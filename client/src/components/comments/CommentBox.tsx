@@ -16,23 +16,20 @@ type Props = {
 
 const CommentBox: React.FC<Props> = ({username, createdAt, comment}) => {
 	return (
-		console.log(createdAt),
-		(
-			<>
-				<Wrapper>
-					<PresentationWrapper>
-						<ProfilePicWrapper>
-							<Link to={"/profile"}>
-								<ProfilePic size={3} />
-							</Link>
-						</ProfilePicWrapper>
-						<h2>{username}</h2>
-						<h3>{dayjs(Date.parse(createdAt)).fromNow()}</h3>
-					</PresentationWrapper>
-					<p>{comment}</p>
-				</Wrapper>
-			</>
-		)
+		<>
+			<Wrapper>
+				<PresentationWrapper>
+					<ProfilePicWrapper>
+						<Link to={"/profile"}>
+							<ProfilePic size={3} />
+						</Link>
+					</ProfilePicWrapper>
+					<h2>{username}</h2>
+					<h3>{dayjs(Date.parse(createdAt)).fromNow()}</h3>
+				</PresentationWrapper>
+				<p>{comment}</p>
+			</Wrapper>
+		</>
 	);
 };
 

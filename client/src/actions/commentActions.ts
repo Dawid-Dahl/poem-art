@@ -53,17 +53,18 @@ export const editCommentFailed = () =>
 
 //DELETE
 
-export const removeComment = () =>
+export const deleteComment = (commentId: ReduxComment["id"]) =>
 	({
-		type: "REMOVE_COMMENT",
+		type: "DELETE_COMMENT",
+		commentId,
 	} as const);
-export const removeCommentFulfilled = () =>
+export const deleteCommentFulfilled = () =>
 	({
-		type: "REMOVE_COMMENT_FULFILLED",
+		type: "DELETE_COMMENT_FULFILLED",
 	} as const);
-export const removeCommentFailed = () =>
+export const deleteCommentFailed = () =>
 	({
-		type: "REMOVE_COMMENT_FAILED",
+		type: "DELETE_COMMENT_FAILED",
 	} as const);
 
 // -> SYNC
@@ -77,6 +78,11 @@ export const addCommentsToRenderedComments = (comments: ReduxComment[]) =>
 	({
 		type: "ADD_COMMENTS_TO_RENDERED_COMMENTS",
 		comments,
+	} as const);
+export const removeCommentsFromRenderedComments = (commentIds: Array<ReduxComment["id"]>) =>
+	({
+		type: "REMOVE_COMMENTS_FROM_RENDERED_COMMENTS",
+		commentIds,
 	} as const);
 export const emptyRenderedComments = () =>
 	({
@@ -98,11 +104,12 @@ export type CommentActionTypes =
 	| ReturnType<typeof editComment>
 	| ReturnType<typeof editCommentFulfilled>
 	| ReturnType<typeof editCommentFailed>
-	| ReturnType<typeof removeComment>
-	| ReturnType<typeof removeCommentFulfilled>
-	| ReturnType<typeof removeCommentFailed>
+	| ReturnType<typeof deleteComment>
+	| ReturnType<typeof deleteCommentFulfilled>
+	| ReturnType<typeof deleteCommentFailed>
 	| ReturnType<typeof renderComments>
 	| ReturnType<typeof addCommentsToRenderedComments>
+	| ReturnType<typeof removeCommentsFromRenderedComments>
 	| ReturnType<typeof emptyRenderedComments>
 	| ReturnType<typeof openCommentSubmitSection>
 	| ReturnType<typeof closeCommentSubmitSection>;

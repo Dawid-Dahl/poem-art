@@ -16,16 +16,17 @@ export const commentReducer = (
 	action: CommentActionTypes
 ): CommentReducerState => {
 	switch (action.type) {
-		case "POST_COMMENT_FULFILLED":
-			return {...state};
-		case "EDIT_COMMENT_FULFILLED":
-			return {...state};
-		case "REMOVE_COMMENT_FULFILLED":
-			return {...state};
 		case "RENDER_COMMENTS":
 			return {...state, renderedComments: action.comments};
 		case "ADD_COMMENTS_TO_RENDERED_COMMENTS":
 			return {...state, renderedComments: [...state.renderedComments, ...action.comments]};
+		case "REMOVE_COMMENTS_FROM_RENDERED_COMMENTS":
+			return {
+				...state,
+				renderedComments: state.renderedComments.filter(
+					poem => !action.commentIds.includes(poem.id)
+				),
+			};
 		case "EMPTY_RENDERED_COMMENTS":
 			return {...state, renderedComments: []};
 		case "OPEN_COMMENT_SUBMIT_SECTION":

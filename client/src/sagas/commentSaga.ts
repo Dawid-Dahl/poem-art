@@ -4,6 +4,8 @@ import {
 	addCommentsToRenderedComments,
 	getComments,
 	renderComments,
+	deleteComment,
+	removeCommentsFromRenderedComments,
 } from "../actions/commentActions";
 import {apiService} from "../api/apiService";
 import {parseMainApiResponse, comment} from "../utils/utils";
@@ -59,9 +61,26 @@ function* workerPostComment({commentContent, artPoemId}: ReturnType<typeof postC
 	}
 }
 
+function* deletePostComment({commentId}: ReturnType<typeof deleteComment>) {
+	try {
+		const res = yield call(
+			apiService.refreshAndFetch,
+			`comments/delete?commentId=${commentId}`,
+			{
+				method: "DELETE",
+			}
+		);
+
+		yield put(removeCommentsFromRenderedComments([commentId]));
+	} catch (e) {
+		console.log(e);
+	}
+}
+
 function* commentSaga() {
 	yield takeEvery("GET_COMMENTS", workerGetComments);
 	yield takeEvery("POST_COMMENT", workerPostComment);
+	yield takeEvery("DELETE_COMMENT", deletePostComment);
 }
 
 export default commentSaga;
