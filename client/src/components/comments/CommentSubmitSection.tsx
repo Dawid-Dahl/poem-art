@@ -42,7 +42,7 @@ export default CommentSubmitSection;
 const Wrapper = styled.div`
 	display: flex;
 	justify-content: flex-end;
-	margin: 0 1.5em 0.5em 0;
+	margin: 0 1.5em 1em 0;
 `;
 
 const ButtonWrapper = styled.div`
