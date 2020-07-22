@@ -49,7 +49,6 @@ const StyledWrapper = styled.div<WrapperProps>`
 	label {
 		padding: 0 0.5em;
 		height: 3em;
-		min-width: 7em;
 		display: flex;
 		align-items: center;
 		justify-content: center;

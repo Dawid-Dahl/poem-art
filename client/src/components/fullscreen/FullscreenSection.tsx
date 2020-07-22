@@ -109,7 +109,7 @@ const StyledDiv = styled.div<StyledDivProps>`
 `;
 
 const Grid = styled.div`
-	width: 60%;
+	width: 70%;
 	margin: 1em auto;
 	justify-content: center;
 	display: grid;
@@ -118,7 +118,7 @@ const Grid = styled.div`
 	grid-template-areas: "PoemSection Sidebar" "PoemSection Sidebar";
 
 	@media only screen and (max-width: 1280px) {
-		width: 70%;
+		width: 80%;
 	}
 
 	@media only screen and (max-width: 800px) {

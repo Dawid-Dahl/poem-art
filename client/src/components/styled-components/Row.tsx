@@ -30,18 +30,6 @@ const Row = styled.div`
 
 	@media only screen and (max-width: 500px) {
 		margin: 0em 1em;
-
-		input {
-			width: 50%;
-		}
-
-		textarea {
-			width: 50%;
-		}
-
-		select {
-			width: 90%;
-		}
 	}
 `;
 

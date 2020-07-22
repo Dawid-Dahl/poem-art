@@ -154,22 +154,31 @@ const Wrapper = styled.div`
 	}
 `;
 
+const TextInputWrapper = styled.div`
+	width: 30%;
+	min-width: 15em;
+	margin: 0.7em 0;
+`;
+
 const SelectWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 16.3em;
 	margin: 0.7em 0;
+	width: 30%;
+	min-width: 15em;
 `;
 
-const TextInputWrapper = styled.div`
-	margin: 0.7em 0;
-`;
 const FileInputWrapper = styled.div`
 	margin: 0.7em 0;
 `;
 const TextAreaInputWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	margin: 0.7em 0;
+	width: 30%;
+	min-width: 15em;
 `;
 
 const StyledForm = styled.form`

@@ -28,7 +28,7 @@ export default SelectElement;
 
 const StyledSelectElement = styled.select`
 	border: solid transparent 1px;
-	width: 97%;
+	width: 100%;
 	height: 52px;
 	font-size: 1em;
 	border-radius: var(--border-radius-inputs);

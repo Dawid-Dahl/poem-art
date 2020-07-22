@@ -47,4 +47,11 @@ const ProfilePicWrapper = styled.div`
 const TextInputWrapper = styled.div`
 	width: 100%;
 	margin: 1em;
+
+	@media only screen and (max-width: 400px) {
+		input {
+			padding: 0.2em 0.5em;
+			width: 90%;
+		}
+	}
 `;
