@@ -1,4 +1,4 @@
-import {ReduxCollection, AddCollectionFormObject, Collection} from "../types/types";
+import {ReduxCollection, AddCollectionFormObject} from "../types/types";
 
 export const selectCollection = (collection: ReduxCollection) =>
 	({

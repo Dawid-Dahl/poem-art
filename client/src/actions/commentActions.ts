@@ -1,6 +1,25 @@
-//ASYNC
-
 import {ReduxArtPoem, ReduxComment} from "../types/types";
+
+// -> ASYNC
+
+//READ
+
+export const getComments = (artPoemId: ReduxArtPoem["id"], commentCount = 20) =>
+	({
+		type: "GET_COMMENTS",
+		artPoemId,
+		commentCount,
+	} as const);
+export const getCommentsFulfilled = () =>
+	({
+		type: "GET_COMMENTS_FULFILLED",
+	} as const);
+export const getCommentsFailed = () =>
+	({
+		type: "GET_COMMENTS_FAILED",
+	} as const);
+
+//CREATE
 
 export const postComment = (commentContent: string, artPoemId: ReduxArtPoem["id"]) =>
 	({
@@ -16,6 +35,9 @@ export const postCommentFailed = () =>
 	({
 		type: "POST_COMMENT_FAILED",
 	} as const);
+
+//UPDATE
+
 export const editComment = () =>
 	({
 		type: "EDIT_COMMENT",
@@ -28,6 +50,9 @@ export const editCommentFailed = () =>
 	({
 		type: "EDIT_COMMENT_FAILED",
 	} as const);
+
+//DELETE
+
 export const removeComment = () =>
 	({
 		type: "REMOVE_COMMENT",
@@ -41,8 +66,13 @@ export const removeCommentFailed = () =>
 		type: "REMOVE_COMMENT_FAILED",
 	} as const);
 
-//SYNC
+// -> SYNC
 
+export const renderComments = (comments: ReduxComment[]) =>
+	({
+		type: "RENDER_COMMENTS",
+		comments,
+	} as const);
 export const addCommentsToRenderedComments = (comments: ReduxComment[]) =>
 	({
 		type: "ADD_COMMENTS_TO_RENDERED_COMMENTS",
@@ -71,6 +101,7 @@ export type CommentActionTypes =
 	| ReturnType<typeof removeComment>
 	| ReturnType<typeof removeCommentFulfilled>
 	| ReturnType<typeof removeCommentFailed>
+	| ReturnType<typeof renderComments>
 	| ReturnType<typeof addCommentsToRenderedComments>
 	| ReturnType<typeof emptyRenderedComments>
 	| ReturnType<typeof openCommentSubmitSection>

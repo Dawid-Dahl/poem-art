@@ -11,6 +11,7 @@ import {selectPoem, renderPoems} from "../../actions/syncPoemAction";
 import {ReduxArtPoem} from "../../types/types";
 import {welcomePoem, poemNotFound, initPoem} from "../../utils/defaultPoems";
 import CommentSection from "../comments/CommentSection";
+import {getComments} from "../../actions/commentActions";
 
 type Props = {};
 
@@ -36,6 +37,10 @@ const FullscreenPicture: React.FC<Props> = () => {
 
 	useEffect(() => {
 		dispatch(renderPoems(new Array(initPoem)));
+	}, []);
+
+	useEffect(() => {
+		dispatch(getComments(artPoemId));
 	}, []);
 
 	useEffect(() => {

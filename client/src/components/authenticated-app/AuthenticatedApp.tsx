@@ -4,10 +4,10 @@ import Main from "../Main";
 import Fullscreen from "../fullscreen/Fullscreen";
 import Upload from "../upload/Upload";
 import Profile from "../profile/Profile";
-import {useDeselectCollectionOnRouteChange} from "../../custom-hooks/useDeselectCollectionOnRouteChange";
+import {useDeselectionsOnRouteChange} from "../../custom-hooks/useDeselectCollectionOnRouteChange";
 
 export const AuthenticatedApp = () => {
-	useDeselectCollectionOnRouteChange();
+	useDeselectionsOnRouteChange();
 
 	return (
 		<>

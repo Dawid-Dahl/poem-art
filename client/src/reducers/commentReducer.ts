@@ -22,6 +22,8 @@ export const commentReducer = (
 			return {...state};
 		case "REMOVE_COMMENT_FULFILLED":
 			return {...state};
+		case "RENDER_COMMENTS":
+			return {...state, renderedComments: action.comments};
 		case "ADD_COMMENTS_TO_RENDERED_COMMENTS":
 			return {...state, renderedComments: [...state.renderedComments, ...action.comments]};
 		case "EMPTY_RENDERED_COMMENTS":
