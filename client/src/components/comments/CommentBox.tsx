@@ -3,6 +3,10 @@ import styled from "styled-components";
 import {Link} from "react-router-dom";
 import ProfilePic from "../profile/ProfilePic";
 import {User, ReduxComment} from "../../types/types";
+import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from "dayjs";
+
+dayjs.extend(relativeTime);
 
 type Props = {
 	username: User["username"];
@@ -12,20 +16,23 @@ type Props = {
 
 const CommentBox: React.FC<Props> = ({username, createdAt, comment}) => {
 	return (
-		<>
-			<Wrapper>
-				<PresentationWrapper>
-					<ProfilePicWrapper>
-						<Link to={"/profile"}>
-							<ProfilePic size={3} />
-						</Link>
-					</ProfilePicWrapper>
-					<h2>{username}</h2>
-					<h3>{createdAt}</h3>
-				</PresentationWrapper>
-				<p>{comment}</p>
-			</Wrapper>
-		</>
+		console.log(createdAt),
+		(
+			<>
+				<Wrapper>
+					<PresentationWrapper>
+						<ProfilePicWrapper>
+							<Link to={"/profile"}>
+								<ProfilePic size={3} />
+							</Link>
+						</ProfilePicWrapper>
+						<h2>{username}</h2>
+						<h3>{dayjs(parseInt(createdAt)).fromNow()}</h3>
+					</PresentationWrapper>
+					<p>{comment}</p>
+				</Wrapper>
+			</>
+		)
 	);
 };
 

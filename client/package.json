@@ -12,6 +12,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@types/react-dom": "^16.9.8",
+		"dayjs": "^1.8.30",
 		"dotenv": "^8.2.0",
 		"parcel-bundler": "^1.12.4",
 		"rambda": "^5.4.3",
