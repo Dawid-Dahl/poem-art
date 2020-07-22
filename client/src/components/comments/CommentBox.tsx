@@ -27,7 +27,7 @@ const CommentBox: React.FC<Props> = ({username, createdAt, comment}) => {
 							</Link>
 						</ProfilePicWrapper>
 						<h2>{username}</h2>
-						<h3>{dayjs(parseInt(createdAt)).fromNow()}</h3>
+						<h3>{dayjs(Date.parse(createdAt)).fromNow()}</h3>
 					</PresentationWrapper>
 					<p>{comment}</p>
 				</Wrapper>
