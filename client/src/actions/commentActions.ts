@@ -38,9 +38,11 @@ export const postCommentFailed = () =>
 
 //UPDATE
 
-export const editComment = () =>
+export const editComment = (commentContent: string, commentId: ReduxComment["id"]) =>
 	({
 		type: "EDIT_COMMENT",
+		commentContent,
+		commentId,
 	} as const);
 export const editCommentFulfilled = () =>
 	({

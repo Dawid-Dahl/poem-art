@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 import ProfilePic from "../profile/ProfilePic";
@@ -9,14 +9,13 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../store";
 import EditDeleteButtons from "./EditDeleteButtons";
 import {useOutsideCommentClicker} from "../../custom-hooks/useOutsideCommentClicker";
+import EditCommentTextArea from "./EditCommentTextArea";
 
 dayjs.extend(relativeTime);
 
 type Props = {
 	comment: ReduxComment;
 };
-
-const handleCommentInputClick = () => console.log("CLICKED!");
 
 const CommentBox: React.FC<Props> = ({comment}) => {
 	const {id, user, createdAt, comment: commentContent} = comment;
@@ -27,13 +26,17 @@ const CommentBox: React.FC<Props> = ({comment}) => {
 	);
 	const commentSelected = useSelector((state: RootState) => state.commentReducer.commentSelected);
 
-	const wrapperRef = useRef(null);
+	const [editComment, setEditComment] = useState(commentContent);
 
 	useOutsideCommentClicker(id);
 
+	useEffect(() => {
+		setEditComment(commentSelected ? commentSelected.comment : "");
+	}, [commentSelected]);
+
 	return (
 		<>
-			<Wrapper ref={commentSelected?.id === id ? wrapperRef : null} data-comment-id={id}>
+			<Wrapper>
 				<PresentationWrapper data-comment-id={id}>
 					<ProfilePicWrapper data-comment-id={id}>
 						<Link to={"/profile"}>
@@ -49,15 +52,19 @@ const CommentBox: React.FC<Props> = ({comment}) => {
 							data-comment-id={id}
 							comment={comment}
 							isEditingComment={isEditingComment}
+							setEditComment={setEditComment}
 						/>
 					)}
 				</PresentationWrapper>
 				{isEditingComment && commentSelected?.id === comment.id ? (
 					<EditCommentTextArea
-						data-comment-id={id}
-						rows={3}
-						cols={50}
-						onClick={handleCommentInputClick}
+						dataCommentId={id}
+						value={editComment}
+						onChangeHandler={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+							setEditComment(e.target.value)
+						}
+						editCommentContent={editComment}
+						setEditComment={setEditComment}
 					/>
 				) : (
 					<p data-comment-id={id}>{commentContent}</p>
@@ -89,18 +96,6 @@ const Wrapper = styled.div`
 
 	@media only screen and (max-width: 1000px) {
 		padding: 0.5em 1em;
-	}
-`;
-
-const EditCommentTextArea = styled.textarea`
-	width: 100%;
-	border-radius: 5px;
-	color: var(--comment-grey);
-	outline: none;
-	transition: all 0.3s;
-
-	&:focus {
-		box-shadow: 0 0 0 2pt var(--main-btn-color);
 	}
 `;
 

@@ -8,6 +8,7 @@ type Props = {
 	onClickHandler?: (args: any) => any;
 	minimalMinWidth?: boolean;
 	noMargin?: boolean;
+	dataAttribute?: {key: string; value: string};
 };
 
 const Button: React.FC<Props> = ({
@@ -17,11 +18,16 @@ const Button: React.FC<Props> = ({
 	onClickHandler,
 	minimalMinWidth,
 	noMargin,
+	dataAttribute,
 }) => {
 	return (
 		<>
 			<Wrapper kind={kind} minimalMinWidth={minimalMinWidth} noMargin={noMargin}>
-				<button onClick={onClickHandler} type={type}>
+				<button
+					onClick={onClickHandler}
+					type={type}
+					{...{[`data-${dataAttribute?.key}`]: dataAttribute?.value}}
+				>
 					{title}
 				</button>
 			</Wrapper>
@@ -41,7 +47,7 @@ const Wrapper = styled.div<WrapperProps>`
 	z-index: 1;
 
 	button {
-		height: 3em;
+		height: ${props => (props.minimalMinWidth ? "2em" : "3em")};
 		min-width: ${props => (props.minimalMinWidth ? "3em" : "7em")};
 		display: flex;
 		align-items: center;

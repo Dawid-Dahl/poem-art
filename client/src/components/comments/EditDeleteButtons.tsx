@@ -10,19 +10,22 @@ import {useDispatch} from "react-redux";
 import {ReduxComment} from "../../types/types";
 
 type Props = {
-	isEditingComment: boolean;
 	comment: ReduxComment;
+	isEditingComment: boolean;
+	setEditComment: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const handleEdit = (dispatch: Dispatch<any>) => (
 	comment: ReduxComment,
-	isEditingComment: boolean
+	isEditingComment: boolean,
+	setEditComment: React.Dispatch<React.SetStateAction<string>>
 ) => {
 	if (!isEditingComment) {
 		dispatch(enableCommentEdit());
 		dispatch(selectComment(comment));
 	} else {
 		dispatch(disableCommentEdit());
+		setEditComment(comment.comment);
 	}
 };
 
@@ -30,14 +33,14 @@ const handleDelete = (dispatch: Dispatch<any>) => (id: ReduxComment["id"]) => {
 	confirm("Are you sure you want to delete this comment?") && dispatch(deleteComment(id));
 };
 
-const EditDeleteButtons: React.FC<Props> = ({comment, isEditingComment}) => {
+const EditDeleteButtons: React.FC<Props> = ({comment, isEditingComment, setEditComment}) => {
 	const dispatch = useDispatch();
 
 	return (
 		<SpanWrapper data-comment-id={comment.id}>
 			<span
 				data-comment-id={comment.id}
-				onClick={e => handleEdit(dispatch)(comment, isEditingComment)}
+				onClick={e => handleEdit(dispatch)(comment, isEditingComment, setEditComment)}
 			>
 				🖋️
 			</span>
