@@ -22,7 +22,12 @@ const Button: React.FC<Props> = ({
 }) => {
 	return (
 		<>
-			<Wrapper kind={kind} minimalMinWidth={minimalMinWidth} noMargin={noMargin}>
+			<Wrapper
+				kind={kind}
+				minimalMinWidth={minimalMinWidth}
+				noMargin={noMargin}
+				{...{[`data-${dataAttribute?.key}`]: dataAttribute?.value}}
+			>
 				<button
 					onClick={onClickHandler}
 					type={type}

@@ -20,6 +20,14 @@ export const commentReducer = (
 	action: CommentActionTypes
 ): CommentReducerState => {
 	switch (action.type) {
+		case "EDIT_COMMENT_FULFILLED":
+			const {id, comment: resultComment} = action.insertResult;
+			return {
+				...state,
+				renderedComments: state.renderedComments.map(comment =>
+					comment.id === id ? {...comment, comment: resultComment} : comment
+				),
+			};
 		case "RENDER_COMMENTS":
 			return {...state, renderedComments: action.comments};
 		case "ADD_COMMENTS_TO_RENDERED_COMMENTS":

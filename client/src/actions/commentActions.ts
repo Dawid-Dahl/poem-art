@@ -44,9 +44,10 @@ export const editComment = (commentContent: string, commentId: ReduxComment["id"
 		commentContent,
 		commentId,
 	} as const);
-export const editCommentFulfilled = () =>
+export const editCommentFulfilled = (insertResult: ReduxComment) =>
 	({
 		type: "EDIT_COMMENT_FULFILLED",
+		insertResult,
 	} as const);
 export const editCommentFailed = () =>
 	({

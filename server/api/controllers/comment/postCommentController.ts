@@ -16,8 +16,29 @@ export const postCommentController = async (req: Request, res: Response) => {
 		const user = await userRepo.findOne(req.user);
 		const artPoem = await artPoemRepo.findOne(artPoemId);
 
-		if (!user) throw new Error("No user could be fetched from the DB");
-		if (!artPoem) throw new Error("No artPoem could be fetched from the DB");
+		if (!user) {
+			res.status(404).json(
+				jsonResponse(
+					false,
+					JSON.stringify({
+						message: "Couldn't find a user with that ID",
+					})
+				)
+			);
+			return;
+		}
+
+		if (!artPoem) {
+			res.status(404).json(
+				jsonResponse(
+					false,
+					JSON.stringify({
+						message: "Couldn't find an artPoem with that ID",
+					})
+				)
+			);
+			return;
+		}
 
 		const comment = new Comment();
 

@@ -1,29 +1,27 @@
-import React from "react";
+import React, {Dispatch} from "react";
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
-import {editComment} from "../../actions/commentActions";
+import {editComment, disableCommentEdit, deselectComment} from "../../actions/commentActions";
 import {RootState} from "../../store";
 import {showFlash} from "../../actions/flashActions";
 import Button from "../Button";
+import {ReduxComment} from "../../types/types";
 
-type Props = {
-	dataCommentId: number;
-	value: string;
-	onChangeHandler: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-	editCommentContent: string;
-	setEditComment: React.Dispatch<React.SetStateAction<string>>;
-};
-
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => (editCommentContent: string) => {
-	const dispatch = useDispatch();
-
-	const commentSelected = useSelector((state: RootState) => state.commentReducer.commentSelected);
-
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>, dispatch: Dispatch<any>) => (
+	editCommentContent: string,
+	commentSelected: ReduxComment | null
+) => {
 	try {
 		e.preventDefault();
 
-		if (editComment.length === 0) {
+		if (editCommentContent.length === 0) {
 			dispatch(showFlash("You can't post an empty comment."));
+			return;
+		}
+
+		if (editCommentContent === commentSelected?.comment) {
+			dispatch(disableCommentEdit());
+			dispatch(deselectComment());
 			return;
 		}
 
@@ -35,6 +33,14 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => (editCommentConten
 	}
 };
 
+type Props = {
+	dataCommentId: number;
+	value: string;
+	onChangeHandler: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	editCommentContent: string;
+	setEditComment: React.Dispatch<React.SetStateAction<string>>;
+};
+
 const EditCommentTextArea: React.FC<Props> = ({
 	dataCommentId,
 	value,
@@ -42,12 +48,17 @@ const EditCommentTextArea: React.FC<Props> = ({
 	editCommentContent,
 	setEditComment,
 }) => {
+	const dispatch = useDispatch();
+
+	const commentSelected = useSelector((state: RootState) => state.commentReducer.commentSelected);
+
 	return (
 		<>
 			<StyledForm
 				action="POST"
 				autoComplete="off"
-				onSubmit={e => handleSubmit(e)(editCommentContent)}
+				onSubmit={e => handleSubmit(e, dispatch)(editCommentContent, commentSelected)}
+				data-comment-id={dataCommentId}
 			>
 				<TextArea
 					data-comment-id={dataCommentId}

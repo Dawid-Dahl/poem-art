@@ -86,6 +86,7 @@ const Wrapper = styled.div`
 		padding: 0;
 		font-weight: lighter;
 		color: var(--comment-grey);
+		white-space: pre;
 	}
 
 	&:hover {

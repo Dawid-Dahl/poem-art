@@ -8,6 +8,8 @@ import {
 	removeCommentsFromRenderedComments,
 	deselectComment,
 	editComment,
+	editCommentFulfilled,
+	disableCommentEdit,
 } from "../actions/commentActions";
 import {apiService} from "../api/apiService";
 import {parseMainApiResponse, comment} from "../utils/utils";
@@ -73,7 +75,13 @@ function* workerEditComment({commentContent, commentId}: ReturnType<typeof editC
 			body: JSON.stringify({commentId: commentId, commentContent: commentContent}),
 		});
 
-		/* yield put(removeCommentsFromRenderedComments([commentId])); */
+		const json = yield call([res, "json"]);
+
+		const insertResult = JSON.parse(parseMainApiResponse(json).insertResult);
+
+		yield put(disableCommentEdit());
+		yield put(deselectComment());
+		yield put(editCommentFulfilled(insertResult as ReduxComment));
 	} catch (e) {
 		console.log(e);
 	}
