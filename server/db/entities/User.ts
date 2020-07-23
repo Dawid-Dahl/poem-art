@@ -10,6 +10,7 @@ import {
 import {Collection} from "./Collection";
 import {Comment} from "./Comment";
 import {ArtPoem} from "./ArtPoem";
+import {Like} from "./Like";
 
 @Entity()
 export class User extends BaseEntity {
@@ -33,6 +34,9 @@ export class User extends BaseEntity {
 
 	@OneToMany(type => Comment, comment => comment.user)
 	comments: Comment;
+
+	@OneToMany(type => Like, like => like.user)
+	likes: Like;
 
 	@CreateDateColumn()
 	createdAt: Date;
