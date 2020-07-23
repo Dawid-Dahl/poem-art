@@ -4,7 +4,12 @@ import {useHistory} from "react-router";
 import {RootState} from "../store";
 import {deselectCollection} from "../actions/collectionActions";
 import {deselectPoem} from "../actions/syncPoemAction";
-import {emptyRenderedComments, closeCommentSubmitSection} from "../actions/commentActions";
+import {
+	emptyRenderedComments,
+	closeCommentSubmitSection,
+	disableCommentEdit,
+	deselectComment,
+} from "../actions/commentActions";
 
 export const useDeselectionsOnRouteChange = () => {
 	const dispatch = useDispatch();
@@ -36,6 +41,20 @@ export const useDeselectionsOnRouteChange = () => {
 
 		const unlisten = history.listen(
 			() => (dispatch(emptyRenderedComments()), dispatch(closeCommentSubmitSection()))
+		);
+		return () => unlisten();
+	});
+
+	useEffect(() => {
+		if (renderedComments.length === 0) return;
+
+		const unlisten = history.listen(
+			() => (
+				dispatch(emptyRenderedComments()),
+				dispatch(closeCommentSubmitSection()),
+				dispatch(disableCommentEdit()),
+				dispatch(deselectComment())
+			)
 		);
 		return () => unlisten();
 	});

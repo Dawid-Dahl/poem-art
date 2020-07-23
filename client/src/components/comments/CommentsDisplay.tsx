@@ -13,13 +13,7 @@ const CommentsDisplay = () => {
 		<>
 			<Wrapper>
 				{renderedComments.map(comment => (
-					<Comment
-						key={comment.id}
-						id={comment.id}
-						comment={comment.comment}
-						user={comment.user}
-						createdAt={comment.createdAt}
-					/>
+					<Comment key={comment.id} comment={comment} />
 				))}
 			</Wrapper>
 		</>

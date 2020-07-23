@@ -84,6 +84,15 @@ export const removeCommentsFromRenderedComments = (commentIds: Array<ReduxCommen
 		type: "REMOVE_COMMENTS_FROM_RENDERED_COMMENTS",
 		commentIds,
 	} as const);
+export const selectComment = (comment: ReduxComment) =>
+	({
+		type: "SELECT_COMMENT",
+		comment,
+	} as const);
+export const deselectComment = () =>
+	({
+		type: "DESELECT_COMMENT",
+	} as const);
 export const emptyRenderedComments = () =>
 	({
 		type: "EMPTY_RENDERED_COMMENTS",
@@ -95,6 +104,14 @@ export const openCommentSubmitSection = () =>
 export const closeCommentSubmitSection = () =>
 	({
 		type: "CLOSE_COMMENT_SUBMIT_SECTION",
+	} as const);
+export const enableCommentEdit = () =>
+	({
+		type: "ENABLE_COMMENT_EDIT",
+	} as const);
+export const disableCommentEdit = () =>
+	({
+		type: "DISABLE_COMMENT_EDIT",
 	} as const);
 
 export type CommentActionTypes =
@@ -110,6 +127,10 @@ export type CommentActionTypes =
 	| ReturnType<typeof renderComments>
 	| ReturnType<typeof addCommentsToRenderedComments>
 	| ReturnType<typeof removeCommentsFromRenderedComments>
+	| ReturnType<typeof selectComment>
+	| ReturnType<typeof deselectComment>
 	| ReturnType<typeof emptyRenderedComments>
 	| ReturnType<typeof openCommentSubmitSection>
-	| ReturnType<typeof closeCommentSubmitSection>;
+	| ReturnType<typeof closeCommentSubmitSection>
+	| ReturnType<typeof enableCommentEdit>
+	| ReturnType<typeof disableCommentEdit>;

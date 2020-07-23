@@ -6,6 +6,7 @@ import {
 	renderComments,
 	deleteComment,
 	removeCommentsFromRenderedComments,
+	deselectComment,
 } from "../actions/commentActions";
 import {apiService} from "../api/apiService";
 import {parseMainApiResponse, comment} from "../utils/utils";
