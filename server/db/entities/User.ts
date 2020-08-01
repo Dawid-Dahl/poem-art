@@ -6,6 +6,7 @@ import {
 	UpdateDateColumn,
 	BaseEntity,
 	OneToMany,
+	JoinColumn,
 } from "typeorm";
 import {Collection} from "./Collection";
 import {Comment} from "./Comment";

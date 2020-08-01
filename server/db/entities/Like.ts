@@ -2,12 +2,11 @@ import {
 	Entity,
 	PrimaryGeneratedColumn,
 	CreateDateColumn,
-	UpdateDateColumn,
 	BaseEntity,
 	ManyToOne,
-	OneToOne,
 	Unique,
-	Check,
+	JoinColumn,
+	Column,
 } from "typeorm";
 import {ArtPoem} from "./ArtPoem";
 import {User} from "./User";
@@ -18,10 +17,14 @@ export class Like extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@ManyToOne(type => ArtPoem, artpoem => artpoem.like)
+	@Column({nullable: true})
+	userId: string;
+
+	@ManyToOne(type => ArtPoem, artpoem => artpoem.likes)
 	artpoem: ArtPoem;
 
 	@ManyToOne(type => User, user => user.likes)
+	@JoinColumn()
 	user: User;
 
 	@CreateDateColumn()

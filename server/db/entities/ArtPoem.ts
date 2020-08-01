@@ -45,7 +45,7 @@ export class ArtPoem extends BaseEntity {
 	comments: Comment;
 
 	@OneToMany(type => Like, like => like.artpoem)
-	like: Like;
+	likes: Like;
 
 	@CreateDateColumn()
 	createdAt: Date;
