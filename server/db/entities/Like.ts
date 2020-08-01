@@ -7,11 +7,13 @@ import {
 	ManyToOne,
 	OneToOne,
 	Unique,
+	Check,
 } from "typeorm";
 import {ArtPoem} from "./ArtPoem";
 import {User} from "./User";
 
 @Entity()
+@Unique(["artpoem", "user"])
 export class Like extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
@@ -24,7 +26,4 @@ export class Like extends BaseEntity {
 
 	@CreateDateColumn()
 	createdAt: Date;
-
-	@UpdateDateColumn()
-	updatedAt: Date;
 }

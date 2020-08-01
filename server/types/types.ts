@@ -4,7 +4,6 @@ export type ArtPoem = {
 	id: number;
 	title: string;
 	content: string;
-	likes: number;
 	imageUrl: string;
 	userId: string;
 	createdAt: string | Date;
@@ -28,7 +27,6 @@ export type Comment = {
 	id: number;
 	author: ArtPoemId;
 	comment: string;
-	likes: number;
 	createdAt: string | Date;
 	updatedAt: string | Date;
 };

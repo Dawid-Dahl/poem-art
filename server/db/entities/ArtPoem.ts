@@ -27,9 +27,6 @@ export class ArtPoem extends BaseEntity {
 	@Column({type: "text"})
 	content: string;
 
-	@Column({type: "integer", default: 0})
-	likes: number;
-
 	@Column({type: "varchar", nullable: true})
 	imageUrl: string;
 
