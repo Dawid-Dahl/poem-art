@@ -27,7 +27,7 @@ const SelectElement: React.FC<Props> = ({
 export default SelectElement;
 
 const StyledSelectElement = styled.select`
-	border: solid transparent 1px;
+	border: solid var(--light-grey-color) 1px;
 	width: 100%;
 	height: 52px;
 	font-size: 1em;

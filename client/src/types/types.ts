@@ -26,12 +26,12 @@ export type ReduxArtPoem = {
 	title: string;
 	content: string;
 	imageUrl: string;
-	likes?: number;
 	comments?: Comment[];
 	userId: string;
 	createdAt?: string;
 	updatedAt?: string;
 	collections: ReduxCollection[];
+	likes: ReduxLike[];
 };
 
 export type Collection = {
@@ -55,6 +55,12 @@ export type ReduxComment = {
 	user: User;
 	createdAt: string;
 	updatedAt?: string;
+};
+
+export type ReduxLike = {
+	id: number;
+	userId: string;
+	createdAt: string;
 };
 
 export type xTokenPayload = {

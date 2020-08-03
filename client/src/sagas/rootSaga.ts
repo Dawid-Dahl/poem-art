@@ -5,6 +5,7 @@ import flashSaga from "./flashSaga";
 import loginSaga from "./loginSaga";
 import syncPoemsSaga from "./syncPoemsSaga";
 import commentSaga from "./commentSaga";
+import likeSaga from "./likeSaga";
 
 export default function* rootSaga() {
 	yield all([
@@ -14,5 +15,6 @@ export default function* rootSaga() {
 		flashSaga(),
 		loginSaga(),
 		commentSaga(),
+		likeSaga(),
 	]);
 }

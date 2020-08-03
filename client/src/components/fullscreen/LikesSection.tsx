@@ -1,22 +1,39 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import {likePoem} from "../../actions/asyncPoemActions";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store";
+import {ReduxLike, User} from "../../types/types";
+import {enableHasUserLikedPoem} from "../../actions/likeActions";
 
 type Props = {
-	likes: number;
+	likes: ReduxLike[];
 };
+
+const countLikes = (likes: ReduxLike[]): number => likes.length;
+
+const hasUserLikedPoem = (user: User, likes: ReduxLike[]): boolean =>
+	Boolean(likes.find(like => like.userId === user.id));
 
 const LikesSection: React.FC<Props> = ({likes}) => {
 	const dispatch = useDispatch();
+	const user = useSelector((state: RootState) => state.userReducer.user);
+
+	useEffect(() => {
+		if (!user) return;
+		if (!likes) return;
+
+		if (hasUserLikedPoem(user, likes)) dispatch(enableHasUserLikedPoem());
+	}, [likes]);
 
 	const poemSelected = useSelector((state: RootState) => state.syncPoemReducer.poemSelected);
 
 	return (
 		<>
 			<Wrapper>
-				<p onClick={e => dispatch(likePoem(poemSelected.id))}>{`👍🏻 ${likes}`}</p>
+				<p onClick={e => dispatch(likePoem(poemSelected.id))}>{`👍🏻 ${countLikes(
+					likes
+				)}`}</p>
 			</Wrapper>
 		</>
 	);

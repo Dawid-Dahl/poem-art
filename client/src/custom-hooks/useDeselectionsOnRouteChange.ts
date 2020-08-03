@@ -10,6 +10,7 @@ import {
 	disableCommentEdit,
 	deselectComment,
 } from "../actions/commentActions";
+import {disableHasUserLikedPoem} from "../actions/likeActions";
 
 export const useDeselectionsOnRouteChange = () => {
 	const dispatch = useDispatch();
@@ -56,6 +57,11 @@ export const useDeselectionsOnRouteChange = () => {
 				dispatch(deselectComment())
 			)
 		);
+		return () => unlisten();
+	});
+
+	useEffect(() => {
+		const unlisten = history.listen(() => dispatch(disableHasUserLikedPoem()));
 		return () => unlisten();
 	});
 };

@@ -76,9 +76,7 @@ const FullscreenPicture: React.FC<Props> = () => {
 							poem={selectedArtPoem.content}
 						/>
 						<SidebarWrapper>
-							<LikesSection
-								likes={selectedArtPoem.likes ? selectedArtPoem.likes : 0}
-							/>
+							<LikesSection likes={selectedArtPoem.likes} />
 							<CommentSection />
 						</SidebarWrapper>
 					</Grid>
