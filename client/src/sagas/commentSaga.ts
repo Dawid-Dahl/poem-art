@@ -7,10 +7,12 @@ import {
 	editComment,
 	editCommentFulfilled,
 	disableCommentEdit,
+	getCommentsFailed,
 } from "../actions/commentActions";
 import {apiService} from "../api/apiService";
 import {parseMainApiResponse} from "../utils/utils";
 import {ReduxComment} from "../types/types";
+import {updateSelectedPoemComments} from "../actions/syncPoemAction";
 
 function* workerGetComments({artPoemId, commentCount}: ReturnType<typeof getComments>) {
 	try {
@@ -22,6 +24,12 @@ function* workerGetComments({artPoemId, commentCount}: ReturnType<typeof getComm
 		const json = yield call([res, "json"]);
 
 		const comments: ReduxComment[] = parseMainApiResponse(json);
+
+		if (json.success) {
+			yield put(updateSelectedPoemComments(comments));
+		} else {
+			yield put(getCommentsFailed());
+		}
 	} catch (e) {
 		console.log(e);
 	}
@@ -40,12 +48,18 @@ function* workerPostComment({commentContent, artPoemId}: ReturnType<typeof postC
 		const json = yield call([res, "json"]);
 
 		const insertResult = JSON.parse(parseMainApiResponse(json).insertResult);
+
+		yield put(getComments(artPoemId));
 	} catch (e) {
 		console.log(e);
 	}
 }
 
-function* workerEditComment({commentContent, commentId}: ReturnType<typeof editComment>) {
+function* workerEditComment({
+	commentContent,
+	commentId,
+	artPoemId,
+}: ReturnType<typeof editComment>) {
 	try {
 		const res = yield call(apiService.refreshAndFetch, `comments/edit?commentId=${commentId}`, {
 			method: "PUT",
@@ -59,6 +73,7 @@ function* workerEditComment({commentContent, commentId}: ReturnType<typeof editC
 
 		const insertResult = JSON.parse(parseMainApiResponse(json).insertResult);
 
+		yield put(getComments(artPoemId));
 		yield put(disableCommentEdit());
 		yield put(deselectComment());
 		yield put(editCommentFulfilled(insertResult as ReduxComment));
@@ -67,7 +82,7 @@ function* workerEditComment({commentContent, commentId}: ReturnType<typeof editC
 	}
 }
 
-function* deletePostComment({commentId}: ReturnType<typeof deleteComment>) {
+function* deletePostComment({commentId, artPoemId}: ReturnType<typeof deleteComment>) {
 	try {
 		const res = yield call(
 			apiService.refreshAndFetch,
@@ -76,6 +91,8 @@ function* deletePostComment({commentId}: ReturnType<typeof deleteComment>) {
 				method: "DELETE",
 			}
 		);
+
+		yield put(getComments(artPoemId));
 	} catch (e) {
 		console.log(e);
 	}

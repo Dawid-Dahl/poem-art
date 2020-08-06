@@ -38,11 +38,16 @@ export const postCommentFailed = () =>
 
 //UPDATE
 
-export const editComment = (commentContent: string, commentId: ReduxComment["id"]) =>
+export const editComment = (
+	commentContent: string,
+	commentId: ReduxComment["id"],
+	artPoemId: ReduxArtPoem["id"]
+) =>
 	({
 		type: "EDIT_COMMENT",
 		commentContent,
 		commentId,
+		artPoemId,
 	} as const);
 export const editCommentFulfilled = (insertResult: ReduxComment) =>
 	({
@@ -56,10 +61,11 @@ export const editCommentFailed = () =>
 
 //DELETE
 
-export const deleteComment = (commentId: ReduxComment["id"]) =>
+export const deleteComment = (commentId: ReduxComment["id"], artPoemId: ReduxArtPoem["id"]) =>
 	({
 		type: "DELETE_COMMENT",
 		commentId,
+		artPoemId,
 	} as const);
 export const deleteCommentFulfilled = () =>
 	({

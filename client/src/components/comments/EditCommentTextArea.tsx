@@ -5,11 +5,12 @@ import {editComment, disableCommentEdit, deselectComment} from "../../actions/co
 import {RootState} from "../../store";
 import {showFlash} from "../../actions/flashActions";
 import Button from "../Button";
-import {ReduxComment} from "../../types/types";
+import {ReduxComment, ReduxArtPoem} from "../../types/types";
 
 const handleSubmit = (e: React.FormEvent<HTMLFormElement>, dispatch: Dispatch<any>) => (
 	editCommentContent: string,
-	commentSelected: ReduxComment | null
+	commentSelected: ReduxComment | null,
+	artPoemId: ReduxArtPoem["id"]
 ) => {
 	try {
 		e.preventDefault();
@@ -26,7 +27,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>, dispatch: Dispatch<an
 		}
 
 		if (commentSelected) {
-			dispatch(editComment(editCommentContent, commentSelected.id));
+			dispatch(editComment(editCommentContent, commentSelected.id, artPoemId));
 		}
 	} catch (e) {
 		console.log(e);
@@ -51,13 +52,16 @@ const EditCommentTextArea: React.FC<Props> = ({
 	const dispatch = useDispatch();
 
 	const commentSelected = useSelector((state: RootState) => state.commentReducer.commentSelected);
+	const poemSelected = useSelector((state: RootState) => state.syncPoemReducer.poemSelected);
 
 	return (
 		<>
 			<StyledForm
 				action="POST"
 				autoComplete="off"
-				onSubmit={e => handleSubmit(e, dispatch)(editCommentContent, commentSelected)}
+				onSubmit={e =>
+					handleSubmit(e, dispatch)(editCommentContent, commentSelected, poemSelected.id)
+				}
 				data-comment-id={dataCommentId}
 			>
 				<TextArea

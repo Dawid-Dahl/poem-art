@@ -48,6 +48,8 @@ export const syncPoemReducer = (
 			return {...state, renderedPoems: []};
 		case "UPDATE_SELECTED_POEM_LIKES":
 			return R.set(R.lensPath(["poemSelected", "likes"]), action.likes, state);
+		case "UPDATE_SELECTED_POEM_COMMENTS":
+			return R.set(R.lensPath(["poemSelected", "comments"]), action.comments, state);
 		default:
 			return state;
 	}

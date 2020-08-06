@@ -6,8 +6,9 @@ import {
 	deleteComment,
 	disableCommentEdit,
 } from "../../actions/commentActions";
-import {useDispatch} from "react-redux";
-import {ReduxComment} from "../../types/types";
+import {useDispatch, useSelector} from "react-redux";
+import {ReduxComment, ReduxArtPoem} from "../../types/types";
+import {RootState} from "../../store";
 
 type Props = {
 	comment: ReduxComment;
@@ -29,12 +30,17 @@ const handleEdit = (dispatch: Dispatch<any>) => (
 	}
 };
 
-const handleDelete = (dispatch: Dispatch<any>) => (id: ReduxComment["id"]) => {
-	confirm("Are you sure you want to delete this comment?") && dispatch(deleteComment(id));
+const handleDelete = (dispatch: Dispatch<any>) => (
+	commentId: ReduxComment["id"],
+	artPoemId: ReduxArtPoem["id"]
+) => {
+	confirm("Are you sure you want to delete this comment?") &&
+		dispatch(deleteComment(commentId, artPoemId));
 };
 
 const EditDeleteButtons: React.FC<Props> = ({comment, isEditingComment, setEditComment}) => {
 	const dispatch = useDispatch();
+	const poemSelected = useSelector((state: RootState) => state.syncPoemReducer.poemSelected);
 
 	return (
 		<SpanWrapper data-comment-id={comment.id}>
@@ -44,7 +50,10 @@ const EditDeleteButtons: React.FC<Props> = ({comment, isEditingComment, setEditC
 			>
 				🖋️
 			</span>
-			<span data-comment-id={comment.id} onClick={e => handleDelete(dispatch)(comment.id)}>
+			<span
+				data-comment-id={comment.id}
+				onClick={e => handleDelete(dispatch)(comment.id, poemSelected.id)}
+			>
 				❌
 			</span>
 		</SpanWrapper>

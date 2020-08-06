@@ -28,7 +28,7 @@ function* workerLikePoem({artPoemId}: ReturnType<typeof likePoem>) {
 			yield put(getLikesByPoem(artPoemId));
 		} else {
 			const parsed = parseMainApiLikeResponse(json);
-			console.log(parsed);
+
 			yield put(likePoemFailed());
 		}
 	} catch (e) {
@@ -51,7 +51,7 @@ function* workerUnlikePoem({likeId, artPoemId}: ReturnType<typeof unlikePoem>) {
 			yield put(getLikesByPoem(artPoemId));
 		} else {
 			const parsed = parseMainApiLikeResponse(json);
-			console.log(parsed);
+
 			yield put(likePoemFailed());
 		}
 	} catch (e) {
