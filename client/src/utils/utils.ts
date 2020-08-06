@@ -191,6 +191,15 @@ export const parseMainApiResponse = (res: MainApiJsonResponse) => {
 	}
 };
 
+export const parseMainApiLikeResponse = (res: MainApiJsonResponse) => {
+	if (res.success) {
+		return JSON.parse(res.payload);
+	} else {
+		const parsed = JSON.parse(res.payload);
+		throw new Error(`${parsed.message}. You can't like an item twice!`);
+	}
+};
+
 /** This function takes a xToken/xRefreshToken-pair and uses them for verification.
  *
  * Returns the x-token if valid, or a refreshed x-token if not valid but x-refresh-token is valid. The user is thereby successfully verified.

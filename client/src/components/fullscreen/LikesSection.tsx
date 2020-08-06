@@ -1,39 +1,74 @@
-import React, {useEffect} from "react";
+import React, {useEffect, Dispatch} from "react";
 import styled from "styled-components";
-import {likePoem} from "../../actions/asyncPoemActions";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store";
-import {ReduxLike, User} from "../../types/types";
-import {enableHasUserLikedPoem} from "../../actions/likeActions";
+import {ReduxLike, User, ReduxArtPoem} from "../../types/types";
+import {enableHasUserLikedPoem, likePoem, unlikePoem} from "../../actions/likeActions";
 
-type Props = {
-	likes: ReduxLike[];
-};
+type Props = {};
 
-const countLikes = (likes: ReduxLike[]): number => likes.length;
+export const countLikes = (likes: ReduxLike[]): number => likes.length;
 
-const hasUserLikedPoem = (user: User, likes: ReduxLike[]): boolean =>
+const hasUserLiked = (user: User, likes: ReduxLike[]): boolean =>
 	Boolean(likes.find(like => like.userId === user.id));
 
-const LikesSection: React.FC<Props> = ({likes}) => {
+const getUserLike = (user: User | null, likes: ReduxLike[]): ReduxLike | undefined =>
+	user ? likes.find(like => like.userId === user.id) : undefined;
+
+const LikesSection: React.FC<Props> = () => {
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.userReducer.user);
+	const hasUserLikedPoem = useSelector((state: RootState) => state.likeReducer.hasUserLikedPoem);
+	const poemSelected = useSelector((state: RootState) => state.syncPoemReducer.poemSelected);
 
 	useEffect(() => {
 		if (!user) return;
-		if (!likes) return;
+		if (!poemSelected.likes) return;
 
-		if (hasUserLikedPoem(user, likes)) dispatch(enableHasUserLikedPoem());
-	}, [likes]);
+		if (hasUserLiked(user, poemSelected.likes)) dispatch(enableHasUserLikedPoem());
+	}, [poemSelected]);
 
-	const poemSelected = useSelector((state: RootState) => state.syncPoemReducer.poemSelected);
+	const handleLikeClick = (
+		e: React.MouseEvent<HTMLParagraphElement, MouseEvent>,
+		dispatch: Dispatch<any>
+	) => (user: User | null, poemSelected: ReduxArtPoem) => (
+		hasUserLikedPoem: boolean,
+		getUserLike: (user: User | null, likes: ReduxLike[]) => ReduxLike | undefined
+	) => {
+		if (hasUserLikedPoem) {
+			const userLike = getUserLike(user, poemSelected.likes);
+			if (!userLike) return;
+
+			dispatch(unlikePoem(userLike.id, poemSelected.id));
+		} else {
+			dispatch(likePoem(poemSelected.id));
+		}
+	};
 
 	return (
 		<>
 			<Wrapper>
-				<p onClick={e => dispatch(likePoem(poemSelected.id))}>{`👍🏻 ${countLikes(
-					likes
-				)}`}</p>
+				<LikeIcon
+					onClick={e =>
+						handleLikeClick(e, dispatch)(user, poemSelected)(
+							hasUserLikedPoem,
+							getUserLike
+						)
+					}
+					hasUserLikedPoem={hasUserLikedPoem}
+				>
+					👍🏻
+				</LikeIcon>
+				<LikeCounter
+					onClick={e =>
+						handleLikeClick(e, dispatch)(user, poemSelected)(
+							hasUserLikedPoem,
+							getUserLike
+						)
+					}
+				>
+					{`${countLikes(poemSelected.likes)}`}{" "}
+				</LikeCounter>
 			</Wrapper>
 		</>
 	);
@@ -51,9 +86,8 @@ const Wrapper = styled.div`
 	padding: 50px;
 
 	p {
-		margin: 0;
-		cursor: pointer;
-		display: inline;
+		text-align: center;
+		font-size: 2em;
 	}
 
 	@media only screen and (max-width: 1280px) {
@@ -62,9 +96,24 @@ const Wrapper = styled.div`
 
 	@media only screen and (max-width: 800px) {
 	}
+`;
 
-	p {
-		text-align: center;
-		font-size: 2em;
-	}
+type LikeIconProps = {
+	hasUserLikedPoem: boolean;
+};
+
+const LikeIcon = styled.p<LikeIconProps>`
+	background-color: ${props =>
+		props.hasUserLikedPoem ? "var(--main-btn-color)" : "transparent"};
+	border-radius: 5px;
+	margin: 0.3em;
+	padding: 0.2em;
+	cursor: pointer;
+	display: inline;
+`;
+
+const LikeCounter = styled.p`
+	margin: 0.3em;
+	cursor: pointer;
+	display: inline;
 `;

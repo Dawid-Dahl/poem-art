@@ -9,7 +9,7 @@ export const getArtPoemsController = async (req: Request, res: Response) => {
 
 	try {
 		const artPoems = await artPoemRepo.find({
-			relations: ["collections", "likes"],
+			relations: ["collections", "comments", "likes"],
 			take: poemCount,
 		});
 

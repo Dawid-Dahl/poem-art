@@ -9,6 +9,8 @@ export type ArtPoem = {
 	createdAt: string | Date;
 	updatedAt: string | Date;
 	collections: Collection[];
+	comments: Comment[];
+	likes: Like[];
 };
 
 export type CollectionId = Pick<Collection, "id">;
@@ -25,10 +27,15 @@ export type CommentId = Pick<Comment, "id">;
 
 export type Comment = {
 	id: number;
-	author: ArtPoemId;
 	comment: string;
 	createdAt: string | Date;
 	updatedAt: string | Date;
+};
+
+export type Like = {
+	id: number;
+	userId: string;
+	createdAt: string | Date;
 };
 
 export type UserId = User["id"];

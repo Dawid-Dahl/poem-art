@@ -1,6 +1,6 @@
 //READ
 
-import {ReduxCollection, ReduxArtPoem, User} from "../types/types";
+import {ReduxCollection, ReduxArtPoem, User, ReduxLike} from "../types/types";
 
 export const renderPoems = (artPoems: ReduxArtPoem[]) =>
 	({
@@ -54,6 +54,12 @@ export const getPoemsByUserAndCollection = (
 
 //UPDATE
 
+export const updateSelectedPoemLikes = (likes: ReduxLike[]) =>
+	({
+		type: "UPDATE_SELECTED_POEM_LIKES",
+		likes,
+	} as const);
+
 //DELETE
 
 export const removePoemsFromRenderedPoems = (artPoemIds: Array<ReduxArtPoem["id"]>) =>
@@ -74,6 +80,7 @@ export type SyncPoemActionTypes =
 	| ReturnType<typeof renderSocialFeedFulfilled>
 	| ReturnType<typeof selectPoem>
 	| ReturnType<typeof deselectPoem>
+	| ReturnType<typeof updateSelectedPoemLikes>
 	| ReturnType<typeof removePoemsFromRenderedPoems>
 	| ReturnType<typeof removeAllPoemsFromRenderedPoems>
 	| ReturnType<typeof getPoemsByUserAndCollection>;

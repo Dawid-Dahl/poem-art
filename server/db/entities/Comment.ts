@@ -6,6 +6,7 @@ import {
 	UpdateDateColumn,
 	BaseEntity,
 	ManyToOne,
+	JoinColumn,
 } from "typeorm";
 import {ArtPoem} from "./ArtPoem";
 import {User} from "./User";
@@ -22,6 +23,7 @@ export class Comment extends BaseEntity {
 	artpoem: ArtPoem;
 
 	@ManyToOne(type => User, user => user.comments)
+	@JoinColumn()
 	user: User;
 
 	@CreateDateColumn()

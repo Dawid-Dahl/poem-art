@@ -31,7 +31,7 @@ import {
 } from "../actions/syncPoemAction";
 import {poemNotFound, welcomePoem} from "../utils/defaultPoems";
 
-function* workerGetPoem({artPoemId}: ReturnType<typeof getPoem>) {
+export function* workerGetPoem({artPoemId}: ReturnType<typeof getPoem>) {
 	try {
 		yield put(startLoading());
 

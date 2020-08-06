@@ -42,10 +42,10 @@ export class ArtPoem extends BaseEntity {
 	collections: Collection[];
 
 	@OneToMany(type => Comment, comment => comment.artpoem)
-	comments: Comment;
+	comments: Comment[];
 
 	@OneToMany(type => Like, like => like.artpoem)
-	likes: Like;
+	likes: Like[];
 
 	@CreateDateColumn()
 	createdAt: Date;

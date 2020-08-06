@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 import {ReduxArtPoem} from "../../types/types";
+import {countLikes} from "../fullscreen/LikesSection";
 
 const ArtPoem: React.FC<ReduxArtPoem> = ({id, title, likes, imageUrl}) => {
 	return (
@@ -10,7 +11,7 @@ const ArtPoem: React.FC<ReduxArtPoem> = ({id, title, likes, imageUrl}) => {
 				<Link to={`/fullscreen?id=${id}`}>
 					<StyledDiv imageUrl={imageUrl}>
 						<ArtPoemTitle>{title}</ArtPoemTitle>
-						<ArtPoemLikes>{`👍🏻 ${likes}`}</ArtPoemLikes>
+						<ArtPoemLikes>{`👍🏻 ${countLikes(likes)}`}</ArtPoemLikes>
 					</StyledDiv>
 				</Link>
 			</Wrapper>

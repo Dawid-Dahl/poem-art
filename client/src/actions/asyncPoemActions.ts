@@ -82,17 +82,6 @@ export const editPoemFulfilled = () =>
 		type: "EDIT_POEM_FULFILLED",
 	} as const);
 
-export const likePoem = (artPoemId: ReduxArtPoem["id"]) =>
-	({
-		type: "LIKE_POEM",
-		artPoemId,
-	} as const);
-
-export const likePoemFulfilled = () =>
-	({
-		type: "LIKE_POEM_FULFILLED",
-	} as const);
-
 //DELETE
 
 export const deletePoem = (artPoemId: ReduxArtPoem["id"]) =>
@@ -134,8 +123,6 @@ export type AsyncPoemActionTypes =
 	| ReturnType<typeof getPoemsByUserIdFailed>
 	| ReturnType<typeof editPoem>
 	| ReturnType<typeof editPoemFulfilled>
-	| ReturnType<typeof likePoem>
-	| ReturnType<typeof likePoemFulfilled>
 	| ReturnType<typeof deletePoem>
 	| ReturnType<typeof deletePoemFulfilled>
 	| ReturnType<typeof removePoemsFromCache>

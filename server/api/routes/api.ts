@@ -5,6 +5,7 @@ import collectionsRouter from "./collectionsRouter";
 import {jsonResponse} from "../utils/utils";
 import verifyXToken from "../middleware/verifyXToken";
 import commentsRouter from "./commentsRouter";
+import likesRouter from "./likeRouter";
 
 const apiRouter = express.Router();
 
@@ -17,5 +18,6 @@ apiRouter.use("/users", userRouter);
 apiRouter.use("/artpoem", verifyXToken, artPoemRouter);
 apiRouter.use("/collections", verifyXToken, collectionsRouter);
 apiRouter.use("/comments", verifyXToken, commentsRouter);
+apiRouter.use("/likes", verifyXToken, likesRouter);
 
 export default apiRouter;

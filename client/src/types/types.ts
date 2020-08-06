@@ -26,11 +26,11 @@ export type ReduxArtPoem = {
 	title: string;
 	content: string;
 	imageUrl: string;
-	comments?: Comment[];
 	userId: string;
 	createdAt?: string;
 	updatedAt?: string;
 	collections: ReduxCollection[];
+	comments: ReduxComment[];
 	likes: ReduxLike[];
 };
 

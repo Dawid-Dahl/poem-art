@@ -2,6 +2,7 @@ import {ReduxArtPoem} from "../types/types";
 import {sortArtPoemsByCollection, doesArtPoemBelongToUser} from "../utils/utils";
 import {SyncPoemActionTypes} from "../actions/syncPoemAction";
 import {welcomePoem, initPoem} from "../utils/defaultPoems";
+import * as R from "rambda";
 
 export type SyncPoemReducerState = {
 	renderedPoems: ReduxArtPoem[];
@@ -45,6 +46,8 @@ export const syncPoemReducer = (
 			};
 		case "REMOVE_ALL_POEMS_FROM_RENDERED_POEMS":
 			return {...state, renderedPoems: []};
+		case "UPDATE_SELECTED_POEM_LIKES":
+			return R.set(R.lensPath(["poemSelected", "likes"]), action.likes, state);
 		default:
 			return state;
 	}
