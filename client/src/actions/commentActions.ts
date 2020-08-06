@@ -4,7 +4,7 @@ import {ReduxArtPoem, ReduxComment} from "../types/types";
 
 //READ
 
-export const getComments = (artPoemId: ReduxArtPoem["id"], commentCount = 20) =>
+export const getComments = (artPoemId: ReduxArtPoem["id"], commentCount = 30) =>
 	({
 		type: "GET_COMMENTS",
 		artPoemId,
@@ -72,21 +72,6 @@ export const deleteCommentFailed = () =>
 
 // -> SYNC
 
-export const renderComments = (comments: ReduxComment[]) =>
-	({
-		type: "RENDER_COMMENTS",
-		comments,
-	} as const);
-export const addCommentsToRenderedComments = (comments: ReduxComment[]) =>
-	({
-		type: "ADD_COMMENTS_TO_RENDERED_COMMENTS",
-		comments,
-	} as const);
-export const removeCommentsFromRenderedComments = (commentIds: Array<ReduxComment["id"]>) =>
-	({
-		type: "REMOVE_COMMENTS_FROM_RENDERED_COMMENTS",
-		commentIds,
-	} as const);
 export const selectComment = (comment: ReduxComment) =>
 	({
 		type: "SELECT_COMMENT",
@@ -95,10 +80,6 @@ export const selectComment = (comment: ReduxComment) =>
 export const deselectComment = () =>
 	({
 		type: "DESELECT_COMMENT",
-	} as const);
-export const emptyRenderedComments = () =>
-	({
-		type: "EMPTY_RENDERED_COMMENTS",
 	} as const);
 export const openCommentSubmitSection = () =>
 	({
@@ -127,12 +108,8 @@ export type CommentActionTypes =
 	| ReturnType<typeof deleteComment>
 	| ReturnType<typeof deleteCommentFulfilled>
 	| ReturnType<typeof deleteCommentFailed>
-	| ReturnType<typeof renderComments>
-	| ReturnType<typeof addCommentsToRenderedComments>
-	| ReturnType<typeof removeCommentsFromRenderedComments>
 	| ReturnType<typeof selectComment>
 	| ReturnType<typeof deselectComment>
-	| ReturnType<typeof emptyRenderedComments>
 	| ReturnType<typeof openCommentSubmitSection>
 	| ReturnType<typeof closeCommentSubmitSection>
 	| ReturnType<typeof enableCommentEdit>

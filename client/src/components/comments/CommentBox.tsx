@@ -35,42 +35,45 @@ const CommentBox: React.FC<Props> = ({comment}) => {
 	}, [commentSelected]);
 
 	return (
-		<>
-			<Wrapper>
-				<PresentationWrapper data-comment-id={id}>
-					<ProfilePicWrapper data-comment-id={id}>
-						<Link to={"/profile"}>
-							<ProfilePic size={3} />
-						</Link>
-					</ProfilePicWrapper>
-					<NameDateWrapper data-comment-id={id}>
-						<h2 data-comment-id={id}>{user.username}</h2>
-						<h3 data-comment-id={id}>{dayjs(Date.parse(createdAt)).fromNow()}</h3>
-					</NameDateWrapper>
-					{user.id === userId && (
-						<EditDeleteButtons
-							data-comment-id={id}
-							comment={comment}
-							isEditingComment={isEditingComment}
+		console.log(comment),
+		(
+			<>
+				<Wrapper>
+					<PresentationWrapper data-comment-id={id}>
+						<ProfilePicWrapper data-comment-id={id}>
+							<Link to={"/profile"}>
+								<ProfilePic size={3} />
+							</Link>
+						</ProfilePicWrapper>
+						<NameDateWrapper data-comment-id={id}>
+							<h2 data-comment-id={id}>{user.username}</h2>
+							<h3 data-comment-id={id}>{dayjs(Date.parse(createdAt)).fromNow()}</h3>
+						</NameDateWrapper>
+						{user.id === userId && (
+							<EditDeleteButtons
+								data-comment-id={id}
+								comment={comment}
+								isEditingComment={isEditingComment}
+								setEditComment={setEditComment}
+							/>
+						)}
+					</PresentationWrapper>
+					{isEditingComment && commentSelected?.id === comment.id ? (
+						<EditCommentTextArea
+							dataCommentId={id}
+							value={editComment}
+							onChangeHandler={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+								setEditComment(e.target.value)
+							}
+							editCommentContent={editComment}
 							setEditComment={setEditComment}
 						/>
+					) : (
+						<p data-comment-id={id}>{commentContent}</p>
 					)}
-				</PresentationWrapper>
-				{isEditingComment && commentSelected?.id === comment.id ? (
-					<EditCommentTextArea
-						dataCommentId={id}
-						value={editComment}
-						onChangeHandler={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-							setEditComment(e.target.value)
-						}
-						editCommentContent={editComment}
-						setEditComment={setEditComment}
-					/>
-				) : (
-					<p data-comment-id={id}>{commentContent}</p>
-				)}
-			</Wrapper>
-		</>
+				</Wrapper>
+			</>
+		)
 	);
 };
 

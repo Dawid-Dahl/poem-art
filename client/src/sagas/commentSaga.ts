@@ -1,18 +1,15 @@
 import {takeEvery, call, put} from "redux-saga/effects";
 import {
 	postComment,
-	addCommentsToRenderedComments,
 	getComments,
-	renderComments,
 	deleteComment,
-	removeCommentsFromRenderedComments,
 	deselectComment,
 	editComment,
 	editCommentFulfilled,
 	disableCommentEdit,
 } from "../actions/commentActions";
 import {apiService} from "../api/apiService";
-import {parseMainApiResponse, comment} from "../utils/utils";
+import {parseMainApiResponse} from "../utils/utils";
 import {ReduxComment} from "../types/types";
 
 function* workerGetComments({artPoemId, commentCount}: ReturnType<typeof getComments>) {
@@ -25,8 +22,6 @@ function* workerGetComments({artPoemId, commentCount}: ReturnType<typeof getComm
 		const json = yield call([res, "json"]);
 
 		const comments: ReduxComment[] = parseMainApiResponse(json);
-
-		yield put(renderComments(comments));
 	} catch (e) {
 		console.log(e);
 	}
@@ -45,21 +40,6 @@ function* workerPostComment({commentContent, artPoemId}: ReturnType<typeof postC
 		const json = yield call([res, "json"]);
 
 		const insertResult = JSON.parse(parseMainApiResponse(json).insertResult);
-
-		yield put(
-			addCommentsToRenderedComments(
-				new Array(
-					comment().create(
-						insertResult.id,
-						insertResult.comment,
-						insertResult.likes,
-						insertResult.user,
-						insertResult.createdAt,
-						insertResult.updatedAt
-					)
-				)
-			)
-		);
 	} catch (e) {
 		console.log(e);
 	}
@@ -96,8 +76,6 @@ function* deletePostComment({commentId}: ReturnType<typeof deleteComment>) {
 				method: "DELETE",
 			}
 		);
-
-		yield put(removeCommentsFromRenderedComments([commentId]));
 	} catch (e) {
 		console.log(e);
 	}

@@ -3,16 +3,15 @@ import styled from "styled-components";
 import Comment from "./Comment";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store";
+import {ReduxComment} from "../../types/types";
 
 const CommentsDisplay = () => {
-	const renderedComments = useSelector(
-		(state: RootState) => state.commentReducer.renderedComments
-	);
+	const poemSelected = useSelector((state: RootState) => state.syncPoemReducer.poemSelected);
 
 	return (
 		<>
 			<Wrapper>
-				{renderedComments.map(comment => (
+				{poemSelected.comments.map((comment: ReduxComment) => (
 					<Comment key={comment.id} comment={comment} />
 				))}
 			</Wrapper>

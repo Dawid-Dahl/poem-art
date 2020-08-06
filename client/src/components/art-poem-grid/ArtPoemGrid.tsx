@@ -24,6 +24,7 @@ const ArtPoemGrid: React.FC = () => {
 								imageUrl,
 								createdAt,
 								likes,
+								comments,
 								collections,
 								userId,
 							}) => (
@@ -36,6 +37,7 @@ const ArtPoemGrid: React.FC = () => {
 									userId={userId}
 									createdAt={createdAt}
 									likes={likes}
+									comments={comments}
 									collections={collections}
 								/>
 							)

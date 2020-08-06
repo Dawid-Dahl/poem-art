@@ -8,7 +8,7 @@ export const getArtPoemController = async (req: Request, res: Response) => {
 
 	try {
 		const artPoem = await artPoemRepo.findOne(req.query.id as string, {
-			relations: ["collections", "comments", "likes"],
+			relations: ["collections", "comments", "comments.user", "likes"],
 		});
 
 		if (artPoem) {
