@@ -35,6 +35,10 @@ export const loginController = (req: Request, res: Response, next: NextFunction)
 				return;
 			}
 
+			if (!row.isVerified) {
+				//TODO Don't allow login
+			}
+
 			const isMatch = await bcrypt.compare(req.body.password, row.password!);
 
 			if (isMatch) {

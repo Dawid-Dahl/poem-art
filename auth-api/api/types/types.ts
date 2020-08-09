@@ -6,7 +6,9 @@ export type AuthUser = {
 	id: number;
 	email?: string;
 	password?: string;
+	isVerified?: 0 | 1;
 	created_at?: string;
+	updated_at?: string;
 };
 
 export type xTokenPayload = {

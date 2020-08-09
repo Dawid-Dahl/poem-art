@@ -6,7 +6,7 @@ config({
 	path: "../../.env",
 });
 
-export const sendVerificationEmail = async (email: string) => {
+export const sendEmail = (template: Mail.Options) => async () => {
 	try {
 		const transporter = nodemailer.createTransport({
 			host: "smtp.gmail.com",
@@ -18,14 +18,7 @@ export const sendVerificationEmail = async (email: string) => {
 			},
 		});
 
-		const mailOptions: Mail.Options = {
-			from: "artpoememailservice@gmail.com",
-			to: email,
-			subject: "Testing from code",
-			text: "Teeeest2!",
-		};
-
-		const info = await transporter.sendMail(mailOptions);
+		const info = await transporter.sendMail(template);
 
 		console.log("Email sent: ", info.messageId);
 	} catch (e) {
@@ -33,5 +26,3 @@ export const sendVerificationEmail = async (email: string) => {
 		console.error(e);
 	}
 };
-
-sendVerificationEmail("dawiddahl@gmail.com");

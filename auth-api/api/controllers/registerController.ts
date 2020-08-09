@@ -5,10 +5,15 @@ import {Tables} from "../types/enums";
 import bcrypt from "bcrypt";
 import {authJsonResponse, generateId} from "../utils/utils";
 import fetch from "node-fetch";
-import {sendVerificationEmail} from "../utils/nodemailer";
+import {sendEmail} from "../utils/nodemailer";
+import {verificationEmail} from "../utils/mail-templates";
 
 export const registerController = async (req: Request, res: Response) => {
 	const errors = validationResult(req);
+
+	const sendVerificationEmail = sendEmail(
+		verificationEmail().create(req.body.email, "JWT GOES HERE // TODO")
+	);
 
 	if (errors.isEmpty()) {
 		const dbPath = process.env.DB_PATH || "";
@@ -55,7 +60,7 @@ export const registerController = async (req: Request, res: Response) => {
 								body: JSON.stringify({id, username: req.body.username}),
 							});
 
-							sendVerificationEmail(req.body.email);
+							sendVerificationEmail();
 
 							res.status(200).json(
 								authJsonResponse(true, {
