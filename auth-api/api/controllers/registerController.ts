@@ -34,7 +34,7 @@ export const registerController = async (req: Request, res: Response) => {
 						console.log(err);
 
 						const errorMsg = err.message.includes(
-							"UNIQUE constraint failed: AuthUsers.email"
+							"UNIQUE constraint failed: Auth_Users.email"
 						)
 							? "A user with that email is already registered."
 							: "Couldn't register user.";

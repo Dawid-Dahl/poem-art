@@ -1,5 +1,5 @@
 export enum Tables {
-	auth_users = "AuthUsers",
+	auth_users = "Auth_Users",
 	refresh_tokens = "Refresh_Tokens",
 }
 
