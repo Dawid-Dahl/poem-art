@@ -42,7 +42,7 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 				.then(res => res.json())
 				.then((data: AuthJsonResponse) => {
 					if (data.success) {
-						dispatch(showFlash(data.payload?.message ?? ""));
+						dispatch(showFlash(data.payload?.message ?? "", 6000));
 						history.push(redirectUrl);
 					} else {
 						dispatch(showFlash(data.payload?.message ?? ""));

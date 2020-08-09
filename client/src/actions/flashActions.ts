@@ -1,7 +1,8 @@
-export const showFlash = (message: string) =>
+export const showFlash = (message: string, milliseconds: number = 3000) =>
 	({
 		type: "SHOW_FLASH",
 		message,
+		milliseconds,
 	} as const);
 
 export const showFlashFulfilled = (message: string) =>

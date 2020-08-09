@@ -57,7 +57,7 @@ export const registerController = async (req: Request, res: Response) => {
 							res.status(200).json(
 								authJsonResponse(true, {
 									message:
-										"Registration successful. Welcome! You can now log in!",
+										"Almost done! Complete your registration by clicking the verification link in the email sent to your inbox!",
 								})
 							);
 						} catch (e) {

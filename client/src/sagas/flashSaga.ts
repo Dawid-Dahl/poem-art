@@ -5,9 +5,9 @@ function* workerHideFlash() {
 	yield put(hideFlash());
 }
 
-function* workerShowFlash({message}: ReturnType<typeof showFlash>) {
+function* workerShowFlash({message, milliseconds}: ReturnType<typeof showFlash>) {
 	yield put(showFlashFulfilled(message));
-	yield delay(3000);
+	yield delay(milliseconds);
 	yield put(hideFlash());
 }
 
