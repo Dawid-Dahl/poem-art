@@ -5,6 +5,7 @@ import {Tables} from "../types/enums";
 import bcrypt from "bcrypt";
 import {authJsonResponse, generateId} from "../utils/utils";
 import fetch from "node-fetch";
+import {sendVerificationEmail} from "../utils/nodemailer";
 
 export const registerController = async (req: Request, res: Response) => {
 	const errors = validationResult(req);
@@ -53,6 +54,8 @@ export const registerController = async (req: Request, res: Response) => {
 								},
 								body: JSON.stringify({id, username: req.body.username}),
 							});
+
+							sendVerificationEmail(req.body.email);
 
 							res.status(200).json(
 								authJsonResponse(true, {
