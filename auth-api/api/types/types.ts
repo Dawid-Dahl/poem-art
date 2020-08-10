@@ -3,7 +3,7 @@ import {ParamsDictionary} from "express-serve-static-core";
 import {authJsonResponse, jsonResponse} from "../utils/utils";
 
 export type AuthUser = {
-	id: number;
+	id: string;
 	email?: string;
 	password?: string;
 	isVerified?: 0 | 1;
@@ -16,6 +16,12 @@ export type xTokenPayload = {
 	username: string;
 	email: string;
 	admin: number;
+	iat: number;
+	exp: number;
+};
+
+export type DecodedJwt = {
+	sub: string;
 	iat: number;
 	exp: number;
 };

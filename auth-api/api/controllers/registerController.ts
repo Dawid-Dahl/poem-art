@@ -1,9 +1,11 @@
+import path from "path";
+import fs from "fs";
 import {Request, Response} from "express";
 import {validationResult} from "express-validator";
 import sqlite from "sqlite3";
 import {Tables} from "../types/enums";
 import bcrypt from "bcrypt";
-import {authJsonResponse, generateId} from "../utils/utils";
+import {authJsonResponse, generateId, issueAccessToken} from "../utils/utils";
 import fetch from "node-fetch";
 import {sendEmail} from "../utils/nodemailer";
 import {verificationEmail} from "../utils/mail-templates";
@@ -11,9 +13,13 @@ import {verificationEmail} from "../utils/mail-templates";
 export const registerController = async (req: Request, res: Response) => {
 	const errors = validationResult(req);
 
-	const sendVerificationEmail = sendEmail(
-		verificationEmail().create(req.body.email, "JWT GOES HERE // TODO")
-	);
+	const id = generateId();
+	const PRIV_KEY_PATH = path.join(__dirname, "../../", "cryptography", "id_rsa_priv.pem");
+	const PRIV_KEY = fs.readFileSync(PRIV_KEY_PATH, "utf8");
+
+	const xToken = await issueAccessToken(id, PRIV_KEY, "30d");
+
+	const sendVerificationEmail = sendEmail(verificationEmail().create(req.body.email, xToken));
 
 	if (errors.isEmpty()) {
 		const dbPath = process.env.DB_PATH || "";
@@ -31,7 +37,6 @@ export const registerController = async (req: Request, res: Response) => {
 			try {
 				await fetch(`${process.env.MAIN_FETCH_URL}/api/ping`);
 
-				const id = generateId();
 				const sql = `INSERT INTO ${Tables.auth_users} (id, email, password) VALUES (?, ?, ?)`;
 				const values = [id, req.body.email, hash];
 

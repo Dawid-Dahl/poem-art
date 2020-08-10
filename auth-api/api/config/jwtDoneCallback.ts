@@ -61,7 +61,7 @@ const jwtJwtDoneCallback: JwtDoneCallback = (req, res, next) => (err, user, info
 
 							const user = constructUserWithoutPasswordFromSqlResult(row);
 
-							issueAccessToken(user, PRIV_KEY)
+							issueAccessToken(user.id, PRIV_KEY)
 								.then(xToken => {
 									attachUserToRequest(req, user);
 

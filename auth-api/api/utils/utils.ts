@@ -52,9 +52,9 @@ export const extractPayloadFromBase64JWT = (jwt: string | undefined): xTokenPayl
 				.map(x => x.toString("utf8"))
 				.map(x => JSON.parse(x))[0];
 
-export const issueAccessToken = (user: AuthUser, privKey: string, expiresIn = "1m") => {
+export const issueAccessToken = (userId: AuthUser["id"], privKey: string, expiresIn = "1m") => {
 	const payload = {
-		sub: user.id,
+		sub: userId,
 	};
 
 	const signedXTokenPromise = new Promise<string>((res, rej) => {
@@ -103,7 +103,7 @@ export const constructUserWithoutPasswordFromSqlResult = (payload: AuthUser): Au
 });
 
 export const constructUserFromTokenPayload = (payload: xTokenPayload): AuthUser => ({
-	id: payload.sub,
+	id: payload.sub.toString(),
 });
 
 export const attachUserToRequest = (req: RequestWithUser, user: AuthUser) => {

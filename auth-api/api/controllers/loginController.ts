@@ -35,8 +35,14 @@ export const loginController = (req: Request, res: Response, next: NextFunction)
 				return;
 			}
 
-			if (!row.isVerified) {
-				//TODO Don't allow login
+			if (row.isVerified === 0) {
+				res.status(401).json(
+					authJsonResponse(false, {
+						message:
+							"You need to verify your account before logging in! Simply click the verification link in email we sent you.",
+					})
+				);
+				return;
 			}
 
 			const isMatch = await bcrypt.compare(req.body.password, row.password!);
@@ -44,7 +50,7 @@ export const loginController = (req: Request, res: Response, next: NextFunction)
 			if (isMatch) {
 				const user = constructUserWithoutPasswordFromSqlResult(row);
 
-				const xTokenPromise = issueAccessToken(user, PRIV_KEY);
+				const xTokenPromise = issueAccessToken(user.id, PRIV_KEY);
 				const xRefreshTokenPromise = issueRefreshToken(user, PRIV_KEY);
 
 				Promise.all([xTokenPromise, xRefreshTokenPromise])
@@ -69,7 +75,7 @@ export const loginController = (req: Request, res: Response, next: NextFunction)
 									true,
 									{
 										message: "Tokens generated!",
-										user: {id: refreshTokenPayload.sub},
+										user: {id: refreshTokenPayload.sub.toString()},
 									},
 									xTokenFromPromise,
 									xRefreshTokenFromPromise
