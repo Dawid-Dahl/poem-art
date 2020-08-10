@@ -1,9 +1,8 @@
 import Mail from "nodemailer/lib/mailer";
-
 import {config} from "dotenv";
 
 config({
-	path: "../../.env",
+	path: ".env",
 });
 
 export const verificationEmail = () => ({
@@ -13,7 +12,7 @@ export const verificationEmail = () => ({
 			from: "ArtPoem Email Service",
 			to: email,
 			subject: "Verify Your ArtPoem Account",
-			html: `Please click this link to confirm your email: <a href="${url}">${url}</a>`,
+			html: `Please click <a href="${url}">this link</a> to confirm your email.`,
 		};
 	},
 });

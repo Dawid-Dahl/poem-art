@@ -13,8 +13,8 @@ export const sendEmail = (template: Mail.Options) => async () => {
 			port: 465,
 			secure: true,
 			auth: {
-				user: process.env.EMAIL_TRANSPORT_USER, // generated ethereal user
-				pass: process.env.EMAIL_TRANSPORT_PASSWORD, // generated ethereal password
+				user: process.env.EMAIL_TRANSPORT_USER,
+				pass: process.env.EMAIL_TRANSPORT_PASSWORD,
 			},
 		});
 

@@ -49,7 +49,9 @@ export const confirmationController = (req: Request, res: Response, next: NextFu
 					}
 
 					res.status(200).send(
-						"<h1>Thank you for verifying your account. You may now log in!</h1>"
+						`
+                            <h1>Thank you for verifying your account. You may now <a href="${process.env.FRONTEND_URL}/login">log in</a>!</h1>
+                        `
 					);
 				});
 				db.close(err =>
