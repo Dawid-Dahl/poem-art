@@ -2,18 +2,10 @@ import path from "path";
 import fs from "fs";
 import {Request, Response, NextFunction} from "express";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
 import sqlite from "sqlite3";
 import {Tables} from "../types/enums";
-import {SQLRefreshToken, AuthUser, xRefreshTokenPayload, DecodedJwt} from "../types/types";
-import {
-	issueAccessToken,
-	issueRefreshToken,
-	addRefreshTokenToDatabase,
-	extractPayloadFromBase64JWT,
-	constructUserWithoutPasswordFromSqlResult,
-	authJsonResponse,
-} from "../utils/utils";
+import {DecodedJwt} from "../types/types";
+import {authJsonResponse} from "../utils/utils";
 import {config} from "dotenv";
 
 config({

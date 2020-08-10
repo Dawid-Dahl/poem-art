@@ -11,6 +11,11 @@ const Login = () => {
 			<Link to="/register" className="registrationLink">
 				Go To Registration
 			</Link>
+			<ForgotYourPasswordLink>
+				<Link style={{color: "black", textDecoration: "none"}} to="/forgot-my-password">
+					Forgot Your Password?
+				</Link>
+			</ForgotYourPasswordLink>
 		</Wrapper>
 	);
 };
@@ -32,4 +37,9 @@ export const Wrapper = styled.div`
 	h2 {
 		letter-spacing: 1px;
 	}
+`;
+
+const ForgotYourPasswordLink = styled.p`
+	border-top: solid 1px black;
+	padding: 1.1em 0 0 0;
 `;

@@ -5,6 +5,8 @@ import {
 	logoutFulFilled,
 	checkIfLoggedIn,
 	logout,
+	sendResetPasswordEmail,
+	resetPassword,
 } from "../actions/loginActions";
 import {
 	constructUserFromId,
@@ -79,6 +81,50 @@ function* workerLogin({credentials}: ReturnType<typeof login>) {
 	}
 }
 
+function* workerSendResetPasswordEmail({email}: ReturnType<typeof sendResetPasswordEmail>) {
+	try {
+		const res = yield call(fetch, `${process.env.AUTH_FETCH_URL}/api/forgot-my-password`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(email),
+		});
+		/* const {success, payload} = yield call([res, "json"]);
+
+		if (success) {
+		} else {
+			yield put(showFlash(payload?.message ?? ""));
+		} */
+	} catch (e) {
+		console.log(e);
+	}
+}
+
+function* workerResetPassword({password}: ReturnType<typeof resetPassword>) {
+	try {
+		const res = yield call(
+			fetch,
+			`${process.env.AUTH_FETCH_URL}/api/forgot-my-password/reset`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(password),
+			}
+		);
+		/* const {success, payload} = yield call([res, "json"]);
+
+		if (success) {
+		} else {
+			yield put(showFlash(payload?.message ?? ""));
+		} */
+	} catch (e) {
+		console.log(e);
+	}
+}
+
 function* workerLogout() {
 	yield put(logoutFulFilled());
 	yield call(localStorageService.removeTokensFromLocalStorage);
@@ -95,6 +141,8 @@ function* loginSaga() {
 	yield takeEvery("CHECK_IF_LOGGED_IN", workerCheckIfLoggedIn);
 	yield takeEvery("LOGIN", workerLogin);
 	yield takeEvery("LOGOUT", workerLogout);
+	yield takeEvery("SEND_RESET_PASSWORD_EMAIL", workerSendResetPasswordEmail);
+	yield takeEvery("RESET_PASSWORD", workerResetPassword);
 }
 
 export default loginSaga;

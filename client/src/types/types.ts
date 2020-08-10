@@ -8,6 +8,14 @@ export type FormState = {
 	password: string;
 	confirmPassword: string;
 };
+export type ResetPasswordFormState = {
+	password: string;
+	confirmPassword: string;
+};
+
+export type ForgotMyEmailPayload = {email: string};
+
+export type ResetPasswordPayload = {password: string};
 
 export type LoginCredentials = {
 	email: string;
