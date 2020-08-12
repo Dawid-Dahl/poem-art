@@ -43,10 +43,11 @@ export const sendResetPasswordEmailFailed = () =>
 		type: "SEND_RESET_PASSWORD_EMAIL_FAILED",
 	} as const);
 
-export const resetPassword = (password: ResetPasswordPayload) =>
+export const resetPassword = ({password}: ResetPasswordPayload, resetToken: string) =>
 	({
 		type: "RESET_PASSWORD",
 		password,
+		resetToken,
 	} as const);
 
 export const resetPasswordFulfilled = () =>

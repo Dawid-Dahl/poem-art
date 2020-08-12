@@ -90,18 +90,20 @@ function* workerSendResetPasswordEmail({email}: ReturnType<typeof sendResetPassw
 			},
 			body: JSON.stringify(email),
 		});
-		/* const {success, payload} = yield call([res, "json"]);
+
+		const {success, payload} = yield call([res, "json"]);
 
 		if (success) {
+			yield put(showFlash(payload?.message ?? "", 10000));
 		} else {
-			yield put(showFlash(payload?.message ?? ""));
-		} */
+			yield put(showFlash(payload?.message ?? "", 6000));
+		}
 	} catch (e) {
 		console.log(e);
 	}
 }
 
-function* workerResetPassword({password}: ReturnType<typeof resetPassword>) {
+function* workerResetPassword({password, resetToken}: ReturnType<typeof resetPassword>) {
 	try {
 		const res = yield call(
 			fetch,
@@ -111,15 +113,19 @@ function* workerResetPassword({password}: ReturnType<typeof resetPassword>) {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(password),
+				body: JSON.stringify({
+					password,
+					resetToken,
+				}),
 			}
 		);
-		/* const {success, payload} = yield call([res, "json"]);
+		const {success, payload} = yield call([res, "json"]);
 
 		if (success) {
+			yield put(showFlash(payload?.message ?? ""));
 		} else {
 			yield put(showFlash(payload?.message ?? ""));
-		} */
+		}
 	} catch (e) {
 		console.log(e);
 	}

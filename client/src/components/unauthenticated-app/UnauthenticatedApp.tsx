@@ -12,7 +12,7 @@ export const UnauthenticatedApp = () => {
 				<Route path="/register" component={Registration} />
 				<Route path="/login" component={Login} />
 				<Route path="/forgot-my-password" component={ForgotMyPassword} />
-				<Route path="/reset-password" component={ResetPassword} />
+				<Route path="/reset-password/:resetToken" component={ResetPassword} />
 				<Route path="/" component={Login} />
 			</Switch>
 		</>

@@ -9,14 +9,19 @@ import Button from "../Button";
 import styled from "styled-components";
 import TextInput from "../inputs/TextInput";
 import {useDispatch} from "react-redux";
-import {sendResetPasswordEmail, resetPassword} from "../../actions/loginActions";
+import {resetPassword} from "../../actions/loginActions";
 import LoginRow from "../styled-components/LoginRow";
 import {showFlash} from "../../actions/flashActions";
 import {areStringsIdentical} from "../../utils/utils";
+import {useParams} from "react-router";
 
 const ResetPasswordForm: React.FC = () => {
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setconfirmPassword] = useState("");
+
+	const {resetToken}: {resetToken: string} = useParams();
+
+	if (!resetToken) return <h1>No Reset Token</h1>;
 
 	const dispatch = useDispatch();
 
@@ -42,7 +47,7 @@ const ResetPasswordForm: React.FC = () => {
 			confirmPassword
 		);
 
-		if (resetPasswordPayload) dispatch(resetPassword(resetPasswordPayload));
+		if (resetPasswordPayload) dispatch(resetPassword(resetPasswordPayload, resetToken));
 	};
 
 	return (
@@ -56,7 +61,7 @@ const ResetPasswordForm: React.FC = () => {
 					e.currentTarget.reset();
 				}}
 			>
-				<h2>Email Address:</h2>
+				<h2>Enter your new password</h2>
 				<LoginRow>
 					<TextInput
 						name="password"

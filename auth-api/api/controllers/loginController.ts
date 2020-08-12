@@ -12,6 +12,7 @@ import {
 	extractPayloadFromBase64JWT,
 	constructUserWithoutPasswordFromSqlResult,
 	authJsonResponse,
+	closeSqliteConnection,
 } from "../utils/utils";
 
 const PRIV_KEY_PATH = path.join(__dirname, "../../", "cryptography", "id_rsa_priv.pem");
@@ -63,7 +64,7 @@ export const loginController = (req: Request, res: Response, next: NextFunction)
 
 						if (refreshTokenPayload) {
 							const sqlRefreshToken: SQLRefreshToken = {
-								sub: refreshTokenPayload.sub,
+								sub: refreshTokenPayload.sub as number,
 								iat: refreshTokenPayload.iat,
 								xRefreshToken: xRefreshTokenFromPromise,
 							};
@@ -101,5 +102,5 @@ export const loginController = (req: Request, res: Response, next: NextFunction)
 			);
 		}
 	});
-	db.close(err => (err ? console.error(err) : console.log("Closed the database connection")));
+	closeSqliteConnection(db);
 };

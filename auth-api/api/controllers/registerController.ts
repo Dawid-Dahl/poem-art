@@ -5,7 +5,12 @@ import {validationResult} from "express-validator";
 import sqlite from "sqlite3";
 import {Tables} from "../types/enums";
 import bcrypt from "bcrypt";
-import {authJsonResponse, generateId, issueAccessToken} from "../utils/utils";
+import {
+	authJsonResponse,
+	generateId,
+	issueAccessToken,
+	closeSqliteConnection,
+} from "../utils/utils";
 import fetch from "node-fetch";
 import {sendEmail} from "../utils/nodemailer";
 import {verificationEmail} from "../utils/mail-templates";
@@ -54,9 +59,7 @@ export const registerController = async (req: Request, res: Response) => {
 
 						res.status(403).json(authJsonResponse(false, {message: errorMsg}));
 
-						db.close(err =>
-							err ? console.error(err) : console.log("Closed the database connection")
-						);
+						closeSqliteConnection(db);
 					} else {
 						try {
 							await fetch(`${process.env.MAIN_FETCH_URL}/api/users/create`, {
@@ -84,9 +87,7 @@ export const registerController = async (req: Request, res: Response) => {
 								})
 							);
 						}
-						db.close(err =>
-							err ? console.error(err) : console.log("Closed the database connection")
-						);
+						closeSqliteConnection(db);
 					}
 				});
 			} catch (e) {
@@ -98,9 +99,7 @@ export const registerController = async (req: Request, res: Response) => {
 					})
 				);
 
-				db.close(err =>
-					err ? console.error(err) : console.log("Closed the database connection")
-				);
+				closeSqliteConnection(db);
 			}
 		});
 	} else {

@@ -1,6 +1,7 @@
 import sqlite from "sqlite3";
 import {Tables} from "../api/types/enums";
 import {config} from "dotenv";
+import {closeSqliteConnection} from "../api/utils/utils";
 
 config({
 	path: "../../.env",
@@ -31,4 +32,4 @@ db.serialize(() => {
 	);
 });
 
-db.close(err => (err ? console.error(err) : console.log("Closed the database connection")));
+closeSqliteConnection(db);

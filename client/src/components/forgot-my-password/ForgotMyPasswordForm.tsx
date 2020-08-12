@@ -35,7 +35,7 @@ const ForgotMyPasswordForm: React.FC = () => {
 					e.currentTarget.reset();
 				}}
 			>
-				<h2>Email Address:</h2>
+				<h2>Email Address</h2>
 				<LoginRow>
 					<TextInput
 						name="email"

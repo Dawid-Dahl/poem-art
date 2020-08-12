@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import sqlite from "sqlite3";
 import {Tables} from "../types/enums";
 import {DecodedJwt} from "../types/types";
-import {authJsonResponse} from "../utils/utils";
+import {authJsonResponse, closeSqliteConnection} from "../utils/utils";
 import {config} from "dotenv";
 
 config({
@@ -46,9 +46,8 @@ export const confirmationController = (req: Request, res: Response, next: NextFu
                         `
 					);
 				});
-				db.close(err =>
-					err ? console.error(err) : console.log("Closed the database connection")
-				);
+
+				closeSqliteConnection(db);
 			} else {
 				res.status(500).json(
 					authJsonResponse(false, {

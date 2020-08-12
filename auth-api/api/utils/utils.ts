@@ -1,4 +1,10 @@
-import {SQLRefreshToken, xTokenPayload, AuthUser, AuthJsonResponsePayload} from "../types/types";
+import {
+	SQLRefreshToken,
+	xTokenPayload,
+	AuthUser,
+	AuthJsonResponsePayload,
+	DecodedJwt,
+} from "../types/types";
 import jwt from "jsonwebtoken";
 import sqlite from "sqlite3";
 import {config} from "dotenv";
@@ -43,7 +49,9 @@ export const jsonResponse = (
 export const removeBearerFromTokenHeader = (tokenHeader: string | undefined) =>
 	tokenHeader?.split(" ")[1];
 
-export const extractPayloadFromBase64JWT = (jwt: string | undefined): xTokenPayload | undefined =>
+export const extractPayloadFromBase64JWT = (
+	jwt: string | undefined
+): xTokenPayload | DecodedJwt | undefined =>
 	!jwt
 		? undefined
 		: [jwt]
@@ -94,7 +102,7 @@ export const addRefreshTokenToDatabase = (refreshToken: SQLRefreshToken): void =
 		!err ? console.log("Refresh Token added to database!") : console.error(err)
 	);
 
-	db.close(err => (err ? console.error(err) : console.log("Closed the database connection")));
+	closeSqliteConnection(db);
 };
 
 export const constructUserWithoutPasswordFromSqlResult = (payload: AuthUser): AuthUser => ({
@@ -147,3 +155,6 @@ export const refreshAndFetch = (
 		body,
 	});
 };
+
+export const closeSqliteConnection = (db: sqlite.Database) =>
+	db.close(err => (err ? console.error(err) : console.log("Closed the database connection")));
