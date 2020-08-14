@@ -122,9 +122,9 @@ function* workerResetPassword({password, resetToken}: ReturnType<typeof resetPas
 		const {success, payload} = yield call([res, "json"]);
 
 		if (success) {
-			yield put(showFlash(payload?.message ?? ""));
+			yield put(showFlash(payload?.message ?? "", 6000));
 		} else {
-			yield put(showFlash(payload?.message ?? ""));
+			yield put(showFlash(payload?.message ?? "", 6000));
 		}
 	} catch (e) {
 		console.log(e);

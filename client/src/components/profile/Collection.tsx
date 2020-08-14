@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import {ReduxCollection} from "../../types/types";
 import {selectCollection, deleteCollection} from "../../actions/collectionActions";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../store";
 
 type Props = {
 	id: ReduxCollection["id"];
@@ -21,10 +22,13 @@ const handleRemoveClick = (
 
 const Collection: React.FC<Props> = ({id, name, onClickHandler}) => {
 	const dispatch = useDispatch();
+	const collectionSelected = useSelector(
+		(state: RootState) => state.collectionReducer.collectionSelected
+	);
 
 	return (
 		<>
-			<Wrapper>
+			<Wrapper collectionId={id} collectionSelected={collectionSelected}>
 				<SpanWrapper onClick={e => onClickHandler(e, id)}>
 					<span
 						onClick={e =>
@@ -44,7 +48,12 @@ const Collection: React.FC<Props> = ({id, name, onClickHandler}) => {
 
 export default Collection;
 
-const Wrapper = styled.div`
+type WrapperProps = {
+	collectionId: ReduxCollection["id"];
+	collectionSelected?: ReduxCollection | null;
+};
+
+const Wrapper = styled.div<WrapperProps>`
 	display: flex;
 	position: relative;
 	align-items: center;
@@ -52,13 +61,16 @@ const Wrapper = styled.div`
 	height: 200px;
 	flex: 1 1 200px;
 	border-radius: var(--border-radius);
-	background-color: white;
+	background-color: ${({collectionSelected, collectionId}) =>
+		collectionSelected && collectionSelected.id === collectionId
+			? "var(--main-grey-color)"
+			: "white"};
 	padding: 1em;
 	margin: 1em 2em;
 	text-align: center;
 	box-shadow: var(--box-shadow);
 	cursor: pointer;
-	transition: transform 0.3s;
+	transition: all 0.2s;
 	overflow: hidden;
 
 	:hover {
