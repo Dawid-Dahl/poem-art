@@ -40,7 +40,7 @@ const CommentBox: React.FC<Props> = ({comment}) => {
 				<PresentationWrapper data-comment-id={id}>
 					<ProfilePicWrapper data-comment-id={id}>
 						<Link to={"/profile"}>
-							<ProfilePic size={3} />
+							<ProfilePic size={3} user={comment.user} />
 						</Link>
 					</ProfilePicWrapper>
 					<NameDateWrapper data-comment-id={id}>

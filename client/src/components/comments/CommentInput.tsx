@@ -9,11 +9,12 @@ import {postComment, openCommentSubmitSection} from "../../actions/commentAction
 import {RootState} from "../../store";
 import {showFlash} from "../../actions/flashActions";
 
-const CommentInput = () => {
+const CommentInput: React.FC = () => {
 	const [comment, setComment] = useState("");
 
 	const dispatch = useDispatch();
 
+	const user = useSelector((state: RootState) => state.userReducer.user);
 	const isCommentSubmitSectionActive = useSelector(
 		(state: RootState) => state.commentReducer.isCommentSubmitSectionActive
 	);
@@ -42,7 +43,7 @@ const CommentInput = () => {
 				<CommentInputSectionWrapper>
 					<Link to={"/profile"}>
 						<ProfilePicWrapper>
-							<ProfilePic size={3} />
+							<ProfilePic size={3} user={user} />
 						</ProfilePicWrapper>
 					</Link>
 					<TextInputWrapper
