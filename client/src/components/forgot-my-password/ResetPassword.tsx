@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ResetPasswordForm from "./ResetPasswordForm";
+import {Link} from "react-router-dom";
 
 const ResetPassword = () => {
 	return (
@@ -9,6 +10,9 @@ const ResetPassword = () => {
 			<h3>RESET PASSWORD</h3>
 			<p>Password must be at least 4 characters long.</p>
 			<ResetPasswordForm />
+			<Link to="/login" className="loginLink">
+				Go To Login
+			</Link>
 		</Wrapper>
 	);
 };

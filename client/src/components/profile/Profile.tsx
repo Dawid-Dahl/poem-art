@@ -44,7 +44,7 @@ const Profile: React.FC = () => {
 			<Wrapper>
 				<Greeting>{`Welcome back, ${user?.username ?? ""}!`}</Greeting>
 				<ProfilePicWrapper>
-					<ProfilePic size={8} isAnimating />
+					<ProfilePic size={8} isAnimating user={user} />
 				</ProfilePicWrapper>
 				<h2>Your Collections</h2>
 				<CollectionsDisplay collections={collections} />

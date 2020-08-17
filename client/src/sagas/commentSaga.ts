@@ -82,7 +82,7 @@ function* workerEditComment({
 	}
 }
 
-function* deletePostComment({commentId, artPoemId}: ReturnType<typeof deleteComment>) {
+function* workerDeletePostComment({commentId, artPoemId}: ReturnType<typeof deleteComment>) {
 	try {
 		const res = yield call(
 			apiService.refreshAndFetch,
@@ -102,7 +102,7 @@ function* commentSaga() {
 	yield takeEvery("GET_COMMENTS", workerGetComments);
 	yield takeEvery("POST_COMMENT", workerPostComment);
 	yield takeEvery("EDIT_COMMENT", workerEditComment);
-	yield takeEvery("DELETE_COMMENT", deletePostComment);
+	yield takeEvery("DELETE_COMMENT", workerDeletePostComment);
 }
 
 export default commentSaga;

@@ -65,6 +65,7 @@ export const resetPasswordController = (req: Request, res: Response) => {
 											"Something went wrong while updating the password!",
 									})
 								);
+								return;
 							}
 
 							res.status(200).json(

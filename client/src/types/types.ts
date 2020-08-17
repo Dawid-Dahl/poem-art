@@ -81,7 +81,7 @@ export type User = {
 	id: string;
 	username: string;
 	admin: boolean;
-	profilePicture?: string;
+	profilePicture: string | null;
 };
 
 export type AuthJsonResponsePayload = {

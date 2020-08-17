@@ -3,6 +3,7 @@ import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
 import {ArtPoem} from "../../../db/entities/ArtPoem";
 import {Storage, Bucket, File} from "@google-cloud/storage";
+import {deleteGCSFile} from "../../utils/gcsUtils";
 
 export const deleteArtPoemController = async (req: Request, res: Response) => {
 	const artPoemId = req.body.artPoemId as number;
@@ -27,12 +28,6 @@ export const deleteArtPoemController = async (req: Request, res: Response) => {
 	});
 
 	const bucket = gcs.bucket(process.env.GCLOUD_STORAGE_BUCKET || "");
-
-	const deleteGCSFile = async (bucket: Bucket, name: string) => {
-		await bucket.file(name).delete();
-
-		console.log(`gs://${bucket.name}/${name} deleted.`);
-	};
 
 	try {
 		const artPoemRepo = getConnection(process.env.NODE_ENV).getRepository(ArtPoem);
