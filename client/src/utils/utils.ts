@@ -96,6 +96,9 @@ export const constructUserFromId = (
 export const areStringsIdentical = (str1: string, str2: string) =>
 	str1.match(RegExp(`^${str2}$`)) ? true : false;
 
+export const isUserProfile = (queryId: string | null, userId: User["id"] | undefined): boolean =>
+	queryId === userId;
+
 export const removeBearerFromTokenHeader = (tokenHeader: string | undefined | null) => {
 	if (!tokenHeader) return;
 

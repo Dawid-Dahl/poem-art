@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import styled from "styled-components";
-import {Navbar} from "./Navbar";
+import Navbar from "./Navbar";
 import ArtPoemGrid from "./art-poem-grid/ArtPoemGrid";
 import {selectCollection, getAllCollections} from "../actions/collectionActions";
 import SelectElement from "./inputs/SelectElement";

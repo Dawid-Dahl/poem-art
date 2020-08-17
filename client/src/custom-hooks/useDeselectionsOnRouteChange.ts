@@ -10,6 +10,7 @@ import {
 	deselectComment,
 } from "../actions/commentActions";
 import {disableHasUserLikedPoem} from "../actions/likeActions";
+import {unsetProfileName} from "../actions/profileActions";
 
 export const useDeselectionsOnRouteChange = () => {
 	const dispatch = useDispatch();
@@ -46,6 +47,11 @@ export const useDeselectionsOnRouteChange = () => {
 
 	useEffect(() => {
 		const unlisten = history.listen(() => dispatch(disableHasUserLikedPoem()));
+		return () => unlisten();
+	});
+
+	useEffect(() => {
+		const unlisten = history.listen(() => dispatch(unsetProfileName()));
 		return () => unlisten();
 	});
 };

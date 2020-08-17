@@ -10,6 +10,7 @@ import {
 	loadingReducer,
 	commentReducer,
 	likeReducer,
+	profileReducer,
 } from "../reducers/reducers";
 import {composeWithDevTools} from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
@@ -28,6 +29,7 @@ export const rootReducer = combineReducers({
 	loadingReducer,
 	commentReducer,
 	likeReducer,
+	profileReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

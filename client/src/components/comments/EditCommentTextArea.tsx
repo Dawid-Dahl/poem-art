@@ -47,7 +47,6 @@ const EditCommentTextArea: React.FC<Props> = ({
 	value,
 	onChangeHandler,
 	editCommentContent,
-	setEditComment,
 }) => {
 	const dispatch = useDispatch();
 

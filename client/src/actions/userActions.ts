@@ -1,5 +1,21 @@
 import {User} from "../types/types";
 
+export const getUser = (userId: User["id"]) =>
+	({
+		type: "GET_USER",
+		userId,
+	} as const);
+
+export const getUserFulfilled = () =>
+	({
+		type: "GET_USER_FULFILLED",
+	} as const);
+
+export const getUserFailed = () =>
+	({
+		type: "GET_USER_FAILED",
+	} as const);
+
 export const setUser = (user: User) =>
 	({
 		type: "SET_USER",
@@ -31,6 +47,9 @@ export const updateProfileImageFailed = () =>
 export type ReduxUserState = "user";
 
 export type UserActionTypes =
+	| ReturnType<typeof getUser>
+	| ReturnType<typeof getUserFulfilled>
+	| ReturnType<typeof getUserFailed>
 	| ReturnType<typeof setUser>
 	| ReturnType<typeof removeUser>
 	| ReturnType<typeof updateProfileImage>

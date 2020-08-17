@@ -41,7 +41,7 @@ const CommentInput: React.FC = () => {
 		<>
 			<StyledForm action="POST" autoComplete="off" onSubmit={e => handleSubmit(e)}>
 				<CommentInputSectionWrapper>
-					<Link to={"/profile"}>
+					<Link to={`/profile?id=${user?.id}`}>
 						<ProfilePicWrapper>
 							<ProfilePic size={3} user={user} />
 						</ProfilePicWrapper>

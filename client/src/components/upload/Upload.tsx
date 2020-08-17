@@ -4,7 +4,7 @@ import Button from "../Button";
 import TextInput from "../inputs/TextInput";
 import TextAreaInput from "../inputs/TextAreaInput";
 import {ImageFile} from "../../types/types";
-import {Navbar} from "../Navbar";
+import Navbar from "../Navbar";
 import FileInput from "../inputs/FileInput";
 import SelectElement from "../inputs/SelectElement";
 import {useSelector, useDispatch} from "react-redux";

@@ -85,13 +85,13 @@ const Wrapper = styled.div<Omit<Props, "user">>`
 
 	:hover {
 		div {
-			display: block;
+			opacity: 100%;
 		}
 	}
 `;
 
 const ProfilePictureInputWrapper = styled.div`
-	display: none;
+	opacity: 0%;
 	background-color: #00000038;
 	height: 50%;
 	width: 100%;
@@ -99,6 +99,7 @@ const ProfilePictureInputWrapper = styled.div`
 	top: 64px;
 	color: white;
 	padding: 0.1em;
+	transition: opacity 0.2s;
 
 	p {
 		margin: 0;

@@ -7,10 +7,11 @@ import {logout} from "../actions/loginActions";
 import {renderSocialFeed} from "../actions/syncPoemAction";
 import {RootState} from "../store";
 
-export const Navbar: React.FC = () => {
+const Navbar: React.FC = () => {
 	const [rolldownState, setRolldownState] = useState(false);
 
 	const cachedPoems = useSelector((state: RootState) => state.asyncPoemReducer.cachedPoems);
+	const user = useSelector((state: RootState) => state.userReducer.user);
 
 	const dispatch = useDispatch();
 
@@ -35,7 +36,7 @@ export const Navbar: React.FC = () => {
 					/>
 					<LinkButton
 						title="Profile"
-						linkTo="profile"
+						linkTo={`/profile?id=${user?.id}`}
 						kind="white"
 						customization="desktopButton"
 					/>
@@ -59,7 +60,7 @@ export const Navbar: React.FC = () => {
 			<RolldownButtonsWrapper>
 				<RolldownButtons active={rolldownState}>
 					<LinkButton title="Upload" linkTo="upload" kind="white" />
-					<LinkButton title="Profile" linkTo="profile" kind="white" />
+					<LinkButton title="Profile" linkTo={`/profile?id=${user?.id}`} kind="white" />
 					<LinkButton
 						title="Logout"
 						linkTo="login"
@@ -73,6 +74,8 @@ export const Navbar: React.FC = () => {
 		</>
 	);
 };
+
+export default Navbar;
 
 const Wrapper = styled.div`
 	position: fixed;

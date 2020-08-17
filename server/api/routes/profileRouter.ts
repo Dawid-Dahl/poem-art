@@ -3,6 +3,7 @@ import multer from "multer";
 import {postProfileImageController} from "../controllers/profile/postProfileImageController";
 import {uploadGCSProfileImageFile} from "../middleware/uploadGCSProfileImageFile";
 import {deleteProfileImageFromGCSIfExists} from "../middleware/deleteProfileImageFromGCSIfExists";
+import {getUserController} from "../controllers/profile/getUserController";
 
 const upload = multer({
 	storage: multer.memoryStorage(),
@@ -12,6 +13,8 @@ const upload = multer({
 });
 
 const profileRouter = express.Router();
+
+profileRouter.get("/get/:id", getUserController);
 
 profileRouter.post(
 	"/post-profile-image",

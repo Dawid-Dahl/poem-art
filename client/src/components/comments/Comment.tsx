@@ -14,7 +14,7 @@ const Comment: React.FC<Props> = ({comment}) => {
 		<>
 			<Wrapper>
 				<ProfilePicWrapper>
-					<Link to={"/profile"}>
+					<Link to={`/profile?id=${comment.user.id}`}>
 						<ProfilePic size={3} user={comment.user} />
 					</Link>
 				</ProfilePicWrapper>

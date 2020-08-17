@@ -2,14 +2,29 @@ import {takeEvery, call, put} from "redux-saga/effects";
 
 import {apiService} from "../api/apiService";
 import {convertToBytes, parseMainApiResponse} from "../utils/utils";
-import {updateProfileImage, updateProfileImageFulfilled} from "../actions/userActions";
+import {updateProfileImage, updateProfileImageFulfilled, getUser} from "../actions/userActions";
 import {showFlash} from "../actions/flashActions";
 import {User} from "../types/types";
+import {setProfileName} from "../actions/profileActions";
+
+function* workerGetUser({userId}: ReturnType<typeof getUser>) {
+	try {
+		const res = yield call(apiService.refreshAndFetch, `profile/get/${userId}`);
+
+		const json = yield call([res, "json"]);
+
+		const {user}: {user: User} = parseMainApiResponse(json);
+
+		yield put(setProfileName(user));
+	} catch (e) {
+		console.log(e);
+	}
+}
 
 function* workerUpdateProfileImage({imageFile}: ReturnType<typeof updateProfileImage>) {
-	const image = imageFile.get("profilePictureInput") as File;
-
 	try {
+		const image = imageFile.get("profilePictureInput") as File;
+
 		const bytes = convertToBytes("5 mb");
 
 		if (!bytes) return;
@@ -36,6 +51,7 @@ function* workerUpdateProfileImage({imageFile}: ReturnType<typeof updateProfileI
 }
 
 function* userSaga() {
+	yield takeEvery("GET_USER", workerGetUser);
 	yield takeEvery("UPDATE_PROFILE_PICTURE", workerUpdateProfileImage);
 }
 
