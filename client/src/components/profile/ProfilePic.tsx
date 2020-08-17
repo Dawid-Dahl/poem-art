@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from "react";
 import styled from "styled-components";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {updateProfileImage} from "../../actions/userActions";
 import {ImageFile, User} from "../../types/types";
 import ProfilePictureInput from "../inputs/ProfilePictureInput";
+import {isUserProfile} from "../../utils/utils";
+import {useQuery} from "../../custom-hooks/useQuery";
+import {RootState} from "../../store";
 
 type Props = {
 	size: number;
@@ -11,11 +14,17 @@ type Props = {
 	user: User | null;
 };
 
-const ProfilePic: React.FC<Props> = ({size, isAnimating, user}) => {
+const ProfilePic: React.FC<Props> = ({size, isAnimating, user: profileUser}) => {
 	const dispatch = useDispatch();
+
+	const query = useQuery();
+
+	const userId = query.get("id");
 
 	const [imageFile, setImageFile] = useState<ImageFile>(null);
 	const [hasUploadedProfileImage, setHasUploadedProfileImage] = useState<boolean>(false);
+
+	const user = useSelector((state: RootState) => state.userReducer.user);
 
 	useEffect(() => {
 		const data = new FormData();
@@ -41,20 +50,22 @@ const ProfilePic: React.FC<Props> = ({size, isAnimating, user}) => {
 			<Wrapper size={size} isAnimating={isAnimating}>
 				<img
 					src={
-						user?.profilePicture
-							? user.profilePicture
+						profileUser?.profilePicture
+							? profileUser.profilePicture
 							: "https://storage.googleapis.com/poem-art-bucket/default-profile-image.jpg"
 					}
 					alt="profile image"
 				/>
-				<ProfilePictureInputWrapper>
-					<ProfilePictureInput
-						name="profilePictureInput"
-						isFileSelected={Boolean(imageFile)}
-						onChangeHandle={onChangeHandle}
-					/>
-					<p>Change Profile Picture</p>
-				</ProfilePictureInputWrapper>
+				{isUserProfile(userId, user?.id) && (
+					<ProfilePictureInputWrapper>
+						<ProfilePictureInput
+							name="profilePictureInput"
+							isFileSelected={Boolean(imageFile)}
+							onChangeHandle={onChangeHandle}
+						/>
+						<p>Change Profile Picture</p>
+					</ProfilePictureInputWrapper>
+				)}
 			</Wrapper>
 		</>
 	);
