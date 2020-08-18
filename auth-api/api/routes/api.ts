@@ -5,6 +5,7 @@ import verifyJwtRouter from "./verifyJwt";
 import {jsonResponse} from "../utils/utils";
 import confirmationRouter from "./confirmation";
 import forgotMyPasswordRouter from "./forgot-my-password";
+import deleteUserRouter from "./delete-user";
 
 const apiRouter = express.Router();
 
@@ -18,5 +19,6 @@ apiRouter.use("/login", loginRouter);
 apiRouter.use("/confirmation", confirmationRouter);
 apiRouter.use("/verify-jwt", verifyJwtRouter);
 apiRouter.use("/forgot-my-password", forgotMyPasswordRouter);
+apiRouter.use("/delete-user", deleteUserRouter);
 
 export default apiRouter;

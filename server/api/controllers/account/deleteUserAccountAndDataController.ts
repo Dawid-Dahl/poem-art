@@ -11,7 +11,7 @@ export const deleteUserAccountAndDataController = async (req: Request, res: Resp
 	try {
 		const user = await userRepo.findOne(id);
 
-		res.json(jsonResponse(true, JSON.stringify({user})));
+		res.end("DELETED THE IMAGES SO FAR!");
 	} catch (e) {
 		console.log(e);
 		res.status(401).json(jsonResponse(false));

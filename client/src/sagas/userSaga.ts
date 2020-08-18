@@ -52,10 +52,11 @@ function* workerUpdateProfileImage({imageFile}: ReturnType<typeof updateProfileI
 
 function* workerDeleteUserAccountAndData() {
 	try {
-		/* const res = yield call(apiService.refreshAndFetch, "profile/post-profile-image", {
-			method: "POST",
-			body: imageFile,
-		}); */
+		const res = yield call(apiService.refreshAndFetch, "account/delete-account-data", {
+			method: "DELETE",
+		});
+
+		console.log(res);
 	} catch (e) {
 		console.log(e);
 	}

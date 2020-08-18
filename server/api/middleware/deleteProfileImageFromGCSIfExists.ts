@@ -10,38 +10,33 @@ export const deleteProfileImageFromGCSIfExists = async (
 	next: NextFunction
 ) => {
 	try {
-		//get the user from db to find out if there is a profile image
-
 		const userRepo = getConnection(process.env.NODE_ENV).getRepository(User);
 
 		const user = await userRepo.findOne(req.user);
 
 		if (!user) throw new Error("No user was found in the database!");
 
+		const keyFile =
+			"/Volumes/Seagate Backup Plus Drive/Dawid Programming Files/Projects/PoemArt/server/poem-art-40049b821725.json";
+
+		const gcs = new Storage({
+			keyFilename: keyFile,
+			projectId: "poem-art",
+		});
+
+		const bucket = gcs.bucket(process.env.GCLOUD_STORAGE_BUCKET || "");
+
 		if (user.profilePicture) {
-			//if there is a profile image, delete it
-			const keyFile =
-				"/Volumes/Seagate Backup Plus Drive/Dawid Programming Files/Projects/PoemArt/server/poem-art-40049b821725.json";
-
-			const gcs = new Storage({
-				keyFilename: keyFile,
-				projectId: "poem-art",
-			});
-
-			const bucket = gcs.bucket(process.env.GCLOUD_STORAGE_BUCKET || "");
-
-			console.log("THE PROFILE PICTURE: ", user.profilePicture);
-
 			const profilePictureName = getGSCfilename(user.profilePicture, "poem-art-bucket");
 
 			await deleteGCSFile(bucket, profilePictureName);
 
 			next();
 		} else {
-			//otherwise just proceed with upload
 			next();
 		}
 	} catch (e) {
 		console.log(e);
+		next(e);
 	}
 };
