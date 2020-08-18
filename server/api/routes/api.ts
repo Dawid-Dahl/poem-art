@@ -7,6 +7,7 @@ import verifyXToken from "../middleware/verifyXToken";
 import commentsRouter from "./commentsRouter";
 import likesRouter from "./likeRouter";
 import profileRouter from "./profileRouter";
+import accountRouter from "./accountRouter";
 
 const apiRouter = express.Router();
 
@@ -21,5 +22,6 @@ apiRouter.use("/collections", verifyXToken, collectionsRouter);
 apiRouter.use("/comments", verifyXToken, commentsRouter);
 apiRouter.use("/likes", verifyXToken, likesRouter);
 apiRouter.use("/profile", verifyXToken, profileRouter);
+apiRouter.use("/account", verifyXToken, accountRouter);
 
 export default apiRouter;

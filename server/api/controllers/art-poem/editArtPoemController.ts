@@ -8,6 +8,7 @@ import {getConnection} from "typeorm";
 import {ArtPoem} from "../../../db/entities/ArtPoem";
 import {Storage, Bucket} from "@google-cloud/storage";
 import {Collection} from "../../../db/entities/Collection";
+import {getGSCfilename} from "../../utils/gcsUtils";
 
 export const editArtPoemController = async (req: Request, res: Response) => {
 	const {
@@ -46,11 +47,23 @@ export const editArtPoemController = async (req: Request, res: Response) => {
 	});
 	const collectionRepo = getConnection(process.env.NODE_ENV).getRepository(Collection);
 
+	if (!artPoem) {
+		res.status(500).json(
+			jsonResponse(
+				false,
+				JSON.stringify({
+					message: "Something went wrong while trying to get the ArtPoem!",
+				})
+			)
+		);
+		return;
+	}
+
 	try {
 		if (req.file) {
 			console.log("THE ART POEM INSIDE REQ.FILE TO BE DELETED: ", artPoem);
 
-			await deleteGCSFile(bucket, artPoem?.imageUrl.split("/").slice(-1)[0]).catch(
+			await deleteGCSFile(bucket, getGSCfilename(artPoem.imageUrl, "poem-art-bucket")).catch(
 				console.error
 			);
 

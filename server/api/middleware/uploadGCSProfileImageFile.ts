@@ -31,7 +31,7 @@ export const uploadGCSProfileImageFile = (req: Request, res: Response, next: Nex
 		? replaceSpacesInString(req.file.originalname, "_")
 		: req.file.originalname;
 
-	const fileName = `profile-image-${Date.now()}-${crypto
+	const fileName = `${req.user}/profile-image/${Date.now()}-${crypto
 		.randomBytes(3)
 		.toString("hex")}-${sanitizedFileName}`;
 

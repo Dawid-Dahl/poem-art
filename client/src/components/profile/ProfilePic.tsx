@@ -11,10 +11,16 @@ import {RootState} from "../../store";
 type Props = {
 	size: number;
 	isAnimating?: boolean;
+	isPictureChangeable?: boolean;
 	user: User | null;
 };
 
-const ProfilePic: React.FC<Props> = ({size, isAnimating, user: profileUser}) => {
+const ProfilePic: React.FC<Props> = ({
+	size,
+	isAnimating,
+	isPictureChangeable,
+	user: profileUser,
+}) => {
 	const dispatch = useDispatch();
 
 	const query = useQuery();
@@ -56,7 +62,7 @@ const ProfilePic: React.FC<Props> = ({size, isAnimating, user: profileUser}) => 
 					}
 					alt="profile image"
 				/>
-				{isUserProfile(userId, user?.id) && (
+				{isPictureChangeable && isUserProfile(userId, user?.id) && (
 					<ProfilePictureInputWrapper>
 						<ProfilePictureInput
 							name="profilePictureInput"

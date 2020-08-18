@@ -44,6 +44,21 @@ export const updateProfileImageFailed = () =>
 		type: "UPDATE_PROFILE_PICTURE_FAILED",
 	} as const);
 
+export const deleteUserAccountAndData = () =>
+	({
+		type: "DELETE_USER_ACCOUNT_AND_DATA",
+	} as const);
+
+export const deleteUserAccountAndDataFulfilled = () =>
+	({
+		type: "DELETE_USER_ACCOUNT_AND_DATA_FULFILLED",
+	} as const);
+
+export const deleteUserAccountAndDataFailed = () =>
+	({
+		type: "DELETE_USER_ACCOUNT_AND_DATA_FAILED",
+	} as const);
+
 export type ReduxUserState = "user";
 
 export type UserActionTypes =
@@ -54,4 +69,7 @@ export type UserActionTypes =
 	| ReturnType<typeof removeUser>
 	| ReturnType<typeof updateProfileImage>
 	| ReturnType<typeof updateProfileImageFulfilled>
-	| ReturnType<typeof updateProfileImageFailed>;
+	| ReturnType<typeof updateProfileImageFailed>
+	| ReturnType<typeof deleteUserAccountAndData>
+	| ReturnType<typeof deleteUserAccountAndDataFulfilled>
+	| ReturnType<typeof deleteUserAccountAndDataFailed>;

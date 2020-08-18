@@ -50,9 +50,21 @@ function* workerUpdateProfileImage({imageFile}: ReturnType<typeof updateProfileI
 	}
 }
 
+function* workerDeleteUserAccountAndData() {
+	try {
+		/* const res = yield call(apiService.refreshAndFetch, "profile/post-profile-image", {
+			method: "POST",
+			body: imageFile,
+		}); */
+	} catch (e) {
+		console.log(e);
+	}
+}
+
 function* userSaga() {
 	yield takeEvery("GET_USER", workerGetUser);
 	yield takeEvery("UPDATE_PROFILE_PICTURE", workerUpdateProfileImage);
+	yield takeEvery("DELETE_USER_ACCOUNT_AND_DATA", workerDeleteUserAccountAndData);
 }
 
 export default userSaga;

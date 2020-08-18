@@ -1,3 +1,7 @@
+require("dotenv").config({
+	path: ".env",
+});
+
 module.exports = [
 	{
 		name: process.env.NODE_ENV,

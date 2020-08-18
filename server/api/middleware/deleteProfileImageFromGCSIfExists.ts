@@ -2,7 +2,7 @@ import {Storage} from "@google-cloud/storage";
 import {Request, Response, NextFunction} from "express-serve-static-core";
 import {getConnection} from "typeorm";
 import {User} from "../../db/entities/User";
-import {deleteGCSFile} from "../utils/gcsUtils";
+import {deleteGCSFile, getGSCfilename} from "../utils/gcsUtils";
 
 export const deleteProfileImageFromGCSIfExists = async (
 	req: Request,
@@ -30,7 +30,9 @@ export const deleteProfileImageFromGCSIfExists = async (
 
 			const bucket = gcs.bucket(process.env.GCLOUD_STORAGE_BUCKET || "");
 
-			const profilePictureName = user.profilePicture.split("/").slice(-1)[0];
+			console.log("THE PROFILE PICTURE: ", user.profilePicture);
+
+			const profilePictureName = getGSCfilename(user.profilePicture, "poem-art-bucket");
 
 			await deleteGCSFile(bucket, profilePictureName);
 

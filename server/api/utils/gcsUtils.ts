@@ -5,3 +5,6 @@ export const deleteGCSFile = async (bucket: Bucket, name: string) => {
 
 	console.log(`gs://${bucket.name}/${name} deleted.`);
 };
+
+export const getGSCfilename = (filename: string, bucketName: string): string =>
+	filename.split(`${bucketName}/`)[1];

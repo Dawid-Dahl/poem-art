@@ -24,7 +24,9 @@ export const uploadGCSFile = (req: Request, res: Response, next: NextFunction) =
 		? replaceSpacesInString(req.file.originalname, "_")
 		: req.file.originalname;
 
-	const fileName = `${Date.now()}-${crypto.randomBytes(3).toString("hex")}-${sanitizedFileName}`;
+	const fileName = `${req.user}/${Date.now()}-${crypto
+		.randomBytes(3)
+		.toString("hex")}-${sanitizedFileName}`;
 
 	const file = bucket.file(fileName);
 

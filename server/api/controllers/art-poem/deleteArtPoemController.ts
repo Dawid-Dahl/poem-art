@@ -3,7 +3,7 @@ import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
 import {ArtPoem} from "../../../db/entities/ArtPoem";
 import {Storage, Bucket, File} from "@google-cloud/storage";
-import {deleteGCSFile} from "../../utils/gcsUtils";
+import {deleteGCSFile, getGSCfilename} from "../../utils/gcsUtils";
 
 export const deleteArtPoemController = async (req: Request, res: Response) => {
 	const artPoemId = req.body.artPoemId as number;
@@ -36,7 +36,9 @@ export const deleteArtPoemController = async (req: Request, res: Response) => {
 
 		if (!artPoem) throw new Error("No Artpoem was found in the database!");
 
-		await deleteGCSFile(bucket, artPoem.imageUrl.split("/").slice(-1)[0]).catch(console.error);
+		await deleteGCSFile(bucket, getGSCfilename(artPoem.imageUrl, "poem-art-bucket")).catch(
+			console.error
+		);
 
 		await getConnection(process.env.NODE_ENV)
 			.createQueryBuilder()

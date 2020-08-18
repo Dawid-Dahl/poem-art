@@ -9,6 +9,7 @@ import {getPoemsByUserId} from "../../actions/asyncPoemActions";
 import Button from "../Button";
 import {getPoemsByUserAndCollection, renderSocialFeed} from "../../actions/syncPoemAction";
 import {getAllCollections} from "../../actions/collectionActions";
+import UserProfileFooter from "./UserProfileFooter";
 
 const UserProfile: React.FC = () => {
 	const user = useSelector((state: RootState) => state.userReducer.user);
@@ -42,7 +43,7 @@ const UserProfile: React.FC = () => {
 			<Wrapper>
 				<Greeting>{`Welcome back, ${user?.username ?? ""}!`}</Greeting>
 				<ProfilePicWrapper>
-					<ProfilePic size={8} isAnimating user={user} />
+					<ProfilePic size={8} isAnimating isPictureChangeable user={user} />
 				</ProfilePicWrapper>
 				<h2>Your Collections</h2>
 				<CollectionsDisplay collections={collections} />
@@ -56,6 +57,7 @@ const UserProfile: React.FC = () => {
 					/>
 				)}
 				<ArtPoemGrid />
+				<UserProfileFooter />
 			</Wrapper>
 		</>
 	);
