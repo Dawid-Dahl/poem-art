@@ -180,13 +180,6 @@ export const addXTokenHeaderToFetch = (xToken: string | null) => async (
 	return response;
 };
 
-export const resetReduxState = () => {
-	store.dispatch(removeUser());
-	store.dispatch(removeAllCollections());
-	store.dispatch(hideFlash());
-	store.dispatch(hidePopup());
-};
-
 export const parseMainApiResponse = (res: MainApiJsonResponse) => {
 	if (res.success) {
 		return JSON.parse(res.payload);

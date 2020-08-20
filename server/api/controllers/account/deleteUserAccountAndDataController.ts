@@ -1,19 +1,27 @@
 import {Request, Response} from "express-serve-static-core";
 import {jsonResponse} from "../../utils/utils";
-import {getConnection} from "typeorm";
-import {User} from "../../../db/entities/User";
 
-export const deleteUserAccountAndDataController = async (req: Request, res: Response) => {
-	const userRepo = getConnection(process.env.NODE_ENV).getRepository(User);
-
-	const id = req.params.id;
-
+export const deleteUserAccountAndDataController = (req: Request, res: Response) => {
 	try {
-		const user = await userRepo.findOne(id);
-
-		res.end("DELETED THE IMAGES SO FAR!");
+		res.status(200).json(
+			jsonResponse(
+				true,
+				JSON.stringify({
+					message: `User ${req.user} and all its data was successfully deleted from the Main server`,
+				})
+			)
+		);
 	} catch (e) {
 		console.log(e);
-		res.status(401).json(jsonResponse(false));
+
+		res.status(409).json(
+			jsonResponse(
+				false,
+				JSON.stringify({
+					message:
+						"Something went wrong while trying to delete the user and its data from the Main server!",
+				})
+			)
+		);
 	}
 };

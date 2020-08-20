@@ -5,13 +5,24 @@ import jwt from "jsonwebtoken";
 import sqlite from "sqlite3";
 import {Tables} from "../types/enums";
 import {DecodedJwt} from "../types/types";
-import {authJsonResponse, closeSqliteConnection} from "../utils/utils";
+import {authJsonResponse, closeSqliteConnection, removeBearerFromTokenHeader} from "../utils/utils";
 
 const PUB_KEY_PATH = path.join(__dirname, "../..", "cryptography", "id_rsa_pub.pem");
 const PUB_KEY = fs.readFileSync(PUB_KEY_PATH, "utf8");
 
 export const deleteUserController = (req: Request, res: Response, next: NextFunction) => {
-	jwt.verify(req.params.token, PUB_KEY, (err, decodedJwt) => {
+	const xToken = removeBearerFromTokenHeader(req.get("x-token"));
+
+	if (!xToken) {
+		res.status(500).json(
+			authJsonResponse(false, {
+				message: "Something went wrong while trying to delete the user",
+			})
+		);
+		return;
+	}
+
+	jwt.verify(xToken, PUB_KEY, (err, decodedJwt) => {
 		if (err) {
 			console.log(err);
 			res.status(500).json(
@@ -35,9 +46,9 @@ export const deleteUserController = (req: Request, res: Response, next: NextFunc
 						throw new Error("There was an error while trying to delete the user");
 					}
 
-					res.status(204).json(
+					res.status(200).json(
 						authJsonResponse(true, {
-							message: "User has been deleted completely.",
+							message: "The user has been deleted completely along with all its data",
 						})
 					);
 				});
@@ -47,7 +58,7 @@ export const deleteUserController = (req: Request, res: Response, next: NextFunc
 				console.log(e);
 				res.status(500).json(
 					authJsonResponse(false, {
-						message: "Something went wrong while verifying the email",
+						message: "Something went wrong while trying to delete the user",
 					})
 				);
 			}

@@ -3,6 +3,6 @@ import {deleteUserController} from "../controllers/deleteUserController";
 
 const deleteUserRouter = express.Router();
 
-deleteUserRouter.post("/account-data", deleteUserController);
+deleteUserRouter.delete("/account-data", deleteUserController);
 
 export default deleteUserRouter;

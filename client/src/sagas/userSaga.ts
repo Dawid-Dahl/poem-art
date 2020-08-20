@@ -6,6 +6,7 @@ import {updateProfileImage, updateProfileImageFulfilled, getUser} from "../actio
 import {showFlash} from "../actions/flashActions";
 import {User} from "../types/types";
 import {setProfileName} from "../actions/profileActions";
+import {logout} from "../actions/loginActions";
 
 function* workerGetUser({userId}: ReturnType<typeof getUser>) {
 	try {
@@ -56,9 +57,30 @@ function* workerDeleteUserAccountAndData() {
 			method: "DELETE",
 		});
 
-		console.log(res);
+		const json = yield call([res, "json"]);
+
+		if (json.success) {
+			const res = yield call(
+				apiService.refreshAndFetchFromAuthServer,
+				"delete-user/account-data",
+				{
+					method: "DELETE",
+				}
+			);
+
+			const json = yield call([res, "json"]);
+
+			yield put(showFlash(json.payload.message, 6000));
+			yield put(logout());
+		} else {
+			console.error(
+				"Something went wrong while trying to delete the user and its data from the Main server!"
+			);
+		}
 	} catch (e) {
 		console.log(e);
+
+		console.error("Something went wrong while trying to delete the user");
 	}
 }
 

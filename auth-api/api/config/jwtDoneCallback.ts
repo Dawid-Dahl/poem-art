@@ -57,8 +57,6 @@ const jwtJwtDoneCallback: JwtDoneCallback = (req, res, next) => (err, user, info
 								return;
 							}
 
-							console.log(row);
-
 							const user = constructUserWithoutPasswordFromSqlResult(row);
 
 							issueAccessToken(user.id, PRIV_KEY)

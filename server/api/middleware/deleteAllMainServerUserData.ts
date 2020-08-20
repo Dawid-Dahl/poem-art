@@ -48,7 +48,9 @@ export const deleteAllMainServerUserData = async (
 			.where("id = :id", {id: req.user})
 			.execute();
 
-		console.log(`User ${req.user} was successfully deleted from the Auth Server`);
+		console.log(
+			`User ${req.user} and all its data was successfully deleted from the Main Server`
+		);
 
 		next();
 	} catch (e) {
