@@ -18,6 +18,7 @@ const UserProfile: React.FC = () => {
 	const collectionSelected = useSelector(
 		(state: RootState) => state.collectionReducer.collectionSelected
 	);
+	const renderedPoems = useSelector((state: RootState) => state.syncPoemReducer.renderedPoems);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -56,7 +57,7 @@ const UserProfile: React.FC = () => {
 						onClickHandler={handleClick}
 					/>
 				)}
-				<ArtPoemGrid />
+				<ArtPoemGrid renderedPoems={renderedPoems} />
 				<UserProfileFooter />
 			</Wrapper>
 		</>

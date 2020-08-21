@@ -4,9 +4,13 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../store";
 import ArtPoem from "./ArtPoem";
 import Loading from "../Loading";
+import {ReduxArtPoem} from "../../types/types";
 
-const ArtPoemGrid: React.FC = () => {
-	const renderedPoems = useSelector((state: RootState) => state.syncPoemReducer.renderedPoems);
+type Props = {
+	renderedPoems: ReduxArtPoem[];
+};
+
+const ArtPoemGrid: React.FC<Props> = ({renderedPoems}) => {
 	const isLoading = useSelector((state: RootState) => state.loadingReducer.isLoading);
 
 	return (

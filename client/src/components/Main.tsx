@@ -8,6 +8,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../store";
 import {getPoems} from "../actions/asyncPoemActions";
 import {getPoemsByUserAndCollection} from "../actions/syncPoemAction";
+import {filterPoemsByPublicCollection} from "../utils/utils";
 
 const Main = () => {
 	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
@@ -16,7 +17,10 @@ const Main = () => {
 	const collectionSelected = useSelector(
 		(state: RootState) => state.collectionReducer.collectionSelected
 	);
+	const renderedPoems = useSelector((state: RootState) => state.syncPoemReducer.renderedPoems);
 	const dispatch = useDispatch();
+
+	const publicPoems = filterPoemsByPublicCollection(renderedPoems);
 
 	useEffect(() => {
 		collectionSelected &&
@@ -56,7 +60,7 @@ const Main = () => {
 					/>
 				</SelectWrapper>
 				{collectionSelected ? <h1></h1> : <h1>Discover</h1>}
-				<ArtPoemGrid />
+				<ArtPoemGrid renderedPoems={publicPoems} />
 			</InnerWrapper>
 		</Wrapper>
 	);

@@ -7,6 +7,7 @@ import {getPoemsByUserId} from "../../actions/asyncPoemActions";
 import {useQuery} from "../../custom-hooks/useQuery";
 import {getUser} from "../../actions/userActions";
 import {RootState} from "../../store";
+import {filterPoemsByPublicCollection} from "../../utils/utils";
 
 const GeneralProfile: React.FC = () => {
 	const query = useQuery();
@@ -16,6 +17,9 @@ const GeneralProfile: React.FC = () => {
 	const dispatch = useDispatch();
 
 	const profileUser = useSelector((state: RootState) => state.profileReducer.profileUser);
+	const renderedPoems = useSelector((state: RootState) => state.syncPoemReducer.renderedPoems);
+
+	const publicPoems = filterPoemsByPublicCollection(renderedPoems);
 
 	useEffect(() => {
 		if (userId) dispatch(getUser(userId));
@@ -32,7 +36,7 @@ const GeneralProfile: React.FC = () => {
 					<ProfilePic size={8} isAnimating user={profileUser} />
 				</ProfilePicWrapper>
 				<h1>{`${profileUser?.username}'s ArtPoems`} </h1>
-				<ArtPoemGrid />
+				<ArtPoemGrid renderedPoems={publicPoems} />
 			</Wrapper>
 		</>
 	);

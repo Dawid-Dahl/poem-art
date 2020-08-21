@@ -287,3 +287,8 @@ export const comment = () => ({
 		};
 	},
 });
+
+export const filterPoemsByPublicCollection = (poems: ReduxArtPoem[]) =>
+	poems.filter(poem =>
+		poem.collections.map(collection => collection.public).every(result => result === true)
+	);
