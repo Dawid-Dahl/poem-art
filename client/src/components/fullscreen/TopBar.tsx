@@ -2,6 +2,7 @@ import React from "react";
 import LinkButton from "../LinkButton";
 import styled from "styled-components";
 import {useHistory} from "react-router-dom";
+import PoemAuthorSection from "./PoemAuthorSection";
 
 type Props = {
 	title: string;
@@ -31,6 +32,7 @@ const TopBar: React.FC<Props> = ({title, buttonKind, backType}) => {
 					<TopBarTitle title={title}>{title}</TopBarTitle>
 				</TitleWrapper>
 			</Wrapper>
+			<PoemAuthorSection />
 		</>
 	);
 };
