@@ -35,7 +35,11 @@ const GeneralProfile: React.FC = () => {
 				<ProfilePicWrapper>
 					<ProfilePic size={8} isAnimating user={profileUser} />
 				</ProfilePicWrapper>
-				<h1>{`${profileUser?.username}'s ArtPoems`} </h1>
+				{!profileUser ? (
+					<h1 style={{color: "var(--main-grey-color)"}}>Loading...</h1>
+				) : (
+					<h1>{`${profileUser?.username}'s ArtPoems`} </h1>
+				)}
 				<ArtPoemGrid renderedPoems={publicPoems} />
 			</Wrapper>
 		</>

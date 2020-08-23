@@ -2,8 +2,7 @@ import React, {useEffect} from "react";
 import styled from "styled-components";
 import Navbar from "./Navbar";
 import ArtPoemGrid from "./art-poem-grid/ArtPoemGrid";
-import {selectCollection, getAllCollections} from "../actions/collectionActions";
-import SelectElement from "./inputs/SelectElement";
+import {getAllCollections} from "../actions/collectionActions";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../store";
 import {getPoems} from "../actions/asyncPoemActions";
@@ -12,7 +11,6 @@ import {filterPoemsByPublicCollection, pipe, scrambleArray, take} from "../utils
 import Button from "./Button";
 
 const Main = () => {
-	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
 	const cachedPoems = useSelector((state: RootState) => state.asyncPoemReducer.cachedPoems);
 	const user = useSelector((state: RootState) => state.userReducer.user);
 	const collectionSelected = useSelector(
@@ -35,13 +33,6 @@ const Main = () => {
 		dispatch(dispatch(getPoems(20)));
 	}, []);
 
-	const handleSelectCollection = (
-		e: React.ChangeEvent<HTMLSelectElement>
-	): ReturnType<typeof selectCollection> | ReturnType<typeof getPoems> =>
-		e.target.value === "Social Feed"
-			? getPoems()
-			: selectCollection(collections.filter(x => x.name === e.target.value)[0]);
-
 	return (
 		<Wrapper>
 			<Navbar />
@@ -51,11 +42,11 @@ const Main = () => {
 					renderedPoems={pipe(
 						filterPoemsByPublicCollection,
 						scrambleArray,
-						take(4)
+						take(12)
 					)(renderedPoems)}
 				/>
 				<ButtonWrapper>
-					{renderedPoems.length > 10 && (
+					{cachedPoems.length >= 12 && (
 						<Button
 							title="Refresh ArtPoems"
 							kind="grey"

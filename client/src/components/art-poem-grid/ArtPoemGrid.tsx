@@ -31,6 +31,7 @@ const ArtPoemGrid: React.FC<Props> = ({renderedPoems}) => {
 								comments,
 								collections,
 								userId,
+								user,
 							}) => (
 								<ArtPoem
 									key={id}
@@ -43,6 +44,7 @@ const ArtPoemGrid: React.FC<Props> = ({renderedPoems}) => {
 									likes={likes}
 									comments={comments}
 									collections={collections}
+									user={user}
 								/>
 							)
 						)
