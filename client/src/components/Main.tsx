@@ -8,7 +8,8 @@ import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../store";
 import {getPoems} from "../actions/asyncPoemActions";
 import {getPoemsByUserAndCollection} from "../actions/syncPoemAction";
-import {filterPoemsByPublicCollection} from "../utils/utils";
+import {filterPoemsByPublicCollection, pipe, scrambleArray, take} from "../utils/utils";
+import Button from "./Button";
 
 const Main = () => {
 	const collections = useSelector((state: RootState) => state.collectionReducer.collections);
@@ -19,8 +20,6 @@ const Main = () => {
 	);
 	const renderedPoems = useSelector((state: RootState) => state.syncPoemReducer.renderedPoems);
 	const dispatch = useDispatch();
-
-	const publicPoems = filterPoemsByPublicCollection(renderedPoems);
 
 	useEffect(() => {
 		collectionSelected &&
@@ -47,20 +46,24 @@ const Main = () => {
 		<Wrapper>
 			<Navbar />
 			<InnerWrapper>
-				<SelectWrapper>
-					<SelectElement
-						onChangeHandle={(e: React.ChangeEvent<HTMLSelectElement>) =>
-							dispatch(handleSelectCollection(e))
-						}
-						selectedCollection={
-							collectionSelected ? collectionSelected.name : "Social Feed"
-						}
-						isSocialFeedSelectable
-						collections={collections}
-					/>
-				</SelectWrapper>
 				{collectionSelected ? <h1></h1> : <h1>Discover</h1>}
-				<ArtPoemGrid renderedPoems={publicPoems} />
+				<ArtPoemGrid
+					renderedPoems={pipe(
+						filterPoemsByPublicCollection,
+						scrambleArray,
+						take(4)
+					)(renderedPoems)}
+				/>
+				<ButtonWrapper>
+					{renderedPoems.length > 10 && (
+						<Button
+							title="Refresh ArtPoems"
+							kind="grey"
+							type="button"
+							onClickHandler={() => dispatch(getPoems(20))}
+						/>
+					)}
+				</ButtonWrapper>
 			</InnerWrapper>
 		</Wrapper>
 	);
@@ -86,19 +89,10 @@ const InnerWrapper = styled.div`
 	flex-direction: column;
 
 	h1 {
-		margin: 0 0 0.5em 0;
+		margin: 1em 0 1.5em 0;
 	}
 `;
 
-const SelectWrapper = styled.div`
-	width: 50%;
-	max-width: 25em;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 2em 0;
-
-	@media only screen and (max-width: 500px) {
-		margin: 1em 0;
-	}
+const ButtonWrapper = styled.div`
+	margin-bottom: 3em;
 `;

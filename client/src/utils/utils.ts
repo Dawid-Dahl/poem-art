@@ -9,12 +9,7 @@ import {
 	ReduxCollection,
 	ReduxComment,
 } from "../types/types";
-import store from "../store";
 import {authService} from "../auth/authService";
-import {removeAllCollections} from "../actions/collectionActions";
-import {hidePopup} from "../actions/popupActions";
-import {hideFlash} from "../actions/flashActions";
-import {removeUser} from "../actions/userActions";
 import {History} from "history";
 
 export const localStorageService = {
@@ -288,7 +283,14 @@ export const comment = () => ({
 	},
 });
 
+export const pipe = (...fns: Function[]) => (data: any) => fns.reduce((acc, cur) => cur(acc), data);
+
+export const scrambleArray = <T>(arr: Array<T>) =>
+	[...arr].sort((a, b) => (Math.random() > 0.5 ? 1 : -1));
+
 export const filterPoemsByPublicCollection = (poems: ReduxArtPoem[]) =>
 	poems.filter(poem =>
 		poem.collections.map(collection => collection.public).every(result => result === true)
 	);
+
+export const take = (n: number) => (arr: Array<any>) => arr.slice(0, n);

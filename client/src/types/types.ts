@@ -40,6 +40,7 @@ export type ReduxArtPoem = {
 	collections: ReduxCollection[];
 	comments: ReduxComment[];
 	likes: ReduxLike[];
+	user: User;
 };
 
 export type Collection = {
