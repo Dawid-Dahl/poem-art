@@ -58,8 +58,8 @@ const Wrapper = styled.div<WrapperProps>`
 	position: relative;
 	align-items: center;
 	justify-content: center;
-	height: 200px;
-	flex: 1 1 200px;
+	height: 150px;
+	flex: 1 1 150px;
 	border-radius: var(--border-radius);
 	background-color: ${({collectionSelected, collectionId}) =>
 		collectionSelected && collectionSelected.id === collectionId
