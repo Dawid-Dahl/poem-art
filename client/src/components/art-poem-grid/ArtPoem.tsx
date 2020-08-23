@@ -9,9 +9,11 @@ const ArtPoem: React.FC<ReduxArtPoem> = ({id, title, likes, imageUrl}) => {
 		<>
 			<Wrapper>
 				<Link to={`/fullscreen?id=${id}`}>
-					<StyledDiv imageUrl={imageUrl}>
-						<ArtPoemTitle>{title}</ArtPoemTitle>
-						<ArtPoemLikes>{`👍🏻 ${countLikes(likes)}`}</ArtPoemLikes>
+					<StyledDiv data-artpoem-id={id} imageUrl={imageUrl}>
+						<ArtPoemTitle data-artpoem-id={id}>{title}</ArtPoemTitle>
+						<ArtPoemLikes data-artpoem-id={id}>{`👍🏻 ${countLikes(
+							likes
+						)}`}</ArtPoemLikes>
 					</StyledDiv>
 				</Link>
 			</Wrapper>

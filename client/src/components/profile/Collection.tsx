@@ -31,12 +31,8 @@ const Collection: React.FC<Props> = ({id, name, onClickHandler}) => {
 
 	return (
 		<>
-			<Wrapper
-				collectionId={id}
-				data-collection-id={id}
-				collectionSelected={collectionSelected}
-			>
-				<SpanWrapper onClick={e => onClickHandler(e, id)}>
+			<Wrapper collectionId={id} collectionSelected={collectionSelected}>
+				<SpanWrapper data-collection-id={id} onClick={e => onClickHandler(e, id)}>
 					<span
 						onClick={e =>
 							confirm(

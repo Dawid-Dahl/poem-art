@@ -8,14 +8,23 @@ export const useOutsideCollectionClicker = () => {
 		(state: RootState) => state.collectionReducer.collectionSelected
 	);
 	const cachedPoems = useSelector((state: RootState) => state.asyncPoemReducer.cachedPoems);
+	const renderedPoems = useSelector((state: RootState) => state.syncPoemReducer.renderedPoems);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const handleClickOutside = (e: any) => {
 			if (collectionSelected) {
-				const targetId = e.target.getAttribute("data-collection-id");
+				const targetCollectionId = e.target.getAttribute("data-collection-id");
+				const targetArtPoemId = e.target.getAttribute("data-artpoem-id");
 
-				if (targetId === collectionSelected.id.toString()) {
+				console.log(
+					Boolean(renderedPoems.find(poem => poem.id === parseInt(targetArtPoemId)))
+				);
+
+				if (
+					targetCollectionId === collectionSelected.id.toString() ||
+					Boolean(renderedPoems.find(poem => poem.id === parseInt(targetArtPoemId)))
+				) {
 					return;
 				}
 
