@@ -4,6 +4,8 @@ import {getConnection} from "typeorm";
 import {ArtPoem} from "../../../db/entities/ArtPoem";
 import {Storage} from "@google-cloud/storage";
 import {deleteGCSFile, getGSCfilename} from "../../utils/gcsUtils";
+import {Like} from "../../../db/entities/Like";
+import {Comment} from "../../../db/entities/Comment";
 
 export const deleteArtPoemController = async (req: Request, res: Response) => {
 	const artPoemId = req.body.artPoemId as number;
@@ -39,6 +41,20 @@ export const deleteArtPoemController = async (req: Request, res: Response) => {
 		await deleteGCSFile(bucket, getGSCfilename(artPoem.imageUrl, "poem-art-bucket")).catch(
 			console.error
 		);
+
+		await getConnection(process.env.NODE_ENV)
+			.createQueryBuilder()
+			.delete()
+			.from(Like)
+			.where("artpoemId = :artpoemId", {artpoemId: artPoemId})
+			.execute();
+
+		await getConnection(process.env.NODE_ENV)
+			.createQueryBuilder()
+			.delete()
+			.from(Comment)
+			.where("artpoemId = :artpoemId", {artpoemId: artPoemId})
+			.execute();
 
 		await getConnection(process.env.NODE_ENV)
 			.createQueryBuilder()

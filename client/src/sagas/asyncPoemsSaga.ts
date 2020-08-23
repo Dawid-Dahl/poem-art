@@ -138,6 +138,7 @@ function* workerUploadPoems({payload}: ReturnType<typeof uploadPoem>) {
 		const data = yield call([res, "json"]);
 
 		yield put(showFlash(JSON.parse(data.payload).message));
+		yield call(forwardTo, history, `/fullscreen?id=${JSON.parse(data.payload).id}`);
 	} catch (e) {
 		console.log(e);
 	}

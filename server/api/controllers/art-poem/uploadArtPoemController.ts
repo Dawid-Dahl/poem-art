@@ -31,7 +31,7 @@ export const uploadArtPoemController = async (req: Request, res: Response) => {
 		artPoem.user = user;
 		artPoem.collections = [filteredCollection];
 
-		await artPoemRepo.save(artPoem);
+		const insertResult = await artPoemRepo.save(artPoem);
 
 		console.log("ArtPoem was uploaded!");
 
@@ -40,6 +40,7 @@ export const uploadArtPoemController = async (req: Request, res: Response) => {
 				true,
 				JSON.stringify({
 					message: "ArtPoem uploaded successfully!",
+					id: insertResult.id,
 					publicUrl: req.gcsPublicUrl,
 				})
 			)
