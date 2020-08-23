@@ -21,6 +21,7 @@ import {hidePopup} from "../actions/popupActions";
 import {removeAllPoemsFromRenderedPoems} from "../actions/syncPoemAction";
 import {removeAllPoemsFromCache} from "../actions/asyncPoemActions";
 import {closeCommentSubmitSection} from "../actions/commentActions";
+import {User} from "../types/types";
 
 function* workerCheckIfLoggedIn({tokens}: ReturnType<typeof checkIfLoggedIn>) {
 	if (location.pathname === "/register" || location.pathname === "/login") {
@@ -32,7 +33,7 @@ function* workerCheckIfLoggedIn({tokens}: ReturnType<typeof checkIfLoggedIn>) {
 
 		if (validOrRefreshedXToken) {
 			const {sub} = yield call(getPayloadFromJwt, validOrRefreshedXToken);
-			const user = yield call(constructUserFromId, sub);
+			const user: User = yield call(constructUserFromId, sub);
 			if (user) {
 				yield put(setUser(user));
 				yield call(localStorageService.setXToken, validOrRefreshedXToken);

@@ -72,13 +72,17 @@ export const constructUserFromId = (
 				);
 				const data = await response.json();
 
-				const {id, username, profilePicture, admin} = JSON.parse(data.payload).user;
+				const {id, username, profilePicture, admin, createdAt, updatedAt} = JSON.parse(
+					data.payload
+				).user;
 
 				res({
 					id,
 					username,
 					admin,
 					profilePicture,
+					createdAt,
+					updatedAt,
 				});
 			} catch (e) {
 				rej(e);

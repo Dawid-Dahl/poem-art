@@ -83,6 +83,8 @@ export type User = {
 	username: string;
 	admin: boolean;
 	profilePicture: string | null;
+	createdAt: string;
+	updatedAt: string;
 };
 
 export type AuthJsonResponsePayload = {

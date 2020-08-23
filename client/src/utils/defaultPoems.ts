@@ -12,6 +12,14 @@ export const welcomePoem: ReduxArtPoem = {
 	collections: [],
 	likes: [],
 	comments: [],
+	user: {
+		id: "",
+		username: "",
+		admin: false,
+		profilePicture: "",
+		createdAt: "",
+		updatedAt: "",
+	},
 };
 
 export const initPoem: ReduxArtPoem = {
@@ -25,6 +33,14 @@ export const initPoem: ReduxArtPoem = {
 	collections: [],
 	likes: [],
 	comments: [],
+	user: {
+		id: "",
+		username: "",
+		admin: false,
+		profilePicture: "",
+		createdAt: "",
+		updatedAt: "",
+	},
 };
 
 export const poemNotFound: ReduxArtPoem = {
@@ -38,4 +54,12 @@ export const poemNotFound: ReduxArtPoem = {
 	collections: [],
 	likes: [],
 	comments: [],
+	user: {
+		id: "",
+		username: "",
+		admin: false,
+		profilePicture: "",
+		createdAt: "",
+		updatedAt: "",
+	},
 };

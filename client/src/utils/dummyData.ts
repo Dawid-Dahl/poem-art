@@ -19,6 +19,15 @@ export const sampleArtPoems: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 92,
@@ -38,6 +47,15 @@ export const sampleArtPoems: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 93,
@@ -57,6 +75,15 @@ export const sampleArtPoems: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 94,
@@ -76,6 +103,15 @@ export const sampleArtPoems: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 95,
@@ -96,6 +132,15 @@ export const sampleArtPoems: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 ];
 
@@ -118,6 +163,15 @@ export const sampleArtPoemsWithNewDataAdded: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 92,
@@ -137,6 +191,15 @@ export const sampleArtPoemsWithNewDataAdded: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 93,
@@ -156,6 +219,15 @@ export const sampleArtPoemsWithNewDataAdded: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 94,
@@ -175,6 +247,15 @@ export const sampleArtPoemsWithNewDataAdded: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 95,
@@ -195,6 +276,15 @@ export const sampleArtPoemsWithNewDataAdded: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 102,
@@ -220,6 +310,15 @@ export const sampleArtPoemsWithNewDataAdded: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 ];
 
@@ -243,6 +342,15 @@ export const sampleArtPoemArray1: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 ];
 
@@ -265,6 +373,15 @@ export const sampleArtPoemArray2: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 94,
@@ -284,6 +401,15 @@ export const sampleArtPoemArray2: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 ];
 
@@ -306,6 +432,15 @@ export const sampleArrWithDifferentData: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 94,
@@ -325,6 +460,15 @@ export const sampleArrWithDifferentData: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 102,
@@ -350,6 +494,15 @@ export const sampleArrWithDifferentData: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 ];
 
@@ -372,6 +525,15 @@ export const sampleArrWithPoemsFromSeparateUsers: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 127,
@@ -391,6 +553,15 @@ export const sampleArrWithPoemsFromSeparateUsers: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 128,
@@ -410,6 +581,15 @@ export const sampleArrWithPoemsFromSeparateUsers: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 129,
@@ -429,6 +609,15 @@ export const sampleArrWithPoemsFromSeparateUsers: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 ];
 
@@ -451,6 +640,15 @@ export const sampleArrWithoutPoemsFromSeparateUsers: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 	{
 		id: 129,
@@ -470,6 +668,15 @@ export const sampleArrWithoutPoemsFromSeparateUsers: ReduxArtPoem[] = [
 				public: true,
 			},
 		],
+		user: {
+			id: "h52dgb0v3ytke36p7lp",
+			username: "Integral",
+			admin: false,
+			profilePicture:
+				"https://storage.googleapis.com/poem-art-bucket/h52dgb0v3ytke36p7lp/profile-image/1597989290151-eee28a-BAMSE-4462-86c0-ac55e6150d2b.jpeg",
+			createdAt: "2020-08-20T19:14:47.270Z",
+			updatedAt: "2020-08-21T05:54:50.000Z",
+		},
 	},
 ];
 
