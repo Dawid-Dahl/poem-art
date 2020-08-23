@@ -4,6 +4,7 @@ import {ReduxCollection} from "../../types/types";
 import {selectCollection, deleteCollection} from "../../actions/collectionActions";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store";
+import {useOutsideCollectionClicker} from "../../custom-hooks/useOutsideCollectionClicker";
 
 type Props = {
 	id: ReduxCollection["id"];
@@ -26,9 +27,15 @@ const Collection: React.FC<Props> = ({id, name, onClickHandler}) => {
 		(state: RootState) => state.collectionReducer.collectionSelected
 	);
 
+	useOutsideCollectionClicker();
+
 	return (
 		<>
-			<Wrapper collectionId={id} collectionSelected={collectionSelected}>
+			<Wrapper
+				collectionId={id}
+				data-collection-id={id}
+				collectionSelected={collectionSelected}
+			>
 				<SpanWrapper onClick={e => onClickHandler(e, id)}>
 					<span
 						onClick={e =>

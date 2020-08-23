@@ -1,10 +1,9 @@
 import {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../store";
-import {ReduxComment} from "../types/types";
 import {deselectComment, disableCommentEdit} from "../actions/commentActions";
 
-export const useOutsideCommentClicker = (id: ReduxComment["id"]) => {
+export const useOutsideCommentClicker = () => {
 	const commentSelected = useSelector((state: RootState) => state.commentReducer.commentSelected);
 	const dispatch = useDispatch();
 

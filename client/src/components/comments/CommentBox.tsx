@@ -28,7 +28,7 @@ const CommentBox: React.FC<Props> = ({comment}) => {
 
 	const [editComment, setEditComment] = useState(commentContent);
 
-	useOutsideCommentClicker(id);
+	useOutsideCommentClicker();
 
 	useEffect(() => {
 		setEditComment(commentSelected ? commentSelected.comment : "");
