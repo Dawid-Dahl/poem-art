@@ -21,6 +21,15 @@ export const resetPasswordController = (req: Request, res: Response) => {
 
 	const {password, resetToken}: {password: string; resetToken: string} = req.body;
 
+	if (!resetToken) {
+		res.status(401).json(
+			authJsonResponse(false, {
+				message: "You don't have a valid reset token, access denied.",
+			})
+		);
+		return;
+	}
+
 	const resetTokenPayload = extractPayloadFromBase64JWT(resetToken);
 
 	const userId = resetTokenPayload?.sub as string;
@@ -33,9 +42,9 @@ export const resetPasswordController = (req: Request, res: Response) => {
 		jwt.verify(resetToken, PUB_KEY, (err, decodedJwt) => {
 			if (err) {
 				console.log(err);
-				res.status(500).json(
+				res.status(401).json(
 					authJsonResponse(false, {
-						message: "Something went wrong while verifying the resetToken",
+						message: `${err.name}: ${err.message}`,
 					})
 				);
 			} else {

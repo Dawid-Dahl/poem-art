@@ -14,9 +14,9 @@ export const deleteUserController = (req: Request, res: Response, next: NextFunc
 	const xToken = removeBearerFromTokenHeader(req.get("x-token"));
 
 	if (!xToken) {
-		res.status(500).json(
+		res.status(401).json(
 			authJsonResponse(false, {
-				message: "Something went wrong while trying to delete the user",
+				message: "You don't have a valid access token, access denied.",
 			})
 		);
 		return;
@@ -25,9 +25,9 @@ export const deleteUserController = (req: Request, res: Response, next: NextFunc
 	jwt.verify(xToken, PUB_KEY, (err, decodedJwt) => {
 		if (err) {
 			console.log(err);
-			res.status(500).json(
+			res.status(401).json(
 				authJsonResponse(false, {
-					message: "Something went wrong while trying to delete the user",
+					message: `${err.name}: ${err.message}`,
 				})
 			);
 		} else {
