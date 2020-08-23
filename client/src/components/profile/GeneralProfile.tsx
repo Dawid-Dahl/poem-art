@@ -57,6 +57,7 @@ const Wrapper = styled.div`
 
 	h1 {
 		margin: 1.5em;
+		text-align: center;
 	}
 `;
 
