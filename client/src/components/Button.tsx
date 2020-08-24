@@ -90,6 +90,8 @@ const Wrapper = styled.div<WrapperProps>`
 				: "black"};
 		border: black;
 		outline: none;
+		font-weight: lighter;
+		font-family: "Roboto", sans-serif;
 
 		:hover {
 			transform: scale(1.05);

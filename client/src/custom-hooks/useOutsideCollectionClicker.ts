@@ -17,10 +17,6 @@ export const useOutsideCollectionClicker = () => {
 				const targetCollectionId = e.target.getAttribute("data-collection-id");
 				const targetArtPoemId = e.target.getAttribute("data-artpoem-id");
 
-				console.log(
-					Boolean(renderedPoems.find(poem => poem.id === parseInt(targetArtPoemId)))
-				);
-
 				if (
 					targetCollectionId === collectionSelected.id.toString() ||
 					Boolean(renderedPoems.find(poem => poem.id === parseInt(targetArtPoemId)))

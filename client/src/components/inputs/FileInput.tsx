@@ -79,6 +79,7 @@ const StyledWrapper = styled.div<WrapperProps>`
 				? "white"
 				: "black"};
 		border: black;
+		font-weight: lighter;
 
 		:hover {
 			transform: scale(1.05);

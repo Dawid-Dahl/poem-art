@@ -114,8 +114,6 @@ export const refreshXToken = (xRefreshToken: string | null): Promise<RefreshedXT
 			reject(null);
 		}
 
-		console.log("Refreshing server side!");
-
 		authService
 			.verifyXRefreshTokenServerSide(xRefreshToken)
 			.then(res => {

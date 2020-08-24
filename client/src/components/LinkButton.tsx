@@ -68,6 +68,7 @@ const StyledDiv = styled.div<StyledProps>`
 	cursor: pointer;
 	border: black;
 	box-shadow: var(--box-shadow);
+	font-weight: lighter;
 
 	:hover {
 		transform: scale(1.05);

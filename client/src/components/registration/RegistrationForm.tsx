@@ -61,7 +61,7 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 	return (
 		<>
 			<StyledForm action="POST" className="form" onSubmit={handleSubmit}>
-				<h2>REGISTRATION</h2>
+				<h2 className="registration-title">REGISTRATION</h2>
 				<LoginRow>
 					<TextInput
 						name="username"
@@ -126,7 +126,8 @@ const StyledForm = styled.form`
 	padding: 1em 0;
 	background-color: black;
 
-	h2 {
+	.registration-title {
 		color: white;
+		letter-spacing: 0.2em;
 	}
 `;

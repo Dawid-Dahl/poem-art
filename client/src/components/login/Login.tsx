@@ -7,6 +7,9 @@ const Login = () => {
 	return (
 		<Wrapper>
 			<h1 className="registration">artPoem.</h1>
+			<h2 className="app-description">
+				Share and discover poems along with fitting art or photography
+			</h2>
 			<LoginForm />
 			<Link to="/register" className="registrationLink">
 				Go To Registration
@@ -34,8 +37,11 @@ export const Wrapper = styled.div`
 		text-decoration: none;
 	}
 
-	h2 {
-		letter-spacing: 1px;
+	.app-description {
+		color: var(--main-btn-color);
+		text-align: center;
+		margin: 0.5em 1em 1em 1em;
+		font-weight: lighter;
 	}
 `;
 

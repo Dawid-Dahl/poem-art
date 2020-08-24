@@ -3,6 +3,8 @@ import LinkButton from "../LinkButton";
 import styled from "styled-components";
 import {useHistory} from "react-router-dom";
 import PoemAuthorSection from "./PoemAuthorSection";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store";
 
 type Props = {
 	title: string;
@@ -12,6 +14,8 @@ type Props = {
 
 const TopBar: React.FC<Props> = ({title, buttonKind, backType}) => {
 	const history = useHistory();
+	const selectedArtPoem = useSelector((state: RootState) => state.syncPoemReducer.poemSelected);
+
 	return (
 		<>
 			<Wrapper>
@@ -32,7 +36,7 @@ const TopBar: React.FC<Props> = ({title, buttonKind, backType}) => {
 					<TopBarTitle title={title}>{title}</TopBarTitle>
 				</TitleWrapper>
 			</Wrapper>
-			<PoemAuthorSection />
+			{selectedArtPoem.id <= 1 ? "" : <PoemAuthorSection />}
 		</>
 	);
 };

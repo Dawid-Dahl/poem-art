@@ -56,6 +56,6 @@ const Wrapper = styled.div`
 		padding: 50px;
 		text-align: center;
 		font-size: 1.5em;
-		white-space: pre;
+		white-space: break-spaces;
 	}
 `;

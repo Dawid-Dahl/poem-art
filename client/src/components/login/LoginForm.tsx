@@ -37,7 +37,7 @@ const LoginForm: React.FC = () => {
 					e.currentTarget.reset();
 				}}
 			>
-				<h2>LOGIN</h2>
+				<h2 className="login-title">LOGIN</h2>
 				<LoginRow>
 					<TextInput
 						name="email"
@@ -78,7 +78,8 @@ const StyledForm = styled.form`
 	padding: 1em 0;
 	background-color: black;
 
-	h2 {
+	.login-title {
 		color: white;
+		letter-spacing: 0.2em;
 	}
 `;
