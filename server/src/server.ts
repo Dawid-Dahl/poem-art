@@ -1,11 +1,11 @@
 import "reflect-metadata";
 import "dotenv/config";
 import express from "express";
-import apiRouter from "./api/routes/api";
 import cors from "cors";
 import errorhandler from "errorhandler";
 import morgan from "morgan";
 import {createConnection, getConnectionOptions} from "typeorm";
+import apiRouter from "./api/routes/api";
 
 (async () => {
 	try {

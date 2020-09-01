@@ -1,11 +1,11 @@
 import {Storage} from "@google-cloud/storage";
 import {Request, Response, NextFunction} from "express-serve-static-core";
 import {getConnection} from "typeorm";
-import {User} from "../../db/entities/User";
+import {Like} from "../../db/entities/Like";
+import {Comment} from "../../db/entities/Comment";
 import {Collection} from "../../db/entities/Collection";
 import {ArtPoem} from "../../db/entities/ArtPoem";
-import {Comment} from "../../db/entities/Comment";
-import {Like} from "../../db/entities/Like";
+import {User} from "../../db/entities/User";
 
 export const deleteAllMainServerUserData = async (
 	req: Request,

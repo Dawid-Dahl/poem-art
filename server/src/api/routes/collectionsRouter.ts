@@ -1,9 +1,9 @@
 import express from "express";
 import {addCollectionController} from "../controllers/collection/addCollectionController";
 import {getConnection} from "typeorm";
-import {Collection} from "../../db/entities/Collection";
 import {jsonResponse} from "../utils/utils";
 import {deleteCollectionController} from "../controllers/collection/deleteCollectionController";
+import {Collection} from "../../db/entities/Collection";
 
 const collectionsRouter = express.Router();
 

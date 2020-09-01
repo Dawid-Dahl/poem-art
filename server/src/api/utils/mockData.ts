@@ -4,7 +4,6 @@ export const poemWithOneCollection: ArtPoem = {
 	id: 128,
 	title: "So sad",
 	content: "So very sad!",
-	likes: 0,
 	imageUrl:
 		"https://storage.googleapis.com/poem-art-bucket/1594585128110-2a084f-post_apocalyptic_beach_by_clapham1994-d62n6a3.jpg",
 	userId: "diwr0o84w97kae3xq2p",
@@ -19,6 +18,8 @@ export const poemWithOneCollection: ArtPoem = {
 			updatedAt: "2020-05-19T16:31:18.156Z",
 		},
 	],
+	likes: [],
+	comments: [],
 };
 
 export const mockCollectionSadPoems = {
@@ -41,32 +42,33 @@ export const poemWithNoCollections: ArtPoem = {
 	id: 128,
 	title: "So sad",
 	content: "So very sad!",
-	likes: 0,
 	imageUrl:
 		"https://storage.googleapis.com/poem-art-bucket/1594585128110-2a084f-post_apocalyptic_beach_by_clapham1994-d62n6a3.jpg",
 	userId: "diwr0o84w97kae3xq2p",
 	createdAt: "2020-07-12T20:18:48.510Z",
 	updatedAt: "2020-07-19T18:03:37.000Z",
 	collections: [],
+	likes: [],
+	comments: [],
 };
 
 export const poemWithNoCollectionsField: Omit<ArtPoem, "collections"> = {
 	id: 128,
 	title: "So sad",
 	content: "So very sad!!!",
-	likes: 0,
 	imageUrl:
 		"https://storage.googleapis.com/poem-art-bucket/1594585128110-2a084f-post_apocalyptic_beach_by_clapham1994-d62n6a3.jpg",
 	userId: "diwr0o84w97kae3xq2p",
 	createdAt: "2020-07-12T20:18:48.510Z",
 	updatedAt: "2020-07-20T06:42:14.000Z",
+	likes: [],
+	comments: [],
 };
 
 export const poemWithThreeCollections: ArtPoem = {
 	id: 128,
 	title: "So sad",
 	content: "So very sad!",
-	likes: 0,
 	imageUrl:
 		"https://storage.googleapis.com/poem-art-bucket/1594585128110-2a084f-post_apocalyptic_beach_by_clapham1994-d62n6a3.jpg",
 	userId: "diwr0o84w97kae3xq2p",
@@ -95,4 +97,6 @@ export const poemWithThreeCollections: ArtPoem = {
 			updatedAt: "2020-05-19T16:31:18.156Z",
 		},
 	],
+	likes: [],
+	comments: [],
 };

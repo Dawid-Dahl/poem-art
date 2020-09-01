@@ -1,8 +1,8 @@
 import {Storage} from "@google-cloud/storage";
 import {Request, Response, NextFunction} from "express-serve-static-core";
 import {getConnection} from "typeorm";
-import {User} from "../../db/entities/User";
 import {deleteGCSFile, getGSCfilename} from "../utils/gcsUtils";
+import {User} from "../../db/entities/User";
 
 export const deleteProfileImageFromGCSIfExists = async (
 	req: Request,

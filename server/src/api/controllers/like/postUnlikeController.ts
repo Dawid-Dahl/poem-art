@@ -2,7 +2,6 @@ import {jsonResponse} from "../../utils/utils";
 import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
 import {Like} from "../../../db/entities/Like";
-
 export const postUnlikeController = async (req: Request, res: Response) => {
 	const likeRepo = getConnection(process.env.NODE_ENV).getRepository(Like);
 

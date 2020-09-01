@@ -1,9 +1,9 @@
 import {jsonResponse} from "../../utils/utils";
 import {Request, Response} from "express-serve-static-core";
 import {getConnection} from "typeorm";
-import {Comment} from "../../../db/entities/Comment";
 import {User} from "../../../db/entities/User";
 import {ArtPoem} from "../../../db/entities/ArtPoem";
+import {Comment} from "../../../db/entities/Comment";
 
 export const postCommentController = async (req: Request, res: Response) => {
 	const userRepo = getConnection(process.env.NODE_ENV).getRepository(User);
