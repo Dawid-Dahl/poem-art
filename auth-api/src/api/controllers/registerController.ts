@@ -50,7 +50,7 @@ export const registerController = async (req: Request, res: Response) => {
 					return;
 				}
 
-				//register user in auth db --- TODO: CHECK THAT ALREADY AVAILABLE USERS CAN'T REGISTER
+				//register user in auth db
 
 				try {
 					const sql = `INSERT INTO ${Tables.auth_users} (id, email, password) VALUES ($1, $2, $3)`;
@@ -59,12 +59,14 @@ export const registerController = async (req: Request, res: Response) => {
 					await client.query(sql, values);
 				} catch (e) {
 					const errorMsg = e.message.includes(
-						"UNIQUE constraint failed: Auth_Users.email"
+						'duplicate key value violates unique constraint "auth_users_email_key"'
 					)
 						? "A user with that email is already registered."
 						: "Couldn't register user.";
 
 					res.status(403).json(authJsonResponse(false, {message: errorMsg}));
+
+					return;
 				}
 
 				//register user in main db
@@ -82,9 +84,8 @@ export const registerController = async (req: Request, res: Response) => {
 
 					res.status(200).json(
 						authJsonResponse(true, {
-							message: `Almost done! Complete your registration by clicking the verification link in the email sent to your inbox! 
-								
-								(If you can't find it, check the Spam inbox.)`,
+							message:
+								"Almost done! Complete your registration by clicking the verification link in the email sent to your inbox! If you can't find it, check the Spam inbox.",
 						})
 					);
 				} catch (e) {
@@ -95,6 +96,8 @@ export const registerController = async (req: Request, res: Response) => {
 							message: "Registration is not possible right now. Sorry!",
 						})
 					);
+
+					return;
 				}
 			} catch (e) {
 				console.log(e);
