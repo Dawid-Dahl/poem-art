@@ -2,21 +2,22 @@ import path from "path";
 import fs from "fs";
 import {Request, Response} from "express";
 import jwt from "jsonwebtoken";
-import sqlite from "sqlite3";
 import {Tables} from "../types/enums";
-import {authJsonResponse, closeSqliteConnection, extractPayloadFromBase64JWT} from "../utils/utils";
+import {authJsonResponse, extractPayloadFromBase64JWT, releaseClient} from "../utils/utils";
 import {config} from "dotenv";
 import {validationResult} from "express-validator";
 import bcrypt from "bcrypt";
+import getClient from "../../db/db";
+import {PoolClient} from "pg";
 
 config({
 	path: "../../.env",
 });
 
-const PUB_KEY_PATH = path.join(__dirname, "../..", "cryptography", "id_rsa_pub.pem");
-const PUB_KEY = fs.readFileSync(PUB_KEY_PATH, "utf8");
-
 export const resetPasswordController = (req: Request, res: Response) => {
+	const PUB_KEY_PATH = path.join(__dirname, "../..", "cryptography", "id_rsa_pub.pem");
+	const PUB_KEY = fs.readFileSync(PUB_KEY_PATH, "utf8");
+
 	const errors = validationResult(req);
 
 	const {password, resetToken}: {password: string; resetToken: string} = req.body;
@@ -55,36 +56,30 @@ export const resetPasswordController = (req: Request, res: Response) => {
 							return;
 						}
 
-						const dbPath = process.env.DB_PATH || "";
+						const client = (await getClient()) as PoolClient;
 
-						const db = new sqlite.Database(dbPath, err =>
-							err
-								? console.error(err)
-								: console.log("Connected to the SQLite database")
-						);
+						try {
+							const sql = `UPDATE ${Tables.auth_users} SET password=$1 WHERE id=$2`;
+							const values = [hash, userId];
 
-						const sql = `UPDATE ${Tables.auth_users} SET password=? WHERE id=?`;
-						const values = [hash, userId];
-
-						db.run(sql, values, err => {
-							if (err) {
-								res.status(500).json(
-									authJsonResponse(false, {
-										message:
-											"Something went wrong while updating the password!",
-									})
-								);
-								return;
-							}
+							await client.query(sql, values);
 
 							res.status(200).json(
 								authJsonResponse(true, {
 									message: `Your password has been changed! You may now login!`,
 								})
 							);
-						});
-
-						closeSqliteConnection(db);
+						} catch (e) {
+							console.log(e);
+							res.status(500).json(
+								authJsonResponse(false, {
+									message: "Something went wrong while updating the password!",
+								})
+							);
+							return;
+						} finally {
+							releaseClient(client);
+						}
 					});
 				} else {
 					res.status(500).json(

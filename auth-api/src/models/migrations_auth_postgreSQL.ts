@@ -37,7 +37,7 @@ import {Tables} from "../api/types/enums";
 		await client.query(`DROP TABLE IF EXISTS ${Tables.refresh_tokens}`, []);
 
 		const sqlRefreshTokens = `CREATE TABLE IF NOT EXISTS ${Tables.refresh_tokens} (
-            "sub" INTEGER NOT NULL,
+            "sub" TEXT NOT NULL,
             "iat" INTEGER NOT NULL,
             "refresh_token" TEXT NOT NULL
         );`;

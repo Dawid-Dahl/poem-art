@@ -2,18 +2,14 @@ import path from "path";
 import fs from "fs";
 import {Request, Response} from "express";
 import {validationResult} from "express-validator";
-import sqlite from "sqlite3";
 import {Tables} from "../types/enums";
 import bcrypt from "bcrypt";
-import {
-	authJsonResponse,
-	generateId,
-	issueAccessToken,
-	closeSqliteConnection,
-} from "../utils/utils";
+import {authJsonResponse, generateId, issueAccessToken, releaseClient} from "../utils/utils";
 import fetch from "node-fetch";
 import {sendEmail} from "../utils/nodemailer";
 import {verificationEmail} from "../utils/mail-templates";
+import getClient from "../../db/db";
+import {PoolClient} from "pg";
 
 export const registerController = async (req: Request, res: Response) => {
 	const errors = validationResult(req);
@@ -29,77 +25,81 @@ export const registerController = async (req: Request, res: Response) => {
 	const sendVerificationEmail = sendEmail(verificationEmail().create(req.body.email, xToken));
 
 	if (errors.isEmpty()) {
-		const dbPath = process.env.DB_PATH || "";
-
-		const db = new sqlite.Database(dbPath, err =>
-			err ? console.error(err) : console.log("Connected to the SQLite database")
-		);
-
 		bcrypt.hash(req.body.password, 10, async (err, hash) => {
 			if (err) {
 				console.error(err);
 				return;
 			}
 
+			const client = (await getClient()) as PoolClient;
+
 			try {
-				await fetch(`${process.env.MAIN_FETCH_URL}/api/ping`);
+				//check that main API is available
 
-				const sql = `INSERT INTO ${Tables.auth_users} (id, email, password) VALUES (?, ?, ?)`;
-				const values = [id, req.body.email, hash];
+				try {
+					await fetch(`${process.env.MAIN_FETCH_URL}/api/ping`);
+				} catch (e) {
+					console.error("Could not connect to main API. No user created --", e);
 
-				db.run(sql, values, async err => {
-					if (err) {
-						console.log(err);
+					res.status(500).json(
+						authJsonResponse(false, {
+							message: "Registration is not possible right now. Sorry!",
+						})
+					);
 
-						const errorMsg = err.message.includes(
-							"UNIQUE constraint failed: Auth_Users.email"
-						)
-							? "A user with that email is already registered."
-							: "Couldn't register user.";
+					return;
+				}
 
-						res.status(403).json(authJsonResponse(false, {message: errorMsg}));
+				//register user in auth db --- TODO: CHECK THAT ALREADY AVAILABLE USERS CAN'T REGISTER
 
-						closeSqliteConnection(db);
-					} else {
-						try {
-							await fetch(`${process.env.MAIN_FETCH_URL}/api/users/create`, {
-								method: "POST",
-								headers: {
-									"Content-Type": "application/json",
-								},
-								body: JSON.stringify({id, username: req.body.username}),
-							});
+				try {
+					const sql = `INSERT INTO ${Tables.auth_users} (id, email, password) VALUES ($1, $2, $3)`;
+					const values = [id, req.body.email, hash];
 
-							sendVerificationEmail();
+					await client.query(sql, values);
+				} catch (e) {
+					const errorMsg = e.message.includes(
+						"UNIQUE constraint failed: Auth_Users.email"
+					)
+						? "A user with that email is already registered."
+						: "Couldn't register user.";
 
-							res.status(200).json(
-								authJsonResponse(true, {
-									message:
-										"Almost done! Complete your registration by clicking the verification link in the email sent to your inbox!",
-								})
-							);
-						} catch (e) {
-							console.error("Could not connect to main API. No user created --", e);
+					res.status(403).json(authJsonResponse(false, {message: errorMsg}));
+				}
 
-							res.status(200).json(
-								authJsonResponse(false, {
-									message: "Registration is not possible right now. Sorry!",
-								})
-							);
-						}
-						closeSqliteConnection(db);
-					}
-				});
+				//register user in main db
+
+				try {
+					await fetch(`${process.env.MAIN_FETCH_URL}/api/users/create`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({id, username: req.body.username}),
+					});
+
+					await sendVerificationEmail();
+
+					res.status(200).json(
+						authJsonResponse(true, {
+							message: `Almost done! Complete your registration by clicking the verification link in the email sent to your inbox! 
+								
+								(If you can't find it, check the Spam inbox.)`,
+						})
+					);
+				} catch (e) {
+					console.error("Could not connect to main API. No user created --", e);
+
+					res.status(500).json(
+						authJsonResponse(false, {
+							message: "Registration is not possible right now. Sorry!",
+						})
+					);
+				}
 			} catch (e) {
-				console.error("Could not connect to main API. No user created --", e);
-
-				res.status(200).json(
-					authJsonResponse(false, {
-						message: "Registration is not possible right now. Sorry!",
-					})
-				);
-
-				closeSqliteConnection(db);
+				console.log(e);
+			} finally {
+				releaseClient(client);
 			}
 		});
 	} else {

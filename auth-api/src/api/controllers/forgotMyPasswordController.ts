@@ -1,34 +1,29 @@
 import path from "path";
 import fs from "fs";
 import {Request, Response} from "express";
-import sqlite from "sqlite3";
 import {Tables} from "../types/enums";
 import {AuthUser} from "../types/types";
-import {authJsonResponse, issueAccessToken, closeSqliteConnection} from "../utils/utils";
+import {authJsonResponse, issueAccessToken, releaseClient} from "../utils/utils";
 import {sendEmail} from "../utils/nodemailer";
 import {resetPasswordEmail} from "../utils/mail-templates";
+import getClient from "../../db/db";
+import {PoolClient} from "pg";
 
 export const forgotMyPasswordController = async (req: Request, res: Response) => {
 	const PRIV_KEY_PATH = path.join(__dirname, "../../", "cryptography", "id_rsa_priv.pem");
 	const PRIV_KEY = fs.readFileSync(PRIV_KEY_PATH, "utf8");
 
-	const dbPath = process.env.DB_PATH || "";
+	const client = (await getClient()) as PoolClient;
 
-	const db = new sqlite.Database(dbPath, err =>
-		err ? console.error(err) : console.log("Connected to the SQLite database")
-	);
+	try {
+		const sql = `SELECT id from ${Tables.auth_users} WHERE email = $1`;
+		const values = [req.body.email];
 
-	const sql = `SELECT id from ${Tables.auth_users} WHERE email = ?`;
-	const values = [req.body.email];
+		const {rows, rowCount} = await client.query<AuthUser>(sql, values);
 
-	db.get(sql, values, async (err, row: {id: string}) => {
-		if (err) {
-			throw new Error("There was an error getting the id");
-		}
-
-		if (row) {
+		if (rowCount) {
 			try {
-				const xToken = await issueAccessToken(row.id, PRIV_KEY, "1h");
+				const xToken = await issueAccessToken(rows[0].id, PRIV_KEY, "1h");
 
 				if (!xToken)
 					throw new Error("Something went wrong while issueing the access token!");
@@ -44,11 +39,8 @@ export const forgotMyPasswordController = async (req: Request, res: Response) =>
 						message: "Check your email to reset your password! You have 1h to do this.",
 					})
 				);
-
-				closeSqliteConnection(db);
 			} catch (e) {
 				console.log(e);
-				closeSqliteConnection(db);
 				res.status(500).json(
 					authJsonResponse(false, {
 						message:
@@ -62,8 +54,11 @@ export const forgotMyPasswordController = async (req: Request, res: Response) =>
 					message: "No user associated with that email could be found!",
 				})
 			);
-
-			closeSqliteConnection(db);
 		}
-	});
+	} catch (e) {
+		console.log(e);
+		throw new Error("There was an error getting the id");
+	} finally {
+		releaseClient(client);
+	}
 };

@@ -6,7 +6,7 @@ export type AuthUser = {
 	id: string;
 	email?: string;
 	password?: string;
-	isVerified?: 0 | 1;
+	isVerified?: boolean;
 	created_at?: string;
 	updated_at?: string;
 };
@@ -26,14 +26,8 @@ export type DecodedJwt = {
 	exp: number;
 };
 
-export type xRefreshTokenPayload = {
-	sub: number;
-	iat: number;
-	exp: number;
-};
-
 export type SQLRefreshToken = {
-	sub: number;
+	sub: string;
 	iat: number;
 	xRefreshToken: string | undefined;
 };

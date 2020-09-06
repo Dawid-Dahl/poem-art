@@ -89,21 +89,23 @@ export const issueRefreshToken = (user: AuthUser, privKey: string, expiresIn = "
 	return signedXRefreshTokenPromise;
 };
 
-export const addRefreshTokenToDatabase = async (refreshToken: SQLRefreshToken): void => {
-	const dbPath = process.env.DB_REFRESH_TOKEN_PATH || "";
+export const addRefreshTokenToDatabase = async (refreshToken: SQLRefreshToken) => {
+	const client = (await getClient()) as PoolClient;
 
-	const db = new sqlite.Database(dbPath, err =>
-		err ? console.error(err) : console.log("Connected to the SQLite database")
-	);
+	try {
+		const sql = `INSERT INTO ${Tables.refresh_tokens} (sub, iat, refresh_token) VALUES ($1, $2, $3)`;
+		const values = [refreshToken.sub, refreshToken.iat, refreshToken.xRefreshToken];
 
-	const sql = `INSERT INTO ${Tables.refresh_tokens} (sub, iat, refresh_token) VALUES (?, ?, ?)`;
-	const values = [refreshToken.sub, refreshToken.iat, refreshToken.xRefreshToken];
+		console.log("VALUES: ", values);
 
-	db.run(sql, values, err =>
-		!err ? console.log("Refresh Token added to database!") : console.error(err)
-	);
+		await client.query(sql, values);
 
-	closeSqliteConnection(db);
+		console.log("Refresh Token added to database!");
+	} catch (e) {
+		console.log(e);
+	} finally {
+		releaseClient(client);
+	}
 };
 
 export const constructUserWithoutPasswordFromSqlResult = (payload: AuthUser): AuthUser => ({
@@ -124,11 +126,11 @@ export const attachUserToRequest = (req: RequestWithUser, user: AuthUser) => {
 export const checkIfXRefreshTokenExistsInDb = async (
 	xRefreshToken: string | undefined
 ): Promise<boolean> => {
-	const client = await getClient();
+	const client = (await getClient()) as PoolClient;
 
 	try {
 		if (xRefreshToken) {
-			const sql = `SELECT 1 FROM ${Tables.refresh_tokens} WHERE refresh_token = ?`;
+			const sql = `SELECT * FROM ${Tables.refresh_tokens} WHERE refresh_token = $1`;
 
 			return new Promise(async (res, rej) => {
 				const {rows, rowCount} = await client.query(sql, [xRefreshToken]);
@@ -157,13 +159,17 @@ export const refreshAndFetch = (
 	});
 };
 
-export const closeSqliteConnection = (db: sqlite.Database) =>
-	db.close(err => (err ? console.error(err) : console.log("Closed the database connection")));
-
 export const logQ = <T>(qRes: QueryResult<T>): void => {
 	console.log("Executed query", {
 		rows: qRes?.rowCount ?? 0,
 		queryResult: qRes.rows,
+	});
+};
+
+export const logQuery = (rows: any[], rowCount: number): void => {
+	console.log("Executed query", {
+		queryResult: rows,
+		rowCount,
 	});
 };
 

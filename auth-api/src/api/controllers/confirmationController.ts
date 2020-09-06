@@ -2,11 +2,12 @@ import path from "path";
 import fs from "fs";
 import {Request, Response, NextFunction} from "express";
 import jwt from "jsonwebtoken";
-import sqlite from "sqlite3";
 import {Tables} from "../types/enums";
 import {DecodedJwt} from "../types/types";
-import {authJsonResponse, closeSqliteConnection} from "../utils/utils";
+import {authJsonResponse, releaseClient} from "../utils/utils";
 import {config} from "dotenv";
+import getClient from "../../db/db";
+import {PoolClient} from "pg";
 
 config({
 	path: "../../.env",
@@ -16,7 +17,7 @@ const PUB_KEY_PATH = path.join(__dirname, "../..", "cryptography", "id_rsa_pub.p
 const PUB_KEY = fs.readFileSync(PUB_KEY_PATH, "utf8");
 
 export const confirmationController = (req: Request, res: Response, next: NextFunction) => {
-	jwt.verify(req.params.token, PUB_KEY, (err, decodedJwt) => {
+	jwt.verify(req.params.token, PUB_KEY, async (err, decodedJwt) => {
 		if (err) {
 			console.log(err);
 			res.status(500).json(
@@ -26,28 +27,31 @@ export const confirmationController = (req: Request, res: Response, next: NextFu
 			);
 		} else {
 			if (decodedJwt) {
-				const dbPath = process.env.DB_PATH || "";
+				const client = (await getClient()) as PoolClient;
 
-				const db = new sqlite.Database(dbPath, err =>
-					err ? console.error(err) : console.log("Connected to the SQLite database")
-				);
+				try {
+					const sql = `UPDATE ${Tables.auth_users} SET "isVerified" = $1 WHERE id = $2`;
+					const values = [true, (decodedJwt as DecodedJwt).sub];
 
-				const sql = `UPDATE ${Tables.auth_users} SET isVerified = ? WHERE id = ?`;
-				const values = [1, (decodedJwt as DecodedJwt).sub];
+					const {rowCount} = await client.query(sql, values);
 
-				db.run(sql, values, err => {
-					if (err) {
-						throw new Error("There was an error updating the isVerified field");
-					}
-
-					res.status(200).send(
-						`
+					rowCount
+						? res.status(200).send(
+								`
                             <h1>Thank you for verifying your account. You may now <a href="${process.env.FRONTEND_URL}/login">log in</a>!</h1>
                         `
-					);
-				});
-
-				closeSqliteConnection(db);
+						  )
+						: res
+								.status(404)
+								.send(
+									"<h1>Something went wrong when trying to find the user, please contact support to resolve the issue.</h1>"
+								);
+				} catch (e) {
+					console.log(e);
+					throw new Error("There was an error updating the isVerified field");
+				} finally {
+					releaseClient(client);
+				}
 			} else {
 				res.status(500).json(
 					authJsonResponse(false, {

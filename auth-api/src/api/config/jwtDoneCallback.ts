@@ -14,6 +14,7 @@ import {JwtDoneCallback, xTokenPayload, AuthUser} from "../types/types";
 import {config} from "dotenv";
 import {Tables} from "../types/enums";
 import getClient from "../../db/db";
+import {PoolClient} from "pg";
 
 config({path: "../../.env"});
 
@@ -36,7 +37,7 @@ const jwtJwtDoneCallback: JwtDoneCallback = (req, res, next) => (err, user, info
 		checkIfXRefreshTokenExistsInDb(removeBearerFromTokenHeader(req.get("x-refresh-token")))
 			.then(async isXRefreshTokenExistingInDb => {
 				if (isXRefreshTokenExistingInDb) {
-					const client = await getClient();
+					const client = (await getClient()) as PoolClient;
 
 					const sql = `SELECT * FROM ${Tables.auth_users} WHERE id = $1`;
 
