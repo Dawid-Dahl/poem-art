@@ -6,10 +6,11 @@ import {
 	DecodedJwt,
 } from "../types/types";
 import jwt from "jsonwebtoken";
-import sqlite from "sqlite3";
 import {config} from "dotenv";
 import {Tables} from "../types/enums";
 import {Request} from "express";
+import {PoolClient, QueryResult} from "pg";
+import getClient from "../../db/db";
 
 interface RequestWithUser extends Request {
 	user?: object;
@@ -88,7 +89,7 @@ export const issueRefreshToken = (user: AuthUser, privKey: string, expiresIn = "
 	return signedXRefreshTokenPromise;
 };
 
-export const addRefreshTokenToDatabase = (refreshToken: SQLRefreshToken): void => {
+export const addRefreshTokenToDatabase = async (refreshToken: SQLRefreshToken): void => {
 	const dbPath = process.env.DB_REFRESH_TOKEN_PATH || "";
 
 	const db = new sqlite.Database(dbPath, err =>
@@ -120,28 +121,28 @@ export const attachUserToRequest = (req: RequestWithUser, user: AuthUser) => {
 	};
 };
 
-export const checkIfXRefreshTokenExistsInDb = (
+export const checkIfXRefreshTokenExistsInDb = async (
 	xRefreshToken: string | undefined
 ): Promise<boolean> => {
-	if (xRefreshToken) {
-		const dbPath = process.env.DB_REFRESH_TOKEN_PATH || "";
+	const client = await getClient();
 
-		const db = new sqlite.Database(dbPath, err =>
-			err ? console.error(err) : console.log("Connected to the SQLite database")
-		);
+	try {
+		if (xRefreshToken) {
+			const sql = `SELECT 1 FROM ${Tables.refresh_tokens} WHERE refresh_token = ?`;
 
-		const sql = `SELECT 1 FROM ${Tables.refresh_tokens} WHERE refresh_token = ?`;
+			return new Promise(async (res, rej) => {
+				const {rows, rowCount} = await client.query(sql, [xRefreshToken]);
 
-		return new Promise((res, rej) => {
-			db.get(sql, xRefreshToken, (err, row) => {
-				db.close(err =>
-					err ? console.error(err) : console.log("Closed the database connection")
-				);
-				err ? rej(err) : res(Boolean(row));
+				rowCount ? res(Boolean(rows[0])) : rej(null);
 			});
-		});
-	} else {
-		throw new Error("Token was undefined and not a string.");
+		} else {
+			throw new Error("Token was undefined and not a string.");
+		}
+	} catch (e) {
+		console.log(e);
+		return Promise.resolve(false);
+	} finally {
+		releaseClient(client);
 	}
 };
 
@@ -158,3 +159,14 @@ export const refreshAndFetch = (
 
 export const closeSqliteConnection = (db: sqlite.Database) =>
 	db.close(err => (err ? console.error(err) : console.log("Closed the database connection")));
+
+export const logQ = <T>(qRes: QueryResult<T>): void => {
+	console.log("Executed query", {
+		rows: qRes?.rowCount ?? 0,
+		queryResult: qRes.rows,
+	});
+};
+
+export const releaseClient = (client: PoolClient) => (
+	console.log("Client was released back into the pool"), client.release()
+);

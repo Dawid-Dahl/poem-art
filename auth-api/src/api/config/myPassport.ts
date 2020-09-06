@@ -1,5 +1,5 @@
 import {Request, Response, NextFunction} from "express";
-import {removeBearerFromTokenHeader, authJsonResponse, log} from "../utils/utils";
+import {removeBearerFromTokenHeader, authJsonResponse} from "../utils/utils";
 import jwtVerifyCallback from "./jwtVerifyCallback";
 import {JwtDoneCallback, MyPassport, JwtVerifyCallback} from "../types/types";
 import jwtDoneCallback from "./jwtDoneCallback";

@@ -1,4 +1,4 @@
-import sqlite from "sqlite3";
+/* import sqlite from "sqlite3";
 import {config} from "dotenv";
 import {Tables} from "../api/types/enums";
 import {closeSqliteConnection} from "../api/utils/utils";
@@ -32,3 +32,4 @@ db.serialize(() => {
 });
 
 closeSqliteConnection(db);
+ */

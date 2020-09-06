@@ -1,6 +1,5 @@
 import path from "path";
 import fs from "fs";
-import sqlite from "sqlite3";
 import {
 	attachUserToRequest,
 	authJsonResponse,
@@ -9,10 +8,12 @@ import {
 	constructUserWithoutPasswordFromSqlResult,
 	checkIfXRefreshTokenExistsInDb,
 	removeBearerFromTokenHeader,
+	releaseClient,
 } from "../utils/utils";
 import {JwtDoneCallback, xTokenPayload, AuthUser} from "../types/types";
 import {config} from "dotenv";
 import {Tables} from "../types/enums";
+import getClient from "../../db/db";
 
 config({path: "../../.env"});
 
@@ -33,31 +34,29 @@ const jwtJwtDoneCallback: JwtDoneCallback = (req, res, next) => (err, user, info
 
 	if (user && refresh) {
 		checkIfXRefreshTokenExistsInDb(removeBearerFromTokenHeader(req.get("x-refresh-token")))
-			.then(isXRefreshTokenExistingInDb => {
+			.then(async isXRefreshTokenExistingInDb => {
 				if (isXRefreshTokenExistingInDb) {
-					const dbPath = process.env.DB_PATH || "";
+					const client = await getClient();
 
-					const db = new sqlite.Database(dbPath, err =>
-						err ? console.error(err) : console.log("Connected to the SQLite database")
-					);
+					const sql = `SELECT * FROM ${Tables.auth_users} WHERE id = $1`;
 
-					const sql = `SELECT * FROM ${Tables.auth_users} WHERE id = ?`;
-
-					db.get(sql, user.sub, (err, row: AuthUser) => {
+					client.query<AuthUser>(sql, [user.sub], (err, qRes) => {
 						if (err) {
 							next(err);
 						} else {
-							if (!row) {
+							if (!qRes.rowCount) {
 								res.status(401).json(
 									authJsonResponse(false, {
 										message:
 											"No user with this id could be found in the database.",
 									})
 								);
+
+								releaseClient(client);
 								return;
 							}
 
-							const user = constructUserWithoutPasswordFromSqlResult(row);
+							const user = constructUserWithoutPasswordFromSqlResult(qRes.rows[0]);
 
 							issueAccessToken(user.id, PRIV_KEY)
 								.then(xToken => {
@@ -65,11 +64,7 @@ const jwtJwtDoneCallback: JwtDoneCallback = (req, res, next) => (err, user, info
 
 									res.set("x-token", xToken);
 
-									db.close(err =>
-										err
-											? console.error(err)
-											: console.log("Closed the database connection")
-									);
+									releaseClient(client);
 
 									next();
 								})
