@@ -65,15 +65,17 @@ const FullscreenPicture: React.FC<Props> = () => {
 						buttonKind="white"
 						backType="history"
 					/>
-					<Grid>
+					<Grid selectedArtPoem={selectedArtPoem}>
 						<PoemSection
 							poemUserId={selectedArtPoem.userId}
 							poem={selectedArtPoem.content}
 						/>
-						<SidebarWrapper>
-							<LikesSection />
-							<CommentSection />
-						</SidebarWrapper>
+						{selectedArtPoem.id !== 1 && (
+							<SidebarWrapper>
+								<LikesSection />
+								<CommentSection />
+							</SidebarWrapper>
+						)}
 					</Grid>
 				</StyledDiv>
 			</Wrapper>
@@ -106,11 +108,15 @@ const StyledDiv = styled.div<StyledDivProps>`
 	}
 `;
 
-const Grid = styled.div`
+type StyledGridProps = {
+	selectedArtPoem: ReduxArtPoem;
+};
+
+const Grid = styled.div<StyledGridProps>`
 	width: 70%;
 	margin: 1em auto;
 	justify-content: center;
-	display: grid;
+	display: ${props => (props.selectedArtPoem.id === 1 ? "block" : "grid")};
 	grid-template-columns: 1fr 1fr;
 	gap: 1em 1em;
 	grid-template-areas: "PoemSection Sidebar" "PoemSection Sidebar";
