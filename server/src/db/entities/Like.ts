@@ -20,7 +20,7 @@ export class Like extends BaseEntity {
 	@Column({nullable: true})
 	userId: string;
 
-	@ManyToOne(type => ArtPoem, artpoem => artpoem.likes)
+	@ManyToOne(type => ArtPoem, artpoem => artpoem.likes, {onDelete: "CASCADE"})
 	artpoem: ArtPoem;
 
 	@ManyToOne(type => User, user => user.likes)

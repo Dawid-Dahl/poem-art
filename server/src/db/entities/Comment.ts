@@ -19,7 +19,7 @@ export class Comment extends BaseEntity {
 	@Column({type: "text"})
 	comment: string;
 
-	@ManyToOne(type => ArtPoem, artpoem => artpoem.comments)
+	@ManyToOne(type => ArtPoem, artpoem => artpoem.comments, {onDelete: "CASCADE"})
 	artpoem: ArtPoem;
 
 	@ManyToOne(type => User, user => user.comments)
